@@ -7,11 +7,11 @@
     <name>Magazzino</name>
 
     <navigation-rule>
-        <from-view-id>*</from-view-id>
+        <from-view-id>/register.xhtml</from-view-id>
 
         <navigation-case>
-            <from-action>#{identity.logout}</from-action>
-            <if>#{true}</if>
+            <from-action>#{registrar.register}</from-action>
+            <if>#{registrar.registered}</if>
             <to-view-id>/register.xhtml</to-view-id>
             <redirect/>
         </navigation-case>

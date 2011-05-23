@@ -19,7 +19,7 @@ package it.vige.magazzino.i18n;
 import org.jboss.seam.international.status.builder.BundleKey;
 
 /**
- * @author <a href="http://community.jboss.org/people/dan.j.allen">Dan Allen</a>
+ * @author <a href="http://www.vige.it">Luca Stancapiano</a>
  */
 public class DefaultBundleKey extends BundleKey {
 

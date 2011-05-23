@@ -34,8 +34,7 @@ import org.jboss.seam.solder.core.Veto;
  * <strong>User</strong> is the model/entity class that represents a customer who may book a hotel.
  * </p>
  *
- * @author Gavin King
- * @author <a href="http://community.jboss.org/people/dan.j.allen">Dan Allen</a>
+ * @author <a href="http://www.vige.it">Luca Stancapiano</a>
  */
 @Entity
 @Table(name = "traveler")
