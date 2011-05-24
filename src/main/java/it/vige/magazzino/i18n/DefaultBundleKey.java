@@ -22,6 +22,8 @@ import org.jboss.seam.international.status.builder.BundleKey;
  * @author <a href="http://www.vige.it">Luca Stancapiano</a>
  */
 public class DefaultBundleKey extends BundleKey {
+	
+	private static final long serialVersionUID = -602733026031111730L;
 
     public static final String DEFAULT_BUNDLE_NAME = "messages";
 

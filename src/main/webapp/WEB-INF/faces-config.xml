@@ -10,9 +10,57 @@
         <from-view-id>/register.xhtml</from-view-id>
 
         <navigation-case>
-            <from-action>#{registrar.register}</from-action>
-            <if>#{registrar.registered}</if>
+            <from-action>#{register.register}</from-action>
+            <if>#{register.registered}</if>
             <to-view-id>/register.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+
+    </navigation-rule>
+    
+    <navigation-rule>
+        <from-view-id>/customer.xhtml</from-view-id>
+
+        <navigation-case>
+            <from-action>#{customerRegister.register}</from-action>
+            <if>#{customerRegister.registered}</if>
+            <to-view-id>/customer.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+
+    </navigation-rule>
+    
+    <navigation-rule>
+        <from-view-id>/article.xhtml</from-view-id>
+
+        <navigation-case>
+            <from-action>#{articleRegister.register}</from-action>
+            <if>#{articleRegister.registered}</if>
+            <to-view-id>/article.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+
+    </navigation-rule>
+    
+    <navigation-rule>
+        <from-view-id>/magazzino.xhtml</from-view-id>
+
+        <navigation-case>
+            <from-action>#{magazzinoRegister.register}</from-action>
+            <if>#{magazzinoRegister.registered}</if>
+            <to-view-id>/magazzino.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+
+    </navigation-rule>
+    
+    <navigation-rule>
+        <from-view-id>/receipt.xhtml</from-view-id>
+
+        <navigation-case>
+            <from-action>#{receiptRegister.register}</from-action>
+            <if>#{receiptRegister.registered}</if>
+            <to-view-id>/receipt.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
 
