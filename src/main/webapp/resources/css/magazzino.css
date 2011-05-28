@@ -49,7 +49,6 @@ select {
 
 input[type=submit], input[type=button] {
     font-weight: bold;
-    color: #FFFFFF;
     border: 1px solid #5D1414;
     height: 26px;
     background: #FFFFFF url(../img/btn.bg.gold.png) 0 0 repeat-x;

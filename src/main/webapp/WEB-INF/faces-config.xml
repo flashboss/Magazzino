@@ -5,18 +5,6 @@
               version="2.0">
 
     <name>Magazzino</name>
-
-    <navigation-rule>
-        <from-view-id>/register.xhtml</from-view-id>
-
-        <navigation-case>
-            <from-action>#{register.register}</from-action>
-            <if>#{register.registered}</if>
-            <to-view-id>/register.xhtml</to-view-id>
-            <redirect/>
-        </navigation-case>
-
-    </navigation-rule>
     
     <navigation-rule>
         <from-view-id>/customer.xhtml</from-view-id>
