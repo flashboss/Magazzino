@@ -31,7 +31,7 @@
     <url>http://vige.it</url>
 
     <properties>
-        <seam.version>3.0.0.Final</seam.version>
+        <seam.version>3.0.1-SNAPSHOT</seam.version>
         <webapp.directory>src/main/webapp</webapp.directory>
         <jboss.home>${env.JBOSS_HOME}</jboss.home>
         <jboss.domain>default</jboss.domain>
@@ -78,36 +78,12 @@
         <dependency>
             <groupId>org.jboss.seam.faces</groupId>
             <artifactId>seam-faces</artifactId>
-            <version>${seam.version}</version>
+            <version>3.0.1.Final</version>
         </dependency>
         
         <dependency>
             <groupId>org.jboss.seam.international</groupId>
             <artifactId>seam-international</artifactId>
-            <version>${seam.version}</version>
-        </dependency>
-        
-        <dependency>
-            <groupId>org.jboss.seam.servlet</groupId>
-            <artifactId>seam-servlet</artifactId>
-            <version>${seam.version}</version>
-        </dependency>
-        
-        <dependency>
-            <groupId>org.jboss.seam.catch</groupId>
-            <artifactId>seam-catch</artifactId>
-            <version>${seam.version}</version>
-        </dependency>
-
-        <dependency>
-           <groupId>org.jboss.seam.config</groupId>
-           <artifactId>seam-config-xml</artifactId>
-            <version>${seam.version}</version>
-        </dependency>
-
-        <dependency>
-           <groupId>org.jboss.seam.security</groupId>
-           <artifactId>seam-security</artifactId>
             <version>${seam.version}</version>
         </dependency>
         
@@ -174,7 +150,7 @@
         <dependency>
            <groupId>org.jboss.weld</groupId>
            <artifactId>weld-core</artifactId>
-           <scope>test</scope>
+        	<scope>test</scope>
         </dependency>
         
         <dependency>
@@ -183,7 +159,7 @@
             <version>${jboss-javaee6-spec.version}</version>
             <type>pom</type>
             <scope>provided</scope>
-        </dependency>      
+        </dependency>
 
         <!--
         <dependency>
