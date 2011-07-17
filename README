@@ -1,0 +1,10 @@
+to commit the updates:
+
+
+git add src
+git add pom.xml
+
+git commit src -m "comment!"
+git commit pom.xml -m "comment!"
+
+git push
