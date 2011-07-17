@@ -1,0 +1,163 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                template="/WEB-INF/layout/template.xhtml">
+
+    <ui:define name="head">
+        <script type="text/javascript">
+            function controlSpinner(behavior) {
+                if (behavior.status == 'begin') {
+                    document.getElementById('spinner').style.display = 'inline';
+                }
+                else if (behavior.status == 'complete') {
+                    document.getElementById('spinner').style.display = 'none';
+                }
+            }
+        </script>
+    </ui:define>
+
+    <ui:define name="content">
+
+        <div class="section">
+
+         <span class="errors">
+            <h:messages id="messages" globalOnly="true"/>
+         </span>
+
+            <h1>#{bundles.messages.magazzino_search}</h1>
+
+            <h:form id="searchForm" prependId="false">
+                <fieldset>
+                    <h:inputText id="query" value="#{searchCriteria.query}" style="width: 165px;" autocomplete="off">
+                        <f:ajax event="keyup" listener="#{magazzinoSearch.find}" render=":searchResults" onevent="controlSpinner"/>
+                    </h:inputText>
+                    #{' '}
+                    <h:selectOneMenu id="pageSize" value="#{searchCriteria.pageSize}">
+                        <f:ajax listener="#{magazzinoSearch.find}" render=":searchResults" onevent="controlSpinner"/>
+                        <f:selectItem itemLabel="5 #{bundles.messages.jars_short} #{bundles.messages.per_page}" itemValue="5"/>
+                        <f:selectItem itemLabel="10 #{bundles.messages.jars_short} #{bundles.messages.per_page}" itemValue="10"/>
+                        <f:selectItem itemLabel="20 #{bundles.messages.jars_short} #{bundles.messages.per_page}" itemValue="20"/>
+                    </h:selectOneMenu>
+                    #{' '}
+                    <span id="activity"><h:graphicImage id="spinner" value="/img/spinner.gif" style="display: none;"/></span>
+                </fieldset>
+            </h:form>
+        </div>
+
+        <h:panelGroup id="searchResults">
+            <div class="section">
+                <h:outputText id="noJarMsg" value="#{bundles.messages.magazzino_not_found}" rendered="#{empty jars}"/>
+                <h:form id="jarSelectionForm">
+                    <h:dataTable id="jars" value="#{jars}" var="_jar" rendered="#{not empty jars}"
+                                 columnClasses=",,,,action">
+                        <h:column id="causeCol">
+                            <f:facet id="causeFct" name="header">#{bundles.messages.magazzino_cause}</f:facet>
+                            #{_jar.cause}
+                        </h:column>
+                        <h:column id="codeCol">
+                            <f:facet id="codeFct" name="header">#{bundles.messages.magazzino_code}</f:facet>
+                            #{_jar.code}
+                        </h:column>
+                        <h:column id="compensationCol">
+                            <f:facet id="compensationFct" name="header">#{bundles.messages.magazzino_compensation}</f:facet>
+                            #{_jar.compensation}
+                        </h:column>
+                        <h:column id="ragSoc1Col">
+                            <f:facet id="ragSoc1Fct" name="header">#{bundles.messages.magazzino_ragsoc1}</f:facet>
+                            #{_jar.ragSoc1}
+                        </h:column>
+                        <h:column id="ragSoc2Col">
+                            <f:facet id="ragSoc2Fct" name="header">#{bundles.messages.magazzino_ragsoc2}</f:facet>
+                            #{_jar.ragSoc2}
+                        </h:column>
+                        <h:column id="actCol">
+                            <f:facet id="actFct" name="header">#{bundles.messages.action}</f:facet>
+                            <h:link id="view" value="View" outcome="jar" style="white-space: nowrap;">
+                                <f:param name="id" value="#{_jar.number}"/>
+                            </h:link>
+
+                            <ui:remove><!--
+                     <h:commandButton id="view" value="View" action="#{selectionAgent.selectJar(_jar)}"/>
+                     --></ui:remove>
+                        </h:column>
+                    </h:dataTable>
+                </h:form>
+                <h:form id="paginationForm">
+                    <h:commandButton id="previousResults" value="Previous page" action="#{magazzinoSearch.previousPage}"
+                                     rendered="#{magazzinoSearch.previousPageAvailable}">
+                        <f:ajax render=":searchResults" onevent="controlSpinner"/>
+                    </h:commandButton>
+                    #{' '}
+                    <h:commandButton id="moreResults" value="More results" action="#{magazzinoSearch.nextPage}"
+                                     rendered="#{magazzinoSearch.nextPageAvailable}">
+                        <f:ajax render=":searchResults" onevent="controlSpinner"/>
+                    </h:commandButton>
+                </h:form>
+            </div>
+        </h:panelGroup>
+
+        <div class="section">
+            <h1>#{bundles.messages.magazzino_current_selected}</h1>
+        </div>
+        <div class="section">
+            <h:form id="jar_selections">
+                <h:outputText value="#{bundles.messages.no_selection_found}" rendered="#{empty selections}"/>
+                <h:dataTable id="selections" value="#{selections}" var="_selection" rendered="#{not empty selections}">
+                    <h:column id="codeCol">
+                        <f:facet id="codeFct" name="header">#{bundles.messages.magazzino_code}</f:facet>
+                        #{_selection.jar.code}
+                    </h:column>
+                    <h:column id="causeCol">
+                        <f:facet id="causeFct" name="header">#{bundles.messages.magazzino_cause}</f:facet>
+                        #{_selection.jar.cause}
+                    </h:column>
+                    <h:column id="dateCol">
+                        <f:facet id="dateCol" name="header">#{bundles.messages.magazzino_date}</f:facet>
+                        <h:outputText value="#{_selection.jar.date}">
+                            <f:convertDateTime type="date" pattern="MM/dd/yyyy"/>
+                        </h:outputText>
+                    </h:column>
+                    <h:column id="dateDocCol">
+                        <f:facet id="dateDocFct" name="header">#{bundles.messages.magazzino_datedoc}</f:facet>
+                        <h:outputText value="#{_selection.jar.dateDoc}">
+                            <f:convertDateTime type="date" pattern="MM/dd/yyyy"/>
+                        </h:outputText>
+                    </h:column>
+                    <h:column id="compensationCol">
+                        <f:facet id="compensationFct" name="header">#{bundles.messages.magazzino_compensation}</f:facet>
+                        #{_selection.jar.compensation}
+                    </h:column>
+                    <h:column id="codCustomerCol">
+                        <f:facet id="codCustomerFct" name="header">#{bundles.messages.magazzino_codcustomer}</f:facet>
+                        #{_selection.jar.codCustomer}
+                    </h:column>
+                    <h:column id="ragSoc1Col">
+                        <f:facet id="ragSoc1Fct" name="header">#{bundles.messages.magazzino_ragsoc1}</f:facet>
+                        #{_selection.jar.ragSoc1}
+                    </h:column>
+                    <h:column id="ragSoc2Col">
+                        <f:facet id="ragSoc2Fct" name="header">#{bundles.messages.magazzino_ragsoc2}</f:facet>
+                        #{_selection.jar.ragSoc2}
+                    </h:column>
+                    <h:column id="numberDocCol">
+                        <f:facet id="numberDocFct" name="header">#{bundles.messages.magazzino_numberdoc}</f:facet>
+                        #{_selection.jar.numberDoc}
+                    </h:column>
+                    <h:column id="actCol">
+                        <f:facet id="ActFct" name="header">Action</f:facet>
+                        <h:commandLink id="cancel" value="Cancel" action="#{selectionHistory.cancelSelection(_selection)}"/>
+                    </h:column>
+                </h:dataTable>
+            </h:form>
+        </div>
+
+    </ui:define>
+
+    <ui:define name="sidebar">
+
+    </ui:define>
+
+</ui:composition>

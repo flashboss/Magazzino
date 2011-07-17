@@ -1,0 +1,125 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                template="/WEB-INF/layout/template.xhtml">
+
+    <ui:define name="head">
+        <script type="text/javascript">
+            function controlSpinner(behavior) {
+                if (behavior.status == 'begin') {
+                    document.getElementById('spinner').style.display = 'inline';
+                }
+                else if (behavior.status == 'complete') {
+                    document.getElementById('spinner').style.display = 'none';
+                }
+            }
+        </script>
+    </ui:define>
+
+    <ui:define name="content">
+
+        <div class="section">
+
+         <span class="errors">
+            <h:messages id="messages" globalOnly="true"/>
+         </span>
+
+            <h1>#{bundles.messages.receipt_search}</h1>
+
+            <h:form id="searchForm" prependId="false">
+                <fieldset>
+                    <h:inputText id="query" value="#{searchCriteria.query}" style="width: 165px;" autocomplete="off">
+                        <f:ajax event="keyup" listener="#{receiptSearch.find}" render=":searchResults" onevent="controlSpinner"/>
+                    </h:inputText>
+                    #{' '}
+                    <h:selectOneMenu id="pageSize" value="#{searchCriteria.pageSize}">
+                        <f:ajax listener="#{receiptSearch.find}" render=":searchResults" onevent="controlSpinner"/>
+                        <f:selectItem itemLabel="5 #{bundles.messages.receipts_short} #{bundles.messages.per_page}" itemValue="5"/>
+                        <f:selectItem itemLabel="10 #{bundles.messages.receipts_short} #{bundles.messages.per_page}" itemValue="10"/>
+                        <f:selectItem itemLabel="20 #{bundles.messages.receipts_short} #{bundles.messages.per_page}" itemValue="20"/>
+                    </h:selectOneMenu>
+                    #{' '}
+                    <span id="activity"><h:graphicImage id="spinner" value="/img/spinner.gif" style="display: none;"/></span>
+                </fieldset>
+            </h:form>
+        </div>
+
+        <h:panelGroup id="searchResults">
+            <div class="section">
+                <h:outputText id="noReceiptMsg" value="#{bundles.messages.receipt_not_found}" rendered="#{empty receipts}"/>
+                <h:form id="receiptSelectionForm">
+                    <h:dataTable id="receipts" value="#{receipts}" var="_receipt" rendered="#{not empty receipts}"
+                                 columnClasses=",,,,action">
+                        <h:column id="causeCol">
+                            <f:facet id="causeFct" name="header">#{bundles.messages.receipt_cause}</f:facet>
+                            #{_receipt.cause}
+                        </h:column>
+                        <h:column id="descriptionCol">
+                            <f:facet id="descriptionFct" name="header">#{bundles.messages.receipt_description}</f:facet>
+                            #{_receipt.description}
+                        </h:column>
+                        <h:column id="actCol">
+                            <f:facet id="actFct" name="header">Action</f:facet>
+                            <h:link id="view" value="View" outcome="receipt" style="white-space: nowrap;">
+                                <f:param name="id" value="#{_receipt.number}"/>
+                            </h:link>
+
+                            <ui:remove><!--
+                     <h:commandButton id="view" value="View" action="#{selectionAgent.selectReceipt(_receipt)}"/>
+                     --></ui:remove>
+                        </h:column>
+                    </h:dataTable>
+                </h:form>
+                <h:form id="paginationForm">
+                    <h:commandButton id="previousResults" value="Previous page" action="#{receiptSearch.previousPage}"
+                                     rendered="#{receiptSearch.previousPageAvailable}">
+                        <f:ajax render=":searchResults" onevent="controlSpinner"/>
+                    </h:commandButton>
+                    #{' '}
+                    <h:commandButton id="moreResults" value="More results" action="#{receiptSearch.nextPage}"
+                                     rendered="#{receiptSearch.nextPageAvailable}">
+                        <f:ajax render=":searchResults" onevent="controlSpinner"/>
+                    </h:commandButton>
+                </h:form>
+            </div>
+        </h:panelGroup>
+
+        <div class="section">
+            <h1>#{bundles.messages.receipt_current_selected}</h1>
+        </div>
+        <div class="section">
+            <h:form id="receipt_selections">
+                <h:outputText value="#{bundles.messages.no_selection_found}" rendered="#{empty selections}"/>
+                <h:dataTable id="selections" value="#{selections}" var="_selection" rendered="#{not empty selections}">
+                    <h:column id="causeCol">
+                        <f:facet id="causeFct" name="header">#{bundles.messages.receipt_cause}</f:facet>
+                        #{_selection.receipt.cause}
+                    </h:column>
+                    <h:column id="descriptionCol">
+                        <f:facet id="descriptionFct" name="header">#{bundles.messages.receipt_description}</f:facet>
+                        #{_selection.receipt.description}
+                    </h:column>
+                    <h:column id="dateCol">
+                        <f:facet id="dateCol" name="header">#{bundles.messages.receipt_date}</f:facet>
+                        <h:outputText value="#{_selection.receipt.date}">
+                            <f:convertDateTime type="date" pattern="MM/dd/yyyy"/>
+                        </h:outputText>
+                    </h:column>
+                    <h:column id="actCol">
+                        <f:facet id="ActFct" name="header">#{bundles.messages.action}</f:facet>
+                        <h:commandLink id="cancel" value="Cancel" action="#{selectionHistory.cancelSelection(_selection)}"/>
+                    </h:column>
+                </h:dataTable>
+            </h:form>
+        </div>
+
+    </ui:define>
+
+    <ui:define name="sidebar">
+
+    </ui:define>
+
+</ui:composition>
