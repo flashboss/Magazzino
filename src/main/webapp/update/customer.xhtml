@@ -32,21 +32,21 @@
 
                 <fieldset>
                     <p:input id="code" label="#{bundles.messages.customer_code}">
-                        <h:inputText id="input" value="#{newCustomer.code}"/>
+                        <h:inputText id="input" value="#{customerSelection.selectedCustomer.code}"/>
                     </p:input>
                     
                     <p:input id="name" label="#{bundles.messages.customer_name}">
-                        <h:inputText id="input" value="#{newCustomer.name}"/>
+                        <h:inputText id="input" value="#{customerSelection.selectedCustomer.name}"/>
                     </p:input>
                     
                     <p:input id="ragSocial" label="#{bundles.messages.customer_ragsocial}">
-                        <h:inputText id="input" value="#{newCustomer.ragSocial}"/>
+                        <h:inputText id="input" value="#{customerSelection.selectedCustomer.ragSocial}"/>
                     </p:input>
 
                     <div class="buttonBox">
-                        <h:commandButton id="customerRegister" value="#{bundles.messages.template_linkInsert}" action="#{customerRegister.register}"/>
+                        <h:commandButton id="customerRegister" value="#{bundles.messages.template_linkInsert}" action="#{customerUpdater.update(customerSelection.selectedCustomer)}"/>
                         #{' '}
-                        <h:button id="cancel" value="#{bundles.messages.template_linkReset}" outcome="insert_customer"/>
+                        <h:button id="cancel" value="#{bundles.messages.template_linkReset}" />
                     </div>
 
                 </fieldset>

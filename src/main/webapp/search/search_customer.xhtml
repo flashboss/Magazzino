@@ -21,7 +21,7 @@
 
     <ui:define name="content">
 
-        <div class="section">
+        <div class="sectionsearch">
 
          <span class="errors">
             <h:messages id="messages" globalOnly="true"/>
@@ -63,13 +63,7 @@
                         </h:column>
                         <h:column id="actCol">
                             <f:facet id="actFct" name="header">#{bundles.messages.action}</f:facet>
-                            <h:link id="view" value="View" outcome="customer" style="white-space: nowrap;">
-                                <f:param name="id" value="#{_customer.code}"/>
-                            </h:link>
-
-                            <ui:remove><!--
-                     <h:commandButton id="view" value="View" action="#{selectionAgent.selectArticle(_article)}"/>
-                     --></ui:remove>
+                            <h:commandLink id="view" value="View" action="#{customerSelection.selectCustomer(_customer)}" style="white-space: nowrap;" />
                         </h:column>
                     </h:dataTable>
                 </h:form>
@@ -86,29 +80,6 @@
                 </h:form>
             </div>
         </h:panelGroup>
-
-        <div class="section">
-            <h1>#{bundles.messages.customer_current_selected}</h1>
-        </div>
-        <div class="section">
-            <h:form id="customer_selections">
-                <h:outputText value="#{bundles.messages.no_selection_found}" rendered="#{empty selections}"/>
-                <h:dataTable id="selections" value="#{selections}" var="_selection" rendered="#{not empty selections}">
-                    <h:column id="nameCol">
-                        <f:facet id="nameFct" name="header">#{bundles.messages.customer_name}</f:facet>
-                        #{_selection.customer.name}
-                    </h:column>
-                    <h:column id="ragSocialCol">
-                        <f:facet id="ragSocialFct" name="header">#{bundles.messages.customer_ragsocial}</f:facet>
-                        #{_selection.customer.ragSocial}
-                    </h:column>
-                    <h:column id="actCol">
-                        <f:facet id="ActFct" name="header">Action</f:facet>
-                        <h:commandLink id="cancel" value="Cancel" action="#{selectionHistory.cancelSelection(_selection)}"/>
-                    </h:column>
-                </h:dataTable>
-            </h:form>
-        </div>
 
     </ui:define>
 

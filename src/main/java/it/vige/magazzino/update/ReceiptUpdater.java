@@ -14,18 +14,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package it.vige.magazzino;
+package it.vige.magazzino.update;
 
 import it.vige.magazzino.i18n.DefaultBundleKey;
 import it.vige.magazzino.model.Receipt;
 
 import javax.ejb.Stateful;
 import javax.enterprise.inject.Model;
-import javax.enterprise.inject.Produces;
 import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
-import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -39,7 +37,7 @@ import org.jboss.seam.international.status.builder.BundleKey;
  */
 @Stateful
 @Model
-public class ReceiptRegister {
+public class ReceiptUpdater {
 	
     @PersistenceContext
     private EntityManager em;
@@ -52,20 +50,20 @@ public class ReceiptRegister {
 
     private UIInput numberInput;
 
-    private final Receipt newReceipt = new Receipt();
+    private Receipt receipt;
 
     private boolean registered;
 
     private boolean registrationInvalid;
 
-    public void register() {
+    public void update(Receipt receipt) {
         if (verifyNumberIsAvailable()) {
             registered = true;
-            em.persist(newReceipt);
+            em.persist(receipt);
 
             messages.info(new DefaultBundleKey("receipt_registered"))
                     .defaults("You have been successfully registered as the receipt {0}!")
-                    .params(newReceipt.getNumber());
+                    .params(receipt.getNumber());
         } else {
             registrationInvalid = true;
         }
@@ -92,12 +90,6 @@ public class ReceiptRegister {
         }
     }
 
-    @Produces
-    @Named
-    public Receipt getNewReceipt() {
-        return newReceipt;
-    }
-
     public boolean isRegistered() {
         return registered;
     }
@@ -111,11 +103,11 @@ public class ReceiptRegister {
     }
 
     private boolean verifyNumberIsAvailable() {
-        Receipt existing = em.find(Receipt.class, newReceipt.getNumber());
+        Receipt existing = em.find(Receipt.class, receipt.getNumber());
         if (existing != null) {
             messages.warn(new BundleKey("messages", "account_numberTaken"))
                     .defaults("The number '{0}' is already taken. Please choose another number.")
-                    .targets(numberInput.getClientId()).params(newReceipt.getNumber());
+                    .targets(numberInput.getClientId()).params(receipt.getNumber());
             return false;
         }
 

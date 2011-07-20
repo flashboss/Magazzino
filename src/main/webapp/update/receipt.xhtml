@@ -12,14 +12,14 @@
 
     <ui:define name="metadata">
         <f:metadata>
-            <f:event type="preRenderView" listener="#{customerRegister.notifyIfRegistrationIsInvalid}"/>
+            <f:event type="preRenderView" listener="#{receiptRegister.notifyIfRegistrationIsInvalid}"/>
         </f:metadata>
     </ui:define>
 
     <ui:define name="content">
 
         <div class="section">
-            <h1>#{bundles.messages.customer}</h1>
+            <h1>#{bundles.messages.receipt}</h1>
         </div>
 
         <div class="section">
@@ -31,22 +31,26 @@
             <h:form id="regForm" prependId="false">
 
                 <fieldset>
-                    <p:input id="code" label="#{bundles.messages.customer_code}">
-                        <h:inputText id="input" value="#{newCustomer.code}"/>
+                    <p:input id="number" label="#{bundles.messages.receipt_number}">
+                        <h:inputText id="input" value="#{receiptSelection.selectedReceipt.number}"/>
                     </p:input>
                     
-                    <p:input id="name" label="#{bundles.messages.customer_name}">
-                        <h:inputText id="input" value="#{newCustomer.name}"/>
+                    <p:input id="date" label="#{bundles.messages.receipt_date}">
+                        <h:inputText id="input" value="#{receiptSelection.selectedReceipt.date}"/>
                     </p:input>
                     
-                    <p:input id="ragSocial" label="#{bundles.messages.customer_ragsocial}">
-                        <h:inputText id="input" value="#{newCustomer.ragSocial}"/>
+                    <p:input id="cause" label="#{bundles.messages.receipt_cause}">
+                        <h:inputText id="input" value="#{receiptSelection.selectedReceipt.cause}"/>
+                    </p:input>
+                    
+                    <p:input id="description" label="#{bundles.messages.receipt_description}">
+                        <h:inputText id="input" value="#{receiptSelection.selectedReceipt.description}"/>
                     </p:input>
 
                     <div class="buttonBox">
-                        <h:commandButton id="customerRegister" value="#{bundles.messages.template_linkInsert}" action="#{customerRegister.register}"/>
+                        <h:commandButton id="receiptRegister" value="#{bundles.messages.template_linkInsert}" action="#{receiptUpdater.update(receiptSelection.selectedReceipt)}"/>
                         #{' '}
-                        <h:button id="cancel" value="#{bundles.messages.template_linkReset}" outcome="insert_customer"/>
+                        <h:button id="cancel" value="#{bundles.messages.template_linkReset}" />
                     </div>
 
                 </fieldset>
@@ -62,7 +66,7 @@
             <h1>Magazzino</h1>
 
             <p>
-                #{bundles.messages.makeyourdata} #{bundles.messages.customers_short_art}.
+                #{bundles.messages.makeyourdata} #{bundles.messages.receipts_short_art}.
             </p>
 
             <p>

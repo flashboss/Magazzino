@@ -32,49 +32,49 @@
 
                 <fieldset>
                     <p:input id="number" label="#{bundles.messages.magazzino_number}">
-                        <h:inputText id="input" value="#{newJar.number}"/>
+                        <h:inputText id="input" value="#{jarSelection.selectedJar.number}"/>
                     </p:input>
                     
                     <p:input id="date" label="#{bundles.messages.magazzino_date}">
-                        <h:inputText id="input" value="#{newJar.date}"/>
+                        <h:inputText id="input" value="#{jarSelection.selectedJar.date}"/>
                     </p:input>
                     
                     <p:input id="code" label="#{bundles.messages.magazzino_code}">
-                        <h:inputText id="input" value="#{newJar.code}"/>
+                        <h:inputText id="input" value="#{jarSelection.selectedJar.code}"/>
                     </p:input>
                     
                     <p:input id="cause" label="#{bundles.messages.magazzino_cause}">
-                        <h:inputText id="input" value="#{newJar.cause}"/>
+                        <h:inputText id="input" value="#{jarSelection.selectedJar.cause}"/>
                     </p:input>
                     
                     <p:input id="compensation" label="#{bundles.messages.magazzino_compensation}">
-                        <h:inputText id="input" value="#{newJar.compensation}"/>
+                        <h:inputText id="input" value="#{jarSelection.selectedJar.compensation}"/>
                     </p:input>
                     
                     <p:input id="codCustomer" label="#{bundles.messages.magazzino_codcustomer}">
-                        <h:inputText id="input" value="#{newJar.codCustomer}"/>
+                        <h:inputText id="input" value="#{jarSelection.selectedJar.codCustomer}"/>
                     </p:input>
                     
                     <p:input id="ragSoc1" label="#{bundles.messages.magazzino_ragsoc1}">
-                        <h:inputText id="input" value="#{newJar.ragSoc1}"/>
+                        <h:inputText id="input" value="#{jarSelection.selectedJar.ragSoc1}"/>
                     </p:input>
                     
                     <p:input id="ragSoc2" label="#{bundles.messages.magazzino_ragsoc2}">
-                        <h:inputText id="input" value="#{newJar.ragSoc2}"/>
+                        <h:inputText id="input" value="#{jarSelection.selectedJar.ragSoc2}"/>
                     </p:input>
                     
                     <p:input id="numberDoc" label="#{bundles.messages.magazzino_numberdoc}">
-                        <h:inputText id="input" value="#{newJar.numberDoc}"/>
+                        <h:inputText id="input" value="#{jarSelection.selectedJar.numberDoc}"/>
                     </p:input>
                     
                     <p:input id="dateDoc" label="#{bundles.messages.magazzino_datedoc}">
-                        <h:inputText id="input" value="#{newJar.dateDoc}"/>
+                        <h:inputText id="input" value="#{jarSelection.selectedJar.dateDoc}"/>
                     </p:input>
 
                     <div class="buttonBox">
-                        <h:commandButton id="magazzinoRegister" value="#{bundles.messages.template_linkInsert}" action="#{magazzinoRegister.register}"/>
+                        <h:commandButton id="magazzinoRegister" value="#{bundles.messages.template_linkInsert}" action="#{magazzinoUpdater.update(jarSelection.selectedJar)}"/>
                         #{' '}
-                        <h:button id="cancel" value="#{bundles.messages.template_linkReset}" outcome="insert_jar"/>
+                        <h:button id="cancel" value="#{bundles.messages.template_linkReset}" />
                     </div>
 
                 </fieldset>

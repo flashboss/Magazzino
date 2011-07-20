@@ -21,7 +21,7 @@
 
     <ui:define name="content">
 
-        <div class="section">
+        <div class="sectionsearch">
 
          <span class="errors">
             <h:messages id="messages" globalOnly="true"/>
@@ -87,13 +87,7 @@
                         </h:column>
                         <h:column id="actCol">
                             <f:facet id="actFct" name="header">#{bundles.messages.action}</f:facet>
-                            <h:link id="view" value="View" outcome="article" style="white-space: nowrap;">
-                                <f:param name="id" value="#{_article.code}"/>
-                            </h:link>
-
-                            <ui:remove><!--
-                     <h:commandButton id="view" value="View" action="#{selectionAgent.selectArticle(_article)}"/>
-                     --></ui:remove>
+                            <h:commandLink id="view" value="View" action="#{articleSelection.selectArticle(_article)}" style="white-space: nowrap;" />
                         </h:column>
                     </h:dataTable>
                 </h:form>
@@ -110,41 +104,6 @@
                 </h:form>
             </div>
         </h:panelGroup>
-
-        <div class="section">
-            <h1>#{bundles.messages.article_current_selected}</h1>
-        </div>
-        <div class="section">
-            <h:form id="article_selections">
-                <h:outputText value="#{bundles.messages.no_selection_found}" rendered="#{empty selections}"/>
-                <h:dataTable id="selections" value="#{selections}" var="_selection" rendered="#{not empty selections}">
-                    <h:column id="descriptionCol">
-                        <f:facet id="descriptionFct" name="header">#{bundles.messages.article_description}</f:facet>
-                        #{_selection.article.description}
-                    </h:column>
-                    <h:column id="prizeCol">
-                        <f:facet id="locFct" name="header">#{bundles.messages.article_prize}</f:facet>
-                        #{_selection.article.prize}
-                    </h:column>
-                    <h:column id="umCol">
-                        <f:facet id="umCol" name="header">#{bundles.messages.article_um}</f:facet>
-                        #{_selection.article.um}
-                    </h:column>
-                    <h:column id="healthCol">
-                        <f:facet id="healthFct" name="header">#{bundles.messages.article_health}</f:facet>
-                        #{_selection.article.health}
-                    </h:column>
-                    <h:column id="notesCol">
-                        <f:facet id="notesFct" name="header">#{bundles.messages.article_notes}</f:facet>
-                        #{_selection.article.notes}
-                    </h:column>
-                    <h:column id="actCol">
-                        <f:facet id="ActFct" name="header">Action</f:facet>
-                        <h:commandLink id="cancel" value="Cancel" action="#{selectionHistory.cancelSelection(_selection)}"/>
-                    </h:column>
-                </h:dataTable>
-            </h:form>
-        </div>
 
     </ui:define>
 

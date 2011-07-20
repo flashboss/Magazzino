@@ -14,18 +14,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package it.vige.magazzino;
+package it.vige.magazzino.update;
 
 import it.vige.magazzino.i18n.DefaultBundleKey;
-import it.vige.magazzino.model.Receipt;
+import it.vige.magazzino.model.Article;
 
 import javax.ejb.Stateful;
 import javax.enterprise.inject.Model;
-import javax.enterprise.inject.Produces;
 import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
-import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -33,13 +31,13 @@ import org.jboss.seam.international.status.Messages;
 import org.jboss.seam.international.status.builder.BundleKey;
 
 /**
- * The view controller for registering a new receipt
+ * The view controller for registering a new article
  *
  * @author <a href="http://www.vige.it">Luca Stancapiano</a>
  */
 @Stateful
 @Model
-public class ReceiptRegister {
+public class ArticleUpdater {
 	
     @PersistenceContext
     private EntityManager em;
@@ -50,22 +48,22 @@ public class ReceiptRegister {
     @Inject
     private FacesContext facesContext;
 
-    private UIInput numberInput;
+    private UIInput codeInput;
 
-    private final Receipt newReceipt = new Receipt();
+    private Article article;
 
     private boolean registered;
 
     private boolean registrationInvalid;
 
     public void register() {
-        if (verifyNumberIsAvailable()) {
+        if (verifyCodeIsAvailable()) {
             registered = true;
-            em.persist(newReceipt);
+            em.persist(article);
 
-            messages.info(new DefaultBundleKey("receipt_registered"))
-                    .defaults("You have been successfully registered as the receipt {0}!")
-                    .params(newReceipt.getNumber());
+            messages.info(new DefaultBundleKey("article_registered"))
+                    .defaults("You have been successfully registered as the article {0}!")
+                    .params(article.getCode());
         } else {
             registrationInvalid = true;
         }
@@ -87,35 +85,29 @@ public class ReceiptRegister {
      */
     public void notifyIfRegistrationIsInvalid() {
         if (facesContext.isValidationFailed() || registrationInvalid) {
-            messages.warn(new DefaultBundleKey("receipt_invalid")).defaults(
-                    "Invalid receipt. Please correct the errors and try again.");
+            messages.warn(new DefaultBundleKey("article_invalid")).defaults(
+                    "Invalid article. Please correct the errors and try again.");
         }
-    }
-
-    @Produces
-    @Named
-    public Receipt getNewReceipt() {
-        return newReceipt;
     }
 
     public boolean isRegistered() {
         return registered;
     }
 
-    public UIInput getNumberInput() {
-        return numberInput;
+    public UIInput getCodeInput() {
+        return codeInput;
     }
 
-    public void setNumberInput(final UIInput numberInput) {
-        this.numberInput = numberInput;
+    public void setCodeInput(final UIInput codeInput) {
+        this.codeInput = codeInput;
     }
 
-    private boolean verifyNumberIsAvailable() {
-        Receipt existing = em.find(Receipt.class, newReceipt.getNumber());
+    private boolean verifyCodeIsAvailable() {
+        Article existing = em.find(Article.class, article.getCode());
         if (existing != null) {
-            messages.warn(new BundleKey("messages", "account_numberTaken"))
-                    .defaults("The number '{0}' is already taken. Please choose another number.")
-                    .targets(numberInput.getClientId()).params(newReceipt.getNumber());
+            messages.warn(new BundleKey("messages", "account_codeTaken"))
+                    .defaults("The username '{0}' is already taken. Please choose another code.")
+                    .targets(codeInput.getClientId()).params(article.getCode());
             return false;
         }
 

@@ -40,6 +40,7 @@ import org.jboss.seam.international.status.builder.BundleKey;
 @Stateful
 @Model
 public class MagazzinoRegister {
+	
     @PersistenceContext
     private EntityManager em;
 

@@ -246,6 +246,12 @@ div.section {
     margin-left: 30px
 }
 
+#content .sectionsearch {
+    float: left;
+    width: 80%;
+    padding: 15px 15px 0 15px;
+}
+
 #content .section {
     float: left;
     width: 70%;

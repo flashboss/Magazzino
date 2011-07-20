@@ -32,97 +32,97 @@
 
                 <fieldset>
                     <p:input id="code" label="#{bundles.messages.article_code}">
-                        <h:inputText id="input" value="#{newArticle.code}"/>
+                        <h:inputText id="input" value="#{articleSelection.selectedArticle.code}"/>
                     </p:input>
                     
                     <p:input id="barCode" label="#{bundles.messages.article_barcode}">
-                        <h:inputText id="input" value="#{newArticle.barCode}"/>
+                        <h:inputText id="input" value="#{articleSelection.selectedArticle.barCode}"/>
                     </p:input>
                     
                     <p:input id="description" label="#{bundles.messages.article_description}">
-                        <h:inputText id="input" value="#{newArticle.description}"/>
+                        <h:inputText id="input" value="#{articleSelection.selectedArticle.description}"/>
                     </p:input>
                     
                     <p:input id="um" label="#{bundles.messages.article_um}">
-                        <h:inputText id="input" value="#{newArticle.um}"/>
+                        <h:inputText id="input" value="#{articleSelection.selectedArticle.um}"/>
                     </p:input>
                     
                     <p:input id="mis" label="#{bundles.messages.article_mis}">
-                        <h:inputText id="input" value="#{newArticle.mis}"/>
+                        <h:inputText id="input" value="#{articleSelection.selectedArticle.mis}"/>
                     </p:input>
                     
                     <p:input id="catMerc" label="#{bundles.messages.article_catmerc}">
-                        <h:inputText id="input" value="#{newArticle.catMerc}"/>
+                        <h:inputText id="input" value="#{articleSelection.selectedArticle.catMerc}"/>
                     </p:input>
                     
                     <p:input id="imponible" label="#{bundles.messages.article_imponible}">
-                        <h:inputText id="input" value="#{newArticle.imponible}"/>
+                        <h:inputText id="input" value="#{articleSelection.selectedArticle.imponible}"/>
                     </p:input>
                     
                     <p:input id="prize" label="#{bundles.messages.article_prize}">
-                        <h:inputText id="input" value="#{newArticle.prize}"/>
+                        <h:inputText id="input" value="#{articleSelection.selectedArticle.prize}"/>
                     </p:input>
                     
                     <p:input id="cost" label="#{bundles.messages.article_cost}">
-                        <h:inputText id="input" value="#{newArticle.cost}"/>
+                        <h:inputText id="input" value="#{articleSelection.selectedArticle.cost}"/>
                     </p:input>
                     
                     <p:input id="provider" label="#{bundles.messages.article_provider}">
-                        <h:inputText id="input" value="#{newArticle.provider}"/>
+                        <h:inputText id="input" value="#{articleSelection.selectedArticle.provider}"/>
                     </p:input>
                     
                     <p:input id="rate" label="#{bundles.messages.article_rate}">
-                        <h:inputText id="input" value="#{newArticle.rate}"/>
+                        <h:inputText id="input" value="#{articleSelection.selectedArticle.rate}"/>
                     </p:input>
                     
                     <p:input id="ca" label="#{bundles.messages.article_ca}">
-                        <h:inputText id="input" value="#{newArticle.ca}"/>
+                        <h:inputText id="input" value="#{articleSelection.selectedArticle.ca}"/>
                     </p:input>
                     
                     <p:input id="sc1" label="#{bundles.messages.article_sc1}">
-                        <h:inputText id="input" value="#{newArticle.sc1}"/>
+                        <h:inputText id="input" value="#{articleSelection.selectedArticle.sc1}"/>
                     </p:input>
                     
                     <p:input id="sc2" label="#{bundles.messages.article_sc2}">
-                        <h:inputText id="input" value="#{newArticle.sc2}"/>
+                        <h:inputText id="input" value="#{articleSelection.selectedArticle.sc2}"/>
                     </p:input>
                     
                     <p:input id="sc3" label="#{bundles.messages.article_sc3}">
-                        <h:inputText id="input" value="#{newArticle.sc3}"/>
+                        <h:inputText id="input" value="#{articleSelection.selectedArticle.sc3}"/>
                     </p:input>
                     
                     <p:input id="qtmin" label="#{bundles.messages.article_qtmin}">
-                        <h:inputText id="input" value="#{newArticle.qtmin}"/>
+                        <h:inputText id="input" value="#{articleSelection.selectedArticle.qtmin}"/>
                     </p:input>
                     
                     <p:input id="qtmax" label="#{bundles.messages.article_qtmax}">
-                        <h:inputText id="input" value="#{newArticle.qtmax}"/>
+                        <h:inputText id="input" value="#{articleSelection.selectedArticle.qtmax}"/>
                     </p:input>
                     
                     <p:input id="pack" label="#{bundles.messages.article_pack}">
-                        <h:inputText id="input" value="#{newArticle.pack}"/>
+                        <h:inputText id="input" value="#{articleSelection.selectedArticle.pack}"/>
                     </p:input>
                     
                     <p:input id="health" label="#{bundles.messages.article_health}">
-                        <h:inputText id="input" value="#{newArticle.health}"/>
+                        <h:inputText id="input" value="#{articleSelection.selectedArticle.health}"/>
                     </p:input>
                     
                     <p:input id="volume" label="#{bundles.messages.article_volume}">
-                        <h:inputText id="input" value="#{newArticle.volume}"/>
+                        <h:inputText id="input" value="#{articleSelection.selectedArticle.volume}"/>
                     </p:input>
                     
                     <p:input id="making" label="#{bundles.messages.article_making}">
-                        <h:inputText id="input" value="#{newArticle.making}"/>
+                        <h:inputText id="input" value="#{articleSelection.selectedArticle.making}"/>
                     </p:input>
                     
                     <p:input id="notes" label="#{bundles.messages.article_notes}">
-                        <h:inputText id="input" value="#{newArticle.notes}"/>
+                        <h:inputText id="input" value="#{articleSelection.selectedArticle.notes}"/>
                     </p:input>
 
                     <div class="buttonBox">
-                        <h:commandButton id="articleRegister" value="#{bundles.messages.template_linkInsert}" action="#{articleRegister.register}"/>
+                        <h:commandButton id="articleRegister" value="#{bundles.messages.template_linkInsert}" action="#{articleUpdater.update(articleSelection.selectedArticle)}"/>
                         #{' '}
-                        <h:button id="cancel" value="#{bundles.messages.template_linkReset}" outcome="insert_article"/>
+                        <h:button id="cancel" value="#{bundles.messages.template_linkReset}" />
                     </div>
 
                 </fieldset>

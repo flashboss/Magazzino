@@ -54,6 +54,141 @@
 
     </navigation-rule>
 
+    <navigation-rule>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-action>#{receiptSelection.selectReceipt(_receipt)}</from-action>
+            <if>#{receiptSelection.selectedReceipt != null}</if>
+            <to-view-id>/update/receipt.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+
+    </navigation-rule>
+
+    <navigation-rule>
+        <from-view-id>*</from-view-id>
+
+        <navigation-case>
+            <from-action>#{articleSelection.selectArticle(_article)}</from-action>
+            <if>#{articleSelection.selectedArticle != null}</if>
+            <to-view-id>/update/article.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+
+    </navigation-rule>
+
+    <navigation-rule>
+        <from-view-id>*</from-view-id>
+
+        <navigation-case>
+            <from-action>#{magazzinoSelection.selectJar(_jar)}</from-action>
+            <if>#{magazzinoSelection.selectedJar != null}</if>
+            <to-view-id>/update/magazzino.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+
+    </navigation-rule>
+
+    <navigation-rule>
+        <from-view-id>*</from-view-id>
+
+        <navigation-case>
+            <from-action>#{customerSelection.selectCustomer(_customer)}</from-action>
+            <if>#{customerSelection.selectedCustomer != null}</if>
+            <to-view-id>/update/customer.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+
+    </navigation-rule>
+
+    <navigation-rule>
+        <from-view-id>*</from-view-id>
+
+        <navigation-case>
+            <from-outcome>view_customer</from-outcome>
+            <to-view-id>/search/search_customer.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+
+    </navigation-rule>
+
+    <navigation-rule>
+        <from-view-id>*</from-view-id>
+
+        <navigation-case>
+            <from-outcome>view_receipt</from-outcome>
+            <to-view-id>/search/search_receipt.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+
+    </navigation-rule>
+
+    <navigation-rule>
+        <from-view-id>*</from-view-id>
+
+        <navigation-case>
+            <from-outcome>view_article</from-outcome>
+            <to-view-id>/search/search_article.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+
+    </navigation-rule>
+
+    <navigation-rule>
+        <from-view-id>*</from-view-id>
+
+        <navigation-case>
+            <from-outcome>view_jar</from-outcome>
+            <to-view-id>/search/search_magazzino.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+
+    </navigation-rule>
+
+    <navigation-rule>
+        <from-view-id>*</from-view-id>
+
+        <navigation-case>
+            <from-outcome>insert_customer</from-outcome>
+            <to-view-id>/customer.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+
+    </navigation-rule>
+
+    <navigation-rule>
+        <from-view-id>*</from-view-id>
+
+        <navigation-case>
+            <from-outcome>insert_receipt</from-outcome>
+            <to-view-id>/receipt.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+
+    </navigation-rule>
+
+    <navigation-rule>
+        <from-view-id>*</from-view-id>
+
+        <navigation-case>
+            <from-outcome>insert_article</from-outcome>
+            <to-view-id>/article.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+
+    </navigation-rule>
+
+    <navigation-rule>
+        <from-view-id>*</from-view-id>
+
+        <navigation-case>
+            <from-outcome>insert_jar</from-outcome>
+            <to-view-id>/magazzino.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+
+    </navigation-rule>
+
     <application>
         <resource-bundle>
             <base-name>messages</base-name>
