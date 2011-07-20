@@ -32,7 +32,7 @@
 
                 <fieldset>
                     <p:input id="code" label="#{bundles.messages.customer_code}">
-                        <h:inputText id="input" value="#{customerSelection.selectedCustomer.code}"/>
+                        <h:inputText id="input" value="#{customerSelection.selectedCustomer.code}" binding="#{customerUpdater.codeInput}"/>
                     </p:input>
                     
                     <p:input id="name" label="#{bundles.messages.customer_name}">
@@ -44,7 +44,7 @@
                     </p:input>
 
                     <div class="buttonBox">
-                        <h:commandButton id="customerRegister" value="#{bundles.messages.template_linkInsert}" action="#{customerUpdater.update(customerSelection.selectedCustomer)}"/>
+                        <h:commandButton id="customerRegister" value="#{bundles.messages.template_linkUpdate}" action="#{customerUpdater.update(customerSelection.selectedCustomer)}"/>
                         #{' '}
                         <h:button id="cancel" value="#{bundles.messages.template_linkReset}" />
                     </div>

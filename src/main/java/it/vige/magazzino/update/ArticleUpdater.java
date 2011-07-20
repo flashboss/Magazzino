@@ -56,10 +56,11 @@ public class ArticleUpdater {
 
     private boolean registrationInvalid;
 
-    public void register() {
+    public void update(Article article) {
+    	this.article = article;
         if (verifyCodeIsAvailable()) {
             registered = true;
-            em.persist(article);
+            em.refresh(article);
 
             messages.info(new DefaultBundleKey("article_registered"))
                     .defaults("You have been successfully registered as the article {0}!")

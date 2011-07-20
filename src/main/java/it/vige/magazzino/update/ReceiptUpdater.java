@@ -57,9 +57,10 @@ public class ReceiptUpdater {
     private boolean registrationInvalid;
 
     public void update(Receipt receipt) {
+    	this.receipt = receipt;
         if (verifyNumberIsAvailable()) {
             registered = true;
-            em.persist(receipt);
+            em.refresh(receipt);
 
             messages.info(new DefaultBundleKey("receipt_registered"))
                     .defaults("You have been successfully registered as the receipt {0}!")
@@ -104,7 +105,7 @@ public class ReceiptUpdater {
 
     private boolean verifyNumberIsAvailable() {
         Receipt existing = em.find(Receipt.class, receipt.getNumber());
-        if (existing != null) {
+        if (existing == null) {
             messages.warn(new BundleKey("messages", "account_numberTaken"))
                     .defaults("The number '{0}' is already taken. Please choose another number.")
                     .targets(numberInput.getClientId()).params(receipt.getNumber());

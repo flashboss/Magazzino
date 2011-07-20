@@ -56,10 +56,11 @@ public class MagazzinoUpdater {
 
     private boolean registrationInvalid;
 
-    public void update() {
+    public void update(Magazzino magazzino) {
+    	this.magazzino = magazzino;
         if (verifyNumberIsAvailable()) {
             registered = true;
-            em.persist(magazzino);
+            em.refresh(magazzino);
 
             messages.info(new DefaultBundleKey("magazzino_registered"))
                     .defaults("You have been successfully registered as the jar {0}!")

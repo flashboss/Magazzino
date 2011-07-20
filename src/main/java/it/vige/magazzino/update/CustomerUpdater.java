@@ -56,10 +56,11 @@ public class CustomerUpdater {
 
     private boolean registrationInvalid;
 
-    public void update() {
+    public void update(Customer customer) {
+    	this.customer = customer;
         if (verifyCodeIsAvailable()) {
             registered = true;
-            em.persist(customer);
+            em.refresh(customer);
 
             messages.info(new DefaultBundleKey("customer_registered"))
                     .defaults("You have been successfully registered as the customer {0}!")

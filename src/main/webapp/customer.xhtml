@@ -32,7 +32,7 @@
 
                 <fieldset>
                     <p:input id="code" label="#{bundles.messages.customer_code}">
-                        <h:inputText id="input" value="#{newCustomer.code}"/>
+                        <h:inputText id="input" value="#{newCustomer.code}" binding="#{customerRegister.codeInput}"/>
                     </p:input>
                     
                     <p:input id="name" label="#{bundles.messages.customer_name}">

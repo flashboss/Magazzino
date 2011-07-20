@@ -32,7 +32,7 @@
 
                 <fieldset>
                     <p:input id="code" label="#{bundles.messages.article_code}">
-                        <h:inputText id="input" value="#{articleSelection.selectedArticle.code}"/>
+                        <h:inputText id="input" value="#{articleSelection.selectedArticle.code}" binding="#{articleUpdater.codeInput}"/>
                     </p:input>
                     
                     <p:input id="barCode" label="#{bundles.messages.article_barcode}">
@@ -120,7 +120,7 @@
                     </p:input>
 
                     <div class="buttonBox">
-                        <h:commandButton id="articleRegister" value="#{bundles.messages.template_linkInsert}" action="#{articleUpdater.update(articleSelection.selectedArticle)}"/>
+                        <h:commandButton id="articleRegister" value="#{bundles.messages.template_linkUpdate}" action="#{articleUpdater.update(articleSelection.selectedArticle)}"/>
                         #{' '}
                         <h:button id="cancel" value="#{bundles.messages.template_linkReset}" />
                     </div>

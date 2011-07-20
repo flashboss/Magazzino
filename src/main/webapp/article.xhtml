@@ -32,7 +32,7 @@
 
                 <fieldset>
                     <p:input id="code" label="#{bundles.messages.article_code}">
-                        <h:inputText id="input" value="#{newArticle.code}"/>
+                        <h:inputText id="input" value="#{newArticle.code}" binding="#{articleRegister.codeInput}"/>
                     </p:input>
                     
                     <p:input id="barCode" label="#{bundles.messages.article_barcode}">

@@ -32,7 +32,7 @@
 
                 <fieldset>
                     <p:input id="number" label="#{bundles.messages.receipt_number}">
-                        <h:inputText id="input" value="#{receiptSelection.selectedReceipt.number}"/>
+                        <h:inputText id="input" value="#{receiptSelection.selectedReceipt.number}" binding="#{receiptUpdater.numberInput}"/>
                     </p:input>
                     
                     <p:input id="date" label="#{bundles.messages.receipt_date}">
@@ -48,7 +48,7 @@
                     </p:input>
 
                     <div class="buttonBox">
-                        <h:commandButton id="receiptRegister" value="#{bundles.messages.template_linkInsert}" action="#{receiptUpdater.update(receiptSelection.selectedReceipt)}"/>
+                        <h:commandButton id="receiptRegister" value="#{bundles.messages.template_linkUpdate}" action="#{receiptUpdater.update(receiptSelection.selectedReceipt)}"/>
                         #{' '}
                         <h:button id="cancel" value="#{bundles.messages.template_linkReset}" />
                     </div>
