@@ -1,5 +1,6 @@
 to commit the updates:
 
+mvn clean 
 
 git add src
 git add pom.xml
