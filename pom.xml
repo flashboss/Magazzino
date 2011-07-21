@@ -11,14 +11,10 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<parent>
-		<groupId>org.jboss.seam</groupId>
-		<artifactId>seam-parent</artifactId>
-		<version>10</version>
-	</parent>
 
 	<groupId>it.vige</groupId>
 	<artifactId>magazzino</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<name>Magazzino</name>
 	<description>Magazzino Application</description>
@@ -36,6 +32,7 @@
 		<jboss-as-client.version>6.0.0.Final</jboss-as-client.version>
 		<jboss-javaee6-spec.version>1.0.0.Final</jboss-javaee6-spec.version>
 		<jboss-server-manager.version>1.0.3.GA</jboss-server-manager.version>
+		<junit.version>4.0</junit.version>
 		<jersey.version>1.5</jersey.version>
 	</properties>
 
@@ -93,15 +90,6 @@
 		</dependency>
 
 		<!-- Test dependencies -->
-		<dependency>
-			<groupId>org.seleniumhq.selenium.client-drivers</groupId>
-			<artifactId>selenium-java-client-driver</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.jboss.test</groupId>
-			<artifactId>richfaces-selenium</artifactId>
-		</dependency>
 
 		<dependency>
 			<groupId>junit</groupId>
@@ -137,7 +125,7 @@
 			</dependency> -->
 
 	</dependencies>
-	
+
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
@@ -160,7 +148,9 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
 					<!-- activate only when you need to generate the metamodel -->
-					<!-- <compilerArgument>-proc:none</compilerArgument> -->
+					<!-- compilerArgument>-proc:none</compilerArgument>  -->
+					<source>1.6</source>
+					<target>1.6</target>
 				</configuration>
 			</plugin>
 
