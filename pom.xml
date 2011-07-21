@@ -151,6 +151,7 @@
 					<!-- compilerArgument>-proc:none</compilerArgument>  -->
 					<source>1.6</source>
 					<target>1.6</target>
+					<generatedSourcesDirectory>src/main/java</generatedSourcesDirectory>
 				</configuration>
 			</plugin>
 
