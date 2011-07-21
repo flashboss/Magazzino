@@ -30,6 +30,8 @@ import javax.persistence.PersistenceContext;
 import org.jboss.seam.international.status.Messages;
 import org.jboss.seam.international.status.builder.BundleKey;
 
+import org.jboss.seam.faces.context.conversation.End;
+
 /**
  * The view controller for registering a new jar
  *
@@ -56,6 +58,7 @@ public class MagazzinoUpdater {
 
     private boolean registrationInvalid;
 
+    @End
     public void update(Magazzino magazzino) {
     	this.magazzino = magazzino;
         if (verifyNumberIsAvailable()) {

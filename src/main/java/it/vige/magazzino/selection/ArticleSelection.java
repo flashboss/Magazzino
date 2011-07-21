@@ -19,9 +19,11 @@ package it.vige.magazzino.selection;
 import it.vige.magazzino.model.Article;
 
 import javax.ejb.Stateful;
+import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.inject.Produces;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.jboss.seam.faces.context.conversation.Begin;
@@ -30,11 +32,15 @@ import org.jboss.seam.faces.context.conversation.Begin;
 @ConversationScoped
 @Named
 public class ArticleSelection {
+
+    @Inject
+    private Conversation conversation;
 	
 	private Article articleSelection;
 
 	@Begin
     public void selectArticle(final Article article) {
+        conversation.setTimeout(600000); //10 * 60 * 1000 (10 minutes)
         articleSelection = article;
     }
 
