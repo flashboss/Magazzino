@@ -25,12 +25,6 @@
                     <div id="status">
                         #{' '}
                         <pretty:link mappingId="home">#{bundles.messages.template_linkHome}</pretty:link>
-                        <h:panelGroup rendered="#{facesContext.application.projectStage == 'Development'}">
-                            #{' | '}
-                            <h:commandLink action="pretty:home"
-                                           actionListener="#{facesContext.externalContext.invalidateSession}"
-                                           value="#{bundles.messages.template_linkReset}"/>
-                        </h:panelGroup>
                     </div>
                 </h:form>
             </div>

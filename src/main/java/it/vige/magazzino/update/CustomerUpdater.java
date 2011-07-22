@@ -20,6 +20,7 @@ import it.vige.magazzino.i18n.DefaultBundleKey;
 import it.vige.magazzino.model.Customer;
 
 import javax.ejb.Stateful;
+import javax.enterprise.context.ConversationScoped;
 import javax.enterprise.inject.Model;
 import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
@@ -28,94 +29,83 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import org.jboss.seam.international.status.Messages;
-import org.jboss.seam.international.status.builder.BundleKey;
-
-import org.jboss.seam.faces.context.conversation.End;
 
 /**
  * The view controller for registering a new customer
- *
+ * 
  * @author <a href="http://www.vige.it">Luca Stancapiano</a>
  */
 @Stateful
+@ConversationScoped
 @Model
 public class CustomerUpdater {
-	
-    @PersistenceContext
-    private EntityManager em;
 
-    @Inject
-    private Messages messages;
+	@PersistenceContext
+	private EntityManager em;
 
-    @Inject
-    private FacesContext facesContext;
+	@Inject
+	private Messages messages;
 
-    private UIInput codeInput;
+	@Inject
+	private FacesContext facesContext;
 
-    private Customer customer;
+	private UIInput codeInput;
 
-    private boolean registered;
+	private boolean registered;
 
-    private boolean registrationInvalid;
+	private boolean registrationInvalid;
 
-    @End
-    public void update(Customer customer) {
-    	this.customer = customer;
-        if (verifyCodeIsAvailable()) {
-            registered = true;
-            em.refresh(customer);
+	public void update(Customer customer) {
+		Customer oldCustomer;
+		if ((oldCustomer = verifyCodeIsAvailable(customer)) != null)
+			em.remove(oldCustomer);
 
-            messages.info(new DefaultBundleKey("customer_registered"))
-                    .defaults("You have been successfully registered as the customer {0}!")
-                    .params(customer.getCode());
-        } else {
-            registrationInvalid = true;
-        }
-    }
+		em.persist(customer);
+	    registered = true;
+		messages.info(new DefaultBundleKey("customer_registered"))
+				.defaults(
+						"You have been successfully registered as the customer {0}!")
+				.params(customer.getCode());
+	}
 
-    public boolean isRegistrationInvalid() {
-        return registrationInvalid;
-    }
+	public boolean isRegistrationInvalid() {
+		return registrationInvalid;
+	}
 
-    /**
-     * This method just shows another approach to adding a status message.
-     * <p>
-     * Invoked by:
-     * </p>
-     * <p/>
-     * <pre>
-     * &lt;f:event type="preRenderView" listener="#{register.notifyIfRegistrationIsInvalid}"/>
-     * </pre>
-     */
-    public void notifyIfRegistrationIsInvalid() {
-        if (facesContext.isValidationFailed() || registrationInvalid) {
-            messages.warn(new DefaultBundleKey("customer_invalid")).defaults(
-                    "Invalid customer. Please correct the errors and try again.");
-        }
-    }
+	/**
+	 * This method just shows another approach to adding a status message.
+	 * <p>
+	 * Invoked by:
+	 * </p>
+	 * <p/>
+	 * 
+	 * <pre>
+	 * &lt;f:event type="preRenderView" listener="#{register.notifyIfRegistrationIsInvalid}"/>
+	 * </pre>
+	 */
+	public void notifyIfRegistrationIsInvalid() {
+		if (facesContext.isValidationFailed() || registrationInvalid) {
+			messages.warn(new DefaultBundleKey("customer_invalid"))
+					.defaults(
+							"Invalid customer. Please correct the errors and try again.");
+		}
+	}
 
-    public boolean isRegistered() {
-        return registered;
-    }
+	public boolean isRegistered() {
+		return registered;
+	}
 
-    public UIInput getCodeInput() {
-        return codeInput;
-    }
+	public UIInput getCodeInput() {
+		return codeInput;
+	}
 
-    public void setCodeInput(final UIInput codeInput) {
-        this.codeInput = codeInput;
-    }
+	public void setCodeInput(final UIInput codeInput) {
+		this.codeInput = codeInput;
+	}
 
-    private boolean verifyCodeIsAvailable() {
-        Customer existing = em.find(Customer.class, customer.getCode());
-        if (existing != null) {
-            messages.warn(new BundleKey("messages", "account_codeTaken"))
-                    .defaults("The code '{0}' is already taken. Please choose another code.")
-                    .targets(codeInput.getClientId()).params(customer.getCode());
-            return false;
-        }
-
-        return true;
-    }
+	private Customer verifyCodeIsAvailable(Customer customer) {
+		Customer existing = em.find(Customer.class, customer.getCode());
+		return existing;
+	}
 
 }

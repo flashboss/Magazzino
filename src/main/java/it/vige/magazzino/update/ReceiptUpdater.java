@@ -20,6 +20,7 @@ import it.vige.magazzino.i18n.DefaultBundleKey;
 import it.vige.magazzino.model.Receipt;
 
 import javax.ejb.Stateful;
+import javax.enterprise.context.ConversationScoped;
 import javax.enterprise.inject.Model;
 import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
@@ -28,94 +29,77 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import org.jboss.seam.international.status.Messages;
-import org.jboss.seam.international.status.builder.BundleKey;
-
-import org.jboss.seam.faces.context.conversation.End;
 
 /**
  * The view controller for registering a new receipt
- *
+ * 
  * @author <a href="http://www.vige.it">Luca Stancapiano</a>
  */
 @Stateful
+@ConversationScoped
 @Model
 public class ReceiptUpdater {
-	
-    @PersistenceContext
-    private EntityManager em;
 
-    @Inject
-    private Messages messages;
+	@PersistenceContext
+	private EntityManager em;
 
-    @Inject
-    private FacesContext facesContext;
+	@Inject
+	private Messages messages;
 
-    private UIInput numberInput;
+	@Inject
+	private FacesContext facesContext;
 
-    private Receipt receipt;
+	private UIInput numberInput;
 
-    private boolean registered;
+	private boolean registered;
 
-    private boolean registrationInvalid;
+	public void update(Receipt receipt) {
+		Receipt oldReceipt;
+		if ((oldReceipt = verifyNumberIsAvailable(receipt)) != null) 
+			em.remove(oldReceipt);
+		
+		em.persist(receipt);
+		registered = true;
+		messages.info(new DefaultBundleKey("receipt_registered"))
+				.defaults(
+						"You have been successfully registered as the receipt {0}!")
+				.params(receipt.getNumber());
+	}
 
-    @End
-    public void update(Receipt receipt) {
-    	this.receipt = receipt;
-        if (verifyNumberIsAvailable()) {
-            registered = true;
-            em.refresh(receipt);
+	/**
+	 * This method just shows another approach to adding a status message.
+	 * <p>
+	 * Invoked by:
+	 * </p>
+	 * <p/>
+	 * 
+	 * <pre>
+	 * &lt;f:event type="preRenderView" listener="#{register.notifyIfRegistrationIsInvalid}"/>
+	 * </pre>
+	 */
+	public void notifyIfRegistrationIsInvalid() {
+		if (facesContext.isValidationFailed()) {
+			messages.warn(new DefaultBundleKey("receipt_invalid"))
+					.defaults(
+							"Invalid receipt. Please correct the errors and try again.");
+		}
+	}
 
-            messages.info(new DefaultBundleKey("receipt_registered"))
-                    .defaults("You have been successfully registered as the receipt {0}!")
-                    .params(receipt.getNumber());
-        } else {
-            registrationInvalid = true;
-        }
-    }
+	public boolean isRegistered() {
+		return registered;
+	}
 
-    public boolean isRegistrationInvalid() {
-        return registrationInvalid;
-    }
+	public UIInput getNumberInput() {
+		return numberInput;
+	}
 
-    /**
-     * This method just shows another approach to adding a status message.
-     * <p>
-     * Invoked by:
-     * </p>
-     * <p/>
-     * <pre>
-     * &lt;f:event type="preRenderView" listener="#{register.notifyIfRegistrationIsInvalid}"/>
-     * </pre>
-     */
-    public void notifyIfRegistrationIsInvalid() {
-        if (facesContext.isValidationFailed() || registrationInvalid) {
-            messages.warn(new DefaultBundleKey("receipt_invalid")).defaults(
-                    "Invalid receipt. Please correct the errors and try again.");
-        }
-    }
+	public void setNumberInput(final UIInput numberInput) {
+		this.numberInput = numberInput;
+	}
 
-    public boolean isRegistered() {
-        return registered;
-    }
-
-    public UIInput getNumberInput() {
-        return numberInput;
-    }
-
-    public void setNumberInput(final UIInput numberInput) {
-        this.numberInput = numberInput;
-    }
-
-    private boolean verifyNumberIsAvailable() {
-        Receipt existing = em.find(Receipt.class, receipt.getNumber());
-        if (existing == null) {
-            messages.warn(new BundleKey("messages", "account_numberTaken"))
-                    .defaults("The number '{0}' is already taken. Please choose another number.")
-                    .targets(numberInput.getClientId()).params(receipt.getNumber());
-            return false;
-        }
-
-        return true;
-    }
+	private Receipt verifyNumberIsAvailable(Receipt receipt) {
+		Receipt existing = em.find(Receipt.class, receipt.getNumber());
+		return existing;
+	}
 
 }

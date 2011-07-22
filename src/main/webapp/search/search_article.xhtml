@@ -87,7 +87,8 @@
                         </h:column>
                         <h:column id="actCol">
                             <f:facet id="actFct" name="header">#{bundles.messages.action}</f:facet>
-                            <h:commandLink id="view" value="View" action="#{articleSelection.selectArticle(_article)}" style="white-space: nowrap;" />
+                            <h:commandLink id="view" value="#{bundles.messages.template_linkView}" action="#{articleSelection.selectArticle(_article)}" style="white-space: nowrap;" />
+                            | <h:commandLink id="delete" value="#{bundles.messages.delete}" action="#{articleDeleter.delete(_article)}" style="white-space: nowrap;" />
                         </h:column>
                     </h:dataTable>
                 </h:form>
