@@ -51,7 +51,7 @@ public class ReceiptUpdater {
 
 	private UIInput numberInput;
 
-	private boolean registered;
+	private boolean updated;
 
 	public void update(Receipt receipt) {
 		Receipt oldReceipt;
@@ -59,10 +59,10 @@ public class ReceiptUpdater {
 			em.remove(oldReceipt);
 		
 		em.persist(receipt);
-		registered = true;
-		messages.info(new DefaultBundleKey("receipt_registered"))
+		updated = true;
+		messages.info(new DefaultBundleKey("receipt_updated"))
 				.defaults(
-						"You have been successfully registered as the receipt {0}!")
+						"You have been successfully updated as the receipt {0}!")
 				.params(receipt.getNumber());
 	}
 
@@ -85,8 +85,8 @@ public class ReceiptUpdater {
 		}
 	}
 
-	public boolean isRegistered() {
-		return registered;
+	public boolean isUpdated() {
+		return updated;
 	}
 
 	public UIInput getNumberInput() {

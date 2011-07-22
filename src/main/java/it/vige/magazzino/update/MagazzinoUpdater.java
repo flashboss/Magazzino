@@ -51,7 +51,7 @@ public class MagazzinoUpdater {
 
 	private UIInput numberInput;
 
-	private boolean registered;
+	private boolean updated;
 
 	private boolean registrationInvalid;
 
@@ -61,10 +61,10 @@ public class MagazzinoUpdater {
 			em.remove(oldMagazzino);
 		
 		em.persist(magazzino);
-		registered = true;
-		messages.info(new DefaultBundleKey("magazzino_registered"))
+		updated = true;
+		messages.info(new DefaultBundleKey("magazzino_updated"))
 				.defaults(
-						"You have been successfully registered as the jar {0}!")
+						"You have been successfully updated as the jar {0}!")
 				.params(magazzino.getNumber());
 	}
 
@@ -90,8 +90,8 @@ public class MagazzinoUpdater {
 		}
 	}
 
-	public boolean isRegistered() {
-		return registered;
+	public boolean isUpdated() {
+		return updated;
 	}
 
 	public UIInput getNumberInput() {

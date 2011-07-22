@@ -51,7 +51,7 @@ public class ArticleUpdater {
 
 	private UIInput codeInput;
 
-	private boolean registered;
+	private boolean updated;
 
 	private boolean registrationInvalid;
 
@@ -61,10 +61,10 @@ public class ArticleUpdater {
 			em.remove(oldArticle);
 
 		em.persist(article);
-	    registered = true;
-		messages.info(new DefaultBundleKey("article_registered"))
+		updated = true;
+		messages.info(new DefaultBundleKey("article_updated"))
 				.defaults(
-						"You have been successfully registered as the article {0}!")
+						"You have been successfully updated as the article {0}!")
 				.params(article.getCode());
 	}
 
@@ -91,8 +91,8 @@ public class ArticleUpdater {
 		}
 	}
 
-	public boolean isRegistered() {
-		return registered;
+	public boolean isUpdated() {
+		return updated;
 	}
 
 	public UIInput getCodeInput() {

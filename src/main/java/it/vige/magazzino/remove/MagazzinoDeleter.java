@@ -55,7 +55,7 @@ public class MagazzinoDeleter {
 		
 		messages.info(new DefaultBundleKey("magazzino_deleted"))
 				.defaults(
-						"You have been successfully registered as the jar {0}!")
+						"You have been successfully deleted the jar {0}!")
 				.params(magazzino.getNumber());
 	}
 

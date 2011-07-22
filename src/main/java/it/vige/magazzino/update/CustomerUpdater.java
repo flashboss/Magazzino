@@ -51,7 +51,7 @@ public class CustomerUpdater {
 
 	private UIInput codeInput;
 
-	private boolean registered;
+	private boolean updated;
 
 	private boolean registrationInvalid;
 
@@ -61,10 +61,10 @@ public class CustomerUpdater {
 			em.remove(oldCustomer);
 
 		em.persist(customer);
-	    registered = true;
-		messages.info(new DefaultBundleKey("customer_registered"))
+		updated = true;
+		messages.info(new DefaultBundleKey("customer_updated"))
 				.defaults(
-						"You have been successfully registered as the customer {0}!")
+						"You have been successfully updated as the customer {0}!")
 				.params(customer.getCode());
 	}
 
@@ -91,8 +91,8 @@ public class CustomerUpdater {
 		}
 	}
 
-	public boolean isRegistered() {
-		return registered;
+	public boolean isUpdated() {
+		return updated;
 	}
 
 	public UIInput getCodeInput() {
