@@ -22,7 +22,6 @@ import it.vige.magazzino.model.Customer;
 import javax.ejb.Stateful;
 import javax.enterprise.context.ConversationScoped;
 import javax.enterprise.inject.Model;
-import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -49,26 +48,15 @@ public class CustomerDeleter {
 	@Inject
 	private FacesContext facesContext;
 
-	private UIInput codeInput;
-
-	private boolean registered;
-
-	private boolean registrationInvalid;
-
 	public void delete(Customer customer) {
 		Customer oldCustomer;
 		if ((oldCustomer = verifyCodeIsAvailable(customer)) != null)
 			em.remove(oldCustomer);
 
-	    registered = true;
-		messages.info(new DefaultBundleKey("customer_registered"))
+		messages.info(new DefaultBundleKey("customer_deleted"))
 				.defaults(
-						"You have been successfully registered as the customer {0}!")
+						"You have been successfully deleted the customer {0}!")
 				.params(customer.getCode());
-	}
-
-	public boolean isRegistrationInvalid() {
-		return registrationInvalid;
 	}
 
 	/**
@@ -79,27 +67,15 @@ public class CustomerDeleter {
 	 * <p/>
 	 * 
 	 * <pre>
-	 * &lt;f:event type="preRenderView" listener="#{register.notifyIfRegistrationIsInvalid}"/>
+	 * &lt;f:event type="preRenderView" listener="#{deleter.notifyIfDeletingIsInvalid}"/>
 	 * </pre>
 	 */
-	public void notifyIfRegistrationIsInvalid() {
-		if (facesContext.isValidationFailed() || registrationInvalid) {
+	public void notifyIfDeletingIsInvalid() {
+		if (facesContext.isValidationFailed()) {
 			messages.warn(new DefaultBundleKey("customer_invalid"))
 					.defaults(
 							"Invalid customer. Please correct the errors and try again.");
 		}
-	}
-
-	public boolean isRegistered() {
-		return registered;
-	}
-
-	public UIInput getCodeInput() {
-		return codeInput;
-	}
-
-	public void setCodeInput(final UIInput codeInput) {
-		this.codeInput = codeInput;
 	}
 
 	private Customer verifyCodeIsAvailable(Customer customer) {

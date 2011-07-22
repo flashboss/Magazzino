@@ -22,7 +22,6 @@ import it.vige.magazzino.model.Article;
 import javax.ejb.Stateful;
 import javax.enterprise.context.ConversationScoped;
 import javax.enterprise.inject.Model;
-import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -49,26 +48,15 @@ public class ArticleDeleter {
 	@Inject
 	private FacesContext facesContext;
 
-	private UIInput codeInput;
-
-	private boolean registered;
-
-	private boolean registrationInvalid;
-
 	public void delete(Article article) {
 		Article oldArticle;
 		if ((oldArticle = verifyCodeIsAvailable(article)) != null) 
 			em.remove(oldArticle);
 
-	    registered = true;
-		messages.info(new DefaultBundleKey("article_registered"))
+		messages.info(new DefaultBundleKey("article_deleted"))
 				.defaults(
-						"You have been successfully registered as the article {0}!")
+						"You have been successfully deleted the article {0}!")
 				.params(article.getCode());
-	}
-
-	public boolean isRegistrationInvalid() {
-		return registrationInvalid;
 	}
 
 	/**
@@ -79,27 +67,15 @@ public class ArticleDeleter {
 	 * <p/>
 	 * 
 	 * <pre>
-	 * &lt;f:event type="preRenderView" listener="#{register.notifyIfRegistrationIsInvalid}"/>
+	 * &lt;f:event type="preRenderView" listener="#{deleter.notifyIfDeletingIsInvalid}"/>
 	 * </pre>
 	 */
-	public void notifyIfRegistrationIsInvalid() {
-		if (facesContext.isValidationFailed() || registrationInvalid) {
+	public void notifyIfDeletingIsInvalid() {
+		if (facesContext.isValidationFailed()) {
 			messages.warn(new DefaultBundleKey("article_invalid"))
 					.defaults(
 							"Invalid article. Please correct the errors and try again.");
 		}
-	}
-
-	public boolean isRegistered() {
-		return registered;
-	}
-
-	public UIInput getCodeInput() {
-		return codeInput;
-	}
-
-	public void setCodeInput(final UIInput codeInput) {
-		this.codeInput = codeInput;
 	}
 
 	private Article verifyCodeIsAvailable(Article article) {

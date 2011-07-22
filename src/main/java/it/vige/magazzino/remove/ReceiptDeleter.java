@@ -22,7 +22,6 @@ import it.vige.magazzino.model.Receipt;
 import javax.ejb.Stateful;
 import javax.enterprise.context.ConversationScoped;
 import javax.enterprise.inject.Model;
-import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -49,19 +48,14 @@ public class ReceiptDeleter {
 	@Inject
 	private FacesContext facesContext;
 
-	private UIInput numberInput;
-
-	private boolean registered;
-
 	public void delete(Receipt receipt) {
 		Receipt oldReceipt;
 		if ((oldReceipt = verifyNumberIsAvailable(receipt)) != null) 
 			em.remove(oldReceipt);
 		
-		registered = true;
-		messages.info(new DefaultBundleKey("receipt_registered"))
+		messages.info(new DefaultBundleKey("receipt_deleted"))
 				.defaults(
-						"You have been successfully registered as the receipt {0}!")
+						"You have been successfully deleted the receipt {0}!")
 				.params(receipt.getNumber());
 	}
 
@@ -73,27 +67,15 @@ public class ReceiptDeleter {
 	 * <p/>
 	 * 
 	 * <pre>
-	 * &lt;f:event type="preRenderView" listener="#{register.notifyIfRegistrationIsInvalid}"/>
+	 * &lt;f:event type="preRenderView" listener="#{register.notifyIfDeletingIsInvalid}"/>
 	 * </pre>
 	 */
-	public void notifyIfRegistrationIsInvalid() {
+	public void notifyIfDeletingIsInvalid() {
 		if (facesContext.isValidationFailed()) {
 			messages.warn(new DefaultBundleKey("receipt_invalid"))
 					.defaults(
 							"Invalid receipt. Please correct the errors and try again.");
 		}
-	}
-
-	public boolean isRegistered() {
-		return registered;
-	}
-
-	public UIInput getNumberInput() {
-		return numberInput;
-	}
-
-	public void setNumberInput(final UIInput numberInput) {
-		this.numberInput = numberInput;
 	}
 
 	private Receipt verifyNumberIsAvailable(Receipt receipt) {

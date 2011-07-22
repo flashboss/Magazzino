@@ -22,7 +22,6 @@ import it.vige.magazzino.model.Magazzino;
 import javax.ejb.Stateful;
 import javax.enterprise.context.ConversationScoped;
 import javax.enterprise.inject.Model;
-import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -49,26 +48,15 @@ public class MagazzinoDeleter {
 	@Inject
 	private FacesContext facesContext;
 
-	private UIInput numberInput;
-
-	private boolean registered;
-
-	private boolean registrationInvalid;
-
 	public void delete(Magazzino magazzino) {
 		Magazzino oldMagazzino;
 		if ((oldMagazzino = verifyNumberIsAvailable(magazzino)) != null) 
 			em.remove(oldMagazzino);
 		
-		registered = true;
-		messages.info(new DefaultBundleKey("magazzino_registered"))
+		messages.info(new DefaultBundleKey("magazzino_deleted"))
 				.defaults(
 						"You have been successfully registered as the jar {0}!")
 				.params(magazzino.getNumber());
-	}
-
-	public boolean isRegistrationInvalid() {
-		return registrationInvalid;
 	}
 
 	/**
@@ -79,26 +67,14 @@ public class MagazzinoDeleter {
 	 * <p/>
 	 * 
 	 * <pre>
-	 * &lt;f:event type="preRenderView" listener="#{register.notifyIfRegistrationIsInvalid}"/>
+	 * &lt;f:event type="preRenderView" listener="#{deleter.notifyIfDeletingIsInvalid}"/>
 	 * </pre>
 	 */
-	public void notifyIfRegistrationIsInvalid() {
-		if (facesContext.isValidationFailed() || registrationInvalid) {
+	public void notifyIfDeletingIsInvalid() {
+		if (facesContext.isValidationFailed()) {
 			messages.warn(new DefaultBundleKey("magazzino_invalid")).defaults(
 					"Invalid jar. Please correct the errors and try again.");
 		}
-	}
-
-	public boolean isRegistered() {
-		return registered;
-	}
-
-	public UIInput getNumberInput() {
-		return numberInput;
-	}
-
-	public void setNumberInput(final UIInput numberInput) {
-		this.numberInput = numberInput;
 	}
 
 	private Magazzino verifyNumberIsAvailable(Magazzino magazzino) {
