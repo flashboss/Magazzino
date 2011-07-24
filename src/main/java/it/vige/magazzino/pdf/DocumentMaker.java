@@ -19,6 +19,7 @@ package it.vige.magazzino.pdf;
 import it.vige.magazzino.model.Receipt;
 
 import java.io.ByteArrayOutputStream;
+import java.util.ResourceBundle;
 
 import javax.enterprise.inject.Model;
 import javax.faces.context.ExternalContext;
@@ -46,6 +47,8 @@ public class DocumentMaker {
 	FacesContext facesContext;
 
 	public void execute(Receipt receipt) throws Exception {
+		ResourceBundle bundle = ResourceBundle.getBundle("messages");
+		
 		Document document = new Document();
 		ByteArrayOutputStream bytesOS = new ByteArrayOutputStream();
 		PdfWriter.getInstance(document, bytesOS);
@@ -58,8 +61,9 @@ public class DocumentMaker {
 				.getResponse();
 		response.setContentType("application/pdf");
 		response.addHeader("Content-disposition",
-				"attachment; filename=\"receipt-" + receipt.getDate()
-						+ ".pdf\"");
+				"attachment; filename=\""
+						+ bundle.getString("receipt") + "-"
+						+ receipt.getDate() + ".pdf\"");
 
 		ServletOutputStream os = response.getOutputStream();
 		os.write(bytesOS.toByteArray());
