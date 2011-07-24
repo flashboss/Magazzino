@@ -66,6 +66,10 @@ public class ArticleSearch {
         queryArticles(criteria);
     }
 
+    public void currentPage() {
+        queryArticles(criteria);
+    }
+
     @Produces
     @Named
     public List<Article> getArticles() {

@@ -17,6 +17,7 @@
 package it.vige.magazzino.remove;
 
 import it.vige.magazzino.i18n.DefaultBundleKey;
+import it.vige.magazzino.inventory.MagazzinoSearch;
 import it.vige.magazzino.model.Magazzino;
 
 import javax.ejb.Stateful;
@@ -47,12 +48,16 @@ public class MagazzinoDeleter {
 
 	@Inject
 	private FacesContext facesContext;
+    
+    @Inject
+    private MagazzinoSearch magazzinoSearch;
 
 	public void delete(Magazzino magazzino) {
 		Magazzino oldMagazzino;
-		if ((oldMagazzino = verifyNumberIsAvailable(magazzino)) != null) 
+		if ((oldMagazzino = verifyNumberIsAvailable(magazzino)) != null) {
 			em.remove(oldMagazzino);
-		
+			magazzinoSearch.currentPage();
+		}
 		messages.info(new DefaultBundleKey("magazzino_deleted"))
 				.defaults(
 						"You have been successfully deleted the jar {0}!")

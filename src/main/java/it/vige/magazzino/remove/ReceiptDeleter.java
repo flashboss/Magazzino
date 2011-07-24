@@ -17,6 +17,7 @@
 package it.vige.magazzino.remove;
 
 import it.vige.magazzino.i18n.DefaultBundleKey;
+import it.vige.magazzino.inventory.ReceiptSearch;
 import it.vige.magazzino.model.Receipt;
 
 import javax.ejb.Stateful;
@@ -47,11 +48,16 @@ public class ReceiptDeleter {
 
 	@Inject
 	private FacesContext facesContext;
+    
+    @Inject
+    private ReceiptSearch receiptSearch;
 
 	public void delete(Receipt receipt) {
 		Receipt oldReceipt;
-		if ((oldReceipt = verifyNumberIsAvailable(receipt)) != null) 
+		if ((oldReceipt = verifyNumberIsAvailable(receipt)) != null) {
 			em.remove(oldReceipt);
+			receiptSearch.currentPage();
+		}
 		
 		messages.info(new DefaultBundleKey("receipt_deleted"))
 				.defaults(

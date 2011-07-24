@@ -81,7 +81,10 @@
                             | <h:commandLink id="delete"
 								value="#{bundles.messages.delete}"
 								action="#{receiptDeleter.delete(_receipt)}"
-								style="white-space: nowrap;" />
+								style="white-space: nowrap;">
+								<f:ajax render=":receiptSelectionForm:searchResults"
+									onevent="controlSpinner" />
+							</h:commandLink>
 						</h:column>
 					</h:dataTable>
 					<h:commandButton id="previousResults" value="Previous page"

@@ -66,6 +66,10 @@ public class ReceiptSearch {
         queryReceipts(criteria);
     }
 
+    public void currentPage() {
+        queryReceipts(criteria);
+    }
+
     @Produces
     @Named
     public List<Receipt> getReceipts() {

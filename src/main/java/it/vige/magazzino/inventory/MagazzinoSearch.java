@@ -66,6 +66,10 @@ public class MagazzinoSearch {
         queryJars(criteria);
     }
 
+    public void currentPage() {
+        queryJars(criteria);
+    }
+
     @Produces
     @Named
     public List<Magazzino> getJars() {

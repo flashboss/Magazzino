@@ -17,6 +17,7 @@
 package it.vige.magazzino.remove;
 
 import it.vige.magazzino.i18n.DefaultBundleKey;
+import it.vige.magazzino.inventory.CustomerSearch;
 import it.vige.magazzino.model.Customer;
 
 import javax.ejb.Stateful;
@@ -47,12 +48,17 @@ public class CustomerDeleter {
 
 	@Inject
 	private FacesContext facesContext;
+    
+    @Inject
+    private CustomerSearch customerSearch;
 
 	public void delete(Customer customer) {
 		Customer oldCustomer;
-		if ((oldCustomer = verifyCodeIsAvailable(customer)) != null)
+		if ((oldCustomer = verifyCodeIsAvailable(customer)) != null) {
 			em.remove(oldCustomer);
-
+			customerSearch.currentPage();
+		}
+		
 		messages.info(new DefaultBundleKey("customer_deleted"))
 				.defaults(
 						"You have been successfully deleted the customer {0}!")

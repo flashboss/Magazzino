@@ -17,6 +17,7 @@
 package it.vige.magazzino.remove;
 
 import it.vige.magazzino.i18n.DefaultBundleKey;
+import it.vige.magazzino.inventory.ArticleSearch;
 import it.vige.magazzino.model.Article;
 
 import javax.ejb.Stateful;
@@ -47,12 +48,17 @@ public class ArticleDeleter {
 
 	@Inject
 	private FacesContext facesContext;
+    
+    @Inject
+    private ArticleSearch articleSearch;
 
 	public void delete(Article article) {
 		Article oldArticle;
-		if ((oldArticle = verifyCodeIsAvailable(article)) != null) 
+		if ((oldArticle = verifyCodeIsAvailable(article)) != null) {
 			em.remove(oldArticle);
-
+			articleSearch.currentPage();
+		}
+		
 		messages.info(new DefaultBundleKey("article_deleted"))
 				.defaults(
 						"You have been successfully deleted the article {0}!")

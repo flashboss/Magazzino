@@ -66,6 +66,10 @@ public class CustomerSearch {
         queryCustomers(criteria);
     }
 
+    public void currentPage() {
+        queryCustomers(criteria);
+    }
+
     @Produces
     @Named
     public List<Customer> getCustomers() {
