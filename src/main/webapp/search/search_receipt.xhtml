@@ -86,7 +86,7 @@
 									onevent="controlSpinner" />
 							</h:commandLink>
 							| <h:commandLink id="pdf"
-								value="#{bundles.messages.template_linkPDF}" action="#{documentMaker.execute}"
+								value="#{bundles.messages.template_linkPDF}" action="#{documentMaker.execute(_receipt)}"
 								style="white-space: nowrap;" />
 						</h:column>
 					</h:dataTable>

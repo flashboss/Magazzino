@@ -16,10 +16,10 @@
  */
 package it.vige.magazzino.pdf;
 
+import it.vige.magazzino.model.Receipt;
+
 import java.io.ByteArrayOutputStream;
 
-import javax.ejb.Stateful;
-import javax.enterprise.context.ConversationScoped;
 import javax.enterprise.inject.Model;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
@@ -45,18 +45,21 @@ public class DocumentMaker {
 	@Inject
 	FacesContext facesContext;
 
-	public void execute() throws Exception {
+	public void execute(Receipt receipt) throws Exception {
 		Document document = new Document();
 		ByteArrayOutputStream bytesOS = new ByteArrayOutputStream();
 		PdfWriter.getInstance(document, bytesOS);
 		document.open();
-		document.add(new Paragraph("Hello World"));
+		document.add(new Paragraph("Hello " + receipt.getCause()));
+		document.add(new Paragraph("Hello " + receipt.getDescription()));
 		document.close();
 
 		HttpServletResponse response = (HttpServletResponse) extCtx
 				.getResponse();
 		response.setContentType("application/pdf");
-		response.addHeader("Content-disposition", "attachment; filename=\"prova.pdf\"");
+		response.addHeader("Content-disposition",
+				"attachment; filename=\"receipt-" + receipt.getDate()
+						+ ".pdf\"");
 
 		ServletOutputStream os = response.getOutputStream();
 		os.write(bytesOS.toByteArray());
