@@ -31,7 +31,7 @@ import javax.persistence.PersistenceContext;
 import org.jboss.seam.international.status.Messages;
 
 /**
- * The view controller for registering a new receipt
+ * The view controller for delete a receipt
  * 
  * @author <a href="http://www.vige.it">Luca Stancapiano</a>
  */

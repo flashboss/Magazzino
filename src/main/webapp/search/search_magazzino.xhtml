@@ -112,8 +112,20 @@
 
 	</ui:define>
 
-	<ui:define name="sidebar">
+    <ui:define name="sidebar">
+        <div class="content">
+            <h1>Magazzino</h1>
+			<h2>#{bundles.messages.jars}</h2>
+            <p>
+                #{bundles.messages.viewyourdata}.
+            </p>
 
-	</ui:define>
+            <p>
+                <a href="#" onclick="window.open('http://www.vige.it','exp','width=752,height=500,scrollbars=yes');">
+                    #{bundles.messages.visitmysite}
+                </a>
+            </p>
+        </div>
+    </ui:define>
 
 </ui:composition>

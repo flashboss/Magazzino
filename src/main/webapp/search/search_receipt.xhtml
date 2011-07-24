@@ -85,6 +85,9 @@
 								<f:ajax render=":receiptSelectionForm:searchResults"
 									onevent="controlSpinner" />
 							</h:commandLink>
+							| <h:commandLink id="pdf"
+								value="#{bundles.messages.template_linkPDF}" action="#{documentMaker.execute}"
+								style="white-space: nowrap;" />
 						</h:column>
 					</h:dataTable>
 					<h:commandButton id="previousResults" value="Previous page"
@@ -106,8 +109,20 @@
 
 	</ui:define>
 
-	<ui:define name="sidebar">
+    <ui:define name="sidebar">
+        <div class="content">
+            <h1>Magazzino</h1>
+			<h2>#{bundles.messages.receipts}</h2>
+            <p>
+                #{bundles.messages.viewyourdata}.
+            </p>
 
-	</ui:define>
+            <p>
+                <a href="#" onclick="window.open('http://www.vige.it','exp','width=752,height=500,scrollbars=yes');">
+                    #{bundles.messages.visitmysite}
+                </a>
+            </p>
+        </div>
+    </ui:define>
 
 </ui:composition>

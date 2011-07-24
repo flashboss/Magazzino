@@ -83,14 +83,6 @@
 							<f:facet id="catMercFct" name="header">#{bundles.messages.article_catmerc}</f:facet>
                             #{_article.catMerc}
                         </h:column>
-						<h:column id="imponibleCol">
-							<f:facet id="imponibleFct" name="header">#{bundles.messages.article_imponible}</f:facet>
-                            #{_article.imponible}
-                        </h:column>
-						<h:column id="prizeCol">
-							<f:facet id="prizeFct" name="header">#{bundles.messages.article_prize}</f:facet>
-                            #{_article.prize}
-                        </h:column>
 						<h:column id="providerCol">
 							<f:facet id="providerFct" name="header">#{bundles.messages.article_provider}</f:facet>
                             #{_article.provider}
@@ -124,8 +116,20 @@
 
 	</ui:define>
 
-	<ui:define name="sidebar">
+    <ui:define name="sidebar">
+        <div class="content">
+            <h1>Magazzino</h1>
+			<h2>#{bundles.messages.articles}</h2>
+            <p>
+                #{bundles.messages.viewyourdata}.
+            </p>
 
-	</ui:define>
+            <p>
+                <a href="#" onclick="window.open('http://www.vige.it','exp','width=752,height=500,scrollbars=yes');">
+                    #{bundles.messages.visitmysite}
+                </a>
+            </p>
+        </div>
+    </ui:define>
 
 </ui:composition>
