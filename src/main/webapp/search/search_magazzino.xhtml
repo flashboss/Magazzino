@@ -1,103 +1,119 @@
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:h="http://java.sun.com/jsf/html"
-                template="/WEB-INF/layout/template.xhtml">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	template="/WEB-INF/layout/template.xhtml">
 
-    <ui:define name="head">
-        <script type="text/javascript">
-            function controlSpinner(behavior) {
-                if (behavior.status == 'begin') {
-                    document.getElementById('spinner').style.display = 'inline';
-                }
-                else if (behavior.status == 'complete') {
-                    document.getElementById('spinner').style.display = 'none';
-                }
-            }
-        </script>
-    </ui:define>
+	<ui:define name="head">
+		<script type="text/javascript">
+			function controlSpinner(behavior) {
+				if (behavior.status == 'begin') {
+					document.getElementById('spinner').style.display = 'inline';
+				} else if (behavior.status == 'complete') {
+					document.getElementById('spinner').style.display = 'none';
+				}
+			}
+		</script>
+	</ui:define>
 
-    <ui:define name="content">
+	<ui:define name="content">
 
-        <div class="sectionsearch">
+		<div class="sectionsearch">
 
-         <span class="errors">
-            <h:messages id="messages" globalOnly="true"/>
-         </span>
+			<span class="errors"> <h:messages id="messages"
+					globalOnly="true" /> </span>
 
-            <h1>#{bundles.messages.magazzino_search}</h1>
+			<h1>#{bundles.messages.magazzino_search}</h1>
 
-            <h:form id="searchForm" prependId="false">
-                <fieldset>
-                    <h:inputText id="query" value="#{searchCriteria.query}" style="width: 165px;" autocomplete="off">
-                        <f:ajax event="keyup" listener="#{magazzinoSearch.find}" render=":searchResults" onevent="controlSpinner"/>
-                    </h:inputText>
-                    #{' '}
-                    <h:selectOneMenu id="pageSize" value="#{searchCriteria.pageSize}">
-                        <f:ajax listener="#{magazzinoSearch.find}" render=":searchResults" onevent="controlSpinner"/>
-                        <f:selectItem itemLabel="5 #{bundles.messages.magazzinos_short} #{bundles.messages.per_page}" itemValue="5"/>
-                        <f:selectItem itemLabel="10 #{bundles.messages.magazzinos_short} #{bundles.messages.per_page}" itemValue="10"/>
-                        <f:selectItem itemLabel="20 #{bundles.messages.magazzinos_short} #{bundles.messages.per_page}" itemValue="20"/>
-                    </h:selectOneMenu>
-                    #{' '}
-                    <span id="activity"><h:graphicImage id="spinner" value="/img/spinner.gif" style="display: none;"/></span>
-                </fieldset>
-            </h:form>
-        </div>
+			<h:form id="searchForm" prependId="false">
+				<fieldset>
+					<h:inputText id="query" value="#{searchCriteria.query}"
+						style="width: 165px;" autocomplete="off">
+						<f:ajax event="keyup" listener="#{magazzinoSearch.find}"
+							render=":jarSelectionForm:searchResults" onevent="controlSpinner" />
+					</h:inputText>
+					#{' '}
+					<h:selectOneMenu id="pageSize" value="#{searchCriteria.pageSize}">
+						<f:ajax listener="#{magazzinoSearch.find}" render=":jarSelectionForm:searchResults"
+							onevent="controlSpinner" />
+						<f:selectItem
+							itemLabel="5 #{bundles.messages.magazzinos_short} #{bundles.messages.per_page}"
+							itemValue="5" />
+						<f:selectItem
+							itemLabel="10 #{bundles.messages.magazzinos_short} #{bundles.messages.per_page}"
+							itemValue="10" />
+						<f:selectItem
+							itemLabel="20 #{bundles.messages.magazzinos_short} #{bundles.messages.per_page}"
+							itemValue="20" />
+					</h:selectOneMenu>
+					#{' '} <span id="activity"><h:graphicImage id="spinner"
+							value="/img/spinner.gif" style="display: none;" />
+					</span>
+				</fieldset>
+			</h:form>
+		</div>
 
-        <h:panelGroup id="searchResults">
-            <div class="section">
-                <h:outputText id="noJarMsg" value="#{bundles.messages.magazzino_not_found}" rendered="#{empty jars}"/>
-                <h:form id="jarSelectionForm">
-                    <h:dataTable id="jars" value="#{jars}" var="_jar" rendered="#{not empty jars}"
-                                 columnClasses=",,,,action">
-                        <h:column id="causeCol">
-                            <f:facet id="causeFct" name="header">#{bundles.messages.magazzino_cause}</f:facet>
+		<div class="section">
+			<h:form id="jarSelectionForm">
+				<h:panelGroup id="searchResults">
+					<h:outputText id="noJarMsg"
+						value="#{bundles.messages.magazzino_not_found}"
+						rendered="#{empty jars}" />
+					<h:dataTable id="jars" value="#{jars}" var="_jar"
+						rendered="#{not empty jars}" columnClasses=",,,,action">
+						<h:column id="causeCol">
+							<f:facet id="causeFct" name="header">#{bundles.messages.magazzino_cause}</f:facet>
                             #{_jar.cause}
                         </h:column>
-                        <h:column id="codeCol">
-                            <f:facet id="codeFct" name="header">#{bundles.messages.magazzino_code}</f:facet>
+						<h:column id="codeCol">
+							<f:facet id="codeFct" name="header">#{bundles.messages.magazzino_code}</f:facet>
                             #{_jar.code}
                         </h:column>
-                        <h:column id="compensationCol">
-                            <f:facet id="compensationFct" name="header">#{bundles.messages.magazzino_compensation}</f:facet>
+						<h:column id="compensationCol">
+							<f:facet id="compensationFct" name="header">#{bundles.messages.magazzino_compensation}</f:facet>
                             #{_jar.compensation}
                         </h:column>
-                        <h:column id="ragSoc1Col">
-                            <f:facet id="ragSoc1Fct" name="header">#{bundles.messages.magazzino_ragsoc1}</f:facet>
+						<h:column id="ragSoc1Col">
+							<f:facet id="ragSoc1Fct" name="header">#{bundles.messages.magazzino_ragsoc1}</f:facet>
                             #{_jar.ragSoc1}
                         </h:column>
-                        <h:column id="ragSoc2Col">
-                            <f:facet id="ragSoc2Fct" name="header">#{bundles.messages.magazzino_ragsoc2}</f:facet>
+						<h:column id="ragSoc2Col">
+							<f:facet id="ragSoc2Fct" name="header">#{bundles.messages.magazzino_ragsoc2}</f:facet>
                             #{_jar.ragSoc2}
                         </h:column>
-                        <h:column id="actCol">
-                            <f:facet id="actFct" name="header">#{bundles.messages.action}</f:facet> 
-                            <h:commandLink id="view" value="#{bundles.messages.template_linkView}" action="#{magazzinoSelection.selectJar(_jar)}" style="white-space: nowrap;" />
-                            | <h:commandLink id="delete" value="#{bundles.messages.delete}" action="#{magazzinoDeleter.delete(_jar)}" style="white-space: nowrap;" />
-                        </h:column>
-                    </h:dataTable>
-                </h:form>
-                <h:form id="paginationForm">
-                    <h:commandButton id="previousResults" value="Previous page" action="#{magazzinoSearch.previousPage}"
-                                     rendered="#{magazzinoSearch.previousPageAvailable}">
-                        <f:ajax render=":searchResults" onevent="controlSpinner"/>
-                    </h:commandButton>
+						<h:column id="actCol">
+							<f:facet id="actFct" name="header">#{bundles.messages.action}</f:facet>
+							<h:commandLink id="view"
+								value="#{bundles.messages.template_linkView}"
+								action="#{magazzinoSelection.selectJar(_jar)}"
+								style="white-space: nowrap;" />
+                            | <h:commandLink id="delete"
+								value="#{bundles.messages.delete}"
+								action="#{magazzinoDeleter.delete(_jar)}"
+								style="white-space: nowrap;" />
+						</h:column>
+					</h:dataTable>
+					<h:commandButton id="previousResults" value="Previous page"
+						action="#{magazzinoSearch.previousPage}"
+						rendered="#{magazzinoSearch.previousPageAvailable}">
+						<f:ajax render=":jarSelectionForm:searchResults" onevent="controlSpinner" />
+					</h:commandButton>
                     #{' '}
-                    <h:commandButton id="moreResults" value="More results" action="#{magazzinoSearch.nextPage}"
-                                     rendered="#{magazzinoSearch.nextPageAvailable}">
-                        <f:ajax render=":searchResults" onevent="controlSpinner"/>
-                    </h:commandButton>
-                </h:form>
-            </div>
-        </h:panelGroup>
+                    <h:commandButton id="moreResults"
+						value="More results" action="#{magazzinoSearch.nextPage}"
+						rendered="#{magazzinoSearch.nextPageAvailable}">
+						<f:ajax render=":jarSelectionForm:searchResults" onevent="controlSpinner" />
+					</h:commandButton>
+				</h:panelGroup>
+			</h:form>
+		</div>
 
-    </ui:define>
+	</ui:define>
 
-    <ui:define name="sidebar">
+	<ui:define name="sidebar">
 
-    </ui:define>
+	</ui:define>
 
 </ui:composition>

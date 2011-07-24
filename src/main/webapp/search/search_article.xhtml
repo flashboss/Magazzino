@@ -1,115 +1,131 @@
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:h="http://java.sun.com/jsf/html"
-                template="/WEB-INF/layout/template.xhtml">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	template="/WEB-INF/layout/template.xhtml">
 
-    <ui:define name="head">
-        <script type="text/javascript">
-            function controlSpinner(behavior) {
-                if (behavior.status == 'begin') {
-                    document.getElementById('spinner').style.display = 'inline';
-                }
-                else if (behavior.status == 'complete') {
-                    document.getElementById('spinner').style.display = 'none';
-                }
-            }
-        </script>
-    </ui:define>
+	<ui:define name="head">
+		<script type="text/javascript">
+			function controlSpinner(behavior) {
+				if (behavior.status == 'begin') {
+					document.getElementById('spinner').style.display = 'inline';
+				} else if (behavior.status == 'complete') {
+					document.getElementById('spinner').style.display = 'none';
+				}
+			}
+		</script>
+	</ui:define>
 
-    <ui:define name="content">
+	<ui:define name="content">
 
-        <div class="sectionsearch">
+		<div class="sectionsearch">
 
-         <span class="errors">
-            <h:messages id="messages" globalOnly="true"/>
-         </span>
+			<span class="errors"> <h:messages id="messages"
+					globalOnly="true" /> </span>
 
-            <h1>#{bundles.messages.article_search}</h1>
+			<h1>#{bundles.messages.article_search}</h1>
 
-            <h:form id="searchForm" prependId="false">
-                <fieldset>
-                    <h:inputText id="query" value="#{searchCriteria.query}" style="width: 165px;" autocomplete="off">
-                        <f:ajax event="keyup" listener="#{articleSearch.find}" render=":searchResults" onevent="controlSpinner"/>
-                    </h:inputText>
-                    #{' '}
-                    <h:selectOneMenu id="pageSize" value="#{searchCriteria.pageSize}">
-                        <f:ajax listener="#{articleSearch.find}" render=":searchResults" onevent="controlSpinner"/>
-                        <f:selectItem itemLabel="5 #{bundles.messages.articles_short} #{bundles.messages.per_page}" itemValue="5"/>
-                        <f:selectItem itemLabel="10 #{bundles.messages.articles_short} #{bundles.messages.per_page}" itemValue="10"/>
-                        <f:selectItem itemLabel="20 #{bundles.messages.articles_short} #{bundles.messages.per_page}" itemValue="20"/>
-                    </h:selectOneMenu>
-                    #{' '}
-                    <span id="activity"><h:graphicImage id="spinner" value="/img/spinner.gif" style="display: none;"/></span>
-                </fieldset>
-            </h:form>
-        </div>
+			<h:form id="searchForm" prependId="false">
+				<fieldset>
+					<h:inputText id="query" value="#{searchCriteria.query}"
+						style="width: 165px;" autocomplete="off">
+						<f:ajax event="keyup" listener="#{articleSearch.find}"
+							render=":articleSelectionForm:searchResults" onevent="controlSpinner" />
+					</h:inputText>
+					#{' '}
+					<h:selectOneMenu id="pageSize" value="#{searchCriteria.pageSize}">
+						<f:ajax listener="#{articleSearch.find}" render=":articleSelectionForm:searchResults"
+							onevent="controlSpinner" />
+						<f:selectItem
+							itemLabel="5 #{bundles.messages.articles_short} #{bundles.messages.per_page}"
+							itemValue="5" />
+						<f:selectItem
+							itemLabel="10 #{bundles.messages.articles_short} #{bundles.messages.per_page}"
+							itemValue="10" />
+						<f:selectItem
+							itemLabel="20 #{bundles.messages.articles_short} #{bundles.messages.per_page}"
+							itemValue="20" />
+					</h:selectOneMenu>
+					#{' '} <span id="activity"><h:graphicImage id="spinner"
+							value="/img/spinner.gif" style="display: none;" />
+					</span>
+				</fieldset>
+			</h:form>
+		</div>
 
-        <h:panelGroup id="searchResults">
-            <div class="section">
-                <h:outputText id="noArticleMsg" value="#{bundles.messages.article_not_found}" rendered="#{empty articles}"/>
-                <h:form id="articleSelectionForm">
-                    <h:dataTable id="articles" value="#{articles}" var="_article" rendered="#{not empty articles}"
-                                 columnClasses=",,,,action">
-                        <h:column id="barCodeCol">
-                            <f:facet id="barCodeFct" name="header">#{bundles.messages.article_barcode}</f:facet>
+		<div class="section">
+			<h:form id="articleSelectionForm">
+				<h:panelGroup id="searchResults">
+					<h:outputText id="noArticleMsg"
+						value="#{bundles.messages.article_not_found}"
+						rendered="#{empty articles}" />
+					<h:dataTable id="articles" value="#{articles}" var="_article"
+						rendered="#{not empty articles}" columnClasses=",,,,action">
+						<h:column id="barCodeCol">
+							<f:facet id="barCodeFct" name="header">#{bundles.messages.article_barcode}</f:facet>
                             #{_article.barCode}
                         </h:column>
-                        <h:column id="descriptionCol">
-                            <f:facet id="descriptionFct" name="header">#{bundles.messages.article_description}</f:facet>
+						<h:column id="descriptionCol">
+							<f:facet id="descriptionFct" name="header">#{bundles.messages.article_description}</f:facet>
                             #{_article.description}
                         </h:column>
-                        <h:column id="umCol">
-                            <f:facet id="umFct" name="header">#{bundles.messages.article_um}</f:facet>
+						<h:column id="umCol">
+							<f:facet id="umFct" name="header">#{bundles.messages.article_um}</f:facet>
                             #{_article.um}
                         </h:column>
-                        <h:column id="misCol">
-                            <f:facet id="misFct" name="header">#{bundles.messages.article_mis}</f:facet>
+						<h:column id="misCol">
+							<f:facet id="misFct" name="header">#{bundles.messages.article_mis}</f:facet>
                             #{_article.mis}
                         </h:column>
-                        <h:column id="catMercCol">
-                            <f:facet id="catMercFct" name="header">#{bundles.messages.article_catmerc}</f:facet>
+						<h:column id="catMercCol">
+							<f:facet id="catMercFct" name="header">#{bundles.messages.article_catmerc}</f:facet>
                             #{_article.catMerc}
                         </h:column>
-                        <h:column id="imponibleCol">
-                            <f:facet id="imponibleFct" name="header">#{bundles.messages.article_imponible}</f:facet>
+						<h:column id="imponibleCol">
+							<f:facet id="imponibleFct" name="header">#{bundles.messages.article_imponible}</f:facet>
                             #{_article.imponible}
                         </h:column>
-                        <h:column id="prizeCol">
-                            <f:facet id="prizeFct" name="header">#{bundles.messages.article_prize}</f:facet>
+						<h:column id="prizeCol">
+							<f:facet id="prizeFct" name="header">#{bundles.messages.article_prize}</f:facet>
                             #{_article.prize}
                         </h:column>
-                        <h:column id="providerCol">
-                            <f:facet id="providerFct" name="header">#{bundles.messages.article_provider}</f:facet>
+						<h:column id="providerCol">
+							<f:facet id="providerFct" name="header">#{bundles.messages.article_provider}</f:facet>
                             #{_article.provider}
                         </h:column>
-                        <h:column id="actCol">
-                            <f:facet id="actFct" name="header">#{bundles.messages.action}</f:facet>
-                            <h:commandLink id="view" value="#{bundles.messages.template_linkView}" action="#{articleSelection.selectArticle(_article)}" style="white-space: nowrap;" />
-                            | <h:commandLink id="delete" value="#{bundles.messages.delete}" action="#{articleDeleter.delete(_article)}" style="white-space: nowrap;" />
-                        </h:column>
-                    </h:dataTable>
-                </h:form>
-                <h:form id="paginationForm">
-                    <h:commandButton id="previousResults" value="Previous page" action="#{articleSearch.previousPage}"
-                                     rendered="#{articleSearch.previousPageAvailable}">
-                        <f:ajax render=":searchResults" onevent="controlSpinner"/>
-                    </h:commandButton>
+						<h:column id="actCol">
+							<f:facet id="actFct" name="header">#{bundles.messages.action}</f:facet>
+							<h:commandLink id="view"
+								value="#{bundles.messages.template_linkView}"
+								action="#{articleSelection.selectArticle(_article)}"
+								style="white-space: nowrap;" />
+                            | <h:commandLink id="delete"
+								value="#{bundles.messages.delete}"
+								action="#{articleDeleter.delete(_article)}"
+								style="white-space: nowrap;" />
+						</h:column>
+					</h:dataTable>
+					<h:commandButton id="previousResults" value="Previous page"
+						action="#{articleSearch.previousPage}"
+						rendered="#{articleSearch.previousPageAvailable}">
+						<f:ajax render=":articleSelectionForm:searchResults" onevent="controlSpinner" />
+					</h:commandButton>
                     #{' '}
-                    <h:commandButton id="moreResults" value="More results" action="#{articleSearch.nextPage}"
-                                     rendered="#{articleSearch.nextPageAvailable}">
-                        <f:ajax render=":searchResults" onevent="controlSpinner"/>
-                    </h:commandButton>
-                </h:form>
-            </div>
-        </h:panelGroup>
+                    <h:commandButton id="moreResults"
+						value="More results" action="#{articleSearch.nextPage}"
+						rendered="#{articleSearch.nextPageAvailable}">
+						<f:ajax render=":articleSelectionForm:searchResults" onevent="controlSpinner" />
+					</h:commandButton>
+				</h:panelGroup>
+			</h:form>
+		</div>
 
-    </ui:define>
+	</ui:define>
 
-    <ui:define name="sidebar">
+	<ui:define name="sidebar">
 
-    </ui:define>
+	</ui:define>
 
 </ui:composition>
