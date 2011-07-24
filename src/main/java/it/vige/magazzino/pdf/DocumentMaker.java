@@ -53,8 +53,12 @@ public class DocumentMaker {
 		ByteArrayOutputStream bytesOS = new ByteArrayOutputStream();
 		PdfWriter.getInstance(document, bytesOS);
 		document.open();
-		document.add(new Paragraph("Hello " + receipt.getCause()));
-		document.add(new Paragraph("Hello " + receipt.getDescription()));
+		
+		document.add(new Paragraph(bundle.getString("receipt_number")+": " + receipt.getNumber()));
+		document.add(new Paragraph(bundle.getString("receipt_date")+": " + receipt.getDate()));
+		document.add(new Paragraph(bundle.getString("receipt_cause")+": " + receipt.getCause()));
+		document.add(new Paragraph(bundle.getString("receipt_description")+": " + receipt.getDescription()));
+		
 		document.close();
 
 		HttpServletResponse response = (HttpServletResponse) extCtx
