@@ -275,94 +275,94 @@ public class Format1DocumentReceipt implements DocumentReceipt {
 		Phrase phrase54 = new Phrase("dgbsbb");
 		Phrase phrase55 = new Phrase("323232");
 		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase53, 36,
-				i-20, 0);
+				i-30, 0);
 		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase54, 116,
-				i-20, 0);
+				i-30, 0);
 		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase55, 206,
-				i-20, 0);
+				i-30, 0);
 
 		Phrase phrase56 = new Phrase("opoppp");
 		Phrase phrase57 = new Phrase("2ws");
 		Phrase phrase58 = new Phrase("78900");
 		ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, phrase56, 106,
-				i - 40, 0);
+				i - 50, 0);
 		ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, phrase57, 186,
-				i - 40, 0);
+				i - 50, 0);
 		ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, phrase58, 276,
-				i - 40, 0);
+				i - 50, 0);
 
 		Phrase phrase59 = new Phrase("lalpaopdje");
 		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase59, 36,
-				i - 60, 0);
+				i - 70, 0);
 
 		Phrase phrase60 = new Phrase("78900");
 		Phrase phrase61 = new Phrase("opoppp");
 		Phrase phrase62 = new Phrase("2ws");
 		ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, phrase60, 186,
-				i - 80, 0);
+				i - 90, 0);
 		ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, phrase61, 186,
-				i - 100, 0);
+				i - 110, 0);
 		ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, phrase62, 186,
-				i - 120, 0);
+				i - 130, 0);
 		
 		Phrase phrase63 = new Phrase("78900");
 		Phrase phrase64 = new Phrase("opoppp");
 		Phrase phrase65 = new Phrase("2ws");
 		ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, phrase63, 276,
-				i - 80, 0);
+				i - 90, 0);
 		ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, phrase64, 276,
-				i - 100, 0);
+				i - 110, 0);
 		ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, phrase65, 276,
-				i - 120, 0);
+				i - 130, 0);
 
 		Phrase phrase66 = new Phrase("2w1");
 		Phrase phrase67 = new Phrase("78910");
 		Phrase phrase68 = new Phrase("op1ppp");
 		Phrase phrase69 = new Phrase("21s");
 		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase66, 296,
-				i - 20, 0);
+				i - 30, 0);
 		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase67, 346,
-				i - 20, 0);
+				i - 30, 0);
 		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase68, 416,
-				i - 20, 0);
+				i - 30, 0);
 		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase69, 476,
-				i - 20, 0);
+				i - 30, 0);
 
 		Phrase phrase70 = new Phrase("2ws");
 		Phrase phrase71 = new Phrase("78900");
 		Phrase phrase72 = new Phrase("opoppp");
 		Phrase phrase73 = new Phrase("2ws");
 		ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, phrase70, 336,
-				i - 40, 0);
+				i - 50, 0);
 		ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, phrase71, 396,
-				i - 40, 0);
+				i - 50, 0);
 		ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, phrase72, 466,
-				i - 40, 0);
+				i - 50, 0);
 		ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, phrase73, 526,
-				i - 40, 0);
+				i - 50, 0);
 
 		Phrase phrase74 = new Phrase("78900");
 		Phrase phrase75 = new Phrase("opoppp");
 		Phrase phrase76 = new Phrase("2ws");
 		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase74, 296,
-				i - 60, 0);
+				i - 70, 0);
 		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase75, 376,
-				i - 60, 0);
+				i - 70, 0);
 		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase76, 466,
-				i - 60, 0);
+				i - 70, 0);
 
 		Phrase phrase77 = new Phrase("2ws");
 		Phrase phrase78 = new Phrase("78900");
 		Phrase phrase79 = new Phrase("opoppp");
 		Phrase phrase80 = new Phrase("2ws");
 		ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, phrase77, 346,
-				i - 80, 0);
+				i - 90, 0);
 		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase78, 376,
-				i - 80, 0);
+				i - 90, 0);
 		ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, phrase79, 456,
-				i - 80, 0);
+				i - 90, 0);
 		ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, phrase80, 516,
-				i - 100, 0);
+				i - 110, 0);
 				
         table.addCell(cell);
         document.add(table);
