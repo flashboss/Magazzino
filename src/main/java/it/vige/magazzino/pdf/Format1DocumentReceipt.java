@@ -140,12 +140,18 @@ public class Format1DocumentReceipt implements DocumentReceipt {
 		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase20, 356,
 				694, 0);
 
-		Phrase phrase21 = new Phrase("dfgdfsgdsfg");
-		Phrase phrase22 = new Phrase("fnsdjfndjsf");
-		Phrase phrase23 = new Phrase("rewrewr");
-		Phrase phrase24 = new Phrase(bundle.getString("receipt_number"));
-		Phrase phrase25 = new Phrase(bundle.getString("receipt_date"));
-		Phrase phrase26 = new Phrase("ddj");
+		Phrase phrase21 = new Phrase(bundle.getString("customer_code")
+				.toUpperCase()
+				+ " "
+				+ bundle.getString("customer").toUpperCase());
+		Phrase phrase22 = new Phrase(bundle.getString("pdf_partita_iva"));
+		Phrase phrase23 = new Phrase(bundle.getString("pdf_agent"));
+		Phrase phrase24 = new Phrase(bundle.getString("pdf_number_receipt"));
+		Phrase phrase25 = new Phrase(bundle.getString("receipt_date")
+				.toUpperCase()
+				+ " "
+				+ bundle.getString("receipt").toUpperCase());
+		Phrase phrase26 = new Phrase(bundle.getString("pdf_number_page"));
 		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase21, 24,
 				540, 0);
 		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase22, 100,
@@ -192,14 +198,18 @@ public class Format1DocumentReceipt implements DocumentReceipt {
 		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase36, 276,
 				503, 0);
 
-		Phrase phrase37 = new Phrase("dsadasd");
-		Phrase phrase38 = new Phrase("dgbsbb");
-		Phrase phrase39 = new Phrase("32");
-		Phrase phrase40 = new Phrase("bbgdb");
-		Phrase phrase41 = new Phrase("wefwew");
-		Phrase phrase42 = new Phrase("ewrew");
-		Phrase phrase43 = new Phrase("ewr5");
-		Phrase phrase44 = new Phrase("ewr");
+		Phrase phrase37 = new Phrase(bundle.getString("article_code")
+				.toUpperCase());
+		Phrase phrase38 = new Phrase(bundle.getString("article_description")
+				.toUpperCase());
+		Phrase phrase39 = new Phrase(bundle.getString("article_um")
+				.toUpperCase());
+		Phrase phrase40 = new Phrase(bundle.getString("pdf_number_articles"));
+		Phrase phrase41 = new Phrase(bundle.getString("article_prize")
+				.toUpperCase());
+		Phrase phrase42 = new Phrase(bundle.getString("pdf_reduction"));
+		Phrase phrase43 = new Phrase(bundle.getString("pdf_amount"));
+		Phrase phrase44 = new Phrase(bundle.getString("pdf_iva"));
 		ColumnText.showTextAligned(canvas, Element.ALIGN_CENTER, phrase37, 47,
 				480, 0);
 		ColumnText.showTextAligned(canvas, Element.ALIGN_CENTER, phrase38, 126,
@@ -266,9 +276,9 @@ public class Format1DocumentReceipt implements DocumentReceipt {
 		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase82, 326,
 				i, 0);
 
-		Phrase phrase53 = new Phrase("dsadasd");
-		Phrase phrase54 = new Phrase("dgbsbb");
-		Phrase phrase55 = new Phrase("323232");
+		Phrase phrase53 = new Phrase(bundle.getString("pdf_total_goods"));
+		Phrase phrase54 = new Phrase(bundle.getString("pdf_reduction"));
+		Phrase phrase55 = new Phrase(bundle.getString("pdf_total_net"));
 		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase53, 26,
 				i - 30, 0);
 		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase54, 104,
@@ -286,7 +296,7 @@ public class Format1DocumentReceipt implements DocumentReceipt {
 		ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, phrase58, 252,
 				i - 50, 0);
 
-		Phrase phrase59 = new Phrase("lalpaopdje");
+		Phrase phrase59 = new Phrase(bundle.getString("pdf_expiries"));
 		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase59, 36,
 				i - 70, 0);
 
@@ -310,10 +320,10 @@ public class Format1DocumentReceipt implements DocumentReceipt {
 		ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, phrase65, 256,
 				i - 130, 0);
 
-		Phrase phrase66 = new Phrase("2w1");
-		Phrase phrase67 = new Phrase("78910");
-		Phrase phrase68 = new Phrase("op1ppp");
-		Phrase phrase69 = new Phrase("21s");
+		Phrase phrase66 = new Phrase(bundle.getString("pdf_transport"));
+		Phrase phrase67 = new Phrase(bundle.getString("pdf_caching"));
+		Phrase phrase68 = new Phrase(bundle.getString("pdf_various_costs"));
+		Phrase phrase69 = new Phrase(bundle.getString("pdf_stamps"));
 		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase66, 260,
 				i - 30, 0);
 		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase67, 340,
@@ -336,9 +346,10 @@ public class Format1DocumentReceipt implements DocumentReceipt {
 		ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, phrase73, 546,
 				i - 50, 0);
 
-		Phrase phrase74 = new Phrase("78900");
-		Phrase phrase75 = new Phrase("opoppp");
-		Phrase phrase76 = new Phrase("2ws");
+		Phrase phrase74 = new Phrase(bundle.getString("article_imponible")
+				.toUpperCase());
+		Phrase phrase75 = new Phrase(bundle.getString("pdf_tax"));
+		Phrase phrase76 = new Phrase(bundle.getString("pdf_total_receipt"));
 		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase74, 260,
 				i - 70, 0);
 		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase75, 352,
