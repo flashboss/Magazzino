@@ -60,11 +60,6 @@ public class Format1DocumentReceipt implements DocumentReceipt {
 		ByteArrayOutputStream bytesOS = new ByteArrayOutputStream();
 		PdfWriter writer = PdfWriter.getInstance(document, bytesOS);
 		document.open();
-		
-        PdfPTable table = new PdfPTable(1);
-        table.setWidthPercentage(105);
-        PdfPCell cell = new PdfPCell();
-        cell.setFixedHeight(650);
         
 		PdfContentByte canvas = writer.getDirectContentUnder();
 		Image image1 = Image.getInstance("/Users/flashboss/Desktop/logo.gif");
@@ -150,18 +145,18 @@ public class Format1DocumentReceipt implements DocumentReceipt {
 		Phrase phrase23 = new Phrase("rewrewr");
 		Phrase phrase24 = new Phrase(bundle.getString("receipt_number"));
 		Phrase phrase25 = new Phrase(bundle.getString("receipt_date"));
-		Phrase phrase26 = new Phrase("ddjdkd");
-		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase21, 36,
+		Phrase phrase26 = new Phrase("ddj");
+		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase21, 24,
 				540, 0);
-		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase22, 106,
+		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase22, 100,
 				540, 0);
-		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase23, 166,
+		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase23, 176,
 				540, 0);
-		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase24, 226,
+		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase24, 390,
 				540, 0);
-		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase25, 316,
+		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase25, 466,
 				540, 0);
-		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase26, 386,
+		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase26, 542,
 				540, 0);
 		
 		Phrase phrase27 = new Phrase("aaqaqaq");
@@ -169,57 +164,57 @@ public class Format1DocumentReceipt implements DocumentReceipt {
 		Phrase phrase29 = new Phrase("cnjcndkd");
 		Phrase phrase30 = new Phrase(receipt.getNumber());
 		Phrase phrase31 = new Phrase(receipt.getDate());
-		Phrase phrase32 = new Phrase("tgsbsfgnffn");
+		Phrase phrase32 = new Phrase("tgsb");
 		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase27, 36,
 				530, 0);
 		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase28, 106,
 				530, 0);
-		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase29, 166,
+		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase29, 176,
 				530, 0);
-		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase30, 226,
+		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase30, 396,
 				530, 0);
-		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase31, 316,
+		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase31, 470,
 				530, 0);
-		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase32, 386,
+		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase32, 546,
 				530, 0);
 
 		Phrase phrase33 = new Phrase("aaqaqaq");
 		Phrase phrase34 = new Phrase("cddcddcd");
-		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase33, 36,
-				510, 0);
-		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase34, 226,
-				510, 0);
+		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase33, 24,
+				513, 0);
+		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase34, 264,
+				513, 0);
 		
 		Phrase phrase35 = new Phrase("cnjcndkd");
 		Phrase phrase36 = new Phrase("dddedreqq");
 		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase35, 36,
-				500, 0);
-		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase36, 226,
-				500, 0);
+				503, 0);
+		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase36, 276,
+				503, 0);
 
 		Phrase phrase37 = new Phrase("dsadasd");
 		Phrase phrase38 = new Phrase("dgbsbb");
-		Phrase phrase39 = new Phrase("323232");
-		Phrase phrase40 = new Phrase("bbgdbdfbdb");
+		Phrase phrase39 = new Phrase("32");
+		Phrase phrase40 = new Phrase("bbgdb");
 		Phrase phrase41 = new Phrase("wefwew");
 		Phrase phrase42 = new Phrase("ewrew");
 		Phrase phrase43 = new Phrase("ewr5");
-		Phrase phrase44 = new Phrase("ewr5");
-		ColumnText.showTextAligned(canvas, Element.ALIGN_CENTER, phrase37, 59,
+		Phrase phrase44 = new Phrase("ewr");
+		ColumnText.showTextAligned(canvas, Element.ALIGN_CENTER, phrase37, 47,
 				480, 0);
 		ColumnText.showTextAligned(canvas, Element.ALIGN_CENTER, phrase38, 126,
 				480, 0);
-		ColumnText.showTextAligned(canvas, Element.ALIGN_CENTER, phrase39, 186,
+		ColumnText.showTextAligned(canvas, Element.ALIGN_CENTER, phrase39, 286,
 				480, 0);
-		ColumnText.showTextAligned(canvas, Element.ALIGN_CENTER, phrase40, 256,
+		ColumnText.showTextAligned(canvas, Element.ALIGN_CENTER, phrase40, 320,
 				480, 0);
-		ColumnText.showTextAligned(canvas, Element.ALIGN_CENTER, phrase41, 326,
+		ColumnText.showTextAligned(canvas, Element.ALIGN_CENTER, phrase41, 368,
 				480, 0);
-		ColumnText.showTextAligned(canvas, Element.ALIGN_CENTER, phrase42, 376,
+		ColumnText.showTextAligned(canvas, Element.ALIGN_CENTER, phrase42, 447,
 				480, 0);
-		ColumnText.showTextAligned(canvas, Element.ALIGN_CENTER, phrase43, 426,
+		ColumnText.showTextAligned(canvas, Element.ALIGN_CENTER, phrase43, 480,
 				480, 0);
-		ColumnText.showTextAligned(canvas, Element.ALIGN_CENTER, phrase44, 486,
+		ColumnText.showTextAligned(canvas, Element.ALIGN_CENTER, phrase44, 562,
 				480, 0);
 
 		Phrase phrase45 = null;
@@ -235,28 +230,28 @@ public class Format1DocumentReceipt implements DocumentReceipt {
 		for (i = 0; i < 70; i = i + 15) {
 			phrase45 = new Phrase("dgbsbb");
 			phrase46 = new Phrase("323232");
-			phrase47 = new Phrase("bbgdbdfbdb");
-			phrase48 = new Phrase("wefwew");
+			phrase47 = new Phrase("bbg");
+			phrase48 = new Phrase("wefwe");
 			phrase49 = new Phrase("ewrew");
 			phrase50 = new Phrase("ewr5");
 			phrase51 = new Phrase("dsadasd");
-			phrase52 = new Phrase("dsadasd");
+			phrase52 = new Phrase("ds");
 			ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase45,
 					59, 460-i, 0);
 			ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase46,
 					126, 460-i, 0);
 			ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase47,
-					176, 460-i, 0);
+					280, 460-i, 0);
 			ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase48,
-					256, 460-i, 0);
+					306, 460-i, 0);
 			ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase49,
-					326, 460-i, 0);
+					368, 460-i, 0);
 			ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase50,
-					376, 460-i, 0);
+					436, 460-i, 0);
 			ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase51,
-					426, 460-i, 0);
+					480, 460-i, 0);
 			ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase52,
-					476, 460-i, 0);
+					556, 460-i, 0);
 		}
 		
 		if (i - 298 < 0)
@@ -274,21 +269,21 @@ public class Format1DocumentReceipt implements DocumentReceipt {
 		Phrase phrase53 = new Phrase("dsadasd");
 		Phrase phrase54 = new Phrase("dgbsbb");
 		Phrase phrase55 = new Phrase("323232");
-		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase53, 36,
-				i-30, 0);
-		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase54, 116,
-				i-30, 0);
-		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase55, 206,
-				i-30, 0);
+		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase53, 26,
+				i - 30, 0);
+		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase54, 104,
+				i - 30, 0);
+		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase55, 182,
+				i - 30, 0);
 
 		Phrase phrase56 = new Phrase("opoppp");
 		Phrase phrase57 = new Phrase("2ws");
 		Phrase phrase58 = new Phrase("78900");
-		ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, phrase56, 106,
+		ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, phrase56, 96,
 				i - 50, 0);
-		ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, phrase57, 186,
+		ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, phrase57, 176,
 				i - 50, 0);
-		ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, phrase58, 276,
+		ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, phrase58, 252,
 				i - 50, 0);
 
 		Phrase phrase59 = new Phrase("lalpaopdje");
@@ -298,74 +293,155 @@ public class Format1DocumentReceipt implements DocumentReceipt {
 		Phrase phrase60 = new Phrase("78900");
 		Phrase phrase61 = new Phrase("opoppp");
 		Phrase phrase62 = new Phrase("2ws");
-		ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, phrase60, 186,
+		ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, phrase60, 166,
 				i - 90, 0);
-		ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, phrase61, 186,
+		ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, phrase61, 166,
 				i - 110, 0);
-		ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, phrase62, 186,
+		ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, phrase62, 166,
 				i - 130, 0);
 		
 		Phrase phrase63 = new Phrase("78900");
 		Phrase phrase64 = new Phrase("opoppp");
 		Phrase phrase65 = new Phrase("2ws");
-		ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, phrase63, 276,
+		ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, phrase63, 256,
 				i - 90, 0);
-		ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, phrase64, 276,
+		ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, phrase64, 256,
 				i - 110, 0);
-		ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, phrase65, 276,
+		ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, phrase65, 256,
 				i - 130, 0);
 
 		Phrase phrase66 = new Phrase("2w1");
 		Phrase phrase67 = new Phrase("78910");
 		Phrase phrase68 = new Phrase("op1ppp");
 		Phrase phrase69 = new Phrase("21s");
-		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase66, 296,
+		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase66, 260,
 				i - 30, 0);
-		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase67, 346,
+		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase67, 340,
 				i - 30, 0);
-		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase68, 416,
+		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase68, 418,
 				i - 30, 0);
-		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase69, 476,
+		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase69, 496,
 				i - 30, 0);
 
 		Phrase phrase70 = new Phrase("2ws");
 		Phrase phrase71 = new Phrase("78900");
 		Phrase phrase72 = new Phrase("opoppp");
 		Phrase phrase73 = new Phrase("2ws");
-		ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, phrase70, 336,
+		ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, phrase70, 300,
 				i - 50, 0);
-		ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, phrase71, 396,
+		ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, phrase71, 390,
 				i - 50, 0);
-		ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, phrase72, 466,
+		ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, phrase72, 468,
 				i - 50, 0);
-		ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, phrase73, 526,
+		ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, phrase73, 546,
 				i - 50, 0);
 
 		Phrase phrase74 = new Phrase("78900");
 		Phrase phrase75 = new Phrase("opoppp");
 		Phrase phrase76 = new Phrase("2ws");
-		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase74, 296,
+		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase74, 260,
 				i - 70, 0);
-		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase75, 376,
+		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase75, 352,
 				i - 70, 0);
-		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase76, 466,
+		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase76, 484,
 				i - 70, 0);
 
 		Phrase phrase77 = new Phrase("2ws");
 		Phrase phrase78 = new Phrase("78900");
 		Phrase phrase79 = new Phrase("opoppp");
 		Phrase phrase80 = new Phrase("2ws");
-		ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, phrase77, 346,
+		ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, phrase77, 310,
 				i - 90, 0);
-		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase78, 376,
+		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase78, 352,
 				i - 90, 0);
-		ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, phrase79, 456,
+		ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, phrase79, 450,
 				i - 90, 0);
-		ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, phrase80, 516,
+		ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, phrase80, 536,
 				i - 110, 0);
 				
+
+        PdfPTable table = new PdfPTable(1);
+        table.getDefaultCell().setPadding(50);
+        table.setWidthPercentage(105);
+        PdfPCell cell = new PdfPCell();
+        cell.setPadding(127);
         table.addCell(cell);
         document.add(table);
+        
+       
+        table = new PdfPTable(6);
+        table.getDefaultCell().setPadding(5);
+        table.setWidthPercentage(105);
+        table.setWidths(new float[]{7,7,20,7,7,3});
+        cell = new PdfPCell();
+        cell.setPadding(14);
+        table.addCell(cell);
+        table.addCell(cell);
+        table.addCell(cell);
+        table.addCell(cell);
+        table.addCell(cell);
+        table.addCell(cell);            
+        document.add(table);
+
+        table = new PdfPTable(2);
+        table.getDefaultCell().setPadding(5);
+        table.setWidthPercentage(105);
+        table.setWidths(new float[]{15.5f,20});
+        cell = new PdfPCell();
+        cell.setPadding(14);
+        table.addCell(cell);
+        table.addCell(cell);
+        document.add(table);
+
+        table = new PdfPTable(1);
+        table.getDefaultCell().setPadding(50);
+        table.setWidthPercentage(105);
+        cell = new PdfPCell();
+        cell.setPadding(3);
+        table.addCell(cell);
+        document.add(table);
+        
+        table = new PdfPTable(7);
+        table.getDefaultCell().setPadding(100);
+        table.setWidths(new float[]{23.5f,2,4,8,3,8,2});
+        table.setWidthPercentage(105);
+        cell = new PdfPCell();
+        cell.setPadding(105);
+        table.addCell(cell);
+        table.addCell(cell);
+        table.addCell(cell);
+        table.addCell(cell);
+        table.addCell(cell);
+        table.addCell(cell);
+        table.addCell(cell);
+        document.add(table);
+
+        table = new PdfPTable(7);
+        table.getDefaultCell().setPadding(5);
+        table.setWidthPercentage(105);
+        cell = new PdfPCell();
+        cell.setPadding(17);
+        table.addCell(cell);
+        table.addCell(cell);
+        table.addCell(cell);
+        table.addCell(cell);
+        table.addCell(cell);
+        table.addCell(cell);
+        table.addCell(cell);
+        document.add(table);
+
+        table = new PdfPTable(4);
+        table.getDefaultCell().setPadding(5);
+        table.setWidths(new float[]{10.5f,4,6,4});
+        table.setWidthPercentage(105);
+        cell = new PdfPCell();
+        cell.setPadding(48);
+        table.addCell(cell);
+        table.addCell(cell);
+        table.addCell(cell);
+        table.addCell(cell);
+        document.add(table);
+        
 		document.close();
 		
 
