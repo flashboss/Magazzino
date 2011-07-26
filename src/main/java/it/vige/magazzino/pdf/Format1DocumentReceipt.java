@@ -55,12 +55,12 @@ public class Format1DocumentReceipt implements DocumentReceipt {
 	@Model
 	public void build(Receipt receipt) throws Exception {
 		ResourceBundle bundle = ResourceBundle.getBundle("messages");
-		
+
 		Document document = new Document();
 		ByteArrayOutputStream bytesOS = new ByteArrayOutputStream();
 		PdfWriter writer = PdfWriter.getInstance(document, bytesOS);
 		document.open();
-        
+
 		PdfContentByte canvas = writer.getDirectContentUnder();
 		Image image1 = Image.getInstance("/Users/flashboss/Desktop/logo.gif");
 		image1.setAbsolutePosition(166, 738);
@@ -158,7 +158,7 @@ public class Format1DocumentReceipt implements DocumentReceipt {
 				540, 0);
 		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase26, 542,
 				540, 0);
-		
+
 		Phrase phrase27 = new Phrase("aaqaqaq");
 		Phrase phrase28 = new Phrase("cddcddcd");
 		Phrase phrase29 = new Phrase("cnjcndkd");
@@ -184,7 +184,7 @@ public class Format1DocumentReceipt implements DocumentReceipt {
 				513, 0);
 		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase34, 264,
 				513, 0);
-		
+
 		Phrase phrase35 = new Phrase("cnjcndkd");
 		Phrase phrase36 = new Phrase("dddedreqq");
 		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase35, 36,
@@ -237,23 +237,23 @@ public class Format1DocumentReceipt implements DocumentReceipt {
 			phrase51 = new Phrase("dsadasd");
 			phrase52 = new Phrase("ds");
 			ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase45,
-					59, 460-i, 0);
+					59, 460 - i, 0);
 			ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase46,
-					126, 460-i, 0);
+					126, 460 - i, 0);
 			ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase47,
-					280, 460-i, 0);
+					280, 460 - i, 0);
 			ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase48,
-					306, 460-i, 0);
+					306, 460 - i, 0);
 			ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase49,
-					368, 460-i, 0);
+					368, 460 - i, 0);
 			ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase50,
-					436, 460-i, 0);
+					436, 460 - i, 0);
 			ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase51,
-					480, 460-i, 0);
+					480, 460 - i, 0);
 			ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase52,
-					556, 460-i, 0);
+					556, 460 - i, 0);
 		}
-		
+
 		if (i - 298 < 0)
 			i = 298;
 		else
@@ -261,11 +261,11 @@ public class Format1DocumentReceipt implements DocumentReceipt {
 
 		Phrase phrase81 = new Phrase(receipt.getCause());
 		Phrase phrase82 = new Phrase(receipt.getDescription());
-		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase81, 59,
-				i, 0);
+		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase81, 59, i,
+				0);
 		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase82, 326,
 				i, 0);
-		
+
 		Phrase phrase53 = new Phrase("dsadasd");
 		Phrase phrase54 = new Phrase("dgbsbb");
 		Phrase phrase55 = new Phrase("323232");
@@ -299,7 +299,7 @@ public class Format1DocumentReceipt implements DocumentReceipt {
 				i - 110, 0);
 		ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, phrase62, 166,
 				i - 130, 0);
-		
+
 		Phrase phrase63 = new Phrase("78900");
 		Phrase phrase64 = new Phrase("opoppp");
 		Phrase phrase65 = new Phrase("2ws");
@@ -358,100 +358,96 @@ public class Format1DocumentReceipt implements DocumentReceipt {
 				i - 90, 0);
 		ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, phrase80, 536,
 				i - 110, 0);
-				
 
-        PdfPTable table = new PdfPTable(1);
-        table.getDefaultCell().setPadding(50);
-        table.setWidthPercentage(105);
-        PdfPCell cell = new PdfPCell();
-        cell.setPadding(127);
-        table.addCell(cell);
-        document.add(table);
-        
-       
-        table = new PdfPTable(6);
-        table.getDefaultCell().setPadding(5);
-        table.setWidthPercentage(105);
-        table.setWidths(new float[]{7,7,20,7,7,3});
-        cell = new PdfPCell();
-        cell.setPadding(14);
-        table.addCell(cell);
-        table.addCell(cell);
-        table.addCell(cell);
-        table.addCell(cell);
-        table.addCell(cell);
-        table.addCell(cell);            
-        document.add(table);
+		PdfPTable table = new PdfPTable(1);
+		table.getDefaultCell().setPadding(50);
+		table.setWidthPercentage(105);
+		PdfPCell cell = new PdfPCell();
+		cell.setPadding(127);
+		table.addCell(cell);
+		document.add(table);
 
-        table = new PdfPTable(2);
-        table.getDefaultCell().setPadding(5);
-        table.setWidthPercentage(105);
-        table.setWidths(new float[]{15.5f,20});
-        cell = new PdfPCell();
-        cell.setPadding(14);
-        table.addCell(cell);
-        table.addCell(cell);
-        document.add(table);
+		table = new PdfPTable(6);
+		table.getDefaultCell().setPadding(5);
+		table.setWidthPercentage(105);
+		table.setWidths(new float[] { 7, 7, 20, 7, 7, 3 });
+		cell = new PdfPCell();
+		cell.setPadding(14);
+		table.addCell(cell);
+		table.addCell(cell);
+		table.addCell(cell);
+		table.addCell(cell);
+		table.addCell(cell);
+		table.addCell(cell);
+		document.add(table);
 
-        table = new PdfPTable(1);
-        table.getDefaultCell().setPadding(50);
-        table.setWidthPercentage(105);
-        cell = new PdfPCell();
-        cell.setPadding(3);
-        table.addCell(cell);
-        document.add(table);
-        
-        table = new PdfPTable(7);
-        table.getDefaultCell().setPadding(100);
-        table.setWidths(new float[]{23.5f,2,4,8,3,8,2});
-        table.setWidthPercentage(105);
-        cell = new PdfPCell();
-        cell.setPadding(105);
-        table.addCell(cell);
-        table.addCell(cell);
-        table.addCell(cell);
-        table.addCell(cell);
-        table.addCell(cell);
-        table.addCell(cell);
-        table.addCell(cell);
-        document.add(table);
+		table = new PdfPTable(2);
+		table.getDefaultCell().setPadding(5);
+		table.setWidthPercentage(105);
+		table.setWidths(new float[] { 15.5f, 20 });
+		cell = new PdfPCell();
+		cell.setPadding(14);
+		table.addCell(cell);
+		table.addCell(cell);
+		document.add(table);
 
-        table = new PdfPTable(7);
-        table.getDefaultCell().setPadding(5);
-        table.setWidthPercentage(105);
-        cell = new PdfPCell();
-        cell.setPadding(17);
-        table.addCell(cell);
-        table.addCell(cell);
-        table.addCell(cell);
-        table.addCell(cell);
-        table.addCell(cell);
-        table.addCell(cell);
-        table.addCell(cell);
-        document.add(table);
+		table = new PdfPTable(1);
+		table.getDefaultCell().setPadding(50);
+		table.setWidthPercentage(105);
+		cell = new PdfPCell();
+		cell.setPadding(3);
+		table.addCell(cell);
+		document.add(table);
 
-        table = new PdfPTable(4);
-        table.getDefaultCell().setPadding(5);
-        table.setWidths(new float[]{10.5f,4,6,4});
-        table.setWidthPercentage(105);
-        cell = new PdfPCell();
-        cell.setPadding(48);
-        table.addCell(cell);
-        table.addCell(cell);
-        table.addCell(cell);
-        table.addCell(cell);
-        document.add(table);
-        
+		table = new PdfPTable(7);
+		table.getDefaultCell().setPadding(100);
+		table.setWidths(new float[] { 23.5f, 2, 4, 8, 3, 8, 2 });
+		table.setWidthPercentage(105);
+		cell = new PdfPCell();
+		cell.setPadding(105);
+		table.addCell(cell);
+		table.addCell(cell);
+		table.addCell(cell);
+		table.addCell(cell);
+		table.addCell(cell);
+		table.addCell(cell);
+		table.addCell(cell);
+		document.add(table);
+
+		table = new PdfPTable(7);
+		table.getDefaultCell().setPadding(5);
+		table.setWidthPercentage(105);
+		cell = new PdfPCell();
+		cell.setPadding(17);
+		table.addCell(cell);
+		table.addCell(cell);
+		table.addCell(cell);
+		table.addCell(cell);
+		table.addCell(cell);
+		table.addCell(cell);
+		table.addCell(cell);
+		document.add(table);
+
+		table = new PdfPTable(4);
+		table.getDefaultCell().setPadding(5);
+		table.setWidths(new float[] { 10.5f, 4, 6, 4 });
+		table.setWidthPercentage(105);
+		cell = new PdfPCell();
+		cell.setPadding(48);
+		table.addCell(cell);
+		table.addCell(cell);
+		table.addCell(cell);
+		table.addCell(cell);
+		document.add(table);
+
 		document.close();
-		
 
 		HttpServletResponse response = (HttpServletResponse) extCtx
 				.getResponse();
 		response.setContentType("application/pdf");
-		response.addHeader("Content-disposition",
-				"attachment; filename=\""
-						+ bundle.getString("receipt") + "-"
-						+ receipt.getDate() + ".pdf\"");
+		response.addHeader("Content-disposition", "attachment; filename=\""
+				+ bundle.getString("receipt") + "-" + receipt.getDate()
+				+ ".pdf\"");
 
 		ServletOutputStream os = response.getOutputStream();
 		os.write(bytesOS.toByteArray());
