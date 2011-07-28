@@ -22,7 +22,7 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
 /**
- * @author <a href="http://community.jboss.org/people/dan.j.allen">Dan Allen</a>
+ * @author <a href="http://www.vige.it">Luca Stancapiano</a>
  */
 @Named
 @SessionScoped

@@ -16,6 +16,7 @@
  */
 package it.vige.magazzino.inventory;
 
+import it.vige.magazzino.log.ReceiptLog;
 import it.vige.magazzino.model.Receipt;
 import it.vige.magazzino.model.Receipt_;
 
@@ -33,13 +34,19 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
+import org.jboss.seam.solder.logging.TypedCategory;
+
 /**
- * @author <a href="http://community.jboss.org/people/dan.j.allen">Dan Allen</a>
+ * @author <a href="http://www.vige.it">Luca Stancapiano</a>
  */
 @Named
 @Stateful
 @SessionScoped
 public class ReceiptSearch {
+	
+    @Inject
+    @TypedCategory(ReceiptSearch.class)
+    private ReceiptLog log;
 
     @PersistenceContext
     private EntityManager em;
@@ -104,5 +111,6 @@ public class ReceiptSearch {
         } else {
             receipts = results;
         }
+        log.searchExecuted(receipts);
     }
 }

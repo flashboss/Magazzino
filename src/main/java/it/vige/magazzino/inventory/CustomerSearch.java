@@ -16,6 +16,7 @@
  */
 package it.vige.magazzino.inventory;
 
+import it.vige.magazzino.log.CustomerLog;
 import it.vige.magazzino.model.Customer;
 import it.vige.magazzino.model.Customer_;
 
@@ -33,13 +34,19 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
+import org.jboss.seam.solder.logging.TypedCategory;
+
 /**
- * @author <a href="http://community.jboss.org/people/dan.j.allen">Dan Allen</a>
+ * @author <a href="http://www.vige.it">Luca Stancapiano</a>
  */
 @Named
 @Stateful
 @SessionScoped
 public class CustomerSearch {
+	
+    @Inject
+    @TypedCategory(CustomerSearch.class)
+    private CustomerLog log;
 
     @PersistenceContext
     private EntityManager em;
@@ -103,5 +110,6 @@ public class CustomerSearch {
         } else {
             customers = results;
         }
+        log.searchExecuted(customers);
     }
 }

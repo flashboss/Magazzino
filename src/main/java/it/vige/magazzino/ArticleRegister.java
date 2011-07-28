@@ -17,6 +17,7 @@
 package it.vige.magazzino;
 
 import it.vige.magazzino.i18n.DefaultBundleKey;
+import it.vige.magazzino.log.ArticleLog;
 import it.vige.magazzino.model.Article;
 
 import javax.ejb.Stateful;
@@ -31,6 +32,7 @@ import javax.persistence.PersistenceContext;
 
 import org.jboss.seam.international.status.Messages;
 import org.jboss.seam.international.status.builder.BundleKey;
+import org.jboss.seam.solder.logging.TypedCategory;
 
 /**
  * The view controller for registering a new article
@@ -40,7 +42,11 @@ import org.jboss.seam.international.status.builder.BundleKey;
 @Stateful
 @Model
 public class ArticleRegister {
-	
+
+    @Inject
+    @TypedCategory(ArticleRegister.class)
+    private ArticleLog log;
+    
     @PersistenceContext
     private EntityManager em;
 
@@ -66,6 +72,7 @@ public class ArticleRegister {
             messages.info(new DefaultBundleKey("article_registered"))
                     .defaults("You have been successfully registered as the article {0}!")
                     .params(newArticle.getCode());
+            log.articleConfirmed(newArticle.getCode(), newArticle.getBarCode());
         } else {
             registrationInvalid = true;
         }
@@ -116,6 +123,7 @@ public class ArticleRegister {
             messages.warn(new BundleKey("messages", "account_codeTaken"))
                     .defaults("The username '{0}' is already taken. Please choose another code.")
                     .targets(codeInput.getClientId()).params(newArticle.getCode());
+            log.articleAvailable(existing.getCode(), existing != null);
             return false;
         }
 

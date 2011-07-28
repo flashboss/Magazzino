@@ -17,6 +17,7 @@
 package it.vige.magazzino;
 
 import it.vige.magazzino.i18n.DefaultBundleKey;
+import it.vige.magazzino.log.CustomerLog;
 import it.vige.magazzino.model.Customer;
 
 import javax.ejb.Stateful;
@@ -31,6 +32,7 @@ import javax.persistence.PersistenceContext;
 
 import org.jboss.seam.international.status.Messages;
 import org.jboss.seam.international.status.builder.BundleKey;
+import org.jboss.seam.solder.logging.TypedCategory;
 
 /**
  * The view controller for registering a new customer
@@ -40,7 +42,11 @@ import org.jboss.seam.international.status.builder.BundleKey;
 @Stateful
 @Model
 public class CustomerRegister {
-	
+
+    @Inject
+    @TypedCategory(CustomerRegister.class)
+    private CustomerLog log;
+    
     @PersistenceContext
     private EntityManager em;
 
@@ -66,6 +72,7 @@ public class CustomerRegister {
             messages.info(new DefaultBundleKey("customer_registered"))
                     .defaults("You have been successfully registered as the customer {0}!")
                     .params(newCustomer.getCode());
+            log.customerConfirmed(newCustomer.getCode());
         } else {
             registrationInvalid = true;
         }
@@ -116,6 +123,7 @@ public class CustomerRegister {
             messages.warn(new BundleKey("messages", "account_codeTaken"))
                     .defaults("The code '{0}' is already taken. Please choose another code.")
                     .targets(codeInput.getClientId()).params(newCustomer.getCode());
+            log.customerAvailable(existing.getCode(), existing != null);
             return false;
         }
 

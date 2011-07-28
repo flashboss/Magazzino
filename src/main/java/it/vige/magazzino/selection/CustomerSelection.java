@@ -16,6 +16,7 @@
  */
 package it.vige.magazzino.selection;
 
+import it.vige.magazzino.log.CustomerLog;
 import it.vige.magazzino.model.Customer;
 
 import javax.ejb.Stateful;
@@ -27,11 +28,16 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.jboss.seam.faces.context.conversation.Begin;
+import org.jboss.seam.solder.logging.TypedCategory;
 
 @Stateful
 @ConversationScoped
 @Named
 public class CustomerSelection {
+
+    @Inject
+    @TypedCategory(CustomerSelection.class)
+    private CustomerLog log;
 
     @Inject
     private Conversation conversation;
@@ -42,6 +48,7 @@ public class CustomerSelection {
     public void selectCustomer(final Customer customer) {
         conversation.setTimeout(600000); //10 * 60 * 1000 (10 minutes)
         customerSelection = customer;
+        log.customerSelected(customer.getCode(), customer.getName());
     }
 
     @Produces

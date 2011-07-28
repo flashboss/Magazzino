@@ -17,6 +17,7 @@
 package it.vige.magazzino;
 
 import it.vige.magazzino.i18n.DefaultBundleKey;
+import it.vige.magazzino.log.MagazzinoLog;
 import it.vige.magazzino.model.Magazzino;
 
 import javax.ejb.Stateful;
@@ -31,6 +32,7 @@ import javax.persistence.PersistenceContext;
 
 import org.jboss.seam.international.status.Messages;
 import org.jboss.seam.international.status.builder.BundleKey;
+import org.jboss.seam.solder.logging.TypedCategory;
 
 /**
  * The view controller for registering a new jar
@@ -40,6 +42,10 @@ import org.jboss.seam.international.status.builder.BundleKey;
 @Stateful
 @Model
 public class MagazzinoRegister {
+
+    @Inject
+    @TypedCategory(MagazzinoRegister.class)
+    private MagazzinoLog log;
 	
     @PersistenceContext
     private EntityManager em;
@@ -66,6 +72,7 @@ public class MagazzinoRegister {
             messages.info(new DefaultBundleKey("magazzino_registered"))
                     .defaults("You have been successfully registered as the jar {0}!")
                     .params(newMagazzino.getNumber());
+            log.jarConfirmed(newMagazzino.getNumber(), newMagazzino.getCodCustomer());
         } else {
             registrationInvalid = true;
         }
@@ -116,6 +123,7 @@ public class MagazzinoRegister {
             messages.warn(new BundleKey("messages", "account_numberTaken"))
                     .defaults("The number '{0}' is already taken. Please choose another number.")
                     .targets(numberInput.getClientId()).params(newMagazzino.getNumber());
+            log.jarAvailable(existing.getNumber(), existing != null);
             return false;
         }
 

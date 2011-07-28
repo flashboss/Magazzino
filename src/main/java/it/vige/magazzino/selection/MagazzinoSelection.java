@@ -16,6 +16,7 @@
  */
 package it.vige.magazzino.selection;
 
+import it.vige.magazzino.log.MagazzinoLog;
 import it.vige.magazzino.model.Magazzino;
 
 import javax.ejb.Stateful;
@@ -27,12 +28,17 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.jboss.seam.faces.context.conversation.Begin;
+import org.jboss.seam.solder.logging.TypedCategory;
 
 @Stateful
 @ConversationScoped
 @Named
 public class MagazzinoSelection {
 
+    @Inject
+    @TypedCategory(MagazzinoSelection.class)
+    private MagazzinoLog log;
+    
     @Inject
     private Conversation conversation;
 	
@@ -42,6 +48,7 @@ public class MagazzinoSelection {
     public void selectJar(final Magazzino jar) {
         conversation.setTimeout(600000); //10 * 60 * 1000 (10 minutes)
         jarSelection = jar;
+        log.jarSelected(jar.getNumber(), jar.getCodCustomer(), jar.getCause());
     }
 
     @Produces

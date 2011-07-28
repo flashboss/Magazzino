@@ -17,6 +17,7 @@
 package it.vige.magazzino;
 
 import it.vige.magazzino.i18n.DefaultBundleKey;
+import it.vige.magazzino.log.ReceiptLog;
 import it.vige.magazzino.model.Receipt;
 
 import javax.ejb.Stateful;
@@ -31,6 +32,7 @@ import javax.persistence.PersistenceContext;
 
 import org.jboss.seam.international.status.Messages;
 import org.jboss.seam.international.status.builder.BundleKey;
+import org.jboss.seam.solder.logging.TypedCategory;
 
 /**
  * The view controller for registering a new receipt
@@ -40,6 +42,10 @@ import org.jboss.seam.international.status.builder.BundleKey;
 @Stateful
 @Model
 public class ReceiptRegister {
+
+    @Inject
+    @TypedCategory(ReceiptRegister.class)
+    private ReceiptLog log;
 	
     @PersistenceContext
     private EntityManager em;
@@ -66,6 +72,7 @@ public class ReceiptRegister {
             messages.info(new DefaultBundleKey("receipt_registered"))
                     .defaults("You have been successfully registered as the receipt {0}!")
                     .params(newReceipt.getNumber());
+            log.receiptConfirmed(newReceipt.getNumber(), newReceipt.getCause());
         } else {
             registrationInvalid = true;
         }
@@ -116,6 +123,7 @@ public class ReceiptRegister {
             messages.warn(new BundleKey("messages", "account_numberTaken"))
                     .defaults("The number '{0}' is already taken. Please choose another number.")
                     .targets(numberInput.getClientId()).params(newReceipt.getNumber());
+            log.receiptAvailable(existing.getNumber(), existing != null);
             return false;
         }
 

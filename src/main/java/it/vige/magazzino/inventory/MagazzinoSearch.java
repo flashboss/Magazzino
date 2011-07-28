@@ -16,6 +16,7 @@
  */
 package it.vige.magazzino.inventory;
 
+import it.vige.magazzino.log.MagazzinoLog;
 import it.vige.magazzino.model.Magazzino;
 import it.vige.magazzino.model.Magazzino_;
 
@@ -33,13 +34,19 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
+import org.jboss.seam.solder.logging.TypedCategory;
+
 /**
- * @author <a href="http://community.jboss.org/people/dan.j.allen">Dan Allen</a>
+ * @author <a href="http://www.vige.it">Luca Stancapiano</a>
  */
 @Named
 @Stateful
 @SessionScoped
 public class MagazzinoSearch {
+	
+    @Inject
+    @TypedCategory(MagazzinoSearch.class)
+    private MagazzinoLog log;
 
     @PersistenceContext
     private EntityManager em;
@@ -108,5 +115,6 @@ public class MagazzinoSearch {
         } else {
             jars = results;
         }
+        log.searchExecuted(jars);
     }
 }
