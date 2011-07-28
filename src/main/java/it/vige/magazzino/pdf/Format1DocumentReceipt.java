@@ -223,13 +223,13 @@ public class Format1DocumentReceipt implements DocumentReceipt {
 				480, 0);
 		ColumnText.showTextAligned(canvas, Element.ALIGN_CENTER, phrase40, 324,
 				480, 0);
-		ColumnText.showTextAligned(canvas, Element.ALIGN_CENTER, phrase41, 368,
+		ColumnText.showTextAligned(canvas, Element.ALIGN_CENTER, phrase41, 373,
 				480, 0);
-		ColumnText.showTextAligned(canvas, Element.ALIGN_CENTER, phrase42, 447,
+		ColumnText.showTextAligned(canvas, Element.ALIGN_CENTER, phrase42, 440,
 				480, 0);
 		ColumnText.showTextAligned(canvas, Element.ALIGN_CENTER, phrase43, 488,
 				480, 0);
-		ColumnText.showTextAligned(canvas, Element.ALIGN_CENTER, phrase44, 562,
+		ColumnText.showTextAligned(canvas, Element.ALIGN_CENTER, phrase44, 552,
 				480, 0);
 
 		Phrase phrase45 = null;
@@ -269,10 +269,13 @@ public class Format1DocumentReceipt implements DocumentReceipt {
 					556, 460 - i, 0);
 		}
 
+		int j = 298;
 		if (i - 298 < 0)
 			i = 298;
-		else
+		else {
+			j = i;
 			i = 460 - i;
+		}
 
 		Phrase phrase81 = new Phrase(receipt.getCause(), normalFont);
 		Phrase phrase82 = new Phrase(receipt.getDescription(), normalFont);
@@ -417,10 +420,10 @@ public class Format1DocumentReceipt implements DocumentReceipt {
 
 		table = new PdfPTable(7);
 		table.getDefaultCell().setPadding(100);
-		table.setWidths(new float[] { 23.5f, 2, 4, 8, 3, 8, 2 });
+		table.setWidths(new float[] { 23.5f, 2, 5, 6, 4, 7, 3 });
 		table.setWidthPercentage(105);
 		cell = new PdfPCell();
-		cell.setPadding(105);
+		cell.setPadding(j*8-2279);
 		table.addCell(cell);
 		table.addCell(cell);
 		table.addCell(cell);

@@ -31,7 +31,6 @@ import javax.servlet.http.HttpServletResponse;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
-import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.ColumnText;
@@ -65,7 +64,6 @@ public class Format2DocumentReceipt implements DocumentReceipt {
 		document.open();
 
 		Font normalFont = new Font();
-		Font headerFont = FontFactory.getFont(FontFactory.TIMES, 9);
 
 		PdfContentByte canvas = writer.getDirectContentUnder();
 		Image image1 = Image.getInstance("/Users/flashboss/Desktop/logo.gif");
@@ -205,11 +203,13 @@ public class Format2DocumentReceipt implements DocumentReceipt {
 			ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase39,
 					496, 598 - i, 0);
 		}
-
+		int j = 298;
 		if (i - 298 < 0)
 			i = 298;
-		else
+		else {
+			j = i;
 			i = 588 - i;
+		}
 		Phrase phrase40 = new Phrase(bundle.getString("pdf_references").toUpperCase(), normalFont);
 		Phrase phrase41 = new Phrase(bundle.getString("pdf_delivery").toUpperCase(), normalFont);
 		Phrase phrase42 = new Phrase(bundle.getString("pdf_payments").toUpperCase(), normalFont);
@@ -434,7 +434,7 @@ public class Format2DocumentReceipt implements DocumentReceipt {
 		cell.enableBorderSide(PdfPCell.LEFT);
 		cell.enableBorderSide(PdfPCell.BOTTOM);
 		cell.enableBorderSide(PdfPCell.TOP);
-		cell.setPadding(150);
+		cell.setPadding(j*8-2234);
 		table.addCell(cell);
 		table.addCell(cell);
 		table.addCell(cell);
