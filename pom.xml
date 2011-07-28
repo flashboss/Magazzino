@@ -36,6 +36,14 @@
 		<jersey.version>1.5</jersey.version>
 	</properties>
 
+	<repositories>
+		<repository>
+			<id>itextpdf.com</id>
+			<name>Maven Repository for iText</name>
+			<url>http://maven.itextpdf.com/</url>
+		</repository>
+	</repositories>
+
 	<dependencies>
 
 		<dependency>
@@ -120,6 +128,12 @@
 			<scope>provided</scope>
 		</dependency>
 
+		<dependency>
+			<groupId>com.itextpdf</groupId>
+			<artifactId>itextpdf</artifactId>
+			<version>5.0.2</version>
+		</dependency>
+
 		<!-- <dependency> <groupId>org.codehaus.groovy.maven.runtime</groupId> 
 			<artifactId>gmaven-runtime-1.6</artifactId> <version>1.0</version> <scope>test</scope> 
 			</dependency> -->
@@ -146,9 +160,10 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.2</version>
 				<configuration>
 					<!-- activate only when you need to generate the metamodel -->
-					<!-- compilerArgument>-proc:none</compilerArgument>  -->
+					<!-- compilerArgument>-proc:none</compilerArgument> -->
 					<source>1.6</source>
 					<target>1.6</target>
 					<generatedSourcesDirectory>src/main/java</generatedSourcesDirectory>
@@ -199,6 +214,7 @@
 
 			<plugin>
 				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.7.2</version>
 				<configuration>
 					<skip>true</skip>
 				</configuration>
