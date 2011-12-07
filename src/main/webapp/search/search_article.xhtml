@@ -99,14 +99,14 @@
 								style="white-space: nowrap;" />
 						</h:column>
 					</h:dataTable>
-					<h:commandButton id="previousResults" value="Previous page"
+					<h:commandButton id="previousResults" value="#{bundles.messages.pagination_minus}"
 						action="#{articleSearch.previousPage}"
 						rendered="#{articleSearch.previousPageAvailable}">
 						<f:ajax render=":articleSelectionForm:searchResults" onevent="controlSpinner" />
 					</h:commandButton>
                     #{' '}
                     <h:commandButton id="moreResults"
-						value="More results" action="#{articleSearch.nextPage}"
+						value="#{bundles.messages.pagination_more}" action="#{articleSearch.nextPage}"
 						rendered="#{articleSearch.nextPageAvailable}">
 						<f:ajax render=":articleSelectionForm:searchResults" onevent="controlSpinner" />
 					</h:commandButton>

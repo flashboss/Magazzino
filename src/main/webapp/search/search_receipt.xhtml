@@ -90,7 +90,7 @@
 								style="white-space: nowrap;" />
 						</h:column>
 					</h:dataTable>
-					<h:commandButton id="previousResults" value="Previous page"
+					<h:commandButton id="previousResults" value="#{bundles.messages.pagination_minus}"
 						action="#{receiptSearch.previousPage}"
 						rendered="#{receiptSearch.previousPageAvailable}">
 						<f:ajax render=":receiptSelectionForm:searchResults"
@@ -98,7 +98,7 @@
 					</h:commandButton>
                     #{' '}
                     <h:commandButton id="moreResults"
-						value="More results" action="#{receiptSearch.nextPage}"
+						value="#{bundles.messages.pagination_more}" action="#{receiptSearch.nextPage}"
 						rendered="#{receiptSearch.nextPageAvailable}">
 						<f:ajax render=":receiptSelectionForm:searchResults"
 							onevent="controlSpinner" />
