@@ -47,6 +47,12 @@
                         <h:inputText id="input" value="#{newReceipt.description}"/>
                     </p:input>
 
+					<p:input id="jar" label="#{bundles.messages.magazzino}">
+						<h:selectManyMenu id="select" value="#{newReceipt.jar}">
+							<f:selectItems value="#{magazzinoSearch.jars}" />
+						</h:selectManyMenu>
+					</p:input>
+
                     <div class="buttonBox">
                         <h:commandButton id="receiptRegister" value="#{bundles.messages.template_linkInsert}" action="#{receiptRegister.register}"/>
                         #{' '}

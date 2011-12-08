@@ -20,6 +20,7 @@ import java.io.Serializable;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
@@ -30,82 +31,98 @@ import org.jboss.seam.solder.core.Veto;
 
 /**
  * <p>
- * <strong>Receipt</strong> is the model/entity class that represents a customer to insert or select.
+ * <strong>Receipt</strong> is the model/entity class that represents a customer
+ * to insert or select.
  * </p>
- *
+ * 
  * @author <a href="http://www.vige.it">Luca Stancapiano</a>
  */
 @Entity
 @Table(name = "receipt")
 @Veto
 public class Receipt implements Serializable {
-    private static final long serialVersionUID = -602763026033932730L;
-    private String number;
-    private String date;
-    private String cause;
-    private String description;
+	private static final long serialVersionUID = -602763026033932730L;
 
-    public Receipt() {
-    }
+	@ManyToOne
+	private Magazzino jar;
+	private String number;
+	private String date;
+	private String cause;
+	private String description;
 
-    public Receipt(final String number, final String date, final String cause) {
-        this.number = number;
-        this.date = date;
-        this.cause = cause;
-    }
+	public Receipt() {
+	}
 
-    public Receipt(final String number, final String date, final String cause, final String description) {
-        this(number, date, cause);
-        this.description = description;
-    }
+	public Receipt(final String number, final String date, final String cause,
+			Magazzino jar) {
+		this.number = number;
+		this.date = date;
+		this.cause = cause;
+		this.jar = jar;
+	}
 
-    @NotNull
-    @Size(min = 1, max = 100)
-    public String getCause() {
-        return cause;
-    }
+	public Receipt(final String number, final String date, final String cause,
+			final String description, Magazzino jar) {
+		this(number, date, cause, jar);
+		this.description = description;
+	}
 
-    public void setCause(final String cause) {
-        this.cause = cause;
-    }
+	@NotNull
+	@Size(min = 1, max = 100)
+	public String getCause() {
+		return cause;
+	}
 
-    @Size(min = 5, max = 15)
-    public String getDescription() {
-        return description;
-    }
+	public void setCause(final String cause) {
+		this.cause = cause;
+	}
 
-    public void setDescription(final String description) {
-        this.description = description;
-    }
+	@Size(min = 5, max = 15)
+	public String getDescription() {
+		return description;
+	}
 
-    @Id
-    @NotNull
-    @Size(min = 3, max = 15)
-    @Pattern(regexp = "^\\w*$", message = "not a valid number")
-    public String getNumber() {
-        return number;
-    }
+	public void setDescription(final String description) {
+		this.description = description;
+	}
 
-    public void setNumber(final String number) {
-        this.number = number;
-    }
+	@Id
+	@NotNull
+	@Size(min = 3, max = 15)
+	@Pattern(regexp = "^\\w*$", message = "not a valid number")
+	public String getNumber() {
+		return number;
+	}
 
-    @NotNull
-    public String getDate() {
-        return date;
-    }
+	public void setNumber(final String number) {
+		this.number = number;
+	}
 
-    public void setDate(final String date) {
-        this.date = date;
-    }
+	@NotNull
+	public String getDate() {
+		return date;
+	}
 
-    @Transient
-    public String getNumberWithCause() {
-        return number + " <" + cause + ">";
-    }
+	public void setDate(final String date) {
+		this.date = date;
+	}
 
-    @Override
-    public String toString() {
-        return "Receipt(" + number + ")";
-    }
+	@Transient
+	public String getNumberWithCause() {
+		return number + " <" + cause + ">";
+	}
+
+	@Override
+	public String toString() {
+		return "Receipt(" + number + ")";
+	}
+
+	@NotNull
+	public Magazzino getJar() {
+		return jar;
+	}
+
+	public void setJar(final Magazzino jar) {
+		this.jar = jar;
+	}
 }
