@@ -1,6 +1,6 @@
 /*
- * JBoss, Home of Professional Open Source
- * Copyright 2010, Red Hat Middleware LLC, and individual contributors
+ * Vige, Home of Professional Open Source
+ * Copyright 2010, Vige, and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -74,13 +74,13 @@ public class MagazzinoAgentTest {
 	EntityManager em;
 
 	@Inject
-	Instance<Article> bookingInstance;
+	Instance<Article> articleInstance;
 
 	public void prepareSeedData() throws Exception {
 		utx.begin();
 		em.joinTransaction();
-		em.createQuery("delete from Booking").executeUpdate();
-		em.createQuery("delete from Hotel").executeUpdate();
+		em.createQuery("delete from Article").executeUpdate();
+		em.createQuery("delete from Receipt").executeUpdate();
 		em.persist(new Article("Doubletree Atlanta-Buckhead",
 				"3342 Peachtree Road NE"));
 		em.createQuery("delete from User").executeUpdate();
@@ -130,7 +130,7 @@ public class MagazzinoAgentTest {
 	}
 
 	@Test
-	public void testBookHotel() throws Exception {
+	public void testArticles() throws Exception {
 		prepareSeedData();
 
 		BoundConversationContext ctx = null;
@@ -142,10 +142,10 @@ public class MagazzinoAgentTest {
 			ctx.associate(storage);
 			ctx.activate();
 
-			Article booking = bookingInstance.get();
-			booking.setCa("1111222233334444");
+			Article article = articleInstance.get();
+			article.setCa("1111222233334444");
 
-			Assert.assertEquals(1, em.createQuery("select b from Booking b")
+			Assert.assertEquals(1, em.createQuery("select b from Article b")
 					.getResultList().size());
 		} finally {
 			if (ctx != null && ctx.isActive()) {
