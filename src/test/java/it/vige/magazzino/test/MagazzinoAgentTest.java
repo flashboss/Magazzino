@@ -16,12 +16,17 @@
  */
 package it.vige.magazzino.test;
 
+import static it.vige.magazzino.test.Dependencies.INTERNATIONAL;
+import static it.vige.magazzino.test.Dependencies.SOLDER;
 import it.vige.magazzino.i18n.DefaultBundleKey;
+import it.vige.magazzino.log.ArticleLog;
+import it.vige.magazzino.log.CustomerLog;
+import it.vige.magazzino.log.MagazzinoLog;
+import it.vige.magazzino.log.ReceiptLog;
 import it.vige.magazzino.model.Article;
 import it.vige.magazzino.model.Customer;
 import it.vige.magazzino.model.Magazzino;
 import it.vige.magazzino.model.Receipt;
-import it.vige.magazzino.selection.ArticleSelection;
 
 import java.util.HashMap;
 
@@ -32,21 +37,17 @@ import javax.persistence.PersistenceContext;
 import javax.transaction.UserTransaction;
 
 import org.jboss.arquillian.api.Deployment;
-import org.jboss.weld.Container;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.jboss.weld.Container;
 import org.jboss.weld.context.bound.BoundConversationContext;
 import org.jboss.weld.context.bound.BoundRequest;
 import org.jboss.weld.context.bound.MutableBoundRequest;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import static it.vige.magazzino.test.Dependencies.INTERNATIONAL;
-import static it.vige.magazzino.test.Dependencies.JODA_TIME;
-import static it.vige.magazzino.test.Dependencies.SOLDER;
 
 @RunWith(Arquillian.class)
 public class MagazzinoAgentTest {
@@ -57,10 +58,9 @@ public class MagazzinoAgentTest {
 				.addPackage(Magazzino.class.getPackage())
 				.addClasses(Receipt.class, Magazzino.class, Customer.class,
 						Article.class, DefaultBundleKey.class,
-						AuthenticatedUserProducer.class)
-				.addPackage(ArticleSelection.class.getPackage())
+						AuthenticatedUserProducer.class, ArticleLog.class,
+						CustomerLog.class, MagazzinoLog.class, ReceiptLog.class)
 				.addAsLibraries(SOLDER)
-				.addAsLibraries(JODA_TIME)
 				.addAsLibraries(INTERNATIONAL)
 				.addAsWebInfResource("test-persistence.xml",
 						"classes/META-INF/persistence.xml")
@@ -72,9 +72,6 @@ public class MagazzinoAgentTest {
 
 	@PersistenceContext
 	EntityManager em;
-
-	@Inject
-	Receipt bookingAgent;
 
 	@Inject
 	Instance<Article> bookingInstance;
@@ -145,8 +142,6 @@ public class MagazzinoAgentTest {
 			ctx.associate(storage);
 			ctx.activate();
 
-			bookingAgent.setNumber("1l");
-			bookingAgent.setNumber("1l");
 			Article booking = bookingInstance.get();
 			booking.setCa("1111222233334444");
 

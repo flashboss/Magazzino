@@ -11,10 +11,6 @@ public interface Dependencies {
 			.use(MavenDependencyResolver.class).loadReposFromPom("pom.xml")
 			.artifact("org.jboss.seam.solder:seam-solder").exclusion("*")
 			.resolveAs(GenericArchive.class).toArray(new Archive<?>[0]);
-	static final Archive<?>[] JODA_TIME = DependencyResolvers
-			.use(MavenDependencyResolver.class).loadReposFromPom("pom.xml")
-			.artifact("joda-time:joda-time").exclusion("*")
-			.resolveAs(GenericArchive.class).toArray(new Archive<?>[0]);
 	static final Archive<?>[] INTERNATIONAL = DependencyResolvers
 			.use(MavenDependencyResolver.class).loadReposFromPom("pom.xml")
 			.artifact("org.jboss.seam.international:seam-international")
