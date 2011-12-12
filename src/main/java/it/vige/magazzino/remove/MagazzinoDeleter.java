@@ -21,7 +21,7 @@ import it.vige.magazzino.inventory.MagazzinoSearch;
 import it.vige.magazzino.model.Magazzino;
 
 import javax.ejb.Stateful;
-import javax.enterprise.context.ConversationScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.enterprise.inject.Model;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
@@ -36,8 +36,8 @@ import org.jboss.seam.international.status.Messages;
  * @author <a href="http://www.vige.it">Luca Stancapiano</a>
  */
 @Stateful
-@ConversationScoped
 @Model
+@SessionScoped
 public class MagazzinoDeleter {
 
 	@PersistenceContext

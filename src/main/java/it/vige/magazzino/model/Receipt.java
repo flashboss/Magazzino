@@ -114,7 +114,7 @@ public class Receipt implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Receipt(" + number + ")";
+		return cause;
 	}
 
 	@NotNull
@@ -124,5 +124,20 @@ public class Receipt implements Serializable {
 
 	public void setJar(final Magazzino jar) {
 		this.jar = jar;
+	}
+
+	@Override
+	public boolean equals(Object arg0) {
+		// TODO Auto-generated method stub
+		if (!(arg0 instanceof Receipt))
+			return super.equals(arg0);
+		else
+			return this.getNumber().equals(((Receipt) arg0).getNumber());
+	}
+
+	@Override
+	public int hashCode() {
+		// TODO Auto-generated method stub
+		return Integer.parseInt(number);
 	}
 }

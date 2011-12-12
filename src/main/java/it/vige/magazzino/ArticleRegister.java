@@ -21,6 +21,7 @@ import it.vige.magazzino.log.ArticleLog;
 import it.vige.magazzino.model.Article;
 
 import javax.ejb.Stateful;
+import javax.enterprise.context.SessionScoped;
 import javax.enterprise.inject.Model;
 import javax.enterprise.inject.Produces;
 import javax.faces.component.UIInput;
@@ -41,6 +42,7 @@ import org.jboss.seam.solder.logging.TypedCategory;
  */
 @Stateful
 @Model
+@SessionScoped
 public class ArticleRegister {
 
     @Inject

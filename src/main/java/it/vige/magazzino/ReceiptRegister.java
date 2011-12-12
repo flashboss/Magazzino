@@ -21,6 +21,7 @@ import it.vige.magazzino.log.ReceiptLog;
 import it.vige.magazzino.model.Receipt;
 
 import javax.ejb.Stateful;
+import javax.enterprise.context.SessionScoped;
 import javax.enterprise.inject.Model;
 import javax.enterprise.inject.Produces;
 import javax.faces.component.UIInput;
@@ -41,6 +42,7 @@ import org.jboss.seam.solder.logging.TypedCategory;
  */
 @Stateful
 @Model
+@SessionScoped
 public class ReceiptRegister {
 
     @Inject
@@ -66,8 +68,8 @@ public class ReceiptRegister {
 
     public void register() {
         if (verifyNumberIsAvailable()) {
-            registered = true;
             em.persist(newReceipt);
+            registered = true;
 
             messages.info(new DefaultBundleKey("receipt_registered"))
                     .defaults("You have been successfully registered as the receipt {0}!")

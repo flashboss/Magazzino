@@ -18,9 +18,10 @@ package it.vige.magazzino.update;
 
 import it.vige.magazzino.i18n.DefaultBundleKey;
 import it.vige.magazzino.model.Magazzino;
+import it.vige.magazzino.selection.MagazzinoSelection;
 
 import javax.ejb.Stateful;
-import javax.enterprise.context.ConversationScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.enterprise.inject.Model;
 import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
@@ -36,8 +37,8 @@ import org.jboss.seam.international.status.Messages;
  * @author <a href="http://www.vige.it">Luca Stancapiano</a>
  */
 @Stateful
-@ConversationScoped
 @Model
+@SessionScoped
 public class MagazzinoUpdater {
 
 	@PersistenceContext
@@ -49,14 +50,18 @@ public class MagazzinoUpdater {
 	@Inject
 	private FacesContext facesContext;
 
+	@Inject
+	private MagazzinoSelection magazzinoSelection;
+
 	private UIInput numberInput;
 
 	private boolean updated;
 
 	private boolean registrationInvalid;
 
-	public void update(Magazzino magazzino) {
+	public void update() {
 		Magazzino oldMagazzino;
+		Magazzino magazzino = magazzinoSelection.getSelectedJar();
 		if ((oldMagazzino = verifyNumberIsAvailable(magazzino)) != null) 
 			em.remove(oldMagazzino);
 		

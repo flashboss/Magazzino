@@ -29,8 +29,8 @@ import org.jboss.seam.solder.core.Veto;
 
 /**
  * <p>
- * <strong>Article</strong> is the model/entity class that represents a article of the jar
- * to insert and select.
+ * <strong>Article</strong> is the model/entity class that represents a article
+ * of the jar to insert and select.
  * </p>
  * 
  * @author <a href="http://www.vige.it">Luca Stancapiano</a>
@@ -104,7 +104,7 @@ public class Article implements Serializable {
 
 	@Id
 	@NotNull
-	@Size(min = 1, max = 100)	
+	@Size(min = 1, max = 100)
 	public String getCode() {
 		return code;
 	}
@@ -288,6 +288,21 @@ public class Article implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Article(" + code + ")";
+		return description;
+	}
+
+	@Override
+	public boolean equals(Object arg0) {
+		// TODO Auto-generated method stub
+		if (!(arg0 instanceof Article))
+			return super.equals(arg0);
+		else
+			return this.getCode().equals(((Article) arg0).getCode());
+	}
+
+	@Override
+	public int hashCode() {
+		// TODO Auto-generated method stub
+		return Integer.parseInt(code);
 	}
 }

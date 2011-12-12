@@ -21,8 +21,8 @@ import it.vige.magazzino.model.Article;
 
 import javax.ejb.Stateful;
 import javax.enterprise.context.Conversation;
-import javax.enterprise.context.ConversationScoped;
 import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -31,8 +31,8 @@ import org.jboss.seam.faces.context.conversation.Begin;
 import org.jboss.seam.solder.logging.TypedCategory;
 
 @Stateful
-@ConversationScoped
 @Named
+@SessionScoped
 public class ArticleSelection {
 	
     @Inject

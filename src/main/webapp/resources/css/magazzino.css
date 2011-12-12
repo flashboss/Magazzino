@@ -44,7 +44,7 @@ input {
 }
 
 select {
-    padding: 1px;
+    padding: 8px;
 }
 
 input[type=submit], input[type=button] {

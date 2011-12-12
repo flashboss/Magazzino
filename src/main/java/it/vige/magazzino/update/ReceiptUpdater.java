@@ -18,9 +18,10 @@ package it.vige.magazzino.update;
 
 import it.vige.magazzino.i18n.DefaultBundleKey;
 import it.vige.magazzino.model.Receipt;
+import it.vige.magazzino.selection.ReceiptSelection;
 
 import javax.ejb.Stateful;
-import javax.enterprise.context.ConversationScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.enterprise.inject.Model;
 import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
@@ -36,8 +37,8 @@ import org.jboss.seam.international.status.Messages;
  * @author <a href="http://www.vige.it">Luca Stancapiano</a>
  */
 @Stateful
-@ConversationScoped
 @Model
+@SessionScoped
 public class ReceiptUpdater {
 
 	@PersistenceContext
@@ -49,12 +50,16 @@ public class ReceiptUpdater {
 	@Inject
 	private FacesContext facesContext;
 
+	@Inject
+	private ReceiptSelection receiptSelection;
+
 	private UIInput numberInput;
 
 	private boolean updated;
 
-	public void update(Receipt receipt) {
+	public void update() {
 		Receipt oldReceipt;
+		Receipt receipt = receiptSelection.getSelectedReceipt();
 		if ((oldReceipt = verifyNumberIsAvailable(receipt)) != null) 
 			em.remove(oldReceipt);
 		

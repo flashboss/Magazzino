@@ -1,104 +1,121 @@
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:s="http://jboss.org/seam/faces"
-                xmlns:p="http://java.sun.com/jsf/composite/components/property"
-                template="/WEB-INF/layout/template.xhtml">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:s="http://jboss.org/seam/faces"
+	xmlns:p="http://java.sun.com/jsf/composite/components/property"
+	template="/WEB-INF/layout/template.xhtml">
 
-    <ui:param name="pageClass" value="home"/>
+	<ui:param name="pageClass" value="home" />
 
-    <ui:define name="metadata">
-        <f:metadata>
-            <f:event type="preRenderView" listener="#{magazzinoRegister.notifyIfRegistrationIsInvalid}"/>
-        </f:metadata>
-    </ui:define>
+	<ui:define name="metadata">
+		<f:metadata>
+			<f:event type="preRenderView"
+				listener="#{magazzinoUpdater.notifyIfRegistrationIsInvalid}" />
+		</f:metadata>
+	</ui:define>
 
-    <ui:define name="content">
+	<ui:define name="content">
 
-        <div class="section">
-            <h1>#{bundles.messages.magazzino}</h1>
-        </div>
+		<div class="section">
+			<h1>#{bundles.messages.magazzino}</h1>
+		</div>
 
-        <div class="section">
+		<div class="section">
 
-            <div class="errors">
-                <h:messages id="messages" globalOnly="true"/>
-            </div>
+			<div class="errors">
+				<h:messages id="messages" globalOnly="true" />
+			</div>
 
-            <h:form id="regForm" prependId="false">
+			<h:form id="regForm" prependId="false">
 
-                <fieldset>
-                    <p:input id="number" label="#{bundles.messages.magazzino_number}">
-                        <h:inputText id="input" value="#{magazzinoSelection.selectedJar.number}" binding="#{magazzinoUpdater.numberInput}"/>
-                    </p:input>
-                    
-                    <p:input id="date" label="#{bundles.messages.magazzino_date}">
-                        <h:inputText id="input" value="#{magazzinoSelection.selectedJar.date}"/>
-                    </p:input>
-                    
-                    <p:input id="code" label="#{bundles.messages.magazzino_code}">
-                        <h:inputText id="input" value="#{magazzinoSelection.selectedJar.code}"/>
-                    </p:input>
-                    
-                    <p:input id="cause" label="#{bundles.messages.magazzino_cause}">
-                        <h:inputText id="input" value="#{magazzinoSelection.selectedJar.cause}"/>
-                    </p:input>
-                    
-                    <p:input id="compensation" label="#{bundles.messages.magazzino_compensation}">
-                        <h:inputText id="input" value="#{magazzinoSelection.selectedJar.compensation}"/>
-                    </p:input>
-                    
-                    <p:input id="codCustomer" label="#{bundles.messages.magazzino_codcustomer}">
-                        <h:inputText id="input" value="#{magazzinoSelection.selectedJar.codCustomer}"/>
-                    </p:input>
-                    
-                    <p:input id="ragSoc1" label="#{bundles.messages.magazzino_ragsoc1}">
-                        <h:inputText id="input" value="#{magazzinoSelection.selectedJar.ragSoc1}"/>
-                    </p:input>
-                    
-                    <p:input id="ragSoc2" label="#{bundles.messages.magazzino_ragsoc2}">
-                        <h:inputText id="input" value="#{magazzinoSelection.selectedJar.ragSoc2}"/>
-                    </p:input>
-                    
-                    <p:input id="numberDoc" label="#{bundles.messages.magazzino_numberdoc}">
-                        <h:inputText id="input" value="#{magazzinoSelection.selectedJar.numberDoc}"/>
-                    </p:input>
-                    
-                    <p:input id="dateDoc" label="#{bundles.messages.magazzino_datedoc}">
-                        <h:inputText id="input" value="#{magazzinoSelection.selectedJar.dateDoc}"/>
-                    </p:input>
+				<fieldset>
+					<p:input id="number" label="#{bundles.messages.magazzino_number}">
+						<h:inputText id="input"
+							value="#{magazzinoSelection.selectedJar.number}"
+							binding="#{magazzinoUpdater.numberInput}" />
+					</p:input>
 
-                    <div class="buttonBox">
-                        <h:commandButton id="magazzinoRegister" value="#{bundles.messages.template_linkUpdate}" action="#{magazzinoUpdater.update(magazzinoSelection.selectedJar)}"/>
-                        #{' '}
-                        <h:button id="cancel" value="#{bundles.messages.template_linkReset}" />
-                    </div>
+					<p:input id="date" label="#{bundles.messages.magazzino_date}">
+						<h:inputText id="input"
+							value="#{magazzinoSelection.selectedJar.date}" />
+					</p:input>
 
-                </fieldset>
+					<p:input id="code" label="#{bundles.messages.magazzino_code}">
+						<h:inputText id="input"
+							value="#{magazzinoSelection.selectedJar.code}" />
+					</p:input>
 
-            </h:form>
+					<p:input id="cause" label="#{bundles.messages.magazzino_cause}">
+						<h:inputText id="input"
+							value="#{magazzinoSelection.selectedJar.cause}" />
+					</p:input>
 
-        </div>
+					<p:input id="compensation"
+						label="#{bundles.messages.magazzino_compensation}">
+						<h:inputText id="input"
+							value="#{magazzinoSelection.selectedJar.compensation}" />
+					</p:input>
 
-    </ui:define>
+					<p:input id="codCustomer"
+						label="#{bundles.messages.magazzino_codcustomer}">
+						<h:inputText id="input"
+							value="#{magazzinoSelection.selectedJar.codCustomer}" />
+					</p:input>
 
-    <ui:define name="sidebar">
-        <div class="content">
-            <h1>Magazzino</h1>
+					<p:input id="ragSoc1" label="#{bundles.messages.magazzino_ragsoc1}">
+						<h:inputText id="input"
+							value="#{magazzinoSelection.selectedJar.ragSoc1}" />
+					</p:input>
 
-            <p>
-                #{bundles.messages.updateyourdata} #{bundles.messages.magazzinos_short_art}.
-            </p>
+					<p:input id="ragSoc2" label="#{bundles.messages.magazzino_ragsoc2}">
+						<h:inputText id="input"
+							value="#{magazzinoSelection.selectedJar.ragSoc2}" />
+					</p:input>
 
-            <p>
-                <a href="#" onclick="window.open('http://www.vige.it','exp','width=752,height=500,scrollbars=yes');">
-                    #{bundles.messages.visitmysite}
-                </a>
-            </p>
-        </div>
-    </ui:define>
+					<p:input id="numberDoc"
+						label="#{bundles.messages.magazzino_numberdoc}">
+						<h:inputText id="input"
+							value="#{magazzinoSelection.selectedJar.numberDoc}" />
+					</p:input>
+
+					<p:input id="dateDoc" label="#{bundles.messages.magazzino_datedoc}">
+						<h:inputText id="input"
+							value="#{magazzinoSelection.selectedJar.dateDoc}" />
+					</p:input>
+
+					<div class="buttonBox">
+						<h:commandButton id="magazzinoUpdater"
+							value="#{bundles.messages.template_linkUpdate}"
+							action="#{magazzinoUpdater.update}" />
+						#{' '}
+						<h:button id="cancel"
+							value="#{bundles.messages.template_linkReset}" />
+					</div>
+
+				</fieldset>
+
+			</h:form>
+
+		</div>
+
+	</ui:define>
+
+	<ui:define name="sidebar">
+		<div class="content">
+			<h1>Magazzino</h1>
+
+			<p>#{bundles.messages.updateyourdata}
+				#{bundles.messages.magazzinos_short_art}.</p>
+
+			<p>
+				<a href="#"
+					onclick="window.open('http://www.vige.it','exp','width=752,height=500,scrollbars=yes');">
+					#{bundles.messages.visitmysite} </a>
+			</p>
+		</div>
+	</ui:define>
 
 </ui:composition>

@@ -1,76 +1,82 @@
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:s="http://jboss.org/seam/faces"
-                xmlns:p="http://java.sun.com/jsf/composite/components/property"
-                template="/WEB-INF/layout/template.xhtml">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:s="http://jboss.org/seam/faces"
+	xmlns:p="http://java.sun.com/jsf/composite/components/property"
+	template="/WEB-INF/layout/template.xhtml">
 
-    <ui:param name="pageClass" value="home"/>
+	<ui:param name="pageClass" value="home" />
 
-    <ui:define name="metadata">
-        <f:metadata>
-            <f:event type="preRenderView" listener="#{customerRegister.notifyIfRegistrationIsInvalid}"/>
-        </f:metadata>
-    </ui:define>
+	<ui:define name="metadata">
+		<f:metadata>
+			<f:event type="preRenderView"
+				listener="#{customerRegister.notifyIfRegistrationIsInvalid}" />
+		</f:metadata>
+	</ui:define>
 
-    <ui:define name="content">
+	<ui:define name="content">
 
-        <div class="section">
-            <h1>#{bundles.messages.customer}</h1>
-        </div>
+		<div class="section">
+			<h1>#{bundles.messages.customer}</h1>
+		</div>
 
-        <div class="section">
+		<div class="section">
 
-            <div class="errors">
-                <h:messages id="messages" globalOnly="true"/>
-            </div>
+			<div class="errors">
+				<h:messages id="messages" globalOnly="true" />
+			</div>
 
-            <h:form id="regForm" prependId="false">
+			<h:form id="regForm" prependId="false">
 
-                <fieldset>
-                    <p:input id="code" label="#{bundles.messages.customer_code}">
-                        <h:inputText id="input" value="#{newCustomer.code}" binding="#{customerRegister.codeInput}"/>
-                    </p:input>
-                    
-                    <p:input id="name" label="#{bundles.messages.customer_name}">
-                        <h:inputText id="input" value="#{newCustomer.name}"/>
-                    </p:input>
-                    
-                    <p:input id="ragSocial" label="#{bundles.messages.customer_ragsocial}">
-                        <h:inputText id="input" value="#{newCustomer.ragSocial}"/>
-                    </p:input>
+				<fieldset>
+					<p:input id="code" label="#{bundles.messages.customer_code}">
+						<h:inputText id="input" value="#{newCustomer.code}"
+							binding="#{customerRegister.codeInput}" />
+					</p:input>
 
-                    <div class="buttonBox">
-                        <h:commandButton id="customerRegister" value="#{bundles.messages.template_linkInsert}" action="#{customerRegister.register}"/>
-                        #{' '}
-                        <h:button id="cancel" value="#{bundles.messages.template_linkReset}" outcome="insert_customer"/>
-                    </div>
+					<p:input id="name" label="#{bundles.messages.customer_name}">
+						<h:inputText id="input" value="#{newCustomer.name}" />
+					</p:input>
 
-                </fieldset>
+					<p:input id="ragSocial"
+						label="#{bundles.messages.customer_ragsocial}">
+						<h:inputText id="input" value="#{newCustomer.ragSocial}" />
+					</p:input>
 
-            </h:form>
+					<div class="buttonBox">
+						<h:commandButton id="customerRegister"
+							value="#{bundles.messages.template_linkInsert}"
+							action="#{customerRegister.register}" />
+						#{' '}
+						<h:button id="cancel"
+							value="#{bundles.messages.template_linkReset}"
+							outcome="insert_customer" />
+					</div>
 
-        </div>
+				</fieldset>
 
-    </ui:define>
+			</h:form>
 
-    <ui:define name="sidebar">
-        <div class="content">
-            <h1>Magazzino</h1>
+		</div>
 
-            <p>
-                #{bundles.messages.makeyourdata} #{bundles.messages.customers_short_art}.
-            </p>
+	</ui:define>
 
-            <p>
-                <a href="#" onclick="window.open('http://www.vige.it','exp','width=752,height=500,scrollbars=yes');">
-                    #{bundles.messages.visitmysite}
-                </a>
-            </p>
-        </div>
-    </ui:define>
+	<ui:define name="sidebar">
+		<div class="content">
+			<h1>Magazzino</h1>
+
+			<p>#{bundles.messages.makeyourdata}
+				#{bundles.messages.customers_short_art}.</p>
+
+			<p>
+				<a href="#"
+					onclick="window.open('http://www.vige.it','exp','width=752,height=500,scrollbars=yes');">
+					#{bundles.messages.visitmysite} </a>
+			</p>
+		</div>
+	</ui:define>
 
 </ui:composition>

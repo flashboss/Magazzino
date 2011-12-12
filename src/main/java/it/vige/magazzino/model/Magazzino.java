@@ -163,6 +163,21 @@ public class Magazzino implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Magazzino(" + number + ")";
+		return ragSoc1;
+	}
+
+	@Override
+	public boolean equals(Object arg0) {
+		// TODO Auto-generated method stub
+		if (!(arg0 instanceof Magazzino))
+			return super.equals(arg0);
+		else
+			return this.getNumber().equals(((Magazzino) arg0).getNumber());
+	}
+
+	@Override
+	public int hashCode() {
+		// TODO Auto-generated method stub
+		return Integer.parseInt(number);
 	}
 }

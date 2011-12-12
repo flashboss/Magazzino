@@ -53,6 +53,54 @@
         </navigation-case>
 
     </navigation-rule>
+    
+    <navigation-rule>
+        <from-view-id>/update/customer.xhtml</from-view-id>
+        
+        <navigation-case>
+            <from-action>#{customerUpdater.update}</from-action>
+            <if>#{customerUpdater.updated}</if>
+            <to-view-id>/update/customer.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+
+    </navigation-rule>
+    
+    <navigation-rule>
+        <from-view-id>/update/article.xhtml</from-view-id>
+        
+        <navigation-case>
+            <from-action>#{articleUpdater.update}</from-action>
+            <if>#{articleUpdater.updated}</if>
+            <to-view-id>/update/article.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+
+    </navigation-rule>
+    
+    <navigation-rule>
+        <from-view-id>/update/magazzino.xhtml</from-view-id>
+        
+        <navigation-case>
+            <from-action>#{magazzinoUpdater.update}</from-action>
+            <if>#{magazzinoUpdater.updated}</if>
+            <to-view-id>/update/magazzino.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+
+    </navigation-rule>
+    
+    <navigation-rule>
+        <from-view-id>/update/receipt.xhtml</from-view-id>
+        
+        <navigation-case>
+            <from-action>#{receiptUpdater.update}</from-action>
+            <if>#{receiptUpdater.updated}</if>
+            <to-view-id>/update/receipt.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+
+    </navigation-rule>
 
     <navigation-rule>
         <from-view-id>*</from-view-id>

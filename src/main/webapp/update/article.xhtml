@@ -1,152 +1,180 @@
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:s="http://jboss.org/seam/faces"
-                xmlns:p="http://java.sun.com/jsf/composite/components/property"
-                template="/WEB-INF/layout/template.xhtml">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:s="http://jboss.org/seam/faces"
+	xmlns:p="http://java.sun.com/jsf/composite/components/property"
+	template="/WEB-INF/layout/template.xhtml">
 
-    <ui:param name="pageClass" value="home"/>
+	<ui:param name="pageClass" value="home" />
 
-    <ui:define name="metadata">
-        <f:metadata>
-            <f:event type="preRenderView" listener="#{articleRegister.notifyIfRegistrationIsInvalid}"/>
-        </f:metadata>
-    </ui:define>
+	<ui:define name="metadata">
+		<f:metadata>
+			<f:event type="preRenderView"
+				listener="#{articleUpdater.notifyIfRegistrationIsInvalid}" />
+		</f:metadata>
+	</ui:define>
 
-    <ui:define name="content">
+	<ui:define name="content">
 
-        <div class="section">
-            <h1>#{bundles.messages.article}</h1>
-        </div>
+		<div class="section">
+			<h1>#{bundles.messages.article}</h1>
+		</div>
 
-        <div class="section">
+		<div class="section">
 
-            <div class="errors">
-                <h:messages id="messages" globalOnly="true"/>
-            </div>
+			<div class="errors">
+				<h:messages id="messages" globalOnly="true" />
+			</div>
 
-            <h:form id="regForm" prependId="false">
+			<h:form id="regForm" prependId="false">
 
-                <fieldset>
-                    <p:input id="code" label="#{bundles.messages.article_code}">
-                        <h:inputText id="input" value="#{articleSelection.selectedArticle.code}" binding="#{articleUpdater.codeInput}"/>
-                    </p:input>
-                    
-                    <p:input id="barCode" label="#{bundles.messages.article_barcode}">
-                        <h:inputText id="input" value="#{articleSelection.selectedArticle.barCode}"/>
-                    </p:input>
-                    
-                    <p:input id="description" label="#{bundles.messages.article_description}">
-                        <h:inputText id="input" value="#{articleSelection.selectedArticle.description}"/>
-                    </p:input>
-                    
-                    <p:input id="um" label="#{bundles.messages.article_um}">
-                        <h:inputText id="input" value="#{articleSelection.selectedArticle.um}"/>
-                    </p:input>
-                    
-                    <p:input id="mis" label="#{bundles.messages.article_mis}">
-                        <h:inputText id="input" value="#{articleSelection.selectedArticle.mis}"/>
-                    </p:input>
-                    
-                    <p:input id="catMerc" label="#{bundles.messages.article_catmerc}">
-                        <h:inputText id="input" value="#{articleSelection.selectedArticle.catMerc}"/>
-                    </p:input>
-                    
-                    <p:input id="imponible" label="#{bundles.messages.article_imponible}">
-                        <h:inputText id="input" value="#{articleSelection.selectedArticle.imponible}"/>
-                    </p:input>
-                    
-                    <p:input id="prize" label="#{bundles.messages.article_prize}">
-                        <h:inputText id="input" value="#{articleSelection.selectedArticle.prize}"/>
-                    </p:input>
-                    
-                    <p:input id="cost" label="#{bundles.messages.article_cost}">
-                        <h:inputText id="input" value="#{articleSelection.selectedArticle.cost}"/>
-                    </p:input>
-                    
-                    <p:input id="provider" label="#{bundles.messages.article_provider}">
-                        <h:inputText id="input" value="#{articleSelection.selectedArticle.provider}"/>
-                    </p:input>
-                    
-                    <p:input id="rate" label="#{bundles.messages.article_rate}">
-                        <h:inputText id="input" value="#{articleSelection.selectedArticle.rate}"/>
-                    </p:input>
-                    
-                    <p:input id="ca" label="#{bundles.messages.article_ca}">
-                        <h:inputText id="input" value="#{articleSelection.selectedArticle.ca}"/>
-                    </p:input>
-                    
-                    <p:input id="sc1" label="#{bundles.messages.article_sc1}">
-                        <h:inputText id="input" value="#{articleSelection.selectedArticle.sc1}"/>
-                    </p:input>
-                    
-                    <p:input id="sc2" label="#{bundles.messages.article_sc2}">
-                        <h:inputText id="input" value="#{articleSelection.selectedArticle.sc2}"/>
-                    </p:input>
-                    
-                    <p:input id="sc3" label="#{bundles.messages.article_sc3}">
-                        <h:inputText id="input" value="#{articleSelection.selectedArticle.sc3}"/>
-                    </p:input>
-                    
-                    <p:input id="qtmin" label="#{bundles.messages.article_qtmin}">
-                        <h:inputText id="input" value="#{articleSelection.selectedArticle.qtmin}"/>
-                    </p:input>
-                    
-                    <p:input id="qtmax" label="#{bundles.messages.article_qtmax}">
-                        <h:inputText id="input" value="#{articleSelection.selectedArticle.qtmax}"/>
-                    </p:input>
-                    
-                    <p:input id="pack" label="#{bundles.messages.article_pack}">
-                        <h:inputText id="input" value="#{articleSelection.selectedArticle.pack}"/>
-                    </p:input>
-                    
-                    <p:input id="health" label="#{bundles.messages.article_health}">
-                        <h:inputText id="input" value="#{articleSelection.selectedArticle.health}"/>
-                    </p:input>
-                    
-                    <p:input id="volume" label="#{bundles.messages.article_volume}">
-                        <h:inputText id="input" value="#{articleSelection.selectedArticle.volume}"/>
-                    </p:input>
-                    
-                    <p:input id="making" label="#{bundles.messages.article_making}">
-                        <h:inputText id="input" value="#{articleSelection.selectedArticle.making}"/>
-                    </p:input>
-                    
-                    <p:input id="notes" label="#{bundles.messages.article_notes}">
-                        <h:inputText id="input" value="#{articleSelection.selectedArticle.notes}"/>
-                    </p:input>
+				<fieldset>
+					<p:input id="code" label="#{bundles.messages.article_code}">
+						<h:inputText id="input"
+							value="#{articleSelection.selectedArticle.code}"
+							binding="#{articleUpdater.codeInput}" />
+					</p:input>
 
-                    <div class="buttonBox">
-                        <h:commandButton id="articleRegister" value="#{bundles.messages.template_linkUpdate}" action="#{articleUpdater.update(articleSelection.selectedArticle)}"/>
-                        #{' '}
-                        <h:button id="cancel" value="#{bundles.messages.template_linkReset}" />
-                    </div>
+					<p:input id="barCode" label="#{bundles.messages.article_barcode}">
+						<h:inputText id="input"
+							value="#{articleSelection.selectedArticle.barCode}" />
+					</p:input>
 
-                </fieldset>
+					<p:input id="description"
+						label="#{bundles.messages.article_description}">
+						<h:inputText id="input"
+							value="#{articleSelection.selectedArticle.description}" />
+					</p:input>
 
-            </h:form>
+					<p:input id="um" label="#{bundles.messages.article_um}">
+						<h:inputText id="input"
+							value="#{articleSelection.selectedArticle.um}" />
+					</p:input>
 
-        </div>
+					<p:input id="mis" label="#{bundles.messages.article_mis}">
+						<h:inputText id="input"
+							value="#{articleSelection.selectedArticle.mis}" />
+					</p:input>
 
-    </ui:define>
+					<p:input id="catMerc" label="#{bundles.messages.article_catmerc}">
+						<h:inputText id="input"
+							value="#{articleSelection.selectedArticle.catMerc}" />
+					</p:input>
 
-    <ui:define name="sidebar">
-        <div class="content">
-            <h1>Magazzino</h1>
+					<p:input id="imponible"
+						label="#{bundles.messages.article_imponible}">
+						<h:inputText id="input"
+							value="#{articleSelection.selectedArticle.imponible}" />
+					</p:input>
 
-            <p>
-                #{bundles.messages.updateyourdata} #{bundles.messages.articles_short_art}.
-            </p>
+					<p:input id="prize" label="#{bundles.messages.article_prize}">
+						<h:inputText id="input"
+							value="#{articleSelection.selectedArticle.prize}" />
+					</p:input>
 
-            <p>
-                <a href="#" onclick="window.open('http://www.vige.it','exp','width=752,height=500,scrollbars=yes');">
-                    #{bundles.messages.visitmysite}
-                </a>
-            </p>
-        </div>
-    </ui:define>
+					<p:input id="cost" label="#{bundles.messages.article_cost}">
+						<h:inputText id="input"
+							value="#{articleSelection.selectedArticle.cost}" />
+					</p:input>
+
+					<p:input id="provider" label="#{bundles.messages.article_provider}">
+						<h:inputText id="input"
+							value="#{articleSelection.selectedArticle.provider}" />
+					</p:input>
+
+					<p:input id="rate" label="#{bundles.messages.article_rate}">
+						<h:inputText id="input"
+							value="#{articleSelection.selectedArticle.rate}" />
+					</p:input>
+
+					<p:input id="ca" label="#{bundles.messages.article_ca}">
+						<h:inputText id="input"
+							value="#{articleSelection.selectedArticle.ca}" />
+					</p:input>
+
+					<p:input id="sc1" label="#{bundles.messages.article_sc1}">
+						<h:inputText id="input"
+							value="#{articleSelection.selectedArticle.sc1}" />
+					</p:input>
+
+					<p:input id="sc2" label="#{bundles.messages.article_sc2}">
+						<h:inputText id="input"
+							value="#{articleSelection.selectedArticle.sc2}" />
+					</p:input>
+
+					<p:input id="sc3" label="#{bundles.messages.article_sc3}">
+						<h:inputText id="input"
+							value="#{articleSelection.selectedArticle.sc3}" />
+					</p:input>
+
+					<p:input id="qtmin" label="#{bundles.messages.article_qtmin}">
+						<h:inputText id="input"
+							value="#{articleSelection.selectedArticle.qtmin}" />
+					</p:input>
+
+					<p:input id="qtmax" label="#{bundles.messages.article_qtmax}">
+						<h:inputText id="input"
+							value="#{articleSelection.selectedArticle.qtmax}" />
+					</p:input>
+
+					<p:input id="pack" label="#{bundles.messages.article_pack}">
+						<h:inputText id="input"
+							value="#{articleSelection.selectedArticle.pack}" />
+					</p:input>
+
+					<p:input id="health" label="#{bundles.messages.article_health}">
+						<h:inputText id="input"
+							value="#{articleSelection.selectedArticle.health}" />
+					</p:input>
+
+					<p:input id="volume" label="#{bundles.messages.article_volume}">
+						<h:inputText id="input"
+							value="#{articleSelection.selectedArticle.volume}" />
+					</p:input>
+
+					<p:input id="making" label="#{bundles.messages.article_making}">
+						<h:inputText id="input"
+							value="#{articleSelection.selectedArticle.making}" />
+					</p:input>
+
+					<p:input id="notes" label="#{bundles.messages.article_notes}">
+						<h:inputText id="input"
+							value="#{articleSelection.selectedArticle.notes}" />
+					</p:input>
+
+					<div class="buttonBox">
+						<h:commandButton id="articleUpdater"
+							value="#{bundles.messages.template_linkUpdate}"
+							action="#{articleUpdater.update}" />
+						#{' '}
+						<h:button id="cancel"
+							value="#{bundles.messages.template_linkReset}" />
+					</div>
+
+				</fieldset>
+
+			</h:form>
+
+		</div>
+
+	</ui:define>
+
+	<ui:define name="sidebar">
+		<div class="content">
+			<h1>Magazzino</h1>
+
+			<p>#{bundles.messages.updateyourdata}
+				#{bundles.messages.articles_short_art}.</p>
+
+			<p>
+				<a href="#"
+					onclick="window.open('http://www.vige.it','exp','width=752,height=500,scrollbars=yes');">
+					#{bundles.messages.visitmysite} </a>
+			</p>
+		</div>
+	</ui:define>
 
 </ui:composition>

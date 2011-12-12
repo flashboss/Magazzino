@@ -29,62 +29,78 @@ import org.jboss.seam.solder.core.Veto;
 
 /**
  * <p>
- * <strong>Customer</strong> is the model/entity class that represents a customer who may buy an article.
+ * <strong>Customer</strong> is the model/entity class that represents a
+ * customer who may buy an article.
  * </p>
- *
+ * 
  * @author <a href="http://www.vige.it">Luca Stancapiano</a>
  */
 @Entity
 @Table(name = "customer")
 @Veto
 public class Customer implements Serializable {
-    private static final long serialVersionUID = -612733026033932730L;
-    private String code;
-    private String name;
-    private String ragSocial;
+	private static final long serialVersionUID = -612733026033932730L;
+	private String code;
+	private String name;
+	private String ragSocial;
 
-    public Customer() {
-    }
+	public Customer() {
+	}
 
-    public Customer(final String code, final String name, final String ragSocial) {
-        this.code = code;
-        this.name = name;
-        this.ragSocial = ragSocial;
-    }
+	public Customer(final String code, final String name, final String ragSocial) {
+		this.code = code;
+		this.name = name;
+		this.ragSocial = ragSocial;
+	}
 
-    @NotNull
-    @Size(min = 1, max = 100)
-    public String getName() {
-        return name;
-    }
+	@NotNull
+	@Size(min = 1, max = 100)
+	public String getName() {
+		return name;
+	}
 
-    public void setName(final String name) {
-        this.name = name;
-    }
+	public void setName(final String name) {
+		this.name = name;
+	}
 
-    @Id
-    @NotNull
-    @Size(min = 3, max = 15)
-    @Pattern(regexp = "^\\w*$", message = "not a valid customer")
-    public String getCode() {
-        return code;
-    }
+	@Id
+	@NotNull
+	@Size(min = 3, max = 15)
+	@Pattern(regexp = "^\\w*$", message = "not a valid customer")
+	public String getCode() {
+		return code;
+	}
 
-    public void setCode(final String code) {
-        this.code = code;
-    }
+	public void setCode(final String code) {
+		this.code = code;
+	}
 
-    @NotNull
-    public String getRagSocial() {
-        return ragSocial;
-    }
+	@NotNull
+	public String getRagSocial() {
+		return ragSocial;
+	}
 
-    public void setRagSocial(final String ragSocial) {
-        this.ragSocial = ragSocial;
-    }
+	public void setRagSocial(final String ragSocial) {
+		this.ragSocial = ragSocial;
+	}
 
-    @Override
-    public String toString() {
-        return "Customer(" + code + ")";
-    }
+	@Override
+	public String toString() {
+		return ragSocial;
+	}
+
+	@Override
+	public boolean equals(Object arg0) {
+		// TODO Auto-generated method stub
+		if (!(arg0 instanceof Customer))
+			return super.equals(arg0);
+		else
+			return this.getCode().equals(((Customer) arg0).getCode());
+	}
+
+	@Override
+	public int hashCode() {
+		// TODO Auto-generated method stub
+		return Integer.parseInt(code);
+	}
 }
