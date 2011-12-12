@@ -45,6 +45,8 @@ public class Receipt implements Serializable {
 
 	@ManyToOne
 	private Magazzino jar;
+	@ManyToOne
+	private Customer customer;
 	private String number;
 	private String date;
 	private String cause;
@@ -54,16 +56,17 @@ public class Receipt implements Serializable {
 	}
 
 	public Receipt(final String number, final String date, final String cause,
-			Magazzino jar) {
+			Magazzino jar, Customer customer) {
 		this.number = number;
 		this.date = date;
 		this.cause = cause;
 		this.jar = jar;
+		this.customer = customer;
 	}
 
 	public Receipt(final String number, final String date, final String cause,
-			final String description, Magazzino jar) {
-		this(number, date, cause, jar);
+			final String description, Magazzino jar, Customer customer) {
+		this(number, date, cause, jar, customer);
 		this.description = description;
 	}
 
@@ -124,6 +127,15 @@ public class Receipt implements Serializable {
 
 	public void setJar(final Magazzino jar) {
 		this.jar = jar;
+	}
+
+	@NotNull
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(final Customer customer) {
+		this.customer = customer;
 	}
 
 	@Override

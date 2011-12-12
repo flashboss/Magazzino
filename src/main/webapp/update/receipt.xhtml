@@ -15,6 +15,7 @@
 			<f:event type="preRenderView"
 				listener="#{receiptUpdater.notifyIfRegistrationIsInvalid}" />
 			<f:event type="preRenderView" listener="#{magazzinoSearch.find}" />
+			<f:event type="preRenderView" listener="#{customerSearch.find}" />
 		</f:metadata>
 	</ui:define>
 
@@ -60,6 +61,14 @@
 							value="#{receiptSelection.selectedReceipt.jar}"
 							converter="magazzinoConverter">
 							<f:selectItems value="#{jars}" />
+						</h:selectOneMenu>
+					</p:input>
+
+					<p:input id="customer" label="#{bundles.messages.customer}">
+						<h:selectOneMenu id="select"
+							value="#{receiptSelection.selectedReceipt.customer}"
+							converter="customerConverter">
+							<f:selectItems value="#{customers}" />
 						</h:selectOneMenu>
 					</p:input>
 

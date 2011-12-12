@@ -25,7 +25,7 @@ public interface Dependencies {
 
 	static final Archive<?>[] SOLDER = DependencyResolvers
 			.use(MavenDependencyResolver.class).loadReposFromPom("pom.xml")
-			.artifact("org.jboss.seam.solder:seam-solder").exclusion("*")
+			.artifact("org.jboss.seam.solder:seam-solder-tooling").exclusion("*")
 			.resolveAs(GenericArchive.class).toArray(new Archive<?>[0]);
 	static final Archive<?>[] INTERNATIONAL = DependencyResolvers
 			.use(MavenDependencyResolver.class).loadReposFromPom("pom.xml")
