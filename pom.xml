@@ -169,13 +169,6 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.jboss.seam.solder</groupId>
-			<artifactId>seam-solder</artifactId>
-			<version>3.0.0.Final</version>
-			<scope>test</scope>
-		</dependency>
-
-		<dependency>
 			<groupId>org.testng</groupId>
 			<artifactId>testng</artifactId>
 			<version>5.10</version>
