@@ -72,7 +72,7 @@ public class Format2DocumentReceipt implements DocumentReceipt {
 		document.add(image1);
 
 		Phrase phrase1 = new Phrase(bundle.getString("pdf_number_receipt"), normalFont);
-		Phrase phrase2 = new Phrase(receipt.getNumber(), normalFont);
+		Phrase phrase2 = new Phrase(receipt.getNumber()+"", normalFont);
 		Phrase phrase3 = new Phrase(bundle.getString("receipt_date"), normalFont);
 		Phrase phrase4 = new Phrase(receipt.getDate(), normalFont);
 		Phrase phrase5 = new Phrase(receipt.getCause(), normalFont);

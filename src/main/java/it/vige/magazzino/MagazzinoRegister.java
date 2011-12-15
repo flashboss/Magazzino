@@ -74,7 +74,7 @@ public class MagazzinoRegister {
             messages.info(new DefaultBundleKey("magazzino_registered"))
                     .defaults("You have been successfully registered as the jar {0}!")
                     .params(newMagazzino.getNumber());
-            log.jarConfirmed(newMagazzino.getNumber(), newMagazzino.getCodCustomer());
+            log.jarConfirmed(newMagazzino.getNumber()+"", newMagazzino.getCodCustomer());
         } else {
             registrationInvalid = true;
         }
@@ -125,7 +125,7 @@ public class MagazzinoRegister {
             messages.warn(new BundleKey("messages", "account_numberTaken"))
                     .defaults("The number '{0}' is already taken. Please choose another number.")
                     .targets(numberInput.getClientId()).params(newMagazzino.getNumber());
-            log.jarAvailable(existing.getNumber(), existing != null);
+            log.jarAvailable(existing.getNumber()+"", existing != null);
             return false;
         }
 

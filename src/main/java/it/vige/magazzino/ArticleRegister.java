@@ -74,7 +74,7 @@ public class ArticleRegister {
             messages.info(new DefaultBundleKey("article_registered"))
                     .defaults("You have been successfully registered as the article {0}!")
                     .params(newArticle.getCode());
-            log.articleConfirmed(newArticle.getCode(), newArticle.getBarCode());
+            log.articleConfirmed(newArticle.getCode()+"", newArticle.getBarCode());
         } else {
             registrationInvalid = true;
         }
@@ -125,7 +125,7 @@ public class ArticleRegister {
             messages.warn(new BundleKey("messages", "account_codeTaken"))
                     .defaults("The username '{0}' is already taken. Please choose another code.")
                     .targets(codeInput.getClientId()).params(newArticle.getCode());
-            log.articleAvailable(existing.getCode(), existing != null);
+            log.articleAvailable(existing.getCode()+"", existing != null);
             return false;
         }
 

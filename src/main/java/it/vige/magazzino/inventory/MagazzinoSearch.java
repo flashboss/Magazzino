@@ -103,7 +103,10 @@ public class MagazzinoSearch {
                         builder.like(builder.lower(jar.get(Magazzino_.dateDoc)), criteria.getSearchPattern()),
                         builder.like(builder.lower(jar.get(Magazzino_.numberDoc)), criteria.getSearchPattern()),
                         builder.like(builder.lower(jar.get(Magazzino_.ragSoc1)), criteria.getSearchPattern()),
-                        builder.like(builder.lower(jar.get(Magazzino_.ragSoc2)), criteria.getSearchPattern())));
+                        builder.like(builder.lower(jar.get(Magazzino_.ragSoc2)), criteria.getSearchPattern()),
+                        builder.like(builder.lower(jar.get(Magazzino_.iva)), criteria.getSearchPattern()),
+                        builder.like(builder.lower(jar.get(Magazzino_.capSoc)), criteria.getSearchPattern()),
+                        builder.like(builder.lower(jar.get(Magazzino_.reaPI)), criteria.getSearchPattern())));
 
         List<Magazzino> results = em.createQuery(cquery).setMaxResults(criteria.getFetchSize())
                 .setFirstResult(criteria.getFetchOffset()).getResultList();

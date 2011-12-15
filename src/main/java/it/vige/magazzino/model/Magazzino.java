@@ -20,6 +20,7 @@ import java.io.Serializable;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -39,6 +40,8 @@ import org.jboss.seam.solder.core.Veto;
 @Veto
 public class Magazzino implements Serializable {
 	private static final long serialVersionUID = -602933026033932730L;
+	@OneToOne
+	private Address address;
 	private String number;
 	private String date;
 	private String code;
@@ -49,6 +52,9 @@ public class Magazzino implements Serializable {
 	private String ragSoc2;
 	private String numberDoc;
 	private String dateDoc;
+	private String iva;
+	private String capSoc;
+	private String reaPI;
 
 	public Magazzino() {
 	}
@@ -61,7 +67,8 @@ public class Magazzino implements Serializable {
 	public Magazzino(final String number, final String date, final String code,
 			final String cause, final String compensation,
 			final String codCustomer, final String ragSoc1,
-			final String ragSoc2, final String numberDoc, final String dateDoc) {
+			final String ragSoc2, final String numberDoc, final String dateDoc,
+			final String iva, final String capSoc, final String reaPI) {
 		this(number, date);
 		this.code = code;
 		this.cause = cause;
@@ -71,6 +78,9 @@ public class Magazzino implements Serializable {
 		this.ragSoc2 = ragSoc2;
 		this.numberDoc = numberDoc;
 		this.dateDoc = dateDoc;
+		this.iva = iva;
+		this.capSoc = capSoc;
+		this.reaPI = reaPI;
 	}
 
 	@Id
@@ -161,6 +171,39 @@ public class Magazzino implements Serializable {
 		this.dateDoc = dateDoc;
 	}
 
+	@NotNull
+	public Address getAddress() {
+		return address;
+	}
+
+	public void setAddress(final Address address) {
+		this.address = address;
+	}
+
+	public String getIva() {
+		return iva;
+	}
+
+	public void setIva(String iva) {
+		this.iva = iva;
+	}
+
+	public String getCapSoc() {
+		return capSoc;
+	}
+
+	public void setCapSoc(String capSoc) {
+		this.capSoc = capSoc;
+	}
+
+	public String getReaPI() {
+		return reaPI;
+	}
+
+	public void setReaPI(String reaPI) {
+		this.reaPI = reaPI;
+	}
+
 	@Override
 	public String toString() {
 		return ragSoc1;
@@ -172,7 +215,7 @@ public class Magazzino implements Serializable {
 		if (!(arg0 instanceof Magazzino))
 			return super.equals(arg0);
 		else
-			return this.getNumber().equals(((Magazzino) arg0).getNumber());
+			return this.getNumber() == ((Magazzino) arg0).getNumber();
 	}
 
 	@Override

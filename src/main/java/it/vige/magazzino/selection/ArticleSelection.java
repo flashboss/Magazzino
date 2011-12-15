@@ -48,7 +48,7 @@ public class ArticleSelection {
     public void selectArticle(final Article article) {
         conversation.setTimeout(600000); //10 * 60 * 1000 (10 minutes)
         articleSelection = article;
-        log.articleSelected(article.getCode(), article.getBarCode(), article.getDescription());
+        log.articleSelected(article.getCode()+"", article.getBarCode(), article.getDescription());
     }
 
     @Produces

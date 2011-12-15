@@ -29,7 +29,7 @@ import org.jboss.seam.solder.core.Veto;
 
 /**
  * <p>
- * <strong>Article</strong> is the model/entity class that represents a article
+ * <strong>Article</strong> is the model/entity class that represents an article
  * of the jar to insert and select.
  * </p>
  * 
@@ -245,7 +245,7 @@ public class Article implements Serializable {
 
 	@NotNull
 	@Size(min = 3, max = 15)
-	@Pattern(regexp = "^\\w*$", message = "not a valid article")
+	@Pattern(regexp = "^\\w*$", message = "it has to be a number")
 	public String getPack() {
 		return pack;
 	}

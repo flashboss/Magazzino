@@ -20,6 +20,7 @@ import java.io.Serializable;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -40,17 +41,22 @@ import org.jboss.seam.solder.core.Veto;
 @Veto
 public class Customer implements Serializable {
 	private static final long serialVersionUID = -612733026033932730L;
+	@OneToOne
+	private Address address;
 	private String code;
 	private String name;
 	private String ragSocial;
+	private String iva;
 
 	public Customer() {
 	}
 
-	public Customer(final String code, final String name, final String ragSocial) {
+	public Customer(final String code, final String name,
+			final String ragSocial, final String iva) {
 		this.code = code;
 		this.name = name;
 		this.ragSocial = ragSocial;
+		this.iva = iva;
 	}
 
 	@NotNull
@@ -84,9 +90,27 @@ public class Customer implements Serializable {
 		this.ragSocial = ragSocial;
 	}
 
+	@NotNull
+	public String getIva() {
+		return iva;
+	}
+
+	public void setIva(final String iva) {
+		this.iva = iva;
+	}
+
 	@Override
 	public String toString() {
 		return ragSocial;
+	}
+
+	@NotNull
+	public Address getAddress() {
+		return address;
+	}
+
+	public void setAddress(final Address address) {
+		this.address = address;
 	}
 
 	@Override

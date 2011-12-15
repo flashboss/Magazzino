@@ -43,7 +43,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 @RunWith(Arquillian.class)
-public class CustomerAgentTest {
+public class AddressAgentTest {
 	@Deployment
 	public static WebArchive createDeployment() {
 		return ShrinkWrap
@@ -71,68 +71,87 @@ public class CustomerAgentTest {
 		em.joinTransaction();
 		em.createQuery("delete from Article").executeUpdate();
 		em.createQuery("delete from Receipt").executeUpdate();
-		em.persist(new Article("898989", "3342 Peachtree Road NE"));
+		em.persist(new Article("6767676",
+				"3342 Peachtree Road NE"));
 		em.createQuery("delete from User").executeUpdate();
-		em.persist(new Customer("45454", "ike", "ike@mailinator.com", "545454"));
+		em.persist(new Customer("3246565", "ike", "ike@mailinator.com", "545454"));
 		utx.commit();
 	}
 
 	@Test
-	public void createCustomer() throws Exception {
+	public void createAddress() throws Exception {
 
-		customer("19987", "cliente 1", "rag soc 1", "92755353", "19987",
-				"piazza Clodio", "00122", "64746567", "7654345676",
+		address("19987", "piazza Clodio", "00122", "64746567", "7654345676",
 				"reqrew@vige.it", "wwewewe.com", "54", "RM", "Guidonia", "Rome");
-		customer("1177", "cliente 2", "rag soc 2", "74424577", "1177",
-				"viale Mazzini", "00134", "534537446", "346357465736",
+		address("1177", "viale Mazzini", "00134", "534537446", "346357465736",
 				"hgdfgsfg@vige.it", "fdfd.com", "67", "LO", "Setteville",
 				"London");
-		customer("98766", "cliente 3", "rag soc 3", "2232322", "98766",
-				"piazza Bologna", "00234", "5425356457", "8875645732",
+		address("98766", "piazza Bologna", "00234", "5425356457", "8875645732",
 				"afadfsd@vige.it", "wwqewr.com", "33", "BO", "Settecamini",
 				"Bologna");
-		customer("11121", "cliente 4", "rag soc 4", "76565656", "11121",
-				"viale Giulio Cesare", "00987", "896969687", "32456733",
-				"hdhhjdghf@vige.it", "qasas.com", "656", "FI", "Tivoli",
-				"Florence");
-		customer("34322", "cliente 6", "rag soc 6", "2535345433", "34322",
-				"via Prenestina", "00152", "87584734637", "84562354656",
-				"gdhdgjfgj@vige.it", "ppopo.com", "24", "SH", "Zagarolo",
-				"Shangai");
-		customer("22222", "cliente 7", "rag soc 7", "654424322", "22222",
-				"piazza Tuscolo", "00012", "32678475323", "74684736433",
-				"fsdfsdfsd@vige.it", "ewe.com", "76", "BO", "Nola", "Bombay");
-		customer("55555", "cliente 8", "rag soc 8", "53546566", "55555",
-				"via Tuscolana", "09833", "42675473364", "754684333",
+		address("11121", "viale Giulio Cesare", "00987", "896969687",
+				"32456733", "hdhhjdghf@vige.it", "qasas.com", "656", "FI",
+				"Tivoli", "Florence");
+		address("54566", "via Tibutina", "01234", "23423423", "2436233453",
+				"fdsfsdfsd@vige.it", "ffkkfkf.com", "34", "PA", "Francoforte",
+				"Paris");
+		address("34322", "via Prenestina", "00152", "87584734637",
+				"84562354656", "gdhdgjfgj@vige.it", "ppopo.com", "24", "SH",
+				"Zagarolo", "Shangai");
+		address("22222", "piazza Tuscolo", "00012", "32678475323",
+				"74684736433", "fsdfsdfsd@vige.it", "ewe.com", "76", "BO",
+				"Nola", "Bombay");
+		address("55555", "via Tuscolana", "09833", "42675473364", "754684333",
 				"tytre@vige.it", "swswd.com", "546", "RM", "Castelvolturno",
 				"Rome");
-		String stringa12 = customer("325", "cliente 9", "rag soc 9",
-				"323244646", "325", "via Serafini", "00999", "534748622",
-				"323244646", "ewrete@vige.it", "ewewwq.com", "66", "KY",
+		String stringa12 = address("325", "via Serafini", "00999", "534748622",
+				"7568473634", "ewrete@vige.it", "ewewwq.com", "66", "KY",
 				"Tropea", "Kyoto");
-		customer("6433", "cliente 10", "rag soc 10", "324464646", "6433",
-				"via Serafina", "00666", "63564832764", "3467468733",
+		address("6433", "via Serafina", "00666", "63564832764", "3467468733",
+				"ngnghghg@vige.it", "llklk.it", "33", "TK", "Palinuro", "Tokyo");
+
+		address("4353", "piazza Clodio", "01122", "64746567", "7651676",
+				"reqrew@vige.it", "wwewewe.com", "54", "RM", "Guidonia", "Rome");
+		address("222", "viale Mazzini", "00114", "531446", "3463165736",
+				"hgdfgsfg@vige.it", "fdfd.com", "67", "LO", "Setteville",
+				"London");
+		address("76435", "piazza Bologna", "00234", "54253516457", "8871115645732",
+				"afadfsd@vige.it", "wwqewr.com", "33", "BO", "Settecamini",
+				"Bologna");
+		address("23567", "viale Giulio Cesare", "00987", "896969687",
+				"32456733", "hdhhjdghf@vige.it", "qasas.com", "6526", "FI",
+				"Tivoli", "Florence");
+		address("876", "via Tibutina", "01234", "23423423", "2436233453",
+				"fdsfsdfsd@vige.it", "ffkkfkf.com", "34", "PA", "Francoforte",
+				"Paris");
+		address("345", "via Prenestina", "00152", "87584734637",
+				"84562354656", "gdhdgjfgj@vige.it", "ppopo.com", "124", "SH",
+				"Zagarolo", "Shangai");
+		address("764", "piazza Tuscolo", "00212", "32678475323",
+				"74684736433", "fsdfsdfsd@vige.it", "ewe.com", "716", "BO",
+				"Nola", "Bombay");
+		address("3454", "via Tuscolana", "09833", "42675473364", "754684333",
+				"tytre@vige.it", "swswd.com", "546", "RM", "Castelvolturno",
+				"Rome");
+		address("7654", "via Serafini", "00999", "534748622",
+				"7568473634", "ewrete@vige.it", "ewewwq.com", "616", "KY",
+				"Tropea", "Kyoto");
+		address("23453", "via Serafina", "00666", "63564832764", "3467468733",
 				"ngnghghg@vige.it", "llklk.it", "33", "TK", "Palinuro", "Tokyo");
 		java.io.ObjectInputStream ois = new java.io.ObjectInputStream(
 				new java.io.ByteArrayInputStream(stringa12.getBytes()));
-		Customer customer = (Customer) ois.readObject();
-		customer.getName();
+		Address address = (Address) ois.readObject();
+		address.getEmail();
 		ois.close();
 
 	}
 
-	public String customer(String code, String name, String ragSocial,
-			String iva, String codeAddress, String homeAddress, String cap,
+	public String address(String code, String homeAddress, String cap,
 			String phone, String fax, String email, String site,
 			String civicNumber, String province, String town, String city)
 			throws Exception {
-		Customer customer = new Customer();
-		customer.setCode(code);
-		customer.setName(name);
-		customer.setRagSocial(ragSocial);
-
 		Address address = new Address();
-		address.setCode(codeAddress);
+		address.setCode(code);
 		address.setAddress(homeAddress);
 		address.setCap(cap);
 		address.setCity(city);
@@ -144,13 +163,11 @@ public class CustomerAgentTest {
 		address.setTown(town);
 		address.setProvince(province);
 
-		customer.setAddress(address);
-
 		java.io.ObjectOutputStream oos = new java.io.ObjectOutputStream(
 				new java.io.FileOutputStream("/Users/flashboss/prova"));
-		oos.writeObject(customer);
+		oos.writeObject(address);
 		oos.close();
-		byte[] bytes = new byte[531];
+		byte[] bytes = new byte[351];
 		java.io.FileInputStream fis = new java.io.FileInputStream(
 				"/Users/flashboss/prova");
 		fis.read(bytes);
@@ -171,7 +188,7 @@ public class CustomerAgentTest {
 		}
 		return setBinaryLength(sb.toString());
 	}
-
+	
 	private String setBinaryLength(String result) {
 		while (true) {
 			if (result.endsWith("0"))

@@ -74,7 +74,7 @@ public class CustomerRegister {
             messages.info(new DefaultBundleKey("customer_registered"))
                     .defaults("You have been successfully registered as the customer {0}!")
                     .params(newCustomer.getCode());
-            log.customerConfirmed(newCustomer.getCode());
+            log.customerConfirmed(newCustomer.getCode()+"");
         } else {
             registrationInvalid = true;
         }
@@ -125,7 +125,7 @@ public class CustomerRegister {
             messages.warn(new BundleKey("messages", "account_codeTaken"))
                     .defaults("The code '{0}' is already taken. Please choose another code.")
                     .targets(codeInput.getClientId()).params(newCustomer.getCode());
-            log.customerAvailable(existing.getCode(), existing != null);
+            log.customerAvailable(existing.getCode()+"", existing != null);
             return false;
         }
 

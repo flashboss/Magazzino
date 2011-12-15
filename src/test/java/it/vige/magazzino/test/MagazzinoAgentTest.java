@@ -23,6 +23,7 @@ import it.vige.magazzino.log.ArticleLog;
 import it.vige.magazzino.log.CustomerLog;
 import it.vige.magazzino.log.MagazzinoLog;
 import it.vige.magazzino.log.ReceiptLog;
+import it.vige.magazzino.model.Address;
 import it.vige.magazzino.model.Article;
 import it.vige.magazzino.model.Customer;
 import it.vige.magazzino.model.Magazzino;
@@ -81,45 +82,72 @@ public class MagazzinoAgentTest {
 		em.joinTransaction();
 		em.createQuery("delete from Article").executeUpdate();
 		em.createQuery("delete from Receipt").executeUpdate();
-		em.persist(new Article("Doubletree Atlanta-Buckhead",
-				"3342 Peachtree Road NE"));
+		em.persist(new Article("7889999", "3342 Peachtree Road NE"));
 		em.createQuery("delete from User").executeUpdate();
-		em.persist(new Customer("Ike", "ike", "ike@mailinator.com"));
+		em.persist(new Customer("34566", "ike", "ike@mailinator.com", "545454"));
 		utx.commit();
 	}
 
 	@Test
 	public void createMagazzino() throws Exception {
 		magazzino("21344", "01/06/1999", "23432", "cause 1", "compensation 1",
-				"2654654", "rag soc 1", "rag soc 2", "111", "01/05/1998");
+				"2654654", "rag soc 1", "rag soc 2", "111", "01/05/1998",
+				"4343289479", "39.000,00 Û", "70075", "4353", "piazza Clodio",
+				"01122", "64746567", "7651676", "reqrew@vige.it",
+				"wwewewe.com", "54", "RM", "Guidonia", "Rome");
 		magazzino("21345", "02/06/1981", "543534", "cause 2", "compensation 2",
-				"2654654", "rag soc 3", "rag soc 4", "111", "01/01/1998");
+				"2654654", "rag soc 3", "rag soc 4", "111", "01/01/1998",
+				"656253253", "12.000,00 $", "32677", "222", "viale Mazzini",
+				"00114", "531446", "3463165736", "hgdfgsfg@vige.it",
+				"fdfd.com", "67", "LO", "Setteville", "London");
 		magazzino("21346", "06/02/1999", "6546", "cause 3", "compensation 3",
-				"213443", "rag soc 5", "rag soc 6", "111", "05/05/1977");
+				"213443", "rag soc 5", "rag soc 6", "111", "05/05/1977",
+				"89898983", "45.000,00 Û", "44342", "76435", "piazza Bologna",
+				"00234", "54253516457", "8871115645732", "afadfsd@vige.it",
+				"wwqewr.com", "33", "BO", "Settecamini", "Bologna");
 		magazzino("21347", "06/01/1999", "2342", "cause 4", "compensation 4",
-				"453534", "rag soc 7", "rag soc 8", "111", "05/04/1976");
+				"453534", "rag soc 7", "rag soc 8", "111", "05/04/1976",
+				"455454543", "89.000,00 $", "65345", "23567",
+				"viale Giulio Cesare", "00987", "896969687", "32456733",
+				"hdhhjdghf@vige.it", "qasas.com", "6526", "FI", "Tivoli",
+				"Florence");
 		magazzino("21348", "06/06/1980", "434", "cause 5", "compensation 5",
-				"2787", "rag soc 9", "rag soc 10", "111", "04/04/1998");
+				"2787", "rag soc 9", "rag soc 10", "111", "04/04/1998",
+				"8989898989", "98.000,00 Û", "98873", "876", "via Tibutina",
+				"01234", "23423423", "2436233453", "fdsfsdfsd@vige.it",
+				"ffkkfkf.com", "34", "PA", "Francoforte", "Paris");
 		magazzino("21349", "06/06/1982", "22", "cause 6", "compensation 6",
-				"53453", "rag soc 11", "rag soc 12", "111", "04/04/1998");
-		magazzino("21310", "06/03/1983", "55", "cause 7", "compensation 7",
-				"4333", "rag soc 13", "rag soc 14", "111", "04/01/1998");
-		magazzino("21311", "06/02/1984", "34224", "cause 8", "compensation 8",
-				"23433", "rag soc 15", "rag soc 16", "111", "01/04/1998");
+				"53453", "rag soc 11", "rag soc 12", "111", "04/04/1998",
+				"32323232323", "333.000,00 $", "54664", "345",
+				"via Prenestina", "00152", "87584734637", "84562354656",
+				"gdhdgjfgj@vige.it", "ppopo.com", "124", "SH", "Zagarolo",
+				"Shangai");
 		magazzino("21314", "06/01/1985", "534543", "cause 9", "compensation 9",
-				"54546", "rag soc 17", "rag soc 18", "111", "04/02/1992");
+				"54546", "rag soc 17", "rag soc 18", "111", "04/02/1992",
+				"43565757", "42.000,00 Û", "22223", "7654", "via Serafini",
+				"00999", "534748622", "7568473634", "ewrete@vige.it",
+				"ewewwq.com", "616", "KY", "Tropea", "Kyoto");
 		magazzino("213334", "02/06/1986", "23432", "cause 10",
 				"compensation 10", "6544", "rag soc 19", "rag soc 20", "111",
-				"04/04/1998");
+				"04/04/1998", "8787878787", "99.000,00 $", "43432", "23453",
+				"via Serafina", "00666", "63564832764", "3467468733",
+				"ngnghghg@vige.it", "llklk.it", "33", "TK", "Palinuro", "Tokyo");
 		magazzino("212344", "03/06/1987", "65464", "cause 11",
 				"compensation 11", "34322", "rag soc 21", "rag soc 22", "111",
-				"05/04/1992");
+				"05/04/1992", "212121212", "33.000,00 Û", "86433", "65433",
+				"via Tuscolana", "09833", "42675473364", "754684333",
+				"tytre@vige.it", "swswd.com", "546", "RM", "Castelvolturno",
+				"Rome");
 		String stringa12 = magazzino("21234", "04/06/1988", "5646", "cause 12",
 				"compensation 12", "6567", "rag soc 23", "rag soc 24", "111",
-				"04/05/1998");
+				"04/05/1998", "212121212", "33.000,00 Û", "86433", "123444",
+				"via Serafini", "00999", "534748622", "7568473634",
+				"ewrete@vige.it", "ewewwq.com", "626", "KY", "Tropea", "Kyoto");
 		magazzino("1344", "05/06/1989", "645645", "cause 13",
 				"compensation 13", "5454", "rag soc 25", "rag soc 26", "111",
-				"04/04/1995");
+				"04/04/1995", "212121212", "33.000,00 Û", "86433", "876544",
+				"via Serafina", "00666", "63564832764", "3467468733",
+				"ngnghghg@vige.it", "llklk.it", "33", "TK", "Palinuro", "Tokyo");
 
 		java.io.ObjectInputStream ois = new java.io.ObjectInputStream(
 				new java.io.ByteArrayInputStream(stringa12.getBytes()));
@@ -157,8 +185,11 @@ public class MagazzinoAgentTest {
 
 	public String magazzino(String number, String date, String code,
 			String cause, String compensation, String codCustomer,
-			String ragSoc1, String ragSoc2, String numberDoc, String dateDoc)
-			throws Exception {
+			String ragSoc1, String ragSoc2, String numberDoc, String dateDoc,
+			String iva, String capSoc, String reaPI, String codeAddress,
+			String homeAddress, String cap, String phone, String fax,
+			String email, String site, String civicNumber, String province,
+			String town, String city) throws Exception {
 		Magazzino magazzino = new Magazzino();
 		magazzino.setNumber(number);
 		magazzino.setDate(date);
@@ -170,12 +201,30 @@ public class MagazzinoAgentTest {
 		magazzino.setRagSoc2(ragSoc2);
 		magazzino.setNumberDoc(numberDoc);
 		magazzino.setDateDoc(dateDoc);
+		magazzino.setIva(iva);
+		magazzino.setCapSoc(capSoc);
+		magazzino.setReaPI(reaPI);
+
+		Address address = new Address();
+		address.setCode(codeAddress);
+		address.setAddress(homeAddress);
+		address.setCap(cap);
+		address.setCity(city);
+		address.setCivicNumber(civicNumber);
+		address.setEmail(email);
+		address.setFax(fax);
+		address.setPhone(phone);
+		address.setSite(site);
+		address.setTown(town);
+		address.setProvince(province);
+
+		magazzino.setAddress(address);
 
 		java.io.ObjectOutputStream oos = new java.io.ObjectOutputStream(
 				new java.io.FileOutputStream("/Users/flashboss/prova"));
 		oos.writeObject(magazzino);
 		oos.close();
-		byte[] bytes = new byte[331];
+		byte[] bytes = new byte[840];
 		java.io.FileInputStream fis = new java.io.FileInputStream(
 				"/Users/flashboss/prova");
 		fis.read(bytes);
@@ -194,7 +243,19 @@ public class MagazzinoAgentTest {
 			// look up low nibble char
 			sb.append(hexChar[b[i] & 0x0f]);
 		}
-		return sb.toString();
+		return setBinaryLength(sb.toString());
+	}
+
+	private String setBinaryLength(String result) {
+		while (true) {
+			if (result.endsWith("0"))
+				result = result.substring(0, result.lastIndexOf("0"));
+			else
+				break;
+		}
+		if (result.length() % 2 != 0)
+			result = result + "0";
+		return result;
 	}
 
 	// table to convert a nibble to a hex char.

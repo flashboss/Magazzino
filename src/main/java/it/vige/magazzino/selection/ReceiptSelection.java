@@ -48,7 +48,7 @@ public class ReceiptSelection {
     public void selectReceipt(final Receipt receipt) {
         conversation.setTimeout(600000); //10 * 60 * 1000 (10 minutes)
         receiptSelection = receipt;
-        log.receiptSelected(receipt.getNumber(), receipt.getCause(), receipt.getDescription());
+        log.receiptSelected(receipt.getNumber()+"", receipt.getCause(), receipt.getDescription());
     }
 
     @Produces

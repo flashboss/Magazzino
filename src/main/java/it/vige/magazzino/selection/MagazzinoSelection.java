@@ -48,7 +48,7 @@ public class MagazzinoSelection {
     public void selectJar(final Magazzino jar) {
         conversation.setTimeout(600000); //10 * 60 * 1000 (10 minutes)
         jarSelection = jar;
-        log.jarSelected(jar.getNumber(), jar.getCodCustomer(), jar.getCause());
+        log.jarSelected(jar.getNumber()+"", jar.getCodCustomer(), jar.getCause());
     }
 
     @Produces

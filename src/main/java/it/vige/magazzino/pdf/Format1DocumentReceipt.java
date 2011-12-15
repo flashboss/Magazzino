@@ -75,11 +75,21 @@ public class Format1DocumentReceipt implements DocumentReceipt {
 		image2.setAbsolutePosition(326, 748);
 		image2.scalePercent(40);
 		document.add(image2);
-		Phrase phrase1 = new Phrase("Provaaaaaaaaa", normalFont);
-		Phrase phrase2 = new Phrase("prova 1: prova 1", normalFont);
-		Phrase phrase3 = new Phrase("prova 2: prova 2", normalFont);
-		Phrase phrase4 = new Phrase("prova 3: prova 3", normalFont);
-		Phrase phrase5 = new Phrase("prova 4: prova 4", normalFont);
+		Phrase phrase1 = new Phrase(receipt.getJar().getRagSoc1(), normalFont);
+		Phrase phrase2 = new Phrase(receipt.getJar().getAddress().getAddress()
+				+ " " + receipt.getJar().getAddress().getCivicNumber(),
+				normalFont);
+		Phrase phrase3 = new Phrase("Loc. "
+				+ receipt.getJar().getAddress().getTown() + " - "
+				+ receipt.getJar().getAddress().getCap() + " "
+				+ receipt.getJar().getAddress().getCity() + " ("
+				+ receipt.getJar().getAddress().getProvince() + ")", normalFont);
+		Phrase phrase4 = new Phrase("Tel. "
+				+ receipt.getJar().getAddress().getPhone() + " r.a.Fax "
+				+ receipt.getJar().getAddress().getFax(), normalFont);
+		Phrase phrase5 = new Phrase(receipt.getJar().getAddress().getSite()
+				+ " E-mail: " + receipt.getJar().getAddress().getEmail(),
+				normalFont);
 		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase1, 36,
 				784, 0);
 		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase2, 36,
@@ -91,9 +101,14 @@ public class Format1DocumentReceipt implements DocumentReceipt {
 		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase5, 36,
 				744, 0);
 
-		Phrase phrase6 = new Phrase("prova 2: prova 2", normalFont);
-		Phrase phrase7 = new Phrase("prova 3: prova 3", normalFont);
-		Phrase phrase8 = new Phrase("prova 4: prova 4", normalFont);
+		Phrase phrase6 = new Phrase(bundle.getString("magazzino_iva") + " "
+				+ receipt.getJar().getIva(), normalFont);
+		Phrase phrase7 = new Phrase(bundle.getString("magazzino_capsoc") + " "
+				+ receipt.getJar().getCapSoc() + " - "
+				+ bundle.getString("magazzino_reapi") + " n. "
+				+ receipt.getJar().getReaPI(), normalFont);
+		Phrase phrase8 = new Phrase("Reg. Impr. PI n. "
+				+ receipt.getJar().getIva(), normalFont);
 		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase6, 36,
 				724, 0);
 		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase7, 36,
@@ -128,9 +143,18 @@ public class Format1DocumentReceipt implements DocumentReceipt {
 		image3.scalePercent(40);
 		document.add(image3);
 
-		Phrase phrase16 = new Phrase("prova 2: prova 2", normalFont);
-		Phrase phrase17 = new Phrase("prova 3: prova 3", normalFont);
-		Phrase phrase18 = new Phrase("prova 4: prova 4", normalFont);
+		Phrase phrase16 = new Phrase(receipt.getCustomer().getName(),
+				normalFont);
+		Phrase phrase17 = new Phrase(receipt.getCustomer().getAddress()
+				.getAddress()
+				+ ", " + receipt.getCustomer().getAddress().getCivicNumber(),
+				normalFont);
+		Phrase phrase18 = new Phrase(receipt.getCustomer().getAddress()
+				.getCap()
+				+ " "
+				+ receipt.getCustomer().getAddress().getCity()
+				+ " "
+				+ receipt.getCustomer().getAddress().getProvince(), normalFont);
 		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase16, 206,
 				644, 0);
 		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase17, 206,
@@ -149,14 +173,18 @@ public class Format1DocumentReceipt implements DocumentReceipt {
 				.toUpperCase()
 				+ " "
 				+ bundle.getString("customer").toUpperCase(), headerFont);
-		Phrase phrase22 = new Phrase(bundle.getString("pdf_partita_iva").toUpperCase(), headerFont);
-		Phrase phrase23 = new Phrase(bundle.getString("pdf_agent").toUpperCase(), headerFont);
-		Phrase phrase24 = new Phrase(bundle.getString("pdf_number_receipt").toUpperCase(), headerFont);
+		Phrase phrase22 = new Phrase(bundle.getString("pdf_partita_iva")
+				.toUpperCase(), headerFont);
+		Phrase phrase23 = new Phrase(bundle.getString("pdf_agent")
+				.toUpperCase(), headerFont);
+		Phrase phrase24 = new Phrase(bundle.getString("pdf_number_receipt")
+				.toUpperCase(), headerFont);
 		Phrase phrase25 = new Phrase(bundle.getString("receipt_date")
 				.toUpperCase()
 				+ " "
 				+ bundle.getString("receipt").toUpperCase(), headerFont);
-		Phrase phrase26 = new Phrase(bundle.getString("pdf_number_page").toUpperCase(), headerFont);
+		Phrase phrase26 = new Phrase(bundle.getString("pdf_number_page")
+				.toUpperCase(), headerFont);
 		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase21, 24,
 				540, 0);
 		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase22, 100,
@@ -173,7 +201,7 @@ public class Format1DocumentReceipt implements DocumentReceipt {
 		Phrase phrase27 = new Phrase("aaqaqaq", normalFont);
 		Phrase phrase28 = new Phrase("cddcddcd", normalFont);
 		Phrase phrase29 = new Phrase("cnjcndkd", normalFont);
-		Phrase phrase30 = new Phrase(receipt.getNumber(), normalFont);
+		Phrase phrase30 = new Phrase(receipt.getNumber()+"", normalFont);
 		Phrase phrase31 = new Phrase(receipt.getDate(), normalFont);
 		Phrase phrase32 = new Phrase("tgsb", normalFont);
 		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase27, 36,
@@ -209,12 +237,16 @@ public class Format1DocumentReceipt implements DocumentReceipt {
 				.toUpperCase(), headerFont);
 		Phrase phrase39 = new Phrase(bundle.getString("article_um")
 				.toUpperCase(), headerFont);
-		Phrase phrase40 = new Phrase(bundle.getString("pdf_number_articles").toUpperCase(), headerFont);
+		Phrase phrase40 = new Phrase(bundle.getString("pdf_number_articles")
+				.toUpperCase(), headerFont);
 		Phrase phrase41 = new Phrase(bundle.getString("article_prize")
 				.toUpperCase(), headerFont);
-		Phrase phrase42 = new Phrase(bundle.getString("pdf_reduction").toUpperCase(), headerFont);
-		Phrase phrase43 = new Phrase(bundle.getString("pdf_amount").toUpperCase(), headerFont);
-		Phrase phrase44 = new Phrase(bundle.getString("pdf_iva").toUpperCase(), headerFont);
+		Phrase phrase42 = new Phrase(bundle.getString("pdf_reduction")
+				.toUpperCase(), headerFont);
+		Phrase phrase43 = new Phrase(bundle.getString("pdf_amount")
+				.toUpperCase(), headerFont);
+		Phrase phrase44 = new Phrase(bundle.getString("pdf_iva").toUpperCase(),
+				headerFont);
 		ColumnText.showTextAligned(canvas, Element.ALIGN_CENTER, phrase37, 47,
 				480, 0);
 		ColumnText.showTextAligned(canvas, Element.ALIGN_CENTER, phrase38, 126,
@@ -284,9 +316,12 @@ public class Format1DocumentReceipt implements DocumentReceipt {
 		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase82, 326,
 				i, 0);
 
-		Phrase phrase53 = new Phrase(bundle.getString("pdf_total_goods").toUpperCase(), headerFont);
-		Phrase phrase54 = new Phrase(bundle.getString("pdf_reduction").toUpperCase(), headerFont);
-		Phrase phrase55 = new Phrase(bundle.getString("pdf_total_net").toUpperCase(), headerFont);
+		Phrase phrase53 = new Phrase(bundle.getString("pdf_total_goods")
+				.toUpperCase(), headerFont);
+		Phrase phrase54 = new Phrase(bundle.getString("pdf_reduction")
+				.toUpperCase(), headerFont);
+		Phrase phrase55 = new Phrase(bundle.getString("pdf_total_net")
+				.toUpperCase(), headerFont);
 		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase53, 26,
 				i - 30, 0);
 		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase54, 104,
@@ -304,7 +339,8 @@ public class Format1DocumentReceipt implements DocumentReceipt {
 		ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, phrase58, 252,
 				i - 50, 0);
 
-		Phrase phrase59 = new Phrase(bundle.getString("pdf_expiries").toUpperCase(), headerFont);
+		Phrase phrase59 = new Phrase(bundle.getString("pdf_expiries")
+				.toUpperCase(), headerFont);
 		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase59, 36,
 				i - 70, 0);
 
@@ -328,10 +364,14 @@ public class Format1DocumentReceipt implements DocumentReceipt {
 		ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, phrase65, 256,
 				i - 130, 0);
 
-		Phrase phrase66 = new Phrase(bundle.getString("pdf_transport").toUpperCase(), headerFont);
-		Phrase phrase67 = new Phrase(bundle.getString("pdf_caching").toUpperCase(), headerFont);
-		Phrase phrase68 = new Phrase(bundle.getString("pdf_various_costs").toUpperCase(), headerFont);
-		Phrase phrase69 = new Phrase(bundle.getString("pdf_stamps").toUpperCase(), headerFont);
+		Phrase phrase66 = new Phrase(bundle.getString("pdf_transport")
+				.toUpperCase(), headerFont);
+		Phrase phrase67 = new Phrase(bundle.getString("pdf_caching")
+				.toUpperCase(), headerFont);
+		Phrase phrase68 = new Phrase(bundle.getString("pdf_various_costs")
+				.toUpperCase(), headerFont);
+		Phrase phrase69 = new Phrase(bundle.getString("pdf_stamps")
+				.toUpperCase(), headerFont);
 		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase66, 260,
 				i - 30, 0);
 		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase67, 340,
@@ -356,8 +396,10 @@ public class Format1DocumentReceipt implements DocumentReceipt {
 
 		Phrase phrase74 = new Phrase(bundle.getString("article_imponible")
 				.toUpperCase(), headerFont);
-		Phrase phrase75 = new Phrase(bundle.getString("pdf_tax").toUpperCase(), headerFont);
-		Phrase phrase76 = new Phrase(bundle.getString("pdf_total_receipt").toUpperCase(), headerFont);
+		Phrase phrase75 = new Phrase(bundle.getString("pdf_tax").toUpperCase(),
+				headerFont);
+		Phrase phrase76 = new Phrase(bundle.getString("pdf_total_receipt")
+				.toUpperCase(), headerFont);
 		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase74, 260,
 				i - 70, 0);
 		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase75, 352,
@@ -423,7 +465,7 @@ public class Format1DocumentReceipt implements DocumentReceipt {
 		table.setWidths(new float[] { 23.5f, 2, 5, 6, 4, 7, 3 });
 		table.setWidthPercentage(105);
 		cell = new PdfPCell();
-		cell.setPadding(j*8-2279);
+		cell.setPadding(j * 8 - 2279);
 		table.addCell(cell);
 		table.addCell(cell);
 		table.addCell(cell);

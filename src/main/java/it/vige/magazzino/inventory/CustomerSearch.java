@@ -43,73 +43,81 @@ import org.jboss.seam.solder.logging.TypedCategory;
 @Stateful
 @SessionScoped
 public class CustomerSearch {
-	
-    @Inject
-    @TypedCategory(CustomerSearch.class)
-    private CustomerLog log;
 
-    @PersistenceContext
-    private EntityManager em;
+	@Inject
+	@TypedCategory(CustomerSearch.class)
+	private CustomerLog log;
 
-    @Inject
-    private SearchCriteria criteria;
+	@PersistenceContext
+	private EntityManager em;
 
-    private boolean nextPageAvailable = false;
+	@Inject
+	private SearchCriteria criteria;
 
-    private List<Customer> customers = new ArrayList<Customer>();
+	private boolean nextPageAvailable = false;
 
-    public void find() {
-        criteria.firstPage();
-        queryCustomers(criteria);
-    }
+	private List<Customer> customers = new ArrayList<Customer>();
 
-    public void nextPage() {
-        criteria.nextPage();
-        queryCustomers(criteria);
-    }
+	public void find() {
+		criteria.firstPage();
+		queryCustomers(criteria);
+	}
 
-    public void previousPage() {
-        criteria.previousPage();
-        queryCustomers(criteria);
-    }
+	public void nextPage() {
+		criteria.nextPage();
+		queryCustomers(criteria);
+	}
 
-    public void currentPage() {
-        queryCustomers(criteria);
-    }
+	public void previousPage() {
+		criteria.previousPage();
+		queryCustomers(criteria);
+	}
 
-    @Produces
-    @Named
-    public List<Customer> getCustomers() {
-        return customers;
-    }
+	public void currentPage() {
+		queryCustomers(criteria);
+	}
 
-    public boolean isNextPageAvailable() {
-        return nextPageAvailable;
-    }
+	@Produces
+	@Named
+	public List<Customer> getCustomers() {
+		return customers;
+	}
 
-    public boolean isPreviousPageAvailable() {
-        return criteria.getPage() > 0;
-    }
+	public boolean isNextPageAvailable() {
+		return nextPageAvailable;
+	}
 
-    private void queryCustomers(final SearchCriteria criteria) {
-        CriteriaBuilder builder = em.getCriteriaBuilder();
-        CriteriaQuery<Customer> cquery = builder.createQuery(Customer.class);
-        Root<Customer> customer = cquery.from(Customer.class);
-        // QUESTION can like create the pattern for us?
-        cquery.select(customer).where(
-                builder.or(builder.like(builder.lower(customer.get(Customer_.name)), criteria.getSearchPattern()),
-                        builder.like(builder.lower(customer.get(Customer_.ragSocial)), criteria.getSearchPattern())));
+	public boolean isPreviousPageAvailable() {
+		return criteria.getPage() > 0;
+	}
 
-        List<Customer> results = em.createQuery(cquery).setMaxResults(criteria.getFetchSize())
-                .setFirstResult(criteria.getFetchOffset()).getResultList();
+	private void queryCustomers(final SearchCriteria criteria) {
+		CriteriaBuilder builder = em.getCriteriaBuilder();
+		CriteriaQuery<Customer> cquery = builder.createQuery(Customer.class);
+		Root<Customer> customer = cquery.from(Customer.class);
+		// QUESTION can like create the pattern for us?
+		cquery.select(customer).where(
+				builder.or(builder.like(
+						builder.lower(customer.get(Customer_.name)),
+						criteria.getSearchPattern()), builder.like(
+						builder.lower(customer.get(Customer_.ragSocial)),
+						criteria.getSearchPattern()), builder.like(
+						builder.lower(customer.get(Customer_.iva)),
+						criteria.getSearchPattern())));
 
-        nextPageAvailable = results.size() > criteria.getPageSize();
-        if (nextPageAvailable) {
-            // NOTE create new ArrayList since subList creates unserializable list
-            customers = new ArrayList<Customer>(results.subList(0, criteria.getPageSize()));
-        } else {
-            customers = results;
-        }
-        log.searchExecuted(customers);
-    }
+		List<Customer> results = em.createQuery(cquery)
+				.setMaxResults(criteria.getFetchSize())
+				.setFirstResult(criteria.getFetchOffset()).getResultList();
+
+		nextPageAvailable = results.size() > criteria.getPageSize();
+		if (nextPageAvailable) {
+			// NOTE create new ArrayList since subList creates unserializable
+			// list
+			customers = new ArrayList<Customer>(results.subList(0,
+					criteria.getPageSize()));
+		} else {
+			customers = results;
+		}
+		log.searchExecuted(customers);
+	}
 }

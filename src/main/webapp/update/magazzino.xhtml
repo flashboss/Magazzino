@@ -86,6 +86,18 @@
 							value="#{magazzinoSelection.selectedJar.dateDoc}" />
 					</p:input>
 
+					<p:input id="iva" label="#{bundles.messages.magazzino_iva}">
+						<h:inputText id="input" value="#{magazzinoSelection.selectedJar.iva}" />
+					</p:input>
+
+					<p:input id="capSoc" label="#{bundles.messages.magazzino_capsoc}">
+						<h:inputText id="input" value="#{magazzinoSelection.selectedJar.dateDoc}" />
+					</p:input>
+
+					<p:input id="reaPI" label="#{bundles.messages.magazzino_reapi}">
+						<h:inputText id="input" value="#{magazzinoSelection.selectedJar.reaPI}" />
+					</p:input>
+
 					<div class="buttonBox">
 						<h:commandButton id="magazzinoUpdater"
 							value="#{bundles.messages.template_linkUpdate}"

@@ -74,7 +74,7 @@ public class ReceiptRegister {
             messages.info(new DefaultBundleKey("receipt_registered"))
                     .defaults("You have been successfully registered as the receipt {0}!")
                     .params(newReceipt.getNumber());
-            log.receiptConfirmed(newReceipt.getNumber(), newReceipt.getCause());
+            log.receiptConfirmed(newReceipt.getNumber()+"", newReceipt.getCause());
         } else {
             registrationInvalid = true;
         }
@@ -125,7 +125,7 @@ public class ReceiptRegister {
             messages.warn(new BundleKey("messages", "account_numberTaken"))
                     .defaults("The number '{0}' is already taken. Please choose another number.")
                     .targets(numberInput.getClientId()).params(newReceipt.getNumber());
-            log.receiptAvailable(existing.getNumber(), existing != null);
+            log.receiptAvailable(existing.getNumber()+"", existing != null);
             return false;
         }
 
