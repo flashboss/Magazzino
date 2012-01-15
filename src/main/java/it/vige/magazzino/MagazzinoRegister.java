@@ -60,7 +60,7 @@ public class MagazzinoRegister {
 
     private UIInput numberInput;
 
-    private final Magazzino newMagazzino = new Magazzino();
+    private final Magazzino newJar = new Magazzino();
 
     private boolean registered;
 
@@ -69,12 +69,12 @@ public class MagazzinoRegister {
     public void register() {
         if (verifyNumberIsAvailable()) {
             registered = true;
-            em.persist(newMagazzino);
+            em.persist(newJar);
 
             messages.info(new DefaultBundleKey("magazzino_registered"))
                     .defaults("You have been successfully registered as the jar {0}!")
-                    .params(newMagazzino.getNumber());
-            log.jarConfirmed(newMagazzino.getNumber()+"", newMagazzino.getCodCustomer());
+                    .params(newJar.getNumber());
+            log.jarConfirmed(newJar.getNumber()+"", newJar.getCodCustomer());
         } else {
             registrationInvalid = true;
         }
@@ -103,8 +103,8 @@ public class MagazzinoRegister {
 
     @Produces
     @Named
-    public Magazzino getNewMagazzino() {
-        return newMagazzino;
+    public Magazzino getNewJar() {
+        return newJar;
     }
 
     public boolean isRegistered() {
@@ -120,11 +120,11 @@ public class MagazzinoRegister {
     }
 
     private boolean verifyNumberIsAvailable() {
-        Magazzino existing = em.find(Magazzino.class, newMagazzino.getNumber());
+        Magazzino existing = em.find(Magazzino.class, newJar.getNumber());
         if (existing != null) {
             messages.warn(new BundleKey("messages", "account_numberTaken"))
                     .defaults("The number '{0}' is already taken. Please choose another number.")
-                    .targets(numberInput.getClientId()).params(newMagazzino.getNumber());
+                    .targets(numberInput.getClientId()).params(newJar.getNumber());
             log.jarAvailable(existing.getNumber()+"", existing != null);
             return false;
         }

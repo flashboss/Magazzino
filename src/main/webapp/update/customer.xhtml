@@ -6,6 +6,8 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:s="http://jboss.org/seam/faces"
 	xmlns:p="http://java.sun.com/jsf/composite/components/property"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
 	template="/WEB-INF/layout/template.xhtml">
 
 	<ui:param name="pageClass" value="home" />
@@ -53,6 +55,38 @@
 						<h:inputText id="input"
 							value="#{customerSelection.selectedCustomer.iva}" />
 					</p:input>
+
+					<div class="dataItem">
+						<div class="dataLabel">File Upload:</div>
+						<div class="data">
+							<rich:fileUpload fileUploadListener="#{fileUpload.listener}"
+								addLabel="Click to Attach Document" immediateUpload="false"
+								maxFilesQuantity="3" acceptedTypes="#{fileUpload.fileTypesAllowed}">
+								<a4j:ajax event="uploadcomplete" execute="@none"
+									render="fileInfoPanel" />
+							</rich:fileUpload>
+						</div>
+						<a4j:outputPanel id="fileInfoPanel">
+							<h:panelGroup rendered="#{!empty fileUpload.files}">
+								<div>
+									Uploaded Files:<br />
+									<ul>
+										<a4j:repeat value="#{fileUpload.files}" var="theFile">
+											<li>#{theFile.name}</li>
+										</a4j:repeat>
+									</ul>
+								</div>
+							</h:panelGroup>
+						</a4j:outputPanel>
+					</div>
+
+					<div>
+						<h:commandButton value="Clear Uploaded Files"
+							action="#{fileUpload.clearUploadData}" />
+						#{' '}
+						<h:commandButton value="Save Files"
+							action="#{fileUpload.save}" />
+					</div>
 
 					<div class="buttonBox">
 						<h:commandButton id="customerUpdater"
