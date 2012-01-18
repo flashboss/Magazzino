@@ -1,0 +1,59 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:cc="http://java.sun.com/jsf/composite"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+
+	<cc:interface componentType="org.jboss.seam.faces.InputContainer">
+		<cc:attribute name="label" required="true" />
+		<cc:attribute name="click" required="true" />
+		<cc:attribute name="listLabel" required="true" />
+	</cc:interface>
+
+	<cc:implementation>
+		<script type="text/javascript">
+			var onclear = function(event) {
+				var data = event.rf.data;
+				for ( var i in data) {
+					var item = data[i];
+					removeFile(item.name);
+				}
+			}
+		</script>
+		<div class="dataItem">
+			<div class="dataLabel">#{cc.attrs.label}:</div>
+			<div class="data">
+				<rich:fileUpload fileUploadListener="#{fileUpload.listener}"
+					addLabel="#{cc.attrs.click}" maxFilesQuantity="2"
+					acceptedTypes="#{fileUpload.fileTypesAllowed}"
+					onclear="onclear(event)">
+					<a4j:ajax event="uploadcomplete" execute="@none"
+						render="fileInfoPanel" />
+				</rich:fileUpload>
+				<a4j:jsFunction name="removeFile" render="fileInfoPanel"
+					action="#{fileUpload.clearUploadData}">
+					<a4j:param name="clearedFile" assignTo="#{fileUpload.fileName}" />
+				</a4j:jsFunction>
+			</div>
+			<a4j:outputPanel id="fileInfoPanel">
+				<h:panelGroup rendered="#{!empty fileUpload.files}">
+					<div>
+						#{cc.attrs.listLabel}:<br />
+						<ul>
+							<a4j:repeat value="#{fileUpload.files}" var="theFile">
+								<li>#{theFile.name}</li>
+							</a4j:repeat>
+						</ul>
+					</div>
+				</h:panelGroup>
+			</a4j:outputPanel>
+		</div>
+
+	</cc:implementation>
+
+</ui:composition>
