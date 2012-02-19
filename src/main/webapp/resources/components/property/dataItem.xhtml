@@ -13,6 +13,7 @@
 		<cc:attribute name="label" required="true" />
 		<cc:attribute name="click" required="true" />
 		<cc:attribute name="listLabel" required="true" />
+		<cc:attribute name="remove" required="true" />
 	</cc:interface>
 
 	<cc:implementation>
@@ -29,8 +30,8 @@
 			<div class="dataLabel">#{cc.attrs.label}:</div>
 			<div class="data">
 				<rich:fileUpload fileUploadListener="#{fileUpload.listener}"
-					addLabel="#{cc.attrs.click}" maxFilesQuantity="2"
-					acceptedTypes="#{fileUpload.fileTypesAllowed}"
+					data="#{fileUpload.files}" addLabel="#{cc.attrs.click}"
+					maxFilesQuantity="2" acceptedTypes="#{fileUpload.fileTypesAllowed}"
 					onclear="onclear(event)">
 					<a4j:ajax event="uploadcomplete" execute="@none"
 						render="fileInfoPanel" />
@@ -46,7 +47,11 @@
 						#{cc.attrs.listLabel}:<br />
 						<ul>
 							<a4j:repeat value="#{fileUpload.files}" var="theFile">
-								<li>#{theFile.name}</li>
+								<li>#{theFile.name} - <a4j:commandLink
+										action="#{fileUpload.clearUploadData}"
+										reRender="fileInfoPanel" value="#{cc.attrs.remove}"
+										rendered="#{fileUpload.size>0}" />
+								</li>
 							</a4j:repeat>
 						</ul>
 					</div>

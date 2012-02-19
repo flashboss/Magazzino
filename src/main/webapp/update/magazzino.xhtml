@@ -87,19 +87,25 @@
 					</p:input>
 
 					<p:input id="iva" label="#{bundles.messages.magazzino_iva}">
-						<h:inputText id="input" value="#{magazzinoSelection.selectedJar.iva}" />
+						<h:inputText id="input"
+							value="#{magazzinoSelection.selectedJar.iva}" />
 					</p:input>
 
 					<p:input id="capSoc" label="#{bundles.messages.magazzino_capsoc}">
-						<h:inputText id="input" value="#{magazzinoSelection.selectedJar.dateDoc}" />
+						<h:inputText id="input"
+							value="#{magazzinoSelection.selectedJar.dateDoc}" />
 					</p:input>
 
 					<p:input id="reaPI" label="#{bundles.messages.magazzino_reapi}">
-						<h:inputText id="input" value="#{magazzinoSelection.selectedJar.reaPI}" />
+						<h:inputText id="input"
+							value="#{magazzinoSelection.selectedJar.reaPI}" />
 					</p:input>
 
-					<p:dataItem id="dataItem" label="File Upload"
-						click="Click to Attach Document" listLabel="Uploaded Files" />
+					<p:dataItem id="dataItem"
+						label="#{bundles.messages.magazzino_dataitem_title}"
+						click="#{bundles.messages.magazzino_dataitem_click}"
+						listLabel="#{bundles.messages.magazzino_dataitem_list}"
+						remove="#{bundles.messages.magazzino_dataitem_remove}" />
 
 					<div class="buttonBox">
 						<h:commandButton id="magazzinoUpdater"

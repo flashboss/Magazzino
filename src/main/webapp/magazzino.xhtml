@@ -88,8 +88,11 @@
 						<h:inputText id="input" value="#{newJar.reaPI}" />
 					</p:input>
 
-					<p:dataItem id="dataItem" label="File Upload"
-						click="Click to Attach Document" listLabel="Uploaded Files" />
+					<p:dataItem id="dataItem"
+						label="#{bundles.messages.magazzino_dataitem_title}"
+						click="#{bundles.messages.magazzino_dataitem_click}"
+						listLabel="#{bundles.messages.magazzino_dataitem_list}"
+						remove="#{bundles.messages.magazzino_dataitem_remove}" />
 
 					<div class="buttonBox">
 						<h:commandButton id="magazzinoRegister"

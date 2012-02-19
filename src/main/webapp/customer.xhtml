@@ -50,8 +50,11 @@
 						<h:inputText id="input" value="#{newCustomer.iva}" />
 					</p:input>
 
-					<p:dataItem id="dataItem" label="File Upload"
-						click="Click to Attach Document" listLabel="Uploaded Files" />
+					<p:dataItem id="dataItem"
+						label="#{bundles.messages.customer_dataitem_title}"
+						click="#{bundles.messages.customer_dataitem_click}"
+						listLabel="#{bundles.messages.customer_dataitem_list}"
+						remove="#{bundles.messages.customer_dataitem_remove}" />
 
 					<div class="buttonBox">
 						<h:commandButton id="customerRegister"
