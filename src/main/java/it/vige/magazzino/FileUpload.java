@@ -69,6 +69,10 @@ public class FileUpload implements Serializable {
 		}
 	}
 
+	public void clearAllUploadData() {
+		files.removeAll(files);
+	}
+
 	public int getSize() {
 
 		if (getFiles().size() > 0) {
