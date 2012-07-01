@@ -14,6 +14,7 @@
 		<cc:attribute name="click" required="true" />
 		<cc:attribute name="listLabel" required="true" />
 		<cc:attribute name="remove" required="true" />
+		<cc:attribute name="dataContainer" required="true" />
 	</cc:interface>
 
 	<cc:implementation>
@@ -30,29 +31,29 @@
 			<div class="dataLabel">#{cc.attrs.label}:</div>
 			<div class="data">
 				<rich:fileUpload id="fileUploadOp"
-					fileUploadListener="#{fileUpload.listener}"
-					data="#{fileUpload.files}" addLabel="#{cc.attrs.click}"
-					maxFilesQuantity="2" acceptedTypes="#{fileUpload.fileTypesAllowed}"
+					fileUploadListener="#{cc.attrs.dataContainer.listener}"
+					data="#{cc.attrs.dataContainer.files}" addLabel="#{cc.attrs.click}"
+					maxFilesQuantity="2" acceptedTypes="#{cc.attrs.dataContainer.fileTypesAllowed}"
 					onclear="onclear(event)">
 					<a4j:ajax event="uploadcomplete" execute="@none"
 						render="fileInfoPanel" />
 				</rich:fileUpload>
 				<a4j:jsFunction name="removeFile" render="fileInfoPanel"
-					action="#{fileUpload.clearUploadData}">
-					<a4j:param name="clearedFile" assignTo="#{fileUpload.fileName}" />
+					action="#{cc.attrs.dataContainer.clearUploadData}">
+					<a4j:param name="clearedFile" assignTo="#{cc.attrs.dataContainer.fileName}" />
 				</a4j:jsFunction>
 			</div>
 			<a4j:outputPanel id="fileInfoPanel">
-				<h:panelGroup rendered="#{!empty fileUpload.files}">
+				<h:panelGroup rendered="#{!empty cc.attrs.dataContainer.files}">
 					<div>
 						#{cc.attrs.listLabel}:<br />
 						<ul>
-							<a4j:repeat value="#{fileUpload.files}" var="theFile">
+							<a4j:repeat value="#{cc.attrs.dataContainer.files}" var="theFile">
 								<li>#{theFile.name}</li>
 							</a4j:repeat>
-							<a4j:commandLink action="#{fileUpload.clearAllUploadData}"
+							<a4j:commandLink action="#{cc.attrs.dataContainer.clearAllUploadData}"
 								reRender="fileInfoPanel,fileUploadOp" value="#{cc.attrs.remove}"
-								rendered="#{fileUpload.size>0}" immediate="true" />
+								rendered="#{cc.attrs.dataContainer.size>0}" immediate="true" />
 						</ul>
 					</div>
 				</h:panelGroup>

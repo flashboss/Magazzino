@@ -16,10 +16,13 @@
  */
 package it.vige.magazzino.model;
 
-import java.io.Serializable;
+import it.vige.magazzino.FileUpload;
+
+import java.util.ArrayList;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -38,7 +41,7 @@ import org.jboss.seam.solder.core.Veto;
 @Entity
 @Table(name = "magazzino")
 @Veto
-public class Magazzino implements Serializable {
+public class Magazzino extends FileUpload {
 	private static final long serialVersionUID = -602933026033932730L;
 	@OneToOne
 	private Address address;
@@ -55,6 +58,8 @@ public class Magazzino implements Serializable {
 	private String iva;
 	private String capSoc;
 	private String reaPI;
+	@OneToMany
+	private ArrayList<Data> files;
 
 	public Magazzino() {
 	}
@@ -202,6 +207,14 @@ public class Magazzino implements Serializable {
 
 	public void setReaPI(String reaPI) {
 		this.reaPI = reaPI;
+	}
+
+	public ArrayList<Data> getFiles() {
+		return files;
+	}
+
+	public void setFiles(ArrayList<Data> files) {
+		this.files = files;
 	}
 
 	@Override

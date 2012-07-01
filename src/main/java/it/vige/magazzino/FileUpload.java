@@ -1,27 +1,23 @@
 package it.vige.magazzino;
 
+import it.vige.magazzino.model.Data;
+
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.application.FacesMessage.Severity;
 import javax.faces.context.FacesContext;
-import javax.inject.Named;
 
 import org.richfaces.event.FileUploadEvent;
 import org.richfaces.model.UploadedFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@Named
-@SessionScoped
-public class FileUpload implements Serializable {
+public abstract class FileUpload implements DataContainer {
 
 	private static final long serialVersionUID = -4260367986164333712L;
 	private static final Logger log = LoggerFactory.getLogger(FileUpload.class);
@@ -30,8 +26,6 @@ public class FileUpload implements Serializable {
 	public static final String FILE_DIR = "/tmp/fileUpload/";
 
 	private String fileTypesAllowed = "jpg,gif,bmp";
-
-	private List<Data> files = new ArrayList<Data>();
 
 	private String fileName;
 
@@ -54,12 +48,12 @@ public class FileUpload implements Serializable {
 		file.setLength(item.getData().length);
 		file.setName(item.getName());
 		file.setData(item.getData());
-		files.add(file);
+		getFiles().add(file);
 		log.debug("Added File: " + file.getName());
 	}
 
 	public void clearUploadData() {
-		Iterator<Data> i = files.iterator();
+		Iterator<Data> i = getFiles().iterator();
 		while (i.hasNext()) {
 			Data file = i.next();
 			if (file.getName().equals(this.fileName)) {
@@ -70,7 +64,7 @@ public class FileUpload implements Serializable {
 	}
 
 	public void clearAllUploadData() {
-		files.removeAll(files);
+		getFiles().removeAll(getFiles());
 	}
 
 	public int getSize() {
@@ -86,13 +80,9 @@ public class FileUpload implements Serializable {
 		return System.currentTimeMillis();
 	}
 
-	public List<Data> getFiles() {
-		return files;
-	}
+	public abstract ArrayList<Data> getFiles();
 
-	public void setFiles(List<Data> files) {
-		this.files = files;
-	}
+	public abstract void setFiles(ArrayList<Data> files);
 
 	public int getUploadsAvailable() {
 		return MAX_FILES_AVAILABLE;
