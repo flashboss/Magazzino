@@ -258,7 +258,7 @@ public class MagazzinoAgentTest {
 				new java.io.FileOutputStream("/Users/flashboss/prova"));
 		oos.writeObject(magazzino);
 		oos.close();
-		byte[] bytes = new byte[1700];
+		byte[] bytes = new byte[17000];
 		java.io.FileInputStream fis = new java.io.FileInputStream(
 				"/Users/flashboss/prova");
 		fis.read(bytes);

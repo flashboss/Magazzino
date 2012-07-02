@@ -178,7 +178,7 @@ public class CustomerAgentTest {
 				new java.io.FileOutputStream("/Users/flashboss/prova"));
 		oos.writeObject(customer);
 		oos.close();
-		byte[] bytes = new byte[1410];
+		byte[] bytes = new byte[13100];
 		java.io.FileInputStream fis = new java.io.FileInputStream(
 				"/Users/flashboss/prova");
 		fis.read(bytes);

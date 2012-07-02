@@ -16,9 +16,11 @@
  */
 package it.vige.magazzino.pdf;
 
+import it.vige.magazzino.model.Data;
 import it.vige.magazzino.model.Receipt;
 
 import java.io.ByteArrayOutputStream;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.enterprise.inject.Model;
@@ -67,14 +69,21 @@ public class Format1DocumentReceipt implements DocumentReceipt {
 		Font headerFont = FontFactory.getFont(FontFactory.TIMES, 9);
 
 		PdfContentByte canvas = writer.getDirectContentUnder();
-		Image image1 = Image.getInstance("/Users/flashboss/Desktop/logo.gif");
-		image1.setAbsolutePosition(166, 738);
-		image1.scalePercent(60);
-		document.add(image1);
-		Image image2 = Image.getInstance("/Users/flashboss/Desktop/logo.gif");
-		image2.setAbsolutePosition(326, 748);
-		image2.scalePercent(40);
-		document.add(image2);
+		List<Data> imagesJar = receipt.getJar().getFiles();
+
+		if (imagesJar != null && imagesJar.size() > 0) {
+			Image image1 = Image.getInstance(imagesJar.get(0).getData());
+			image1.setAbsolutePosition(166, 738);
+			image1.scalePercent(60);
+			document.add(image1);
+			if (imagesJar.size() > 1) {
+				Image image2 = Image.getInstance(imagesJar.get(1).getData());
+				image2.setAbsolutePosition(326, 748);
+				image2.scalePercent(40);
+				document.add(image2);
+			}
+		}
+
 		Phrase phrase1 = new Phrase(receipt.getJar().getRagSoc1(), normalFont);
 		Phrase phrase2 = new Phrase(receipt.getJar().getAddress().getAddress()
 				+ " " + receipt.getJar().getAddress().getCivicNumber(),
@@ -138,10 +147,14 @@ public class Format1DocumentReceipt implements DocumentReceipt {
 		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase15, 36,
 				604, 0);
 
-		Image image3 = Image.getInstance("/Users/flashboss/Desktop/logo.gif");
-		image3.setAbsolutePosition(212, 664);
-		image3.scalePercent(40);
-		document.add(image3);
+		List<Data> imagesCustomer = receipt.getCustomer().getFiles();
+
+		if (imagesCustomer != null && imagesCustomer.size() > 0) {
+			Image image3 = Image.getInstance(imagesCustomer.get(0).getData());
+			image3.setAbsolutePosition(212, 664);
+			image3.scalePercent(40);
+			document.add(image3);
+		}
 
 		Phrase phrase16 = new Phrase(receipt.getCustomer().getName(),
 				normalFont);
@@ -201,7 +214,7 @@ public class Format1DocumentReceipt implements DocumentReceipt {
 		Phrase phrase27 = new Phrase("aaqaqaq", normalFont);
 		Phrase phrase28 = new Phrase("cddcddcd", normalFont);
 		Phrase phrase29 = new Phrase("cnjcndkd", normalFont);
-		Phrase phrase30 = new Phrase(receipt.getNumber()+"", normalFont);
+		Phrase phrase30 = new Phrase(receipt.getNumber() + "", normalFont);
 		Phrase phrase31 = new Phrase(receipt.getDate(), normalFont);
 		Phrase phrase32 = new Phrase("tgsb", normalFont);
 		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase27, 36,
