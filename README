@@ -9,3 +9,8 @@ git commit src -m "comment!"
 git commit pom.xml -m "comment!"
 
 git push
+
+to install it in jboss:
+
+export JBOSS_HOME=.....
+mvn install jboss:hard-deploy
