@@ -14,7 +14,7 @@
 
 	<groupId>it.vige</groupId>
 	<artifactId>magazzino</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<packaging>war</packaging>
 	<name>Magazzino</name>
 	<description>Magazzino Application</description>
