@@ -1,8 +1,7 @@
 package it.vige.magazzino.converter;
 
+import it.vige.magazzino.inventory.all.ArticleAllSearch;
 import it.vige.magazzino.model.Article;
-
-import java.util.List;
 
 import javax.faces.component.UIComponent;
 import javax.faces.convert.FacesConverter;
@@ -14,12 +13,12 @@ import org.jboss.seam.faces.conversion.Converter;
 public class ArticleConverter extends Converter<Article> {
 
 	@Inject
-	private List<Article> articles;
+	private ArticleAllSearch articleAllSearch;
 
 	@Override
 	public Article toObject(UIComponent arg0, String arg1) {
 		// TODO Auto-generated method stub
-		for (Article article : articles)
+		for (Article article : articleAllSearch.getAllArticles())
 			if (article.getCode().equals(arg1))
 				return article;
 		return null;

@@ -14,8 +14,8 @@
 		<f:metadata>
 			<f:event type="preRenderView"
 				listener="#{receiptRegister.notifyIfRegistrationIsInvalid}" />
-			<f:event type="preRenderView" listener="#{magazzinoSearch.find}" />
-			<f:event type="preRenderView" listener="#{customerSearch.find}" />
+			<f:event type="preRenderView" listener="#{magazzinoAllSearch.find}" />
+			<f:event type="preRenderView" listener="#{customerAllSearch.find}" />
 		</f:metadata>
 	</ui:define>
 
@@ -55,14 +55,14 @@
 					<p:input id="jar" label="#{bundles.messages.magazzino}">
 						<h:selectOneMenu id="select" value="#{newReceipt.jar}"
 							converter="magazzinoConverter">
-							<f:selectItems value="#{jars}" />
+							<f:selectItems value="#{magazzinoAllSearch.allJars}" />
 						</h:selectOneMenu>
 					</p:input>
 
 					<p:input id="customer" label="#{bundles.messages.customer}">
 						<h:selectOneMenu id="select" value="#{newReceipt.customer}"
 							converter="customerConverter">
-							<f:selectItems value="#{customers}" />
+							<f:selectItems value="#{customerAllSearch.allCustomers}" />
 						</h:selectOneMenu>
 					</p:input>
 

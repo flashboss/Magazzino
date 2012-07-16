@@ -1,7 +1,6 @@
 package it.vige.magazzino.converter;
 
-import java.util.List;
-
+import it.vige.magazzino.inventory.all.MagazzinoAllSearch;
 import it.vige.magazzino.model.Magazzino;
 
 import javax.faces.component.UIComponent;
@@ -14,12 +13,12 @@ import org.jboss.seam.faces.conversion.Converter;
 public class MagazzinoConverter extends Converter<Magazzino> {
 
 	@Inject
-	private List<Magazzino> jars;
+	private MagazzinoAllSearch magazzinoAllSearch;
 
 	@Override
 	public Magazzino toObject(UIComponent arg0, String arg1) {
 		// TODO Auto-generated method stub
-		for (Magazzino jar : jars)
+		for (Magazzino jar : magazzinoAllSearch.getAllJars())
 			if (jar.getNumber().equals(arg1))
 				return jar;
 		return null;

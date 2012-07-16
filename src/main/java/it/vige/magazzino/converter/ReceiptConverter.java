@@ -1,7 +1,6 @@
 package it.vige.magazzino.converter;
 
-import java.util.List;
-
+import it.vige.magazzino.inventory.all.ReceiptAllSearch;
 import it.vige.magazzino.model.Receipt;
 
 import javax.faces.component.UIComponent;
@@ -14,12 +13,12 @@ import org.jboss.seam.faces.conversion.Converter;
 public class ReceiptConverter extends Converter<Receipt> {
 
 	@Inject
-	private List<Receipt> receipts;
+	private ReceiptAllSearch receiptAllSearch;
 
 	@Override
 	public Receipt toObject(UIComponent arg0, String arg1) {
 		// TODO Auto-generated method stub
-		for (Receipt receipt : receipts)
+		for (Receipt receipt : receiptAllSearch.getAllReceipts())
 			if (receipt.getNumber().equals(arg1))
 				return receipt;
 		return null;

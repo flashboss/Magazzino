@@ -1,7 +1,6 @@
 package it.vige.magazzino.converter;
 
-import java.util.List;
-
+import it.vige.magazzino.inventory.all.CustomerAllSearch;
 import it.vige.magazzino.model.Customer;
 
 import javax.faces.component.UIComponent;
@@ -14,12 +13,12 @@ import org.jboss.seam.faces.conversion.Converter;
 public class CustomerConverter extends Converter<Customer> {
 
 	@Inject
-	private List<Customer> customers;
+	private CustomerAllSearch customerAllSearch;
 
 	@Override
 	public Customer toObject(UIComponent arg0, String arg1) {
 		// TODO Auto-generated method stub
-		for (Customer jar : customers)
+		for (Customer jar : customerAllSearch.getAllCustomers())
 			if (jar.getCode().equals(arg1))
 				return jar;
 		return null;

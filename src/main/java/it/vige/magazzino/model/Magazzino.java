@@ -228,7 +228,7 @@ public class Magazzino extends FileUpload {
 		if (!(arg0 instanceof Magazzino))
 			return super.equals(arg0);
 		else
-			return this.getNumber() == ((Magazzino) arg0).getNumber();
+			return this.getNumber().equals(((Magazzino) arg0).getNumber());
 	}
 
 	@Override
