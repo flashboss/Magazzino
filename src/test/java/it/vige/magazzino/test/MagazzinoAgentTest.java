@@ -16,19 +16,16 @@
  */
 package it.vige.magazzino.test;
 
+import static it.vige.magazzino.test.Dependencies.JAVAEE;
 import static it.vige.magazzino.test.Dependencies.INTERNATIONAL;
 import static it.vige.magazzino.test.Dependencies.SOLDER;
-import it.vige.magazzino.i18n.DefaultBundleKey;
-import it.vige.magazzino.log.ArticleLog;
-import it.vige.magazzino.log.CustomerLog;
-import it.vige.magazzino.log.MagazzinoLog;
-import it.vige.magazzino.log.ReceiptLog;
+import static it.vige.magazzino.test.Dependencies.RICHFACES;
+import it.vige.magazzino.DataContainer;
 import it.vige.magazzino.model.Address;
 import it.vige.magazzino.model.Article;
 import it.vige.magazzino.model.Customer;
 import it.vige.magazzino.model.Data;
 import it.vige.magazzino.model.Magazzino;
-import it.vige.magazzino.model.Receipt;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -58,13 +55,11 @@ public class MagazzinoAgentTest {
 	public static WebArchive createDeployment() {
 		return ShrinkWrap
 				.create(WebArchive.class, "test.war")
-				.addPackage(Magazzino.class.getPackage())
-				.addClasses(Receipt.class, Magazzino.class, Customer.class,
-						Article.class, DefaultBundleKey.class,
-						AuthenticatedUserProducer.class, ArticleLog.class,
-						CustomerLog.class, MagazzinoLog.class, ReceiptLog.class)
+				.addPackages(true, DataContainer.class.getPackage())
+				.addAsLibraries(JAVAEE)
 				.addAsLibraries(SOLDER)
 				.addAsLibraries(INTERNATIONAL)
+				.addAsLibraries(RICHFACES)
 				.addAsWebInfResource("test-persistence.xml",
 						"classes/META-INF/persistence.xml")
 				.addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
@@ -94,7 +89,7 @@ public class MagazzinoAgentTest {
 	public void createMagazzino() throws Exception {
 
 		byte[] image = image();
-		
+
 		magazzino("21344", "01/06/1999", "23432", "cause 1", "compensation 1",
 				"2654654", "rag soc 1", "rag soc 2", "111", "01/05/1998",
 				"4343289479", "39.000,00 Û", "70075", "4353", "piazza Clodio",

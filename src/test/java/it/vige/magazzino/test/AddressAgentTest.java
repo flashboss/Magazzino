@@ -16,18 +16,11 @@
  */
 package it.vige.magazzino.test;
 
-import static it.vige.magazzino.test.Dependencies.INTERNATIONAL;
-import static it.vige.magazzino.test.Dependencies.SOLDER;
-import it.vige.magazzino.i18n.DefaultBundleKey;
-import it.vige.magazzino.log.ArticleLog;
-import it.vige.magazzino.log.CustomerLog;
-import it.vige.magazzino.log.MagazzinoLog;
-import it.vige.magazzino.log.ReceiptLog;
+import static it.vige.magazzino.test.Dependencies.ALL;
+import it.vige.magazzino.DataContainer;
 import it.vige.magazzino.model.Address;
 import it.vige.magazzino.model.Article;
 import it.vige.magazzino.model.Customer;
-import it.vige.magazzino.model.Magazzino;
-import it.vige.magazzino.model.Receipt;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -48,13 +41,8 @@ public class AddressAgentTest {
 	public static WebArchive createDeployment() {
 		return ShrinkWrap
 				.create(WebArchive.class, "test.war")
-				.addPackage(Magazzino.class.getPackage())
-				.addClasses(Receipt.class, Magazzino.class, Customer.class,
-						Article.class, DefaultBundleKey.class,
-						AuthenticatedUserProducer.class, ArticleLog.class,
-						CustomerLog.class, MagazzinoLog.class, ReceiptLog.class)
-				.addAsLibraries(SOLDER)
-				.addAsLibraries(INTERNATIONAL)
+				.addPackages(true, DataContainer.class.getPackage())
+				.addAsLibraries(ALL)
 				.addAsWebInfResource("test-persistence.xml",
 						"classes/META-INF/persistence.xml")
 				.addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
@@ -71,10 +59,10 @@ public class AddressAgentTest {
 		em.joinTransaction();
 		em.createQuery("delete from Article").executeUpdate();
 		em.createQuery("delete from Receipt").executeUpdate();
-		em.persist(new Article("6767676",
-				"3342 Peachtree Road NE"));
+		em.persist(new Article("6767676", "3342 Peachtree Road NE"));
 		em.createQuery("delete from User").executeUpdate();
-		em.persist(new Customer("3246565", "ike", "ike@mailinator.com", "545454"));
+		em.persist(new Customer("3246565", "ike", "ike@mailinator.com",
+				"545454"));
 		utx.commit();
 	}
 
@@ -115,27 +103,25 @@ public class AddressAgentTest {
 		address("222", "viale Mazzini", "00114", "531446", "3463165736",
 				"hgdfgsfg@vige.it", "fdfd.com", "67", "LO", "Setteville",
 				"London");
-		address("76435", "piazza Bologna", "00234", "54253516457", "8871115645732",
-				"afadfsd@vige.it", "wwqewr.com", "33", "BO", "Settecamini",
-				"Bologna");
+		address("76435", "piazza Bologna", "00234", "54253516457",
+				"8871115645732", "afadfsd@vige.it", "wwqewr.com", "33", "BO",
+				"Settecamini", "Bologna");
 		address("23567", "viale Giulio Cesare", "00987", "896969687",
 				"32456733", "hdhhjdghf@vige.it", "qasas.com", "6526", "FI",
 				"Tivoli", "Florence");
 		address("876", "via Tibutina", "01234", "23423423", "2436233453",
 				"fdsfsdfsd@vige.it", "ffkkfkf.com", "34", "PA", "Francoforte",
 				"Paris");
-		address("345", "via Prenestina", "00152", "87584734637",
-				"84562354656", "gdhdgjfgj@vige.it", "ppopo.com", "124", "SH",
-				"Zagarolo", "Shangai");
-		address("764", "piazza Tuscolo", "00212", "32678475323",
-				"74684736433", "fsdfsdfsd@vige.it", "ewe.com", "716", "BO",
-				"Nola", "Bombay");
+		address("345", "via Prenestina", "00152", "87584734637", "84562354656",
+				"gdhdgjfgj@vige.it", "ppopo.com", "124", "SH", "Zagarolo",
+				"Shangai");
+		address("764", "piazza Tuscolo", "00212", "32678475323", "74684736433",
+				"fsdfsdfsd@vige.it", "ewe.com", "716", "BO", "Nola", "Bombay");
 		address("3454", "via Tuscolana", "09833", "42675473364", "754684333",
 				"tytre@vige.it", "swswd.com", "546", "RM", "Castelvolturno",
 				"Rome");
-		address("7654", "via Serafini", "00999", "534748622",
-				"7568473634", "ewrete@vige.it", "ewewwq.com", "616", "KY",
-				"Tropea", "Kyoto");
+		address("7654", "via Serafini", "00999", "534748622", "7568473634",
+				"ewrete@vige.it", "ewewwq.com", "616", "KY", "Tropea", "Kyoto");
 		address("23453", "via Serafina", "00666", "63564832764", "3467468733",
 				"ngnghghg@vige.it", "llklk.it", "33", "TK", "Palinuro", "Tokyo");
 		java.io.ObjectInputStream ois = new java.io.ObjectInputStream(
@@ -188,7 +174,7 @@ public class AddressAgentTest {
 		}
 		return setBinaryLength(sb.toString());
 	}
-	
+
 	private String setBinaryLength(String result) {
 		while (true) {
 			if (result.endsWith("0"))

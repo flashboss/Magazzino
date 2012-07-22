@@ -23,13 +23,28 @@ import org.jboss.shrinkwrap.resolver.api.maven.MavenDependencyResolver;
 
 public interface Dependencies {
 
+	static final Archive<?>[] ALL = DependencyResolvers
+			.use(MavenDependencyResolver.class).loadReposFromPom("pom.xml")
+			.loadDependenciesFromPom("pom.xml").resolveAs(GenericArchive.class)
+			.toArray(new Archive<?>[0]);
+	static final Archive<?>[] JAVAEE = DependencyResolvers
+			.use(MavenDependencyResolver.class).loadReposFromPom("pom.xml")
+			.artifact("com.sun.faces:jsf-api:2.1.0").exclusion("*")
+			.artifact("com.sun.faces:jsf-impl:2.1.0").exclusion("*")
+			.resolveAs(GenericArchive.class).toArray(new Archive<?>[0]);
 	static final Archive<?>[] SOLDER = DependencyResolvers
 			.use(MavenDependencyResolver.class).loadReposFromPom("pom.xml")
-			.artifact("org.jboss.seam.solder:seam-solder-tooling").exclusion("*")
-			.resolveAs(GenericArchive.class).toArray(new Archive<?>[0]);
+			.artifact("org.jboss.seam.solder:seam-solder:3.0.0.Final")
+			.exclusion("*").resolveAs(GenericArchive.class)
+			.toArray(new Archive<?>[0]);
 	static final Archive<?>[] INTERNATIONAL = DependencyResolvers
 			.use(MavenDependencyResolver.class).loadReposFromPom("pom.xml")
 			.artifact("org.jboss.seam.international:seam-international")
+			.exclusion("*").resolveAs(GenericArchive.class)
+			.toArray(new Archive<?>[0]);
+	static final Archive<?>[] RICHFACES = DependencyResolvers
+			.use(MavenDependencyResolver.class).loadReposFromPom("pom.xml")
+			.artifact("org.richfaces.ui:richfaces-components-api:4.1.0.Final")
 			.exclusion("*").resolveAs(GenericArchive.class)
 			.toArray(new Archive<?>[0]);
 }
