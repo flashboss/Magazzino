@@ -405,19 +405,6 @@
 			</build>
 		</profile>
 
-		<!-- Arquillian's Embedded GlassFish 3.1 adapter is not working correctly -->
-		<!-- <profile> <id>itest-glassfish-embedded</id> <dependencies> <dependency> 
-			<groupId>org.jboss.arquillian.container</groupId> <artifactId>arquillian-glassfish-embedded-3.1</artifactId> 
-			<version>${arquillian.version}</version> <scope>test</scope> </dependency> 
-			<dependency> <groupId>org.glassfish.extras</groupId> <artifactId>glassfish-embedded-all</artifactId> 
-			<version>${glassfish.version}</version> <scope>provided</scope> </dependency> 
-			</dependencies> <build> <testResources> <testResource> <directory>src/test/resources</directory> 
-			</testResource> <testResource> <directory>src/test/resources-glassfish-embedded</directory> 
-			</testResource> </testResources> <plugins> <plugin> <artifactId>maven-surefire-plugin</artifactId> 
-			<version>2.4.3</version> <configuration> <systemProperties> <property> <name>derby.stream.error.file</name> 
-			<value>target/derby.log</value> </property> </systemProperties> </configuration> 
-			</plugin> </plugins> </build> </profile> -->
-
 		<profile>
 			<id>glassfish-remote-3.1</id>
 			<dependencies>
