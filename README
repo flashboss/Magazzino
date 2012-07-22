@@ -10,7 +10,12 @@ git commit pom.xml -m "comment!"
 
 git push
 
-to install it in jboss:
+to install it in jboss 6.x:
 
 export JBOSS_HOME=.....
 mvn install jboss:hard-deploy
+
+to test it in jboss:
+
+export JBOSS_HOME=.....
+mvn -Pjbossas-remote-6 test
