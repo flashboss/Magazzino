@@ -16,10 +16,9 @@
  */
 package it.vige.magazzino.test;
 
-import static it.vige.magazzino.test.Dependencies.JAVAEE;
+import static it.vige.magazzino.test.Dependencies.FACES;
 import static it.vige.magazzino.test.Dependencies.INTERNATIONAL;
 import static it.vige.magazzino.test.Dependencies.SOLDER;
-import static it.vige.magazzino.test.Dependencies.RICHFACES;
 import it.vige.magazzino.DataContainer;
 import it.vige.magazzino.model.Data;
 
@@ -46,10 +45,10 @@ public class ListDataAgentTest {
 		return ShrinkWrap
 				.create(WebArchive.class, "test.war")
 				.addPackages(true, DataContainer.class.getPackage())
-				.addAsLibraries(JAVAEE)
-				.addAsLibraries(SOLDER)
 				.addAsLibraries(INTERNATIONAL)
-				.addAsLibraries(RICHFACES)
+				.addAsLibraries(FACES)
+				.addAsLibraries(SOLDER)
+				.addAsWebInfResource("web.xml", "web.xml")
 				.addAsWebInfResource("test-persistence.xml",
 						"classes/META-INF/persistence.xml")
 				.addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");

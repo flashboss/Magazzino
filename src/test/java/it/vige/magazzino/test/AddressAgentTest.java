@@ -16,7 +16,9 @@
  */
 package it.vige.magazzino.test;
 
-import static it.vige.magazzino.test.Dependencies.ALL;
+import static it.vige.magazzino.test.Dependencies.FACES;
+import static it.vige.magazzino.test.Dependencies.INTERNATIONAL;
+import static it.vige.magazzino.test.Dependencies.SOLDER;
 import it.vige.magazzino.DataContainer;
 import it.vige.magazzino.model.Address;
 import it.vige.magazzino.model.Article;
@@ -42,7 +44,10 @@ public class AddressAgentTest {
 		return ShrinkWrap
 				.create(WebArchive.class, "test.war")
 				.addPackages(true, DataContainer.class.getPackage())
-				.addAsLibraries(ALL)
+				.addAsLibraries(INTERNATIONAL)
+				.addAsLibraries(FACES)
+				.addAsLibraries(SOLDER)
+				.addAsWebInfResource("test-web.xml", "web.xml")
 				.addAsWebInfResource("test-persistence.xml",
 						"classes/META-INF/persistence.xml")
 				.addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
