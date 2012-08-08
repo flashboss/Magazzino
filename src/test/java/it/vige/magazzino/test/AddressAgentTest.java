@@ -18,6 +18,7 @@ package it.vige.magazzino.test;
 
 import static it.vige.magazzino.test.Dependencies.FACES;
 import static it.vige.magazzino.test.Dependencies.INTERNATIONAL;
+import static it.vige.magazzino.test.Dependencies.RICHFACES;
 import static it.vige.magazzino.test.Dependencies.SOLDER;
 import it.vige.magazzino.DataContainer;
 import it.vige.magazzino.model.Address;
@@ -41,16 +42,19 @@ import org.junit.runner.RunWith;
 public class AddressAgentTest {
 	@Deployment
 	public static WebArchive createDeployment() {
-		return ShrinkWrap
+		WebArchive war = ShrinkWrap
 				.create(WebArchive.class, "test.war")
 				.addPackages(true, DataContainer.class.getPackage())
 				.addAsLibraries(INTERNATIONAL)
 				.addAsLibraries(FACES)
 				.addAsLibraries(SOLDER)
+				.addAsLibraries(RICHFACES)
 				.addAsWebInfResource("test-web.xml", "web.xml")
 				.addAsWebInfResource("test-persistence.xml",
 						"classes/META-INF/persistence.xml")
 				.addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
+		System.out.println(war.toString(true));
+		return war;
 	}
 
 	@Inject
@@ -97,7 +101,7 @@ public class AddressAgentTest {
 		address("55555", "via Tuscolana", "09833", "42675473364", "754684333",
 				"tytre@vige.it", "swswd.com", "546", "RM", "Castelvolturno",
 				"Rome");
-		String stringa12 = address("325", "via Serafini", "00999", "534748622",
+		address("325", "via Serafini", "00999", "534748622",
 				"7568473634", "ewrete@vige.it", "ewewwq.com", "66", "KY",
 				"Tropea", "Kyoto");
 		address("6433", "via Serafina", "00666", "63564832764", "3467468733",
@@ -129,11 +133,6 @@ public class AddressAgentTest {
 				"ewrete@vige.it", "ewewwq.com", "616", "KY", "Tropea", "Kyoto");
 		address("23453", "via Serafina", "00666", "63564832764", "3467468733",
 				"ngnghghg@vige.it", "llklk.it", "33", "TK", "Palinuro", "Tokyo");
-		java.io.ObjectInputStream ois = new java.io.ObjectInputStream(
-				new java.io.ByteArrayInputStream(stringa12.getBytes()));
-		Address address = (Address) ois.readObject();
-		address.getEmail();
-		ois.close();
 
 	}
 
@@ -165,6 +164,11 @@ public class AddressAgentTest {
 		fis.close();
 		String result = toHexString(bytes);
 		System.out.println(result);
+		java.io.ObjectInputStream ois = new java.io.ObjectInputStream(
+				new java.io.ByteArrayInputStream(bytes));
+		Address addressRead = (Address) ois.readObject();
+		System.out.println(addressRead.getEmail());
+		ois.close();
 		return result;
 	}
 

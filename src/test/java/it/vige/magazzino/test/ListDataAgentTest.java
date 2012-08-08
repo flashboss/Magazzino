@@ -18,6 +18,7 @@ package it.vige.magazzino.test;
 
 import static it.vige.magazzino.test.Dependencies.FACES;
 import static it.vige.magazzino.test.Dependencies.INTERNATIONAL;
+import static it.vige.magazzino.test.Dependencies.RICHFACES;
 import static it.vige.magazzino.test.Dependencies.SOLDER;
 import it.vige.magazzino.DataContainer;
 import it.vige.magazzino.model.Data;
@@ -42,16 +43,19 @@ import org.junit.runner.RunWith;
 public class ListDataAgentTest {
 	@Deployment
 	public static WebArchive createDeployment() {
-		return ShrinkWrap
+		WebArchive war = ShrinkWrap
 				.create(WebArchive.class, "test.war")
 				.addPackages(true, DataContainer.class.getPackage())
 				.addAsLibraries(INTERNATIONAL)
 				.addAsLibraries(FACES)
 				.addAsLibraries(SOLDER)
-				.addAsWebInfResource("web.xml", "web.xml")
+				.addAsLibraries(RICHFACES)
+				.addAsWebInfResource("test-web.xml", "web.xml")
 				.addAsWebInfResource("test-persistence.xml",
 						"classes/META-INF/persistence.xml")
 				.addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
+		System.out.println(war.toString(true));
+		return war;
 	}
 
 	@Inject

@@ -37,7 +37,6 @@ public interface Dependencies {
 			.resolveAs(GenericArchive.class).toArray(new Archive<?>[0]);
 	static final Archive<?>[] RICHFACES = DependencyResolvers
 			.use(MavenDependencyResolver.class).loadReposFromPom("pom.xml")
-			.artifact("org.richfaces.ui:richfaces-components-ui:4.1.0.Final")
-			.artifact("org.richfaces.core:richfaces-core-impl:4.1.0.Final")
+			.artifact("org.richfaces.ui:richfaces-components-api:4.1.0.Final")
 			.resolveAs(GenericArchive.class).toArray(new Archive<?>[0]);
 }

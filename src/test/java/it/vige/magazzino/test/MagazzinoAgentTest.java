@@ -18,6 +18,7 @@ package it.vige.magazzino.test;
 
 import static it.vige.magazzino.test.Dependencies.FACES;
 import static it.vige.magazzino.test.Dependencies.INTERNATIONAL;
+import static it.vige.magazzino.test.Dependencies.RICHFACES;
 import static it.vige.magazzino.test.Dependencies.SOLDER;
 import it.vige.magazzino.DataContainer;
 import it.vige.magazzino.model.Address;
@@ -52,18 +53,21 @@ import org.junit.runner.RunWith;
 public class MagazzinoAgentTest {
 	@Deployment
 	public static WebArchive createDeployment() {
-		return ShrinkWrap
+		WebArchive war = ShrinkWrap
 				.create(WebArchive.class, "test.war")
 				.addPackages(true, DataContainer.class.getPackage())
 				.addAsLibraries(INTERNATIONAL)
 				.addAsLibraries(FACES)
 				.addAsLibraries(SOLDER)
-				.addAsWebInfResource("web.xml", "web.xml")
+				.addAsLibraries(RICHFACES)
+				.addAsWebInfResource("test-web.xml", "web.xml")
 				.addAsWebInfResource("test-persistence.xml",
 						"classes/META-INF/persistence.xml")
 				.addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
+		System.out.println(war.toString(true));
+		return war;
 	}
-
+    
 	@Inject
 	UserTransaction utx;
 
@@ -144,7 +148,7 @@ public class MagazzinoAgentTest {
 				"via Tuscolana", "09833", "42675473364", "754684333",
 				"tytre@vige.it", "swswd.com", "546", "RM", "Castelvolturno",
 				"Rome", null, null, 0, null, false);
-		String stringa12 = magazzino("21234", "04/06/1988", "5646", "cause 12",
+		magazzino("21234", "04/06/1988", "5646", "cause 12",
 				"compensation 12", "6567", "rag soc 23", "rag soc 24", "111",
 				"04/05/1998", "212121212", "33.000,00 Û", "86433", "123444",
 				"via Serafini", "00999", "534748622", "7568473634",
@@ -156,13 +160,6 @@ public class MagazzinoAgentTest {
 				"via Serafina", "00666", "63564832764", "3467468733",
 				"ngnghghg@vige.it", "llklk.it", "33", "TK", "Palinuro",
 				"Tokyo", null, null, 0, null, false);
-
-		java.io.ObjectInputStream ois = new java.io.ObjectInputStream(
-				new java.io.ByteArrayInputStream(stringa12.getBytes()));
-		Magazzino magazzino = (Magazzino) ois.readObject();
-		magazzino.getCause();
-		ois.close();
-
 	}
 
 	@Test
@@ -259,6 +256,11 @@ public class MagazzinoAgentTest {
 		fis.close();
 		String result = toHexString(bytes);
 		System.out.println(result);
+		java.io.ObjectInputStream ois = new java.io.ObjectInputStream(
+				new java.io.ByteArrayInputStream(bytes));
+		Magazzino magazzinoRead = (Magazzino) ois.readObject();
+		System.out.println(magazzinoRead.getRagSoc1());
+		ois.close();
 		return result;
 	}
 

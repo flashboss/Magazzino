@@ -18,6 +18,7 @@ package it.vige.magazzino.test;
 
 import static it.vige.magazzino.test.Dependencies.FACES;
 import static it.vige.magazzino.test.Dependencies.INTERNATIONAL;
+import static it.vige.magazzino.test.Dependencies.RICHFACES;
 import static it.vige.magazzino.test.Dependencies.SOLDER;
 import it.vige.magazzino.DataContainer;
 import it.vige.magazzino.model.Address;
@@ -44,16 +45,19 @@ import org.junit.runner.RunWith;
 public class CustomerAgentTest {
 	@Deployment
 	public static WebArchive createDeployment() {
-		return ShrinkWrap
+		WebArchive war = ShrinkWrap
 				.create(WebArchive.class, "test.war")
 				.addPackages(true, DataContainer.class.getPackage())
 				.addAsLibraries(INTERNATIONAL)
 				.addAsLibraries(FACES)
 				.addAsLibraries(SOLDER)
-				.addAsWebInfResource("web.xml", "web.xml")
+				.addAsLibraries(RICHFACES)
+				.addAsWebInfResource("test-web.xml", "web.xml")
 				.addAsWebInfResource("test-persistence.xml",
 						"classes/META-INF/persistence.xml")
 				.addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
+		System.out.println(war.toString(true));
+		return war;
 	}
 
 	@Inject
@@ -106,7 +110,7 @@ public class CustomerAgentTest {
 				"via Tuscolana", "09833", "42675473364", "754684333",
 				"tytre@vige.it", "swswd.com", "546", "RM", "Castelvolturno",
 				"Rome", image, "Logo per customer", 334, "logo11.gif", true);
-		String stringa12 = customer("325", "cliente 9", "rag soc 9",
+		customer("325", "cliente 9", "rag soc 9",
 				"323244646", "325", "via Serafini", "00999", "534748622",
 				"323244646", "ewrete@vige.it", "ewewwq.com", "66", "KY",
 				"Tropea", "Kyoto", null, null, 0, null, false);
@@ -114,11 +118,6 @@ public class CustomerAgentTest {
 				"via Serafina", "00666", "63564832764", "3467468733",
 				"ngnghghg@vige.it", "llklk.it", "33", "TK", "Palinuro",
 				"Tokyo", null, null, 0, null, false);
-		java.io.ObjectInputStream ois = new java.io.ObjectInputStream(
-				new java.io.ByteArrayInputStream(stringa12.getBytes()));
-		Customer customer = (Customer) ois.readObject();
-		customer.getName();
-		ois.close();
 
 	}
 
@@ -178,6 +177,11 @@ public class CustomerAgentTest {
 		fis.close();
 		String result = toHexString(bytes);
 		System.out.println(result);
+		java.io.ObjectInputStream ois = new java.io.ObjectInputStream(
+				new java.io.ByteArrayInputStream(bytes));
+		Customer customerRead = (Customer) ois.readObject();
+		System.out.println(customerRead.getRagSocial());
+		ois.close();
 		return result;
 	}
 
