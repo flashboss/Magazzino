@@ -131,6 +131,7 @@ public class ListDataAgentTest {
 				.getResultList().size());
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<Data> listData(byte[] image, String description, int length,
 			String name, boolean isMulti, String hexCode) throws Exception {
 		List<Data> listData = new ArrayList<Data>();

@@ -191,7 +191,7 @@ public class AddressAgentTest {
 				new java.io.ByteArrayInputStream(bytes));
 		Address addressRead = (Address) ois.readObject();
 		Assert.assertEquals(addressRead.getEmail(), email);
-		// Assert.assertEquals(result, hexCode);
+		Assert.assertEquals(result, hexCode);
 		ois.close();
 		return addressRead;
 	}
