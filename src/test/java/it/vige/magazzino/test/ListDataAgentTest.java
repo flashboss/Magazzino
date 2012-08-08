@@ -20,6 +20,9 @@ import static it.vige.magazzino.test.Dependencies.FACES;
 import static it.vige.magazzino.test.Dependencies.INTERNATIONAL;
 import static it.vige.magazzino.test.Dependencies.RICHFACES;
 import static it.vige.magazzino.test.Dependencies.SOLDER;
+import static it.vige.magazzino.test.Utils.image;
+import static it.vige.magazzino.test.Utils.tempFile;
+import static it.vige.magazzino.test.Utils.toHexString;
 import it.vige.magazzino.DataContainer;
 import it.vige.magazzino.model.Data;
 
@@ -36,6 +39,7 @@ import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -50,6 +54,7 @@ public class ListDataAgentTest {
 				.addAsLibraries(FACES)
 				.addAsLibraries(SOLDER)
 				.addAsLibraries(RICHFACES)
+				.addAsResource("logo.gif")
 				.addAsWebInfResource("test-web.xml", "web.xml")
 				.addAsWebInfResource("test-persistence.xml",
 						"classes/META-INF/persistence.xml")
@@ -57,6 +62,9 @@ public class ListDataAgentTest {
 		System.out.println(war.toString(true));
 		return war;
 	}
+
+	static final String[] hexCodes = { "", "", "", "", "", "", "", "", "", "",
+			"" };
 
 	@Inject
 	UserTransaction utx;
@@ -66,36 +74,67 @@ public class ListDataAgentTest {
 
 	@Test
 	public void createListData() throws Exception {
-
 		byte[] image = image();
-		listData(image, "Logo per magazzino", 344, "logo1.gif", true);
-		listData(image, "Logo per magazzino", 348, "logo2.gif", false);
-		listData(image, "Logo per magazzino", 344, "logo3.gif", true);
-		listData(image, "Logo per magazzino", 234, "logo4.gif", false);
-		listData(image, "Logo per customer", 34, "logo5.gif", true);
-		listData(image, "Logo per customer", 349, "logo6.gif", false);
-		listData(image, "Logo per customer", 334, "logo7.gif", true);
-		listData(image, "Logo per customer", 394, "logo8.gif", false);
-		listData(image, "Logo per customer", 314, "logo9.gif", true);
-		listData(image, "Logo per customer", 3411, "logo10.gif", false);
-		listData(image, "Logo per customer", 334, "logo11.gif", true);
 
+		utx.begin();
+		em.joinTransaction();
+		List<Data> listData = listData(image, "Logo per magazzino", 344,
+				"logo1.gif", true, hexCodes[0]);
+		for (Data data : listData)
+			em.persist(data);
+		listData = listData(image, "Logo per magazzino", 348, "logo2.gif",
+				false, hexCodes[1]);
+		for (Data data : listData)
+			em.persist(data);
+		listData = listData(image, "Logo per magazzino", 344, "logo3.gif",
+				true, hexCodes[2]);
+		for (Data data : listData)
+			em.persist(data);
+		listData = listData(image, "Logo per magazzino", 234, "logo4.gif",
+				false, hexCodes[3]);
+		for (Data data : listData)
+			em.persist(data);
+		listData = listData(image, "Logo per customer", 34, "logo5.gif", true,
+				hexCodes[4]);
+		for (Data data : listData)
+			em.persist(data);
+		listData = listData(image, "Logo per customer", 349, "logo6.gif",
+				false, hexCodes[5]);
+		for (Data data : listData)
+			em.persist(data);
+		listData = listData(image, "Logo per customer", 334, "logo7.gif", true,
+				hexCodes[6]);
+		for (Data data : listData)
+			em.persist(data);
+		listData = listData(image, "Logo per customer", 394, "logo8.gif",
+				false, hexCodes[7]);
+		for (Data data : listData)
+			em.persist(data);
+		listData = listData(image, "Logo per customer", 314, "logo9.gif", true,
+				hexCodes[8]);
+		for (Data data : listData)
+			em.persist(data);
+		listData = listData(image, "Logo per customer", 3411, "logo10.gif",
+				false, hexCodes[9]);
+		for (Data data : listData)
+			em.persist(data);
+		listData = listData(image, "Logo per customer", 334, "logo11.gif",
+				true, hexCodes[10]);
+		for (Data data : listData)
+			em.persist(data);
+		utx.commit();
 	}
 
-	public byte[] image() throws Exception {
-		byte[] bytes = new byte[10310];
-		java.io.FileInputStream fis = new java.io.FileInputStream(
-				"/Users/flashboss/Desktop/logo.gif");
-		fis.read(bytes);
-		fis.close();
-		String result = toHexString(bytes);
-		System.out.println(result);
-		return bytes;
+	@Test
+	public void searchListData() throws Exception {
+		Assert.assertEquals(11, em.createQuery("select b from Data b")
+				.getResultList().size());
 	}
 
-	public String listData(byte[] image, String description, int length,
-			String name, boolean isMulti) throws Exception {
+	public List<Data> listData(byte[] image, String description, int length,
+			String name, boolean isMulti, String hexCode) throws Exception {
 		List<Data> listData = new ArrayList<Data>();
+		String secondName = "nuovo nome";
 		Data data = new Data();
 		data.setData(image);
 		data.setDescription(description);
@@ -107,49 +146,32 @@ public class ListDataAgentTest {
 			data2.setData(image);
 			data2.setDescription("nuova descrizione");
 			data2.setLength(98);
-			data2.setName("nuovo nome");
+			data2.setName(secondName);
 			listData.add(data2);
 		}
 
 		java.io.ObjectOutputStream oos = new java.io.ObjectOutputStream(
-				new java.io.FileOutputStream("/Users/flashboss/prova"));
+				new java.io.FileOutputStream(tempFile));
 		oos.writeObject(listData);
 		oos.close();
 		byte[] bytes = new byte[10700];
-		java.io.FileInputStream fis = new java.io.FileInputStream(
-				"/Users/flashboss/prova");
+		java.io.FileInputStream fis = new java.io.FileInputStream(tempFile);
 		fis.read(bytes);
 		fis.close();
 		String result = toHexString(bytes);
 		System.out.println(result);
-		return result;
-	}
-
-	public String toHexString(byte[] b) {
-		StringBuffer sb = new StringBuffer(b.length * 2);
-		for (int i = 0; i < b.length; i++) {
-			// look up high nibble char
-			sb.append(hexChar[(b[i] & 0xf0) >>> 4]);
-
-			// look up low nibble char
-			sb.append(hexChar[b[i] & 0x0f]);
+		java.io.ObjectInputStream ois = new java.io.ObjectInputStream(
+				new java.io.ByteArrayInputStream(bytes));
+		List<Data> listaDataRead = (List<Data>) ois.readObject();
+		if (isMulti) {
+			Assert.assertEquals(listaDataRead.size(), 2);
+			Assert.assertEquals(listaDataRead.get(1).getName(), secondName);
+		} else {
+			Assert.assertEquals(listaDataRead.size(), 2);
 		}
-		return setBinaryLength(sb.toString());
+		Assert.assertEquals(listaDataRead.get(0).getName(), name);
+		Assert.assertEquals(result, hexCode);
+		ois.close();
+		return listaDataRead;
 	}
-
-	private String setBinaryLength(String result) {
-		while (true) {
-			if (result.endsWith("0"))
-				result = result.substring(0, result.lastIndexOf("0"));
-			else
-				break;
-		}
-		if (result.length() % 2 != 0)
-			result = result + "0";
-		return result;
-	}
-
-	// table to convert a nibble to a hex char.
-	static char[] hexChar = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
-			'a', 'b', 'c', 'd', 'e', 'f' };
 }
