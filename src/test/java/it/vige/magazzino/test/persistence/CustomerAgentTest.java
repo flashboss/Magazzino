@@ -22,7 +22,9 @@ import static it.vige.magazzino.test.persistence.Dependencies.RICHFACES;
 import static it.vige.magazzino.test.persistence.Dependencies.SOLDER;
 import static it.vige.magazzino.test.persistence.Utils.image;
 import it.vige.magazzino.DataContainer;
+import it.vige.magazzino.test.operation.AddressOperation;
 import it.vige.magazzino.test.operation.CustomerOperation;
+import it.vige.magazzino.test.operation.ListDataOperation;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -72,49 +74,64 @@ public class CustomerAgentTest {
 		em.joinTransaction();
 
 		CustomerOperation customerOperation = new CustomerOperation();
-		em.persist(customerOperation.create("19987", "cliente 1", "rag soc 1", "92755353",
-				"19987", "piazza Clodio", "00122", "64746567", "7654345676",
-				"reqrew@vige.it", "wwewewe.com", "54", "RM", "Guidonia",
-				"Rome", "5556", image, "Logo per customer", 34, "logo5.gif",
-				true, "2561"));
-		em.persist(customerOperation.create("1177", "cliente 2", "rag soc 2", "74424577",
-				"1177", "viale Mazzini", "00134", "534537446", "346357465736",
-				"hgdfgsfg@vige.it", "fdfd.com", "67", "LO", "Setteville",
-				"London", "55156", image, "Logo per customer", 349,
-				"logo6.gif", false, ""));
-		em.persist(customerOperation.create("98766", "cliente 3", "rag soc 3", "2232322",
-				"98766", "piazza Bologna", "00234", "5425356457", "8875645732",
-				"afadfsd@vige.it", "wwqewr.com", "33", "BO", "Settecamini",
-				"Bologna", "52656", image, "Logo per customer", 334,
-				"logo7.gif", true, "2562"));
-		em.persist(customerOperation.create("11121", "cliente 4", "rag soc 4", "76565656",
-				"11121", "viale Giulio Cesare", "00987", "896969687",
-				"32456733", "hdhhjdghf@vige.it", "qasas.com", "656", "FI",
-				"Tivoli", "Florence", "55656", image, "Logo per customer", 394,
-				"logo8.gif", false, ""));
-		em.persist(customerOperation.create("34322", "cliente 6", "rag soc 6", "2535345433",
-				"34322", "via Prenestina", "00152", "87584734637",
-				"84562354656", "gdhdgjfgj@vige.it", "ppopo.com", "24", "SH",
-				"Zagarolo", "Shangai", "51656", image, "Logo per customer",
-				314, "logo9.gif", true, "2563"));
-		em.persist(customerOperation.create("22222", "cliente 7", "rag soc 7", "654424322",
-				"22222", "piazza Tuscolo", "00012", "32678475323",
-				"74684736433", "fsdfsdfsd@vige.it", "ewe.com", "76", "BO",
-				"Nola", "Bombay", "55646", image, "Logo per customer", 3411,
-				"logo10.gif", false, ""));
-		em.persist(customerOperation.create("55555", "cliente 8", "rag soc 8", "53546566",
-				"55555", "via Tuscolana", "09833", "42675473364", "754684333",
-				"tytre@vige.it", "swswd.com", "546", "RM", "Castelvolturno",
-				"Rome", "55436", image, "Logo per customer", 334, "logo11.gif",
-				true, "2564"));
-		em.persist(customerOperation.create("325", "cliente 9", "rag soc 9", "323244646",
-				"325", "via Serafini", "00999", "534748622", "323244646",
-				"ewrete@vige.it", "ewewwq.com", "66", "KY", "Tropea", "Kyoto",
-				"", null, null, 0, null, false, ""));
-		em.persist(customerOperation.create("6433", "cliente 10", "rag soc 10", "324464646",
-				"6433", "via Serafina", "00666", "63564832764", "3467468733",
-				"ngnghghg@vige.it", "llklk.it", "33", "TK", "Palinuro",
-				"Tokyo", "", null, null, 0, null, false, ""));
+		AddressOperation addressOperation = new AddressOperation();
+		ListDataOperation listDataOperation = new ListDataOperation();
+		em.persist(customerOperation.create("19987", "cliente 1", "rag soc 1",
+				"92755353", addressOperation.create("19987", "piazza Clodio",
+						"00122", "64746567", "7654345676", "reqrew@vige.it",
+						"wwewewe.com", "54", "RM", "Guidonia", "Rome"),
+				listDataOperation.create("5556", image, "Logo per customer",
+						34, "logo5.gif", true, "2561")));
+		em.persist(customerOperation.create("1177", "cliente 2", "rag soc 2",
+				"74424577", addressOperation.create("1177", "viale Mazzini",
+						"00134", "534537446", "346357465736",
+						"hgdfgsfg@vige.it", "fdfd.com", "67", "LO",
+						"Setteville", "London"), listDataOperation.create(
+						"55156", image, "Logo per customer", 349, "logo6.gif",
+						false, "")));
+		em.persist(customerOperation.create("98766", "cliente 3", "rag soc 3",
+				"2232322", addressOperation.create("98766", "piazza Bologna",
+						"00234", "5425356457", "8875645732", "afadfsd@vige.it",
+						"wwqewr.com", "33", "BO", "Settecamini", "Bologna"),
+				listDataOperation.create("52656", image, "Logo per customer",
+						334, "logo7.gif", true, "2562")));
+		em.persist(customerOperation.create("11121", "cliente 4", "rag soc 4",
+				"76565656", addressOperation.create("11121",
+						"viale Giulio Cesare", "00987", "896969687",
+						"32456733", "hdhhjdghf@vige.it", "qasas.com", "656",
+						"FI", "Tivoli", "Florence"), listDataOperation.create(
+						"55656", image, "Logo per customer", 394, "logo8.gif",
+						false, "")));
+		em.persist(customerOperation.create("34322", "cliente 6", "rag soc 6",
+				"2535345433", addressOperation.create("34322",
+						"via Prenestina", "00152", "87584734637",
+						"84562354656", "gdhdgjfgj@vige.it", "ppopo.com", "24",
+						"SH", "Zagarolo", "Shangai"), listDataOperation.create(
+						"51656", image, "Logo per customer", 314, "logo9.gif",
+						true, "2563")));
+		em.persist(customerOperation.create("22222", "cliente 7", "rag soc 7",
+				"654424322", addressOperation.create("22222", "piazza Tuscolo",
+						"00012", "32678475323", "74684736433",
+						"fsdfsdfsd@vige.it", "ewe.com", "76", "BO", "Nola",
+						"Bombay"), listDataOperation.create("55646", image,
+						"Logo per customer", 3411, "logo10.gif", false, "")));
+		em.persist(customerOperation.create("55555", "cliente 8", "rag soc 8",
+				"53546566", addressOperation.create("55555", "via Tuscolana",
+						"09833", "42675473364", "754684333", "tytre@vige.it",
+						"swswd.com", "546", "RM", "Castelvolturno", "Rome"),
+				listDataOperation.create("55436", image, "Logo per customer",
+						334, "logo11.gif", true, "2564")));
+		em.persist(customerOperation.create("325", "cliente 9", "rag soc 9",
+				"323244646", addressOperation.create("325", "via Serafini",
+						"00999", "534748622", "323244646", "ewrete@vige.it",
+						"ewewwq.com", "66", "KY", "Tropea", "Kyoto"),
+				listDataOperation.create("", null, null, 0, null, false, "")));
+		em.persist(customerOperation.create("6433", "cliente 10", "rag soc 10",
+				"324464646", addressOperation.create("6433", "via Serafina",
+						"00666", "63564832764", "3467468733",
+						"ngnghghg@vige.it", "llklk.it", "33", "TK", "Palinuro",
+						"Tokyo"), listDataOperation.create("", null, null, 0,
+						null, false, "")));
 		utx.commit();
 	}
 
