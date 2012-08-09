@@ -30,28 +30,28 @@ public class HexListDataTest {
 	public void decode() throws Exception {
 		byte[] image = image();
 
-		ListDataOperation listDataMock = new ListDataOperation();
-		verify(listDataMock.create("5556", image, "Logo per magazzino", 344,
+		ListDataOperation listDataOperation = new ListDataOperation();
+		verify(listDataOperation.create("5556", image, "Logo per magazzino", 344,
 				"logo1.gif", true, "2561"), hexCodes[0]);
-		verify(listDataMock.create("55156", image, "Logo per magazzino", 348,
+		verify(listDataOperation.create("55156", image, "Logo per magazzino", 348,
 				"logo2.gif", false, ""), hexCodes[1]);
-		verify(listDataMock.create("52656", image, "Logo per magazzino", 344,
+		verify(listDataOperation.create("52656", image, "Logo per magazzino", 344,
 				"logo3.gif", true, "2562"), hexCodes[2]);
-		verify(listDataMock.create("55656", image, "Logo per magazzino", 234,
+		verify(listDataOperation.create("55656", image, "Logo per magazzino", 234,
 				"logo4.gif", false, ""), hexCodes[3]);
-		verify(listDataMock.create("51656", image, "Logo per customer", 34,
+		verify(listDataOperation.create("51656", image, "Logo per customer", 34,
 				"logo5.gif", true, "2563"), hexCodes[4]);
-		verify(listDataMock.create("55646", image, "Logo per customer", 349,
+		verify(listDataOperation.create("55646", image, "Logo per customer", 349,
 				"logo6.gif", false, ""), hexCodes[5]);
-		verify(listDataMock.create("55436", image, "Logo per customer", 334,
+		verify(listDataOperation.create("55436", image, "Logo per customer", 334,
 				"logo7.gif", true, "2564"), hexCodes[6]);
-		verify(listDataMock.create("556", image, "Logo per customer", 394,
+		verify(listDataOperation.create("556", image, "Logo per customer", 394,
 				"logo8.gif", false, ""), hexCodes[7]);
-		verify(listDataMock.create("5526", image, "Logo per customer", 314,
+		verify(listDataOperation.create("5526", image, "Logo per customer", 314,
 				"logo9.gif", true, "2565"), hexCodes[8]);
-		verify(listDataMock.create("55956", image, "Logo per customer", 3411,
+		verify(listDataOperation.create("55956", image, "Logo per customer", 3411,
 				"logo10.gif", false, ""), hexCodes[9]);
-		verify(listDataMock.create("256", image, "Logo per customer", 334,
+		verify(listDataOperation.create("256", image, "Logo per customer", 334,
 				"logo11.gif", true, "2566"), hexCodes[10]);
 	}
 

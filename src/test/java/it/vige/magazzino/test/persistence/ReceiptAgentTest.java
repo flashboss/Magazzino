@@ -55,8 +55,8 @@ public class ReceiptAgentTest {
 		utx.begin();
 		em.joinTransaction();
 
-		ReceiptOperation receiptMock = new ReceiptOperation();
-		em.persist(receiptMock.create("21256", "11/05/2009", "causale 1",
+		ReceiptOperation receiptOperation = new ReceiptOperation();
+		em.persist(receiptOperation.create("21256", "11/05/2009", "causale 1",
 				"description 1", "21344", "01/06/1999", "23432", "cause 1",
 				"compensation 1", "2654654", "rag soc 1", "rag soc 2", "111",
 				"01/05/1998", "4343289479", "39.000,00 Û", "70075", "4353",
@@ -68,7 +68,7 @@ public class ReceiptAgentTest {
 				"reqrew@vige.it", "wwewewe.com", "54", "RM", "Guidonia",
 				"Rome", "5556", image, "Logo per customer", 34, "logo5.gif",
 				true, "2561"));
-		em.persist(receiptMock.create("23226", "02/05/2009", "causale 2",
+		em.persist(receiptOperation.create("23226", "02/05/2009", "causale 2",
 				"description 2", "21345", "02/06/1981", "543534", "cause 2",
 				"compensation 2", "2654654", "rag soc 3", "rag soc 4", "111",
 				"01/01/1998", "656253253", "12.000,00 $", "32677", "222",
@@ -80,7 +80,7 @@ public class ReceiptAgentTest {
 				"346357465736", "hgdfgsfg@vige.it", "fdfd.com", "67", "LO",
 				"Setteville", "London", "55156", image, "Logo per customer",
 				349, "logo6.gif", false, ""));
-		em.persist(receiptMock.create("11213", "11/10/2009", "causale 3",
+		em.persist(receiptOperation.create("11213", "11/10/2009", "causale 3",
 				"description 3", "21346", "06/02/1999", "6546", "cause 3",
 				"compensation 3", "213443", "rag soc 5", "rag soc 6", "111",
 				"05/05/1977", "89898983", "45.000,00 Û", "44342", "76435",
@@ -92,7 +92,7 @@ public class ReceiptAgentTest {
 				"8875645732", "afadfsd@vige.it", "wwqewr.com", "33", "BO",
 				"Settecamini", "Bologna", "52656", image, "Logo per customer",
 				334, "logo7.gif", true, "2562"));
-		em.persist(receiptMock.create("4343", "11/05/2007", "causale 4",
+		em.persist(receiptOperation.create("4343", "11/05/2007", "causale 4",
 				"description 4", "21347", "06/01/1999", "2342", "cause 4",
 				"compensation 4", "453534", "rag soc 7", "rag soc 8", "111",
 				"05/04/1976", "455454543", "89.000,00 $", "65345", "23567",
@@ -104,7 +104,7 @@ public class ReceiptAgentTest {
 				"896969687", "32456733", "hdhhjdghf@vige.it", "qasas.com",
 				"656", "FI", "Tivoli", "Florence", "55656", image,
 				"Logo per customer", 394, "logo8.gif", false, ""));
-		em.persist(receiptMock.create("5453", "11/01/2003", "causale 5",
+		em.persist(receiptOperation.create("5453", "11/01/2003", "causale 5",
 				"description 5", "21348", "06/06/1980", "434", "cause 5",
 				"compensation 5", "2787", "rag soc 9", "rag soc 10", "111",
 				"04/04/1998", "8989898989", "98.000,00 Û", "98873", "876",
@@ -116,7 +116,7 @@ public class ReceiptAgentTest {
 				"87584734637", "84562354656", "gdhdgjfgj@vige.it", "ppopo.com",
 				"24", "SH", "Zagarolo", "Shangai", "51656", image,
 				"Logo per customer", 314, "logo9.gif", true, "2563"));
-		em.persist(receiptMock.create("666", "02/05/2007", "causale 6",
+		em.persist(receiptOperation.create("666", "02/05/2007", "causale 6",
 				"description 6", "21349", "06/06/1982", "22", "cause 6",
 				"compensation 6", "53453", "rag soc 11", "rag soc 12", "111",
 				"04/04/1998", "32323232323", "333.000,00 $", "54664", "345",
@@ -128,7 +128,7 @@ public class ReceiptAgentTest {
 				"74684736433", "fsdfsdfsd@vige.it", "ewe.com", "76", "BO",
 				"Nola", "Bombay", "55646", image, "Logo per customer", 3411,
 				"logo10.gif", false, ""));
-		em.persist(receiptMock.create("32322", "03/03/2002", "causale 7",
+		em.persist(receiptOperation.create("32322", "03/03/2002", "causale 7",
 				"description 7", "21314", "06/01/1985", "534543", "cause 9",
 				"compensation 9", "54546", "rag soc 17", "rag soc 18", "111",
 				"04/02/1992", "43565757", "42.000,00 Û", "22223", "7654",
@@ -140,7 +140,7 @@ public class ReceiptAgentTest {
 				"tytre@vige.it", "swswd.com", "546", "RM", "Castelvolturno",
 				"Rome", "55436", image, "Logo per customer", 334, "logo11.gif",
 				true, "2564"));
-		em.persist(receiptMock.create("528", "11/03/2007", "causale 8",
+		em.persist(receiptOperation.create("528", "11/03/2007", "causale 8",
 				"description 8", "213334", "02/06/1986", "23432", "cause 10",
 				"compensation 10", "6544", "rag soc 19", "rag soc 20", "111",
 				"04/04/1998", "8787878787", "99.000,00 $", "43432", "23453",
@@ -151,7 +151,7 @@ public class ReceiptAgentTest {
 				"323244646", "325", "via Serafini", "00999", "534748622",
 				"323244646", "ewrete@vige.it", "ewewwq.com", "66", "KY",
 				"Tropea", "Kyoto", "", null, null, 0, null, false, ""));
-		em.persist(receiptMock.create("95433", "01/05/2007", "causale 9",
+		em.persist(receiptOperation.create("95433", "01/05/2007", "causale 9",
 				"description 9", "212344", "03/06/1987", "65464", "cause 11",
 				"compensation 11", "34322", "rag soc 21", "rag soc 22", "111",
 				"05/04/1992", "212121212", "33.000,00 Û", "86433", "65433",
@@ -162,7 +162,7 @@ public class ReceiptAgentTest {
 				"via Serafina", "00666", "63564832764", "3467468733",
 				"ngnghghg@vige.it", "llklk.it", "33", "TK", "Palinuro",
 				"Tokyo", "", null, null, 0, null, false, ""));
-		em.persist(receiptMock.create("5432", "11/12/2007", "causale 10",
+		em.persist(receiptOperation.create("5432", "11/12/2007", "causale 10",
 				"description 10", "21234", "04/06/1988", "5646", "cause 12",
 				"compensation 12", "6567", "rag soc 23", "rag soc 24", "111",
 				"04/05/1998", "212121212", "33.000,00 Û", "86433", "123444",
@@ -173,7 +173,7 @@ public class ReceiptAgentTest {
 				"00987", "896969687", "32456733", "hdhhjdghf@vige.it",
 				"qasas.com", "656", "FI", "Tivoli", "Florence", "55656", image,
 				"Logo per customer", 394, "logo8.gif", false, ""));
-		em.persist(receiptMock.create("33333", "12/05/2001", "causale 11",
+		em.persist(receiptOperation.create("33333", "12/05/2001", "causale 11",
 				"description 11", "1344", "05/06/1989", "645645", "cause 13",
 				"compensation 13", "5454", "rag soc 25", "rag soc 26", "111",
 				"04/04/1995", "212121212", "33.000,00 Û", "86433", "876544",

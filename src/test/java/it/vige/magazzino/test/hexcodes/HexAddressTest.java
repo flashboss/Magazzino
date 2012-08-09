@@ -34,66 +34,66 @@ public class HexAddressTest {
 
 	@Test
 	public void decode() throws Exception {
-		AddressOperation addressMock = new AddressOperation();
-		verify(addressMock.create("19987", "piazza Clodio", "00122",
+		AddressOperation addressOperation = new AddressOperation();
+		verify(addressOperation.create("19987", "piazza Clodio", "00122",
 				"64746567", "7654345676", "reqrew@vige.it", "wwewewe.com",
 				"54", "RM", "Guidonia", "Rome"), hexCodes[0]);
-		verify(addressMock.create("1177", "viale Mazzini", "00134",
+		verify(addressOperation.create("1177", "viale Mazzini", "00134",
 				"534537446", "346357465736", "hgdfgsfg@vige.it", "fdfd.com",
 				"67", "LO", "Setteville", "London"), hexCodes[1]);
-		verify(addressMock.create("98766", "piazza Bologna", "00234",
+		verify(addressOperation.create("98766", "piazza Bologna", "00234",
 				"5425356457", "8875645732", "afadfsd@vige.it", "wwqewr.com",
 				"33", "BO", "Settecamini", "Bologna"), hexCodes[2]);
-		verify(addressMock.create("11121", "viale Giulio Cesare", "00987",
+		verify(addressOperation.create("11121", "viale Giulio Cesare", "00987",
 				"896969687", "32456733", "hdhhjdghf@vige.it", "qasas.com",
 				"656", "FI", "Tivoli", "Florence"), hexCodes[3]);
-		verify(addressMock.create("54566", "via Tibutina", "01234", "23423423",
+		verify(addressOperation.create("54566", "via Tibutina", "01234", "23423423",
 				"2436233453", "fdsfsdfsd@vige.it", "ffkkfkf.com", "34", "PA",
 				"Francoforte", "Paris"), hexCodes[4]);
-		verify(addressMock.create("34322", "via Prenestina", "00152",
+		verify(addressOperation.create("34322", "via Prenestina", "00152",
 				"87584734637", "84562354656", "gdhdgjfgj@vige.it", "ppopo.com",
 				"24", "SH", "Zagarolo", "Shangai"), hexCodes[5]);
-		verify(addressMock.create("22222", "piazza Tuscolo", "00012",
+		verify(addressOperation.create("22222", "piazza Tuscolo", "00012",
 				"32678475323", "74684736433", "fsdfsdfsd@vige.it", "ewe.com",
 				"76", "BO", "Nola", "Bombay"), hexCodes[6]);
-		verify(addressMock.create("55555", "via Tuscolana", "09833",
+		verify(addressOperation.create("55555", "via Tuscolana", "09833",
 				"42675473364", "754684333", "tytre@vige.it", "swswd.com",
 				"546", "RM", "Castelvolturno", "Rome"), hexCodes[7]);
-		verify(addressMock.create("325", "via Serafini", "00999", "534748622",
+		verify(addressOperation.create("325", "via Serafini", "00999", "534748622",
 				"7568473634", "ewrete@vige.it", "ewewwq.com", "66", "KY",
 				"Tropea", "Kyoto"), hexCodes[8]);
-		verify(addressMock.create("6433", "via Serafina", "00666",
+		verify(addressOperation.create("6433", "via Serafina", "00666",
 				"63564832764", "3467468733", "ngnghghg@vige.it", "llklk.it",
 				"33", "TK", "Palinuro", "Tokyo"), hexCodes[9]);
-		verify(addressMock.create("4353", "piazza Clodio", "01122", "64746567",
+		verify(addressOperation.create("4353", "piazza Clodio", "01122", "64746567",
 				"7651676", "reqrew@vige.it", "wwewewe.com", "54", "RM",
 				"Guidonia", "Rome"), hexCodes[10]);
-		verify(addressMock.create("222", "viale Mazzini", "00114", "531446",
+		verify(addressOperation.create("222", "viale Mazzini", "00114", "531446",
 				"3463165736", "hgdfgsfg@vige.it", "fdfd.com", "67", "LO",
 				"Setteville", "London"), hexCodes[11]);
-		verify(addressMock.create("76435", "piazza Bologna", "00234",
+		verify(addressOperation.create("76435", "piazza Bologna", "00234",
 				"54253516457", "8871115645732", "afadfsd@vige.it",
 				"wwqewr.com", "33", "BO", "Settecamini", "Bologna"),
 				hexCodes[12]);
-		verify(addressMock.create("23567", "viale Giulio Cesare", "00987",
+		verify(addressOperation.create("23567", "viale Giulio Cesare", "00987",
 				"896969687", "32456733", "hdhhjdghf@vige.it", "qasas.com",
 				"6526", "FI", "Tivoli", "Florence"), hexCodes[13]);
-		verify(addressMock.create("876", "via Tibutina", "01234", "23423423",
+		verify(addressOperation.create("876", "via Tibutina", "01234", "23423423",
 				"2436233453", "fdsfsdfsd@vige.it", "ffkkfkf.com", "34", "PA",
 				"Francoforte", "Paris"), hexCodes[14]);
-		verify(addressMock.create("345", "via Prenestina", "00152",
+		verify(addressOperation.create("345", "via Prenestina", "00152",
 				"87584734637", "84562354656", "gdhdgjfgj@vige.it", "ppopo.com",
 				"124", "SH", "Zagarolo", "Shangai"), hexCodes[15]);
-		verify(addressMock.create("764", "piazza Tuscolo", "00212",
+		verify(addressOperation.create("764", "piazza Tuscolo", "00212",
 				"32678475323", "74684736433", "fsdfsdfsd@vige.it", "ewe.com",
 				"716", "BO", "Nola", "Bombay"), hexCodes[16]);
-		verify(addressMock.create("3454", "via Tuscolana", "09833",
+		verify(addressOperation.create("3454", "via Tuscolana", "09833",
 				"42675473364", "754684333", "tytre@vige.it", "swswd.com",
 				"546", "RM", "Castelvolturno", "Rome"), hexCodes[17]);
-		verify(addressMock.create("7654", "via Serafini", "00999", "534748622",
+		verify(addressOperation.create("7654", "via Serafini", "00999", "534748622",
 				"7568473634", "ewrete@vige.it", "ewewwq.com", "616", "KY",
 				"Tropea", "Kyoto"), hexCodes[18]);
-		verify(addressMock.create("23453", "via Serafina", "00666",
+		verify(addressOperation.create("23453", "via Serafina", "00666",
 				"63564832764", "3467468733", "ngnghghg@vige.it", "llklk.it",
 				"33", "TK", "Palinuro", "Tokyo"), hexCodes[19]);
 	}

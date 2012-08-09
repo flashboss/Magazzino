@@ -74,48 +74,48 @@ public class ListDataAgentTest {
 		utx.begin();
 		em.joinTransaction();
 		
-		ListDataOperation listDataMock = new ListDataOperation();
-		List<Data> listData = listDataMock.create("5556", image, "Logo per magazzino",
+		ListDataOperation listDataOperation = new ListDataOperation();
+		List<Data> listData = listDataOperation.create("5556", image, "Logo per magazzino",
 				344, "logo1.gif", true, "2561");
 		for (Data data : listData)
 			em.persist(data);
-		listData = listDataMock.create("55156", image, "Logo per magazzino", 348,
+		listData = listDataOperation.create("55156", image, "Logo per magazzino", 348,
 				"logo2.gif", false, "");
 		for (Data data : listData)
 			em.persist(data);
-		listData = listDataMock.create("52656", image, "Logo per magazzino", 344,
+		listData = listDataOperation.create("52656", image, "Logo per magazzino", 344,
 				"logo3.gif", true, "2562");
 		for (Data data : listData)
 			em.persist(data);
-		listData = listDataMock.create("55656", image, "Logo per magazzino", 234,
+		listData = listDataOperation.create("55656", image, "Logo per magazzino", 234,
 				"logo4.gif", false, "");
 		for (Data data : listData)
 			em.persist(data);
-		listData = listDataMock.create("51656", image, "Logo per customer", 34,
+		listData = listDataOperation.create("51656", image, "Logo per customer", 34,
 				"logo5.gif", true, "2563");
 		for (Data data : listData)
 			em.persist(data);
-		listData = listDataMock.create("55646", image, "Logo per customer", 349,
+		listData = listDataOperation.create("55646", image, "Logo per customer", 349,
 				"logo6.gif", false, "");
 		for (Data data : listData)
 			em.persist(data);
-		listData = listDataMock.create("55436", image, "Logo per customer", 334,
+		listData = listDataOperation.create("55436", image, "Logo per customer", 334,
 				"logo7.gif", true, "2564");
 		for (Data data : listData)
 			em.persist(data);
-		listData = listDataMock.create("556", image, "Logo per customer", 394,
+		listData = listDataOperation.create("556", image, "Logo per customer", 394,
 				"logo8.gif", false, "");
 		for (Data data : listData)
 			em.persist(data);
-		listData = listDataMock.create("5526", image, "Logo per customer", 314,
+		listData = listDataOperation.create("5526", image, "Logo per customer", 314,
 				"logo9.gif", true, "2565");
 		for (Data data : listData)
 			em.persist(data);
-		listData = listDataMock.create("55956", image, "Logo per customer", 3411,
+		listData = listDataOperation.create("55956", image, "Logo per customer", 3411,
 				"logo10.gif", false, "");
 		for (Data data : listData)
 			em.persist(data);
-		listData = listDataMock.create("256", image, "Logo per customer", 334,
+		listData = listDataOperation.create("256", image, "Logo per customer", 334,
 				"logo11.gif", true, "2566");
 		for (Data data : listData)
 			em.persist(data);
