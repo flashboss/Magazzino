@@ -1,11 +1,11 @@
 package it.vige.magazzino.test.hexcodes;
 
-import static it.vige.magazzino.test.persistence.Utils.image;
-import static it.vige.magazzino.test.persistence.Utils.tempFile;
-import static it.vige.magazzino.test.persistence.Utils.toHexString;
+import static it.vige.magazzino.test.Utils.tempFile;
+import static it.vige.magazzino.test.Utils.toHexString;
 import it.vige.magazzino.model.Receipt;
 import it.vige.magazzino.test.operation.AddressOperation;
 import it.vige.magazzino.test.operation.CustomerOperation;
+import it.vige.magazzino.test.operation.ImageOperation;
 import it.vige.magazzino.test.operation.ListDataOperation;
 import it.vige.magazzino.test.operation.MagazzinoOperation;
 import it.vige.magazzino.test.operation.ReceiptOperation;
@@ -30,13 +30,13 @@ public class HexReceiptTest {
 
 	@Test
 	public void decode() throws Exception {
-		byte[] image = image();
-
+		ImageOperation imageOperation = new ImageOperation();
 		ReceiptOperation receiptOperation = new ReceiptOperation();
 		AddressOperation addressOperation = new AddressOperation();
 		ListDataOperation listDataOperation = new ListDataOperation();
 		MagazzinoOperation magazzinoOperation = new MagazzinoOperation();
 		CustomerOperation customerOperation = new CustomerOperation();
+		byte[] image = imageOperation.create();
 		verify(receiptOperation.create("21256", "11/05/2009", "causale 1",
 				"description 1", magazzinoOperation.create("21344",
 						"01/06/1999", "23432", "cause 1", "compensation 1",

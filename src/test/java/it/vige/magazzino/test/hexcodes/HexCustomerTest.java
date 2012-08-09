@@ -1,11 +1,11 @@
 package it.vige.magazzino.test.hexcodes;
 
-import static it.vige.magazzino.test.persistence.Utils.image;
-import static it.vige.magazzino.test.persistence.Utils.tempFile;
-import static it.vige.magazzino.test.persistence.Utils.toHexString;
+import static it.vige.magazzino.test.Utils.tempFile;
+import static it.vige.magazzino.test.Utils.toHexString;
 import it.vige.magazzino.model.Customer;
 import it.vige.magazzino.test.operation.AddressOperation;
 import it.vige.magazzino.test.operation.CustomerOperation;
+import it.vige.magazzino.test.operation.ImageOperation;
 import it.vige.magazzino.test.operation.ListDataOperation;
 
 import org.junit.Assert;
@@ -26,11 +26,11 @@ public class HexCustomerTest {
 
 	@Test
 	public void decode() throws Exception {
-		byte[] image = image();
-
+		ImageOperation imageOperation = new ImageOperation();
 		CustomerOperation customerOperation = new CustomerOperation();
 		AddressOperation addressOperation = new AddressOperation();
 		ListDataOperation listDataOperation = new ListDataOperation();
+		byte[] image = imageOperation.create();
 		verify(customerOperation.create("19987", "cliente 1", "rag soc 1",
 				"92755353", addressOperation.create("19987", "piazza Clodio",
 						"00122", "64746567", "7654345676", "reqrew@vige.it",

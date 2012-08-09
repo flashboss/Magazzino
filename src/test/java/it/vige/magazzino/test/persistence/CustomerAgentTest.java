@@ -20,10 +20,10 @@ import static it.vige.magazzino.test.persistence.Dependencies.FACES;
 import static it.vige.magazzino.test.persistence.Dependencies.INTERNATIONAL;
 import static it.vige.magazzino.test.persistence.Dependencies.RICHFACES;
 import static it.vige.magazzino.test.persistence.Dependencies.SOLDER;
-import static it.vige.magazzino.test.persistence.Utils.image;
 import it.vige.magazzino.DataContainer;
 import it.vige.magazzino.test.operation.AddressOperation;
 import it.vige.magazzino.test.operation.CustomerOperation;
+import it.vige.magazzino.test.operation.ImageOperation;
 import it.vige.magazzino.test.operation.ListDataOperation;
 
 import javax.inject.Inject;
@@ -68,14 +68,14 @@ public class CustomerAgentTest {
 
 	@Test
 	public void createCustomer() throws Exception {
-		byte[] image = image();
-
 		utx.begin();
 		em.joinTransaction();
 
+		ImageOperation imageOperation = new ImageOperation();
 		CustomerOperation customerOperation = new CustomerOperation();
 		AddressOperation addressOperation = new AddressOperation();
 		ListDataOperation listDataOperation = new ListDataOperation();
+		byte[] image = imageOperation.create();
 		em.persist(customerOperation.create("19987", "cliente 1", "rag soc 1",
 				"92755353", addressOperation.create("19987", "piazza Clodio",
 						"00122", "64746567", "7654345676", "reqrew@vige.it",

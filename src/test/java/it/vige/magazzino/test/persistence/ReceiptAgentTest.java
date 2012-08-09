@@ -4,10 +4,10 @@ import static it.vige.magazzino.test.persistence.Dependencies.FACES;
 import static it.vige.magazzino.test.persistence.Dependencies.INTERNATIONAL;
 import static it.vige.magazzino.test.persistence.Dependencies.RICHFACES;
 import static it.vige.magazzino.test.persistence.Dependencies.SOLDER;
-import static it.vige.magazzino.test.persistence.Utils.image;
 import it.vige.magazzino.DataContainer;
 import it.vige.magazzino.test.operation.AddressOperation;
 import it.vige.magazzino.test.operation.CustomerOperation;
+import it.vige.magazzino.test.operation.ImageOperation;
 import it.vige.magazzino.test.operation.ListDataOperation;
 import it.vige.magazzino.test.operation.MagazzinoOperation;
 import it.vige.magazzino.test.operation.ReceiptOperation;
@@ -54,16 +54,16 @@ public class ReceiptAgentTest {
 
 	@Test
 	public void createReceipt() throws Exception {
-		byte[] image = image();
-
 		utx.begin();
 		em.joinTransaction();
 
+		ImageOperation imageOperation = new ImageOperation();
 		ReceiptOperation receiptOperation = new ReceiptOperation();
 		AddressOperation addressOperation = new AddressOperation();
 		ListDataOperation listDataOperation = new ListDataOperation();
 		MagazzinoOperation magazzinoOperation = new MagazzinoOperation();
 		CustomerOperation customerOperation = new CustomerOperation();
+		byte[] image = imageOperation.create();
 		em.persist(receiptOperation.create("21256", "11/05/2009", "causale 1",
 				"description 1", magazzinoOperation.create("21344",
 						"01/06/1999", "23432", "cause 1", "compensation 1",

@@ -1,7 +1,7 @@
 package it.vige.magazzino.test.hexcodes;
 
-import static it.vige.magazzino.test.persistence.Utils.tempFile;
-import static it.vige.magazzino.test.persistence.Utils.toHexString;
+import static it.vige.magazzino.test.Utils.tempFile;
+import static it.vige.magazzino.test.Utils.toHexString;
 import it.vige.magazzino.model.Address;
 import it.vige.magazzino.test.operation.AddressOperation;
 

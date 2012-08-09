@@ -1,9 +1,9 @@
 package it.vige.magazzino.test.hexcodes;
 
-import static it.vige.magazzino.test.persistence.Utils.image;
-import static it.vige.magazzino.test.persistence.Utils.tempFile;
-import static it.vige.magazzino.test.persistence.Utils.toHexString;
+import static it.vige.magazzino.test.Utils.tempFile;
+import static it.vige.magazzino.test.Utils.toHexString;
 import it.vige.magazzino.model.Data;
+import it.vige.magazzino.test.operation.ImageOperation;
 import it.vige.magazzino.test.operation.ListDataOperation;
 
 import java.util.List;
@@ -28,9 +28,9 @@ public class HexListDataTest {
 
 	@Test
 	public void decode() throws Exception {
-		byte[] image = image();
-
+		ImageOperation imageOperation = new ImageOperation();
 		ListDataOperation listDataOperation = new ListDataOperation();
+		byte[] image = imageOperation.create();
 		verify(listDataOperation.create("5556", image, "Logo per magazzino", 344,
 				"logo1.gif", true, "2561"), hexCodes[0]);
 		verify(listDataOperation.create("55156", image, "Logo per magazzino", 348,

@@ -20,9 +20,9 @@ import static it.vige.magazzino.test.persistence.Dependencies.FACES;
 import static it.vige.magazzino.test.persistence.Dependencies.INTERNATIONAL;
 import static it.vige.magazzino.test.persistence.Dependencies.RICHFACES;
 import static it.vige.magazzino.test.persistence.Dependencies.SOLDER;
-import static it.vige.magazzino.test.persistence.Utils.image;
 import it.vige.magazzino.DataContainer;
 import it.vige.magazzino.test.operation.AddressOperation;
+import it.vige.magazzino.test.operation.ImageOperation;
 import it.vige.magazzino.test.operation.ListDataOperation;
 import it.vige.magazzino.test.operation.MagazzinoOperation;
 
@@ -68,14 +68,14 @@ public class MagazzinoAgentTest {
 
 	@Test
 	public void createMagazzino() throws Exception {
-		byte[] image = image();
-
 		utx.begin();
 		em.joinTransaction();
 
+		ImageOperation imageOperation = new ImageOperation();
 		MagazzinoOperation magazzinoOperation = new MagazzinoOperation();
 		AddressOperation addressOperation = new AddressOperation();
 		ListDataOperation listDataOperation = new ListDataOperation();
+		byte[] image = imageOperation.create();
 		em.persist(magazzinoOperation.create("21344", "01/06/1999", "23432",
 				"cause 1", "compensation 1", "2654654", "rag soc 1",
 				"rag soc 2", "111", "01/05/1998", "4343289479", "39.000,00 Û",

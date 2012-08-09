@@ -1,10 +1,10 @@
 package it.vige.magazzino.test.hexcodes;
 
-import static it.vige.magazzino.test.persistence.Utils.image;
-import static it.vige.magazzino.test.persistence.Utils.tempFile;
-import static it.vige.magazzino.test.persistence.Utils.toHexString;
+import static it.vige.magazzino.test.Utils.tempFile;
+import static it.vige.magazzino.test.Utils.toHexString;
 import it.vige.magazzino.model.Magazzino;
 import it.vige.magazzino.test.operation.AddressOperation;
+import it.vige.magazzino.test.operation.ImageOperation;
 import it.vige.magazzino.test.operation.ListDataOperation;
 import it.vige.magazzino.test.operation.MagazzinoOperation;
 
@@ -28,11 +28,11 @@ public class HexMagazzinoTest {
 
 	@Test
 	public void decode() throws Exception {
-		byte[] image = image();
-
+		ImageOperation imageOperation = new ImageOperation();
 		MagazzinoOperation magazzinoOperation = new MagazzinoOperation();
 		AddressOperation addressOperation = new AddressOperation();
 		ListDataOperation listDataOperation = new ListDataOperation();
+		byte[] image = imageOperation.create();
 		verify(magazzinoOperation.create("21344", "01/06/1999", "23432",
 				"cause 1", "compensation 1", "2654654", "rag soc 1",
 				"rag soc 2", "111", "01/05/1998", "4343289479", "39.000,00 Û",

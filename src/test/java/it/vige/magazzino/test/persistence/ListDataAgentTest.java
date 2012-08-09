@@ -20,9 +20,9 @@ import static it.vige.magazzino.test.persistence.Dependencies.FACES;
 import static it.vige.magazzino.test.persistence.Dependencies.INTERNATIONAL;
 import static it.vige.magazzino.test.persistence.Dependencies.RICHFACES;
 import static it.vige.magazzino.test.persistence.Dependencies.SOLDER;
-import static it.vige.magazzino.test.persistence.Utils.image;
 import it.vige.magazzino.DataContainer;
 import it.vige.magazzino.model.Data;
+import it.vige.magazzino.test.operation.ImageOperation;
 import it.vige.magazzino.test.operation.ListDataOperation;
 
 import java.util.List;
@@ -69,12 +69,12 @@ public class ListDataAgentTest {
 
 	@Test
 	public void createListData() throws Exception {
-		byte[] image = image();
-
 		utx.begin();
 		em.joinTransaction();
-		
+
+		ImageOperation imageOperation = new ImageOperation();
 		ListDataOperation listDataOperation = new ListDataOperation();
+		byte[] image = imageOperation.create();
 		List<Data> listData = listDataOperation.create("5556", image, "Logo per magazzino",
 				344, "logo1.gif", true, "2561");
 		for (Data data : listData)
