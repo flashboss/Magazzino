@@ -16,12 +16,12 @@
  */
 package it.vige.magazzino.test.persistence;
 
-import static it.vige.magazzino.test.persistence.Dependencies.FACES;
-import static it.vige.magazzino.test.persistence.Dependencies.INTERNATIONAL;
-import static it.vige.magazzino.test.persistence.Dependencies.RICHFACES;
-import static it.vige.magazzino.test.persistence.Dependencies.SOLDER;
+import static it.vige.magazzino.test.Dependencies.FACES;
+import static it.vige.magazzino.test.Dependencies.INTERNATIONAL;
+import static it.vige.magazzino.test.Dependencies.RICHFACES;
+import static it.vige.magazzino.test.Dependencies.SOLDER;
 import it.vige.magazzino.DataContainer;
-import it.vige.magazzino.test.operation.AddressOperation;
+import it.vige.magazzino.test.mock.AddressMock;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -37,8 +37,11 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+/**
+ * @author <a href="http://www.vige.it">Luca Stancapiano</a>
+ */
 @RunWith(Arquillian.class)
-public class AddressAgentTest {
+public class AddressAgentTest implements AddressMock {
 	@Deployment
 	public static WebArchive createDeployment() {
 		WebArchive war = ShrinkWrap
@@ -67,67 +70,26 @@ public class AddressAgentTest {
 		utx.begin();
 		em.joinTransaction();
 
-		AddressOperation addressOperation = new AddressOperation();
-		em.persist(addressOperation.create("19987", "piazza Clodio", "00122", "64746567",
-				"7654345676", "reqrew@vige.it", "wwewewe.com", "54", "RM",
-				"Guidonia", "Rome"));
-		em.persist(addressOperation.create("1177", "viale Mazzini", "00134", "534537446",
-				"346357465736", "hgdfgsfg@vige.it", "fdfd.com", "67", "LO",
-				"Setteville", "London"));
-		em.persist(addressOperation.create("98766", "piazza Bologna", "00234", "5425356457",
-				"8875645732", "afadfsd@vige.it", "wwqewr.com", "33", "BO",
-				"Settecamini", "Bologna"));
-		em.persist(addressOperation.create("11121", "viale Giulio Cesare", "00987",
-				"896969687", "32456733", "hdhhjdghf@vige.it", "qasas.com",
-				"656", "FI", "Tivoli", "Florence"));
-		em.persist(addressOperation.create("54566", "via Tibutina", "01234", "23423423",
-				"2436233453", "fdsfsdfsd@vige.it", "ffkkfkf.com", "34", "PA",
-				"Francoforte", "Paris"));
-		em.persist(addressOperation.create("34322", "via Prenestina", "00152", "87584734637",
-				"84562354656", "gdhdgjfgj@vige.it", "ppopo.com", "24", "SH",
-				"Zagarolo", "Shangai"));
-		em.persist(addressOperation.create("22222", "piazza Tuscolo", "00012", "32678475323",
-				"74684736433", "fsdfsdfsd@vige.it", "ewe.com", "76", "BO",
-				"Nola", "Bombay"));
-		em.persist(addressOperation.create("55555", "via Tuscolana", "09833", "42675473364",
-				"754684333", "tytre@vige.it", "swswd.com", "546", "RM",
-				"Castelvolturno", "Rome"));
-		em.persist(addressOperation.create("325", "via Serafini", "00999", "534748622",
-				"7568473634", "ewrete@vige.it", "ewewwq.com", "66", "KY",
-				"Tropea", "Kyoto"));
-		em.persist(addressOperation.create("6433", "via Serafina", "00666", "63564832764",
-				"3467468733", "ngnghghg@vige.it", "llklk.it", "33", "TK",
-				"Palinuro", "Tokyo"));
-		em.persist(addressOperation.create("4353", "piazza Clodio", "01122", "64746567",
-				"7651676", "reqrew@vige.it", "wwewewe.com", "54", "RM",
-				"Guidonia", "Rome"));
-		em.persist(addressOperation.create("222", "viale Mazzini", "00114", "531446",
-				"3463165736", "hgdfgsfg@vige.it", "fdfd.com", "67", "LO",
-				"Setteville", "London"));
-		em.persist(addressOperation.create("76435", "piazza Bologna", "00234", "54253516457",
-				"8871115645732", "afadfsd@vige.it", "wwqewr.com", "33", "BO",
-				"Settecamini", "Bologna"));
-		em.persist(addressOperation.create("23567", "viale Giulio Cesare", "00987",
-				"896969687", "32456733", "hdhhjdghf@vige.it", "qasas.com",
-				"6526", "FI", "Tivoli", "Florence"));
-		em.persist(addressOperation.create("876", "via Tibutina", "01234", "23423423",
-				"2436233453", "fdsfsdfsd@vige.it", "ffkkfkf.com", "34", "PA",
-				"Francoforte", "Paris"));
-		em.persist(addressOperation.create("345", "via Prenestina", "00152", "87584734637",
-				"84562354656", "gdhdgjfgj@vige.it", "ppopo.com", "124", "SH",
-				"Zagarolo", "Shangai"));
-		em.persist(addressOperation.create("764", "piazza Tuscolo", "00212", "32678475323",
-				"74684736433", "fsdfsdfsd@vige.it", "ewe.com", "716", "BO",
-				"Nola", "Bombay"));
-		em.persist(addressOperation.create("3454", "via Tuscolana", "09833", "42675473364",
-				"754684333", "tytre@vige.it", "swswd.com", "546", "RM",
-				"Castelvolturno", "Rome"));
-		em.persist(addressOperation.create("7654", "via Serafini", "00999", "534748622",
-				"7568473634", "ewrete@vige.it", "ewewwq.com", "616", "KY",
-				"Tropea", "Kyoto"));
-		em.persist(addressOperation.create("23453", "via Serafina", "00666", "63564832764",
-				"3467468733", "ngnghghg@vige.it", "llklk.it", "33", "TK",
-				"Palinuro", "Tokyo"));
+		em.persist(address0);
+		em.persist(address1);
+		em.persist(address2);
+		em.persist(address3);
+		em.persist(address4);
+		em.persist(address5);
+		em.persist(address6);
+		em.persist(address7);
+		em.persist(address8);
+		em.persist(address9);
+		em.persist(address10);
+		em.persist(address11);
+		em.persist(address12);
+		em.persist(address13);
+		em.persist(address14);
+		em.persist(address15);
+		em.persist(address16);
+		em.persist(address17);
+		em.persist(address18);
+		em.persist(address19);
 		utx.commit();
 	}
 

@@ -20,8 +20,6 @@ import static it.vige.magazzino.test.Dependencies.FACES;
 import static it.vige.magazzino.test.Dependencies.INTERNATIONAL;
 import static it.vige.magazzino.test.Dependencies.RICHFACES;
 import static it.vige.magazzino.test.Dependencies.SOLDER;
-import it.vige.magazzino.DataContainer;
-import it.vige.magazzino.test.mock.MagazzinoMock;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -37,11 +35,14 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import it.vige.magazzino.DataContainer;
+import it.vige.magazzino.test.mock.ArticleMock;
+
 /**
  * @author <a href="http://www.vige.it">Luca Stancapiano</a>
  */
 @RunWith(Arquillian.class)
-public class MagazzinoAgentTest implements MagazzinoMock {
+public class ArticleAgentTest implements ArticleMock {
 	@Deployment
 	public static WebArchive createDeployment() {
 		WebArchive war = ShrinkWrap
@@ -51,7 +52,6 @@ public class MagazzinoAgentTest implements MagazzinoMock {
 				.addAsLibraries(FACES)
 				.addAsLibraries(SOLDER)
 				.addAsLibraries(RICHFACES)
-				.addAsResource("logo.gif")
 				.addAsWebInfResource("test-web.xml", "web.xml")
 				.addAsWebInfResource("test-persistence.xml",
 						"classes/META-INF/persistence.xml")
@@ -67,28 +67,32 @@ public class MagazzinoAgentTest implements MagazzinoMock {
 	EntityManager em;
 
 	@Test
-	public void createMagazzino() throws Exception {
+	public void createArticle() throws Exception {
 		utx.begin();
 		em.joinTransaction();
 
-		em.persist(magazzino0);
-		em.persist(magazzino1);
-		em.persist(magazzino2);
-		em.persist(magazzino3);
-		em.persist(magazzino4);
-		em.persist(magazzino5);
-		em.persist(magazzino6);
-		em.persist(magazzino7);
-		em.persist(magazzino8);
-		em.persist(magazzino9);
-		em.persist(magazzino10);
+		em.persist(article0);
+		em.persist(article1);
+		em.persist(article2); 
+		em.persist(article3);
+		em.persist(article4);
+		em.persist(article5);
+		em.persist(article6);
+		em.persist(article7);
+		em.persist(article8);
+		em.persist(article9);
+		em.persist(article10);
+		em.persist(article11);
+		em.persist(article12);
+		em.persist(article13);
+		em.persist(article14);
+		em.persist(article15);
 		utx.commit();
 	}
 
 	@Test
-	public void searchMagazzino() throws Exception {
-		Assert.assertEquals(11, em.createQuery("select b from Magazzino b")
+	public void searchArticle() throws Exception {
+		Assert.assertEquals(16, em.createQuery("select b from Article b")
 				.getResultList().size());
 	}
-
 }

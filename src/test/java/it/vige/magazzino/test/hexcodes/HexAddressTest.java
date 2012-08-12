@@ -1,14 +1,33 @@
+/*
+ * Vige, Home of Professional Open Source
+ * Copyright 2010, Vige, and individual contributors
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package it.vige.magazzino.test.hexcodes;
 
 import static it.vige.magazzino.test.Utils.tempFile;
 import static it.vige.magazzino.test.Utils.toHexString;
 import it.vige.magazzino.model.Address;
-import it.vige.magazzino.test.operation.AddressOperation;
+import it.vige.magazzino.test.mock.AddressMock;
 
 import org.junit.Assert;
 import org.junit.Test;
 
-public class HexAddressTest {
+/**
+ * @author <a href="http://www.vige.it">Luca Stancapiano</a>
+ */
+public class HexAddressTest implements AddressMock {
 
 	static final String[] hexCodes = {
 			"aced00057372001f69742e766967652e6d6167617a7a696e6f2e6d6f64656c2e416464726573735163bec74313b40902000b4c0007616464726573737400124c6a6176612f6c616e672f537472696e673b4c000363617071007e00014c00046369747971007e00014c000b63697669634e756d62657271007e00014c0004636f646571007e00014c0005656d61696c71007e00014c000366617871007e00014c000570686f6e6571007e00014c000870726f76696e636571007e00014c00047369746571007e00014c0004746f776e71007e0001787074000d7069617a7a6120436c6f64696f7400053030313232740004526f6d657400023534740005313939383774000e72657172657740766967652e697474000a373635343334353637367400083634373436353637740002524d74000b777765776577652e636f6d740008477569646f6e6961",
@@ -34,68 +53,26 @@ public class HexAddressTest {
 
 	@Test
 	public void decode() throws Exception {
-		AddressOperation addressOperation = new AddressOperation();
-		verify(addressOperation.create("19987", "piazza Clodio", "00122",
-				"64746567", "7654345676", "reqrew@vige.it", "wwewewe.com",
-				"54", "RM", "Guidonia", "Rome"), hexCodes[0]);
-		verify(addressOperation.create("1177", "viale Mazzini", "00134",
-				"534537446", "346357465736", "hgdfgsfg@vige.it", "fdfd.com",
-				"67", "LO", "Setteville", "London"), hexCodes[1]);
-		verify(addressOperation.create("98766", "piazza Bologna", "00234",
-				"5425356457", "8875645732", "afadfsd@vige.it", "wwqewr.com",
-				"33", "BO", "Settecamini", "Bologna"), hexCodes[2]);
-		verify(addressOperation.create("11121", "viale Giulio Cesare", "00987",
-				"896969687", "32456733", "hdhhjdghf@vige.it", "qasas.com",
-				"656", "FI", "Tivoli", "Florence"), hexCodes[3]);
-		verify(addressOperation.create("54566", "via Tibutina", "01234", "23423423",
-				"2436233453", "fdsfsdfsd@vige.it", "ffkkfkf.com", "34", "PA",
-				"Francoforte", "Paris"), hexCodes[4]);
-		verify(addressOperation.create("34322", "via Prenestina", "00152",
-				"87584734637", "84562354656", "gdhdgjfgj@vige.it", "ppopo.com",
-				"24", "SH", "Zagarolo", "Shangai"), hexCodes[5]);
-		verify(addressOperation.create("22222", "piazza Tuscolo", "00012",
-				"32678475323", "74684736433", "fsdfsdfsd@vige.it", "ewe.com",
-				"76", "BO", "Nola", "Bombay"), hexCodes[6]);
-		verify(addressOperation.create("55555", "via Tuscolana", "09833",
-				"42675473364", "754684333", "tytre@vige.it", "swswd.com",
-				"546", "RM", "Castelvolturno", "Rome"), hexCodes[7]);
-		verify(addressOperation.create("325", "via Serafini", "00999", "534748622",
-				"7568473634", "ewrete@vige.it", "ewewwq.com", "66", "KY",
-				"Tropea", "Kyoto"), hexCodes[8]);
-		verify(addressOperation.create("6433", "via Serafina", "00666",
-				"63564832764", "3467468733", "ngnghghg@vige.it", "llklk.it",
-				"33", "TK", "Palinuro", "Tokyo"), hexCodes[9]);
-		verify(addressOperation.create("4353", "piazza Clodio", "01122", "64746567",
-				"7651676", "reqrew@vige.it", "wwewewe.com", "54", "RM",
-				"Guidonia", "Rome"), hexCodes[10]);
-		verify(addressOperation.create("222", "viale Mazzini", "00114", "531446",
-				"3463165736", "hgdfgsfg@vige.it", "fdfd.com", "67", "LO",
-				"Setteville", "London"), hexCodes[11]);
-		verify(addressOperation.create("76435", "piazza Bologna", "00234",
-				"54253516457", "8871115645732", "afadfsd@vige.it",
-				"wwqewr.com", "33", "BO", "Settecamini", "Bologna"),
-				hexCodes[12]);
-		verify(addressOperation.create("23567", "viale Giulio Cesare", "00987",
-				"896969687", "32456733", "hdhhjdghf@vige.it", "qasas.com",
-				"6526", "FI", "Tivoli", "Florence"), hexCodes[13]);
-		verify(addressOperation.create("876", "via Tibutina", "01234", "23423423",
-				"2436233453", "fdsfsdfsd@vige.it", "ffkkfkf.com", "34", "PA",
-				"Francoforte", "Paris"), hexCodes[14]);
-		verify(addressOperation.create("345", "via Prenestina", "00152",
-				"87584734637", "84562354656", "gdhdgjfgj@vige.it", "ppopo.com",
-				"124", "SH", "Zagarolo", "Shangai"), hexCodes[15]);
-		verify(addressOperation.create("764", "piazza Tuscolo", "00212",
-				"32678475323", "74684736433", "fsdfsdfsd@vige.it", "ewe.com",
-				"716", "BO", "Nola", "Bombay"), hexCodes[16]);
-		verify(addressOperation.create("3454", "via Tuscolana", "09833",
-				"42675473364", "754684333", "tytre@vige.it", "swswd.com",
-				"546", "RM", "Castelvolturno", "Rome"), hexCodes[17]);
-		verify(addressOperation.create("7654", "via Serafini", "00999", "534748622",
-				"7568473634", "ewrete@vige.it", "ewewwq.com", "616", "KY",
-				"Tropea", "Kyoto"), hexCodes[18]);
-		verify(addressOperation.create("23453", "via Serafina", "00666",
-				"63564832764", "3467468733", "ngnghghg@vige.it", "llklk.it",
-				"33", "TK", "Palinuro", "Tokyo"), hexCodes[19]);
+		verify(address0, hexCodes[0]);
+		verify(address1, hexCodes[1]);
+		verify(address2, hexCodes[2]);
+		verify(address3, hexCodes[3]);
+		verify(address4, hexCodes[4]);
+		verify(address5, hexCodes[5]);
+		verify(address6, hexCodes[6]);
+		verify(address7, hexCodes[7]);
+		verify(address8, hexCodes[8]);
+		verify(address9, hexCodes[9]);
+		verify(address10, hexCodes[10]);
+		verify(address11, hexCodes[11]);
+		verify(address12, hexCodes[12]);
+		verify(address13, hexCodes[13]);
+		verify(address14, hexCodes[14]);
+		verify(address15, hexCodes[15]);
+		verify(address16, hexCodes[16]);
+		verify(address17, hexCodes[17]);
+		verify(address18, hexCodes[18]);
+		verify(address19, hexCodes[19]);
 	}
 
 	public Address verify(Address address, String hexCode) throws Exception {

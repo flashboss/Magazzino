@@ -14,29 +14,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package it.vige.magazzino.test.operation;
+package it.vige.magazzino.test.mock;
 
-import it.vige.magazzino.model.Address;
-import it.vige.magazzino.model.Customer;
-import it.vige.magazzino.model.Data;
-
-import java.util.ArrayList;
+import it.vige.magazzino.test.operation.ImageOperation;
 
 /**
  * @author <a href="http://www.vige.it">Luca Stancapiano</a>
  */
-public class CustomerOperation {
-
-	public Customer create(String code, String name, String ragSocial,
-			String iva, Address address, ArrayList<Data> listData) {
-		Customer customer = new Customer();
-		customer.setCode(code);
-		customer.setName(name);
-		customer.setRagSocial(ragSocial);
-		customer.setIva(iva);
-		customer.setAddress(address);
-		customer.setFiles(listData);
-
-		return customer;
-	}
+public interface ImageMock {
+	
+	ImageOperation imageOperation = new ImageOperation();
+	
+	byte[] image0 = imageOperation.create();
 }

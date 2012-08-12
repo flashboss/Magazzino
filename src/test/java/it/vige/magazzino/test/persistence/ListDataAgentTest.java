@@ -16,16 +16,13 @@
  */
 package it.vige.magazzino.test.persistence;
 
-import static it.vige.magazzino.test.persistence.Dependencies.FACES;
-import static it.vige.magazzino.test.persistence.Dependencies.INTERNATIONAL;
-import static it.vige.magazzino.test.persistence.Dependencies.RICHFACES;
-import static it.vige.magazzino.test.persistence.Dependencies.SOLDER;
+import static it.vige.magazzino.test.Dependencies.FACES;
+import static it.vige.magazzino.test.Dependencies.INTERNATIONAL;
+import static it.vige.magazzino.test.Dependencies.RICHFACES;
+import static it.vige.magazzino.test.Dependencies.SOLDER;
 import it.vige.magazzino.DataContainer;
 import it.vige.magazzino.model.Data;
-import it.vige.magazzino.test.operation.ImageOperation;
-import it.vige.magazzino.test.operation.ListDataOperation;
-
-import java.util.List;
+import it.vige.magazzino.test.mock.ListDataMock;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -41,8 +38,11 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+/**
+ * @author <a href="http://www.vige.it">Luca Stancapiano</a>
+ */
 @RunWith(Arquillian.class)
-public class ListDataAgentTest {
+public class ListDataAgentTest implements ListDataMock {
 	@Deployment
 	public static WebArchive createDeployment() {
 		WebArchive war = ShrinkWrap
@@ -72,59 +72,52 @@ public class ListDataAgentTest {
 		utx.begin();
 		em.joinTransaction();
 
-		ImageOperation imageOperation = new ImageOperation();
-		ListDataOperation listDataOperation = new ListDataOperation();
-		byte[] image = imageOperation.create();
-		List<Data> listData = listDataOperation.create("5556", image, "Logo per magazzino",
-				344, "logo1.gif", true, "2561");
-		for (Data data : listData)
+		for (Data data : listData0)
 			em.persist(data);
-		listData = listDataOperation.create("55156", image, "Logo per magazzino", 348,
-				"logo2.gif", false, "");
-		for (Data data : listData)
+		for (Data data : listData1)
 			em.persist(data);
-		listData = listDataOperation.create("52656", image, "Logo per magazzino", 344,
-				"logo3.gif", true, "2562");
-		for (Data data : listData)
+		for (Data data : listData2)
 			em.persist(data);
-		listData = listDataOperation.create("55656", image, "Logo per magazzino", 234,
-				"logo4.gif", false, "");
-		for (Data data : listData)
+		for (Data data : listData3)
 			em.persist(data);
-		listData = listDataOperation.create("51656", image, "Logo per customer", 34,
-				"logo5.gif", true, "2563");
-		for (Data data : listData)
+		for (Data data : listData4)
 			em.persist(data);
-		listData = listDataOperation.create("55646", image, "Logo per customer", 349,
-				"logo6.gif", false, "");
-		for (Data data : listData)
+		for (Data data : listData5)
 			em.persist(data);
-		listData = listDataOperation.create("55436", image, "Logo per customer", 334,
-				"logo7.gif", true, "2564");
-		for (Data data : listData)
+		for (Data data : listData6)
 			em.persist(data);
-		listData = listDataOperation.create("556", image, "Logo per customer", 394,
-				"logo8.gif", false, "");
-		for (Data data : listData)
+		for (Data data : listData7)
 			em.persist(data);
-		listData = listDataOperation.create("5526", image, "Logo per customer", 314,
-				"logo9.gif", true, "2565");
-		for (Data data : listData)
+		for (Data data : listData8)
 			em.persist(data);
-		listData = listDataOperation.create("55956", image, "Logo per customer", 3411,
-				"logo10.gif", false, "");
-		for (Data data : listData)
+		for (Data data : listData9)
 			em.persist(data);
-		listData = listDataOperation.create("256", image, "Logo per customer", 334,
-				"logo11.gif", true, "2566");
-		for (Data data : listData)
+		for (Data data : listData10)
+			em.persist(data);
+		for (Data data : listData11)
+			em.persist(data);
+		for (Data data : listData12)
+			em.persist(data);
+		for (Data data : listData13)
+			em.persist(data);
+		for (Data data : listData14)
+			em.persist(data);
+		for (Data data : listData15)
+			em.persist(data);
+		for (Data data : listData16)
+			em.persist(data);
+		for (Data data : listData17)
+			em.persist(data);
+		for (Data data : listData18)
+			em.persist(data);
+		for (Data data : listData19)
 			em.persist(data);
 		utx.commit();
 	}
 
 	@Test
 	public void searchListData() throws Exception {
-		Assert.assertEquals(17, em.createQuery("select b from Data b")
+		Assert.assertEquals(35, em.createQuery("select b from Data b")
 				.getResultList().size());
 	}
 }
