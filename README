@@ -19,3 +19,9 @@ to test it in jboss:
 
 export JBOSS_HOME=.....
 mvn -Pjbossas-remote-6 test
+
+to test it with selenium:
+
+download selenium-server from http://selenium.googlecode.com/files/selenium-server-standalone-2.25.0.jar
+java -jar selenium-server-standalone-2.25.0.jar
+mvn -Dftest test
