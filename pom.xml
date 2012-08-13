@@ -154,22 +154,6 @@
 			<scope>provided</scope>
 		</dependency>
 
-		<!-- Test dependencies -->
-
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>${junit.version}</version>
-			<scope>test</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>org.jboss.arquillian</groupId>
-			<artifactId>arquillian-junit</artifactId>
-			<version>${arquillian.version}</version>
-			<scope>test</scope>
-		</dependency>
-
 		<dependency>
 			<groupId>org.jboss.spec</groupId>
 			<artifactId>jboss-javaee-6.0</artifactId>
@@ -190,6 +174,28 @@
 			<version>3.0.0.Final</version>
 			<scope>provided</scope>
 			<optional>true</optional>
+		</dependency>
+
+		<dependency>
+			<groupId>commons-digester</groupId>
+			<artifactId>commons-digester</artifactId>
+			<version>2.1</version>
+		</dependency>
+
+		<!-- Test dependencies -->
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jboss.arquillian</groupId>
+			<artifactId>arquillian-junit</artifactId>
+			<version>${arquillian.version}</version>
+			<scope>test</scope>
 		</dependency>
 
 		<dependency>
@@ -258,8 +264,6 @@
 				<version>2.8</version>
 				<configuration>
 					<additionalBuildcommands>
-						<!-- annoyingly creates a bin directory <buildCommand> <name>org.eclipse.wst.jsdt.core.javascriptValidator</name> 
-							</buildCommand> -->
 						<buildCommand>
 							<name>org.jboss.tools.common.verification.verifybuilder</name>
 						</buildCommand>
@@ -291,18 +295,6 @@
 				</configuration>
 			</plugin>
 
-			<plugin>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<version>2.7.2</version>
-				<configuration>
-					<testNGArtifactName>none:none</testNGArtifactName>
-					<excludes>
-						<exclude>**/ftest/**</exclude>
-						<exclude>**/persistence/**</exclude>
-					</excludes>
-				</configuration>
-			</plugin>
-
 		</plugins>
 	</build>
 	<profiles>
@@ -326,6 +318,18 @@
 								<param>src/main/resources-jbossas/magazzino-ds.xml</param>
 								<param>${project.build.directory}/${project.build.finalName}.war</param>
 							</fileNames>
+						</configuration>
+					</plugin>
+
+					<plugin>
+						<artifactId>maven-surefire-plugin</artifactId>
+						<version>2.7.2</version>
+						<configuration>
+							<testNGArtifactName>none:none</testNGArtifactName>
+							<excludes>
+								<exclude>**/ftest/**</exclude>
+								<exclude>**/persistence/**</exclude>
+							</excludes>
 						</configuration>
 					</plugin>
 				</plugins>
@@ -438,6 +442,19 @@
 
 		<profile>
 			<id>ftest</id>
+			<build>
+				<plugins>
+					<plugin>
+						<artifactId>maven-surefire-plugin</artifactId>
+						<version>2.7.2</version>
+						<configuration>
+							<excludes>
+								<exclude>**/test/**</exclude>
+							</excludes>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
 		</profile>
 
 	</profiles>
