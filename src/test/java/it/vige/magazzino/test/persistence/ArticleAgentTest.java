@@ -16,10 +16,10 @@
  */
 package it.vige.magazzino.test.persistence;
 
-import static it.vige.magazzino.test.Dependencies.FACES;
-import static it.vige.magazzino.test.Dependencies.INTERNATIONAL;
-import static it.vige.magazzino.test.Dependencies.RICHFACES;
 import static it.vige.magazzino.test.Dependencies.SOLDER;
+import it.vige.magazzino.model.Article;
+import it.vige.magazzino.test.mock.ArticleMock;
+import it.vige.magazzino.test.operation.ArticleOperation;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -35,9 +35,6 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import it.vige.magazzino.DataContainer;
-import it.vige.magazzino.test.mock.ArticleMock;
-
 /**
  * @author <a href="http://www.vige.it">Luca Stancapiano</a>
  */
@@ -47,11 +44,10 @@ public class ArticleAgentTest implements ArticleMock {
 	public static WebArchive createDeployment() {
 		WebArchive war = ShrinkWrap
 				.create(WebArchive.class, "test.war")
-				.addPackages(true, DataContainer.class.getPackage())
-				.addAsLibraries(INTERNATIONAL)
-				.addAsLibraries(FACES)
+				.addClass(ArticleAgentTest.class)
+				.addClasses(ArticleMock.class, ArticleOperation.class,
+						Article.class)
 				.addAsLibraries(SOLDER)
-				.addAsLibraries(RICHFACES)
 				.addAsWebInfResource("test-web.xml", "web.xml")
 				.addAsWebInfResource("test-persistence.xml",
 						"classes/META-INF/persistence.xml")
@@ -73,7 +69,7 @@ public class ArticleAgentTest implements ArticleMock {
 
 		em.persist(article0);
 		em.persist(article1);
-		em.persist(article2); 
+		em.persist(article2);
 		em.persist(article3);
 		em.persist(article4);
 		em.persist(article5);

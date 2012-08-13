@@ -16,12 +16,10 @@
  */
 package it.vige.magazzino.test.persistence;
 
-import static it.vige.magazzino.test.Dependencies.FACES;
-import static it.vige.magazzino.test.Dependencies.INTERNATIONAL;
-import static it.vige.magazzino.test.Dependencies.RICHFACES;
 import static it.vige.magazzino.test.Dependencies.SOLDER;
-import it.vige.magazzino.DataContainer;
+import it.vige.magazzino.model.Address;
 import it.vige.magazzino.test.mock.AddressMock;
+import it.vige.magazzino.test.operation.AddressOperation;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -46,11 +44,10 @@ public class AddressAgentTest implements AddressMock {
 	public static WebArchive createDeployment() {
 		WebArchive war = ShrinkWrap
 				.create(WebArchive.class, "test.war")
-				.addPackages(true, DataContainer.class.getPackage())
-				.addAsLibraries(INTERNATIONAL)
-				.addAsLibraries(FACES)
+				.addClass(AddressAgentTest.class)
+				.addClasses(AddressMock.class, AddressOperation.class,
+						Address.class)
 				.addAsLibraries(SOLDER)
-				.addAsLibraries(RICHFACES)
 				.addAsWebInfResource("test-web.xml", "web.xml")
 				.addAsWebInfResource("test-persistence.xml",
 						"classes/META-INF/persistence.xml")

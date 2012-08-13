@@ -16,12 +16,21 @@
  */
 package it.vige.magazzino.test.persistence;
 
-import static it.vige.magazzino.test.Dependencies.FACES;
-import static it.vige.magazzino.test.Dependencies.INTERNATIONAL;
 import static it.vige.magazzino.test.Dependencies.RICHFACES;
 import static it.vige.magazzino.test.Dependencies.SOLDER;
 import it.vige.magazzino.DataContainer;
+import it.vige.magazzino.FileUpload;
+import it.vige.magazzino.model.Address;
+import it.vige.magazzino.model.Customer;
+import it.vige.magazzino.model.Data;
+import it.vige.magazzino.test.mock.AddressMock;
 import it.vige.magazzino.test.mock.CustomerMock;
+import it.vige.magazzino.test.mock.ImageMock;
+import it.vige.magazzino.test.mock.ListDataMock;
+import it.vige.magazzino.test.operation.AddressOperation;
+import it.vige.magazzino.test.operation.CustomerOperation;
+import it.vige.magazzino.test.operation.ImageOperation;
+import it.vige.magazzino.test.operation.ListDataOperation;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -46,9 +55,16 @@ public class CustomerAgentTest implements CustomerMock {
 	public static WebArchive createDeployment() {
 		WebArchive war = ShrinkWrap
 				.create(WebArchive.class, "test.war")
-				.addPackages(true, DataContainer.class.getPackage())
-				.addAsLibraries(INTERNATIONAL)
-				.addAsLibraries(FACES)
+				.addClass(CustomerAgentTest.class)
+				.addClasses(Data.class, ListDataMock.class,
+						ListDataOperation.class)
+				.addClasses(ImageMock.class, ImageOperation.class)
+				.addClasses(DataContainer.class, FileUpload.class)
+				.addClasses(AddressMock.class, AddressOperation.class,
+						Address.class)
+				.addClasses(CustomerMock.class, CustomerOperation.class,
+						Customer.class)
+				.addClasses(DataContainer.class, FileUpload.class)
 				.addAsLibraries(SOLDER)
 				.addAsLibraries(RICHFACES)
 				.addAsResource("logo.gif")
