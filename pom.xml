@@ -148,17 +148,6 @@
 		</dependency>
 
 		<dependency>
-			<groupId>commons-digester</groupId>
-			<artifactId>commons-digester</artifactId>
-			<version>2.1</version>
-		</dependency>
-
-		<!-- Bean Validation Implementation; provides portable constraints @NotEmpty, 
-			@Email and @Url -->
-		<!-- Hibernate Validator is the only JSR-303 implementation at the moment, 
-			so we can assume it's provided -->
-		<!-- TODO Move Hibernate Validator to app server specific sections -->
-		<dependency>
 			<groupId>org.hibernate.</groupId>
 			<artifactId>hibernate-validator</artifactId>
 			<version>4.1.0.Final</version>
@@ -241,7 +230,7 @@
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
-			<version>1.6.1</version>
+			<version>1.5.6</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
@@ -263,10 +252,6 @@
 					<generatedSourcesDirectory>src/main/java</generatedSourcesDirectory>
 				</configuration>
 			</plugin>
-
-			<!-- <plugin> <groupId>org.codehaus.groovy.maven</groupId> <artifactId>gmaven-plugin</artifactId> 
-				<version>1.0</version> <executions> <execution> <goals> <goal>testCompile</goal> 
-				</goals> </execution> </executions> </plugin> -->
 
 			<plugin>
 				<artifactId>maven-eclipse-plugin</artifactId>
@@ -323,23 +308,6 @@
 	<profiles>
 
 		<profile>
-			<id>distribution</id>
-			<activation>
-				<property>
-					<name>release</name>
-				</property>
-			</activation>
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-assembly-plugin</artifactId>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-
-		<profile>
 			<id>default</id>
 			<activation>
 				<activeByDefault>true</activeByDefault>
@@ -373,10 +341,6 @@
 					<version>${arquillian.version}</version>
 					<scope>test</scope>
 				</dependency>
-				<!-- <dependency> <groupId>org.jboss.spec</groupId> <artifactId>jboss-javaee-6.0</artifactId> 
-					<version>${jboss-javaee6-spec.version}</version> <type>pom</type> <scope>provided</scope> 
-					</dependency> -->
-				<!-- need for org.jnp.interfaces.NamingContextFactory -->
 				<dependency>
 					<groupId>org.jboss.jbossas</groupId>
 					<artifactId>jboss-as-client</artifactId>
@@ -477,11 +441,5 @@
 		</profile>
 
 	</profiles>
-
-	<scm>
-		<connection>scm:git:git://github.com/seam/examples.git</connection>
-		<developerConnection>scm:git:git@github.com:seam/examples.git</developerConnection>
-		<url>http://github.com/seam</url>
-	</scm>
 
 </project>
