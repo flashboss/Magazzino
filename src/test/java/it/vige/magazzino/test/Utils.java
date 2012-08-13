@@ -19,6 +19,9 @@ package it.vige.magazzino.test;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * @author <a href="http://www.vige.it">Luca Stancapiano</a>
+ */
 public class Utils {
 
 	static public String toHexString(byte[] b) {

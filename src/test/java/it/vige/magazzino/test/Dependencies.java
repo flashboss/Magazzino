@@ -21,6 +21,9 @@ import org.jboss.shrinkwrap.api.GenericArchive;
 import org.jboss.shrinkwrap.resolver.api.DependencyResolvers;
 import org.jboss.shrinkwrap.resolver.api.maven.MavenDependencyResolver;
 
+/**
+ * @author <a href="http://www.vige.it">Luca Stancapiano</a>
+ */
 public interface Dependencies {
 	static final Archive<?>[] SOLDER = DependencyResolvers
 			.use(MavenDependencyResolver.class).loadReposFromPom("pom.xml")
