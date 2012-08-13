@@ -28,7 +28,7 @@
 		<shrinkwrap.version>1.0.0-alpha-12</shrinkwrap.version>
 		<glassfish.version>3.1</glassfish.version>
 		<jpamodelgen.version>1.1.1.Final</jpamodelgen.version>
-		<jboss-as-client.version>6.0.0.Final</jboss-as-client.version>
+		<jboss-as-client-6.version>6.0.0.Final</jboss-as-client-6.version>
 		<jboss-javaee6-spec.version>1.0.0.Final</jboss-javaee6-spec.version>
 		<jboss-server-manager.version>1.0.3.GA</jboss-server-manager.version>
 		<junit.version>4.8</junit.version>
@@ -215,7 +215,7 @@
 		<dependency>
 			<groupId>org.jboss.test</groupId>
 			<artifactId>richfaces-selenium</artifactId>
-			<version>1.5.1.Final</version>
+			<version>1.5.3.Final</version>
 			<scope>test</scope>
 		</dependency>
 
@@ -348,7 +348,7 @@
 				<dependency>
 					<groupId>org.jboss.jbossas</groupId>
 					<artifactId>jboss-as-client</artifactId>
-					<version>${jboss-as-client.version}</version>
+					<version>${jboss-as-client-6.version}</version>
 					<type>pom</type>
 					<scope>test</scope>
 				</dependency>
@@ -448,6 +448,24 @@
 						<artifactId>maven-surefire-plugin</artifactId>
 						<version>2.7.2</version>
 						<configuration>
+							<systemProperties>
+								<property>
+									<name>browser</name>
+									<value>*safari</value>
+								</property>
+								<property>
+									<name>context.root</name>
+									<value>http://localhost:8080/</value>
+								</property>
+								<property>
+									<name>context.path</name>
+									<value>/magazzino</value>
+								</property>
+								<property>
+									<name>selenium.port</name>
+									<value>4444</value>
+								</property>
+							</systemProperties>
 							<excludes>
 								<exclude>**/test/**</exclude>
 							</excludes>
