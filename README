@@ -23,5 +23,7 @@ mvn -Pjbossas-remote-6 test
 to test it with selenium:
 
 download selenium-server from http://selenium.googlecode.com/files/selenium-server-standalone-2.25.0.jar
+deploy the application in a server
+start the server with 8080 port
 java -jar selenium-server-standalone-2.25.0.jar
 mvn -Dftest test
