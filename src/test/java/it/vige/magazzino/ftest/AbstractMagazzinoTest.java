@@ -21,7 +21,6 @@ import static org.jboss.test.selenium.locator.LocatorFactory.jq;
 
 import org.jboss.test.selenium.AbstractTestCase;
 import org.jboss.test.selenium.locator.JQueryLocator;
-import org.testng.annotations.BeforeMethod;
 
 /**
  * Utility methods for the articles example.
@@ -31,22 +30,9 @@ import org.testng.annotations.BeforeMethod;
 public abstract class AbstractMagazzinoTest extends AbstractTestCase {
 	public static final String TITLE = "Vige Suites: Magazzino";
 
-	public static final JQueryLocator MENU_FIND = jq("[href^='/magazzino/search']");
 	public static final JQueryLocator MENU_HOME = jq("a:contains('Home')");
-	public static final JQueryLocator MENU_ACCOUNT = jq("[href^='/magazzino/account']");
 	public static final JQueryLocator SEARCH_QUERY = jq("#query");
-	public static final JQueryLocator SEARCH_NO_RESULTS = jq("#noArticlesMsg");
 	public static final JQueryLocator SEARCH_PAGE_SIZE = jq("#pageSize");
-	public static final JQueryLocator SEARCH_RESULT_TABLE_FIRST_ROW_LINK = jq("[id='articleSelectionForm:articles:0:view']");
-
-	@BeforeMethod
-	public void setUp() {
-		selenium.open(contextPath);
-		selenium.waitForPageToLoad();
-		selenium.click(MENU_FIND);
-		selenium.waitForPageToLoad();
-
-	}
 
 	public void enterSearchQuery(String query) {
 		selenium.type(SEARCH_QUERY, query);
