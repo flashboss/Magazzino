@@ -27,34 +27,34 @@ import static org.jboss.test.selenium.locator.LocatorFactory.jq;
 import static org.testng.AssertJUnit.*;
 
 /**
- * This class tests jars functionality of the example.
+ * This class tests articles functionality of the example.
  * 
  * @author <a href="http://www.vige.it">Luca Stancapiano</a>
  */
-public class MagazzinoTest extends AbstractTest {
+public class ArticleTest extends AbstractTest {
 
-	public static final JQueryLocator MENU_FIND = jq("[href^='/magazzino/search/search_magazzino']");
-	public static final JQueryLocator SEARCH_NO_RESULTS = jq("#noJarsMsg");
-	public static final JQueryLocator SEARCH_RESULT_TABLE_FIRST_ROW_LINK = jq("[id='jarSelectionForm:jars:0:view']");
-	public static final JQueryLocator BUTTON_PROCEED = jq("[id='magazzinoForm:proceed']");
+	public static final JQueryLocator MENU_FIND = jq("[href^='/magazzino/search/search_article']");
+	public static final JQueryLocator SEARCH_NO_RESULTS = jq("#noArticlesMsg");
+	public static final JQueryLocator SEARCH_RESULT_TABLE_FIRST_ROW_LINK = jq("[id='articleSelectionForm:articles:0:view']");
+	public static final JQueryLocator BUTTON_PROCEED = jq("[id='articleForm:proceed']");
 	public static final JQueryLocator BUTTON_CONFIRM = jq("[id='confirmForm:confirm']");
 	public static final JQueryLocator BUTTON_CANCEL = jq("[id='confirmForm:cancel']");
 	public static final JQueryLocator BUTTON_REVISE = jq("[id='confirmForm:revise']");
-	public static final String MAGAZZINO_MESSAGE = "The magazzino is";
+	public static final String ARTICLE_MESSAGE = "The article is";
 	public static final String CANCEL_MESSAGE = "has been canceled.";
 
-	public static final JQueryLocator COUNT_MAGAZZINO = jq("[id='jarSelectionForm:jars'] tbody tr");
-	public static final JQueryLocator COUNT_JARS = jq("[id='jars:jars'] tbody tr");
+	public static final JQueryLocator COUNT_ARTICLE = jq("[id='articleSelectionForm:articles'] tbody tr");
+	public static final JQueryLocator COUNT_ARTICLES = jq("[id='articles:articles'] tbody tr");
 
-	public static final JQueryLocator JARS_TABLE_FIRST_ROW_NAME = jq("table[id='jars:jars'] tbody tr:first td:first");
-	public static final JQueryLocator JARS_TABLE_FIRST_ROW_LINK = jq("[id='jars:jars:0:cancel']");
-	public static final JQueryLocator JARS_CANCEL_MESSAGE = jq("[id='messages'] li");
-	public static final String JARS_CANCEL_MESSAGE_TEXT = "Your magazzino at the .+? on .+? has been canceled\\.";
+	public static final JQueryLocator ARTICLES_TABLE_FIRST_ROW_NAME = jq("table[id='articles:articles'] tbody tr:first td:first");
+	public static final JQueryLocator ARTICLES_TABLE_FIRST_ROW_LINK = jq("[id='articles:articles:0:cancel']");
+	public static final JQueryLocator ARTICLES_CANCEL_MESSAGE = jq("[id='messages'] li");
+	public static final String ARTICLES_CANCEL_MESSAGE_TEXT = "Your article at the .+? on .+? has been canceled\\.";
 
-	public static final JQueryLocator DETAILS_CARD_TYPE = jq("[id='magazzinoForm:creditCardType:type']");
-	public static final JQueryLocator DETAILS_CARD_NUMBER = jq("[id='magazzinoForm:creditCardNumber:input']");
-	public static final JQueryLocator DETAILS_SMOKING = jq("[id='magazzinoForm:smokingPreference:input:0']");
-	public static final JQueryLocator DETAILS_NONSMOKING = jq("[id='magazzinoForm:smokingPreference:input:1']");
+	public static final JQueryLocator DETAILS_CARD_TYPE = jq("[id='articleForm:creditCardType:type']");
+	public static final JQueryLocator DETAILS_CARD_NUMBER = jq("[id='articleForm:creditCardNumber:input']");
+	public static final JQueryLocator DETAILS_SMOKING = jq("[id='articleForm:smokingPreference:input:0']");
+	public static final JQueryLocator DETAILS_NONSMOKING = jq("[id='articleForm:smokingPreference:input:1']");
 
 	public static final JQueryLocator CONFIRM_TEXT = jq("[id='content']");
 
@@ -70,17 +70,17 @@ public class MagazzinoTest extends AbstractTest {
 	}
 	
 	/**
-	 * Tests the jars search - with both existing and non-existing queries.
+	 * Tests the receipts search - with both existing and non-existing queries.
 	 */
 	@Test
 	public void testSearch() {
 		enterSearchQuery("Marriott");
 		assertFalse(selenium.isElementPresent(SEARCH_NO_RESULTS));
-		assertEquals(2, selenium.getCount(COUNT_MAGAZZINO));
+		assertEquals(2, selenium.getCount(COUNT_ARTICLE));
 
-		enterSearchQuery("nonExistingMagazzino");
+		enterSearchQuery("nonExistingArticle");
 		assertTrue(selenium.isElementPresent(SEARCH_NO_RESULTS));
-		assertEquals(0, selenium.getCount(COUNT_MAGAZZINO));
+		assertEquals(0, selenium.getCount(COUNT_ARTICLE));
 	}
 
 	@Test
@@ -93,39 +93,39 @@ public class MagazzinoTest extends AbstractTest {
 			selenium.select(SEARCH_PAGE_SIZE,
 					new OptionValueLocator(String.valueOf(pageSize)));
 			waitXhr(selenium).keyUp(SEARCH_QUERY, " ");
-			assertEquals(selenium.getCount(COUNT_MAGAZZINO), pageSize);
+			assertEquals(selenium.getCount(COUNT_ARTICLE), pageSize);
 		}
 	}
 
 	/**
-	 * Simply follows the magazzino wizard without changing anything.
+	 * Simply follows the article wizard without changing anything.
 	 */
 	@Test
-	public void testSimpleMagazzino() {
-		String magazzinoName = "Grand Hyatt";
-		int jarsCount = selenium.getCount(COUNT_JARS);
-		searchMagazzino(magazzinoName, CreditCardType.VISA);
-		assertEquals(++jarsCount, selenium.getCount(COUNT_JARS));
+	public void testSimpleArticle() {
+		String receiptName = "Grand Hyatt";
+		int articlesCount = selenium.getCount(COUNT_ARTICLES);
+		searchArticle(receiptName, CreditCardType.VISA);
+		assertEquals(++articlesCount, selenium.getCount(COUNT_ARTICLES));
 	}
 
 	/**
 	 * Tests "revise" and "cancel" buttons as well as that changed credit card
-	 * details are propagated across the jars wizard.
+	 * details are propagated across the articles wizard.
 	 */
 	@Test
-	public void testMoreSophisticatedMagazzino() {
-		String magazzinoName = "Conrad Miami";
+	public void testMoreSophisticatedArticle() {
+		String receiptName = "Conrad Miami";
 		String creditCardNumber1 = "0123456789012347";
 		CreditCardType creditCardType1 = CreditCardType.DISCOVER;
 		String creditCardNumber2 = "6432109876543210";
 		CreditCardType creditCardType2 = CreditCardType.AMEX;
-		int jarsCount = selenium.getCount(COUNT_JARS);
+		int articlesCount = selenium.getCount(COUNT_ARTICLES);
 
-		enterSearchQuery(magazzinoName);
+		enterSearchQuery(receiptName);
 		selenium.click(SEARCH_RESULT_TABLE_FIRST_ROW_LINK);
 		selenium.waitForPageToLoad();
-		// jars detail page
-		populateMagazzinoFields(creditCardNumber1, creditCardType1);
+		// articles detail page
+		populateArticleFields(creditCardNumber1, creditCardType1);
 		selenium.click(BUTTON_PROCEED);
 		selenium.waitForPageToLoad();
 		// confirmation page
@@ -134,51 +134,51 @@ public class MagazzinoTest extends AbstractTest {
 				creditCardType1.getName()));
 		selenium.click(BUTTON_REVISE);
 		selenium.waitForPageToLoad();
-		// back to magazzino page
-		populateMagazzinoFields(creditCardNumber2, creditCardType2);
+		// back to article page
+		populateArticleFields(creditCardNumber2, creditCardType2);
 		selenium.click(BUTTON_PROCEED);
 		selenium.waitForPageToLoad();
 		// confirmation page
 		assertTrue(selenium.getText(CONFIRM_TEXT).contains(creditCardNumber2));
 		assertTrue(selenium.getText(CONFIRM_TEXT).contains(
 				creditCardType2.getName()));
-		// cancel magazzino
+		// cancel article
 		selenium.click(BUTTON_CANCEL);
 		selenium.waitForPageToLoad();
-		// check that the magazzino count remains unchanged
-		assertEquals(jarsCount, selenium.getCount(COUNT_JARS));
+		// check that the article count remains unchanged
+		assertEquals(articlesCount, selenium.getCount(COUNT_ARTICLES));
 	}
 
 	@Test
-	public void testMagazzinoCanceling() {
-		String[] magazzinoNames = new String[] { "Hilton Diagonal Mar",
+	public void testArticleCanceling() {
+		String[] receiptNames = new String[] { "Hilton Diagonal Mar",
 				"Parc 55", "Ritz-Carlton Montreal", "Parc 55" };
-		int jarsCount = selenium.getCount(COUNT_JARS);
+		int articlesCount = selenium.getCount(COUNT_ARTICLES);
 
-		// make 3 jars
-		for (String magazzinoName : magazzinoNames) {
-			searchMagazzino(magazzinoName, CreditCardType.VISA);
+		// make 3 articles
+		for (String receiptName : receiptNames) {
+			searchArticle(receiptName, CreditCardType.VISA);
 		}
 
-		jarsCount += magazzinoNames.length;
-		assertEquals(jarsCount, selenium.getCount(COUNT_JARS));
+		articlesCount += receiptNames.length;
+		assertEquals(articlesCount, selenium.getCount(COUNT_ARTICLES));
 
-		for (int i = 0; i < magazzinoNames.length; i++) {
-			String magazzinoName = selenium
-					.getText(JARS_TABLE_FIRST_ROW_NAME).trim();
-			selenium.click(JARS_TABLE_FIRST_ROW_LINK);
+		for (int i = 0; i < receiptNames.length; i++) {
+			String receiptName = selenium
+					.getText(ARTICLES_TABLE_FIRST_ROW_NAME).trim();
+			selenium.click(ARTICLES_TABLE_FIRST_ROW_LINK);
 			selenium.waitForPageToLoad();
-			String message = selenium.getText(JARS_CANCEL_MESSAGE);
+			String message = selenium.getText(ARTICLES_CANCEL_MESSAGE);
 			assertTrue("Unexpected canceling message: " + message,
-					message.matches(JARS_CANCEL_MESSAGE_TEXT));
-			assertTrue("Unexpected magazzino name.",
-					message.contains(magazzinoName));
-			assertEquals("Unexpected number of jars", --jarsCount,
-					selenium.getCount(COUNT_JARS));
+					message.matches(ARTICLES_CANCEL_MESSAGE_TEXT));
+			assertTrue("Unexpected receipt name.",
+					message.contains(receiptName));
+			assertEquals("Unexpected number of articles", --articlesCount,
+					selenium.getCount(COUNT_ARTICLES));
 		}
 	}
 
-	protected void searchMagazzino(String magazzinoName,
+	protected void searchArticle(String receiptName,
 			CreditCardType creditCardType) {
 		if (!selenium.isElementPresent(SEARCH_QUERY)) {
 			selenium.open(contextPath);
@@ -186,28 +186,28 @@ public class MagazzinoTest extends AbstractTest {
 			selenium.click(MENU_FIND);
 			selenium.waitForPageToLoad();
 		}
-		enterSearchQuery(magazzinoName);
+		enterSearchQuery(receiptName);
 		selenium.click(SEARCH_RESULT_TABLE_FIRST_ROW_LINK);
 		selenium.waitForPageToLoad();
-		// magazzino page
-		populateMagazzinoFields(creditCardType);
+		// receipt page
+		populateArticleFields(creditCardType);
 		selenium.click(BUTTON_PROCEED);
 		selenium.waitForPageToLoad();
 		// confirm page
 		selenium.click(BUTTON_CONFIRM);
 		selenium.waitForPageToLoad();
 		// main page
-		assertTrue("Jars failed.", selenium.isTextPresent(MAGAZZINO_MESSAGE));
+		assertTrue("Articles failed.", selenium.isTextPresent(ARTICLE_MESSAGE));
 	}
 
-	protected void populateMagazzinoFields(CreditCardType creditCardType) {
+	protected void populateArticleFields(CreditCardType creditCardType) {
 		selenium.select(DETAILS_CARD_TYPE, creditCardType.getLocator());
 	}
 
-	protected void populateMagazzinoFields(String creditCardNumber,
+	protected void populateArticleFields(String creditCardNumber,
 			CreditCardType creditCardType) {
 		selenium.type(DETAILS_CARD_NUMBER, creditCardNumber);
-		populateMagazzinoFields(creditCardType);
+		populateArticleFields(creditCardType);
 	}
 
 	private enum CreditCardType {
