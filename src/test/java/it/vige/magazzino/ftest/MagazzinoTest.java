@@ -16,47 +16,54 @@
  */
 package it.vige.magazzino.ftest;
 
+import static org.jboss.test.selenium.guard.request.RequestTypeGuardFactory.waitXhr;
+import static org.jboss.test.selenium.locator.LocatorFactory.jq;
+import static org.testng.AssertJUnit.assertEquals;
+import static org.testng.AssertJUnit.assertFalse;
+import static org.testng.AssertJUnit.assertTrue;
+import it.vige.magazzino.model.Magazzino;
+import it.vige.magazzino.test.mock.MagazzinoMock;
+import it.vige.magazzino.test.operation.MagazzinoOperation;
+
 import org.jboss.test.selenium.locator.JQueryLocator;
-import org.jboss.test.selenium.locator.option.OptionLocator;
 import org.jboss.test.selenium.locator.option.OptionValueLocator;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-
-import static org.jboss.test.selenium.guard.request.RequestTypeGuardFactory.waitXhr;
-import static org.jboss.test.selenium.locator.LocatorFactory.jq;
-import static org.testng.AssertJUnit.*;
 
 /**
  * This class tests jars functionality of the example.
  * 
  * @author <a href="http://www.vige.it">Luca Stancapiano</a>
  */
-public class MagazzinoTest extends AbstractTest {
+public class MagazzinoTest extends AbstractTest implements MagazzinoMock {
 
 	public static final JQueryLocator MENU_FIND = jq("[href^='/magazzino/search/search_magazzino']");
-	public static final JQueryLocator SEARCH_NO_RESULTS = jq("#noJarsMsg");
-	public static final JQueryLocator SEARCH_RESULT_TABLE_FIRST_ROW_LINK = jq("[id='jarSelectionForm:jars:0:view']");
-	public static final JQueryLocator BUTTON_PROCEED = jq("[id='magazzinoForm:proceed']");
-	public static final JQueryLocator BUTTON_CONFIRM = jq("[id='confirmForm:confirm']");
-	public static final JQueryLocator BUTTON_CANCEL = jq("[id='confirmForm:cancel']");
-	public static final JQueryLocator BUTTON_REVISE = jq("[id='confirmForm:revise']");
-	public static final String MAGAZZINO_MESSAGE = "The magazzino is";
-	public static final String CANCEL_MESSAGE = "has been canceled.";
+	public static final JQueryLocator MENU_INSERT = jq("[href^='/magazzino/magazzino']");
+	public static final JQueryLocator SEARCH_NO_RESULTS = jq("[id='magazzinoSelectionForm:noMagazzinoMsg']");
+	public static final JQueryLocator SEARCH_RESULT_TABLE_FIRST_ROW_LINK = jq("[id='magazzinoSelectionForm:jars:0:view']");
+	public static final JQueryLocator BUTTON_UPDATE_PROCEED = jq("[id='magazzinoUpdater']");
+	public static final JQueryLocator BUTTON_INSERT_PROCEED = jq("[id='magazzinoRegister']");
+	public static final JQueryLocator BUTTON_CANCEL = jq("[id='cancel']");
 
-	public static final JQueryLocator COUNT_MAGAZZINO = jq("[id='jarSelectionForm:jars'] tbody tr");
-	public static final JQueryLocator COUNT_JARS = jq("[id='jars:jars'] tbody tr");
+	public static final JQueryLocator COUNT_JARS = jq("[id='magazzinoSelectionForm:jars'] tbody tr");
 
-	public static final JQueryLocator JARS_TABLE_FIRST_ROW_NAME = jq("table[id='jars:jars'] tbody tr:first td:first");
-	public static final JQueryLocator JARS_TABLE_FIRST_ROW_LINK = jq("[id='jars:jars:0:cancel']");
-	public static final JQueryLocator JARS_CANCEL_MESSAGE = jq("[id='messages'] li");
-	public static final String JARS_CANCEL_MESSAGE_TEXT = "Your magazzino at the .+? on .+? has been canceled\\.";
+	public static final JQueryLocator JARS_TABLE_FIRST_ROW_NAME = jq("table[id='magazzinoSelectionForm:jars'] tbody tr:first td:first");
+	public static final JQueryLocator JARS_TABLE_FIRST_ROW_DELETE = jq("[id='magazzinoSelectionForm:jars:0:delete']");
+	public static final JQueryLocator JARS_MESSAGE = jq("[id='messages'] li");
 
-	public static final JQueryLocator DETAILS_CARD_TYPE = jq("[id='magazzinoForm:creditCardType:type']");
-	public static final JQueryLocator DETAILS_CARD_NUMBER = jq("[id='magazzinoForm:creditCardNumber:input']");
-	public static final JQueryLocator DETAILS_SMOKING = jq("[id='magazzinoForm:smokingPreference:input:0']");
-	public static final JQueryLocator DETAILS_NONSMOKING = jq("[id='magazzinoForm:smokingPreference:input:1']");
-
-	public static final JQueryLocator CONFIRM_TEXT = jq("[id='content']");
+	public static final JQueryLocator DETAILS_RAG_SOC1 = jq("[id='ragSoc1:input']");
+	public static final JQueryLocator DETAILS_RAG_SOC2 = jq("[id='ragSoc2:input']");
+	public static final JQueryLocator DETAILS_NUMBER = jq("[id='number:input']");
+	public static final JQueryLocator DETAILS_DATE = jq("[id='date:input']");
+	public static final JQueryLocator DETAILS_CODE = jq("[id='code:input']");
+	public static final JQueryLocator DETAILS_CAUSE = jq("[id='cause:input']");
+	public static final JQueryLocator DETAILS_COMPENSATION = jq("[id='compensation:input']");
+	public static final JQueryLocator DETAILS_COD_CUSTOMER = jq("[id='codCustomer:input']");
+	public static final JQueryLocator DETAILS_NUMBER_DOC = jq("[id='numberDoc:input']");
+	public static final JQueryLocator DETAILS_DATE_DOC = jq("[id='dateDoc:input']");
+	public static final JQueryLocator DETAILS_IVA = jq("[id='iva:input']");
+	public static final JQueryLocator DETAILS_CAP_SOC = jq("[id='capSoc:input']");
+	public static final JQueryLocator DETAILS_REAPI = jq("[id='reaPI:input']");
 
 	public static final JQueryLocator SEARCH_PAGE_SIZE = jq("[id='pageSize']");
 
@@ -68,32 +75,36 @@ public class MagazzinoTest extends AbstractTest {
 		selenium.waitForPageToLoad();
 
 	}
-	
+
 	/**
 	 * Tests the jars search - with both existing and non-existing queries.
 	 */
 	@Test
 	public void testSearch() {
-		enterSearchQuery("Marriott");
+		enterSearchQuery("cliente");
 		assertFalse(selenium.isElementPresent(SEARCH_NO_RESULTS));
-		assertEquals(2, selenium.getCount(COUNT_MAGAZZINO));
+		assertEquals(5, selenium.getCount(COUNT_JARS));
 
 		enterSearchQuery("nonExistingMagazzino");
 		assertTrue(selenium.isElementPresent(SEARCH_NO_RESULTS));
-		assertEquals(0, selenium.getCount(COUNT_MAGAZZINO));
+		assertEquals(0, selenium.getCount(COUNT_JARS));
 	}
 
 	@Test
 	public void testSearchPageSize() {
 		int[] values = { 5, 10, 20 };
 
-		selenium.type(SEARCH_QUERY, "a");
+		selenium.type(SEARCH_QUERY, "rag soc");
 
 		for (int pageSize : values) {
 			selenium.select(SEARCH_PAGE_SIZE,
 					new OptionValueLocator(String.valueOf(pageSize)));
 			waitXhr(selenium).keyUp(SEARCH_QUERY, " ");
-			assertEquals(selenium.getCount(COUNT_MAGAZZINO), pageSize);
+			if (jars.length > pageSize)
+				assertEquals(selenium.getCount(COUNT_JARS), pageSize);
+			else
+				assertEquals(selenium.getCount(COUNT_JARS), jars.length);
+
 		}
 	}
 
@@ -102,130 +113,104 @@ public class MagazzinoTest extends AbstractTest {
 	 */
 	@Test
 	public void testSimpleMagazzino() {
-		String magazzinoName = "Grand Hyatt";
+		Magazzino magazzino = new Magazzino();
+		magazzino.setCompensation("compensation");
+		magazzino.setCode("21234");
 		int jarsCount = selenium.getCount(COUNT_JARS);
-		searchMagazzino(magazzinoName, CreditCardType.VISA);
+		searchUpdateMagazzino(magazzino, "new cause");
 		assertEquals(++jarsCount, selenium.getCount(COUNT_JARS));
 	}
 
-	/**
-	 * Tests "revise" and "cancel" buttons as well as that changed credit card
-	 * details are propagated across the jars wizard.
-	 */
 	@Test
-	public void testMoreSophisticatedMagazzino() {
-		String magazzinoName = "Conrad Miami";
-		String creditCardNumber1 = "0123456789012347";
-		CreditCardType creditCardType1 = CreditCardType.DISCOVER;
-		String creditCardNumber2 = "6432109876543210";
-		CreditCardType creditCardType2 = CreditCardType.AMEX;
-		int jarsCount = selenium.getCount(COUNT_JARS);
-
-		enterSearchQuery(magazzinoName);
-		selenium.click(SEARCH_RESULT_TABLE_FIRST_ROW_LINK);
+	public void testInsertDeleteNewMagazzino() {
+		MagazzinoOperation magazzinoOperation = new MagazzinoOperation();
+		selenium.click(MENU_INSERT);
 		selenium.waitForPageToLoad();
-		// jars detail page
-		populateMagazzinoFields(creditCardNumber1, creditCardType1);
-		selenium.click(BUTTON_PROCEED);
+		String magazzinoCompensation = "newCompensation";
+		String ragSoc1 = "new rag soc for magazzino test";
+		String ragSoc2 = "0123456789012347";
+		Magazzino magazzino = magazzinoOperation.create("99999999", "", "", "",
+				magazzinoCompensation, "", ragSoc1, ragSoc2, "", "", "", "",
+				"", null, null);
+		populateMagazzinoFields(magazzino);
+		selenium.click(BUTTON_INSERT_PROCEED);
 		selenium.waitForPageToLoad();
-		// confirmation page
-		assertTrue(selenium.getText(CONFIRM_TEXT).contains(creditCardNumber1));
-		assertTrue(selenium.getText(CONFIRM_TEXT).contains(
-				creditCardType1.getName()));
-		selenium.click(BUTTON_REVISE);
-		selenium.waitForPageToLoad();
-		// back to magazzino page
-		populateMagazzinoFields(creditCardNumber2, creditCardType2);
-		selenium.click(BUTTON_PROCEED);
-		selenium.waitForPageToLoad();
-		// confirmation page
-		assertTrue(selenium.getText(CONFIRM_TEXT).contains(creditCardNumber2));
-		assertTrue(selenium.getText(CONFIRM_TEXT).contains(
-				creditCardType2.getName()));
+		String message = selenium.getText(JARS_MESSAGE);
+		assertTrue(message, message.contains(magazzino.getCode()));
 		// cancel magazzino
 		selenium.click(BUTTON_CANCEL);
 		selenium.waitForPageToLoad();
-		// check that the magazzino count remains unchanged
-		assertEquals(jarsCount, selenium.getCount(COUNT_JARS));
+		selenium.click(BUTTON_INSERT_PROCEED);
+		selenium.waitForPageToLoad();
+		assertFalse(message, message.contains(magazzino.getCode()));
+		magazzino.setIva(null);
+		populateMagazzinoFields(magazzino);
+		selenium.click(BUTTON_INSERT_PROCEED);
+		selenium.waitForPageToLoad();
+		assertFalse(message, message.contains(magazzino.getCode()));
+		selenium.click(MENU_FIND);
+		enterSearchQuery(magazzinoCompensation);
+		selenium.waitForPageToLoad();
+		selenium.click(JARS_TABLE_FIRST_ROW_DELETE);
+		selenium.waitForPageToLoad();
+		assertTrue(message, message.contains(magazzino.getCode()));
 	}
 
 	@Test
-	public void testMagazzinoCanceling() {
-		String[] magazzinoNames = new String[] { "Hilton Diagonal Mar",
-				"Parc 55", "Ritz-Carlton Montreal", "Parc 55" };
+	public void testMultiSearchingUpdate() {
+		Magazzino[] jars = new Magazzino[] { magazzino0, magazzino1,
+				magazzino2, magazzino4 };
 		int jarsCount = selenium.getCount(COUNT_JARS);
 
-		// make 3 jars
-		for (String magazzinoName : magazzinoNames) {
-			searchMagazzino(magazzinoName, CreditCardType.VISA);
+		// make 4 jars
+		for (Magazzino magazzino : jars) {
+			searchUpdateMagazzino(magazzino, "test-selenium-for-ragsoc");
 		}
 
-		jarsCount += magazzinoNames.length;
+		selenium.click(MENU_FIND);
+		selenium.waitForPageToLoad();
+		enterSearchQuery("test-selenium-for-ragsoc");
 		assertEquals(jarsCount, selenium.getCount(COUNT_JARS));
-
-		for (int i = 0; i < magazzinoNames.length; i++) {
-			String magazzinoName = selenium
-					.getText(JARS_TABLE_FIRST_ROW_NAME).trim();
-			selenium.click(JARS_TABLE_FIRST_ROW_LINK);
-			selenium.waitForPageToLoad();
-			String message = selenium.getText(JARS_CANCEL_MESSAGE);
-			assertTrue("Unexpected canceling message: " + message,
-					message.matches(JARS_CANCEL_MESSAGE_TEXT));
-			assertTrue("Unexpected magazzino name.",
-					message.contains(magazzinoName));
-			assertEquals("Unexpected number of jars", --jarsCount,
-					selenium.getCount(COUNT_JARS));
-		}
 	}
 
-	protected void searchMagazzino(String magazzinoName,
-			CreditCardType creditCardType) {
+	protected void searchUpdateMagazzino(Magazzino magazzino, String newCause) {
 		if (!selenium.isElementPresent(SEARCH_QUERY)) {
 			selenium.open(contextPath);
 			selenium.waitForPageToLoad();
 			selenium.click(MENU_FIND);
 			selenium.waitForPageToLoad();
 		}
-		enterSearchQuery(magazzinoName);
+		enterSearchQuery(magazzino.getCompensation());
 		selenium.click(SEARCH_RESULT_TABLE_FIRST_ROW_LINK);
 		selenium.waitForPageToLoad();
 		// magazzino page
-		populateMagazzinoFields(creditCardType);
-		selenium.click(BUTTON_PROCEED);
-		selenium.waitForPageToLoad();
-		// confirm page
-		selenium.click(BUTTON_CONFIRM);
+		populateMagazzinoFields(newCause);
+		selenium.click(BUTTON_UPDATE_PROCEED);
 		selenium.waitForPageToLoad();
 		// main page
-		assertTrue("Jars failed.", selenium.isTextPresent(MAGAZZINO_MESSAGE));
+		assertTrue("Update success.",
+				selenium.isTextPresent(magazzino.getCode()));
+		// magazzino page
+		populateMagazzinoFields(magazzino.getCause());
+		selenium.click(BUTTON_UPDATE_PROCEED);
+		selenium.waitForPageToLoad();
+		// main page
+		assertTrue("Update success.",
+				selenium.isTextPresent(magazzino.getCode()));
 	}
 
-	protected void populateMagazzinoFields(CreditCardType creditCardType) {
-		selenium.select(DETAILS_CARD_TYPE, creditCardType.getLocator());
+	protected void populateMagazzinoFields(String ragSoc1) {
+		selenium.type(DETAILS_RAG_SOC1, ragSoc1);
 	}
 
-	protected void populateMagazzinoFields(String creditCardNumber,
-			CreditCardType creditCardType) {
-		selenium.type(DETAILS_CARD_NUMBER, creditCardNumber);
-		populateMagazzinoFields(creditCardType);
+	protected void populateMagazzinoFields(String ragSoc1, String ragSoc2) {
+		populateMagazzinoFields(ragSoc1);
+		selenium.type(DETAILS_RAG_SOC2, ragSoc2);
 	}
 
-	private enum CreditCardType {
-		VISA("VISA"), MASTERCARD("MasterCard"), AMEX("AMEX"), DISCOVER(
-				"Discover");
-
-		private String name;
-
-		private CreditCardType(String name) {
-			this.name = name;
-		}
-
-		public String getName() {
-			return name;
-		}
-
-		public OptionLocator<?> getLocator() {
-			return new OptionValueLocator(name);
-		}
+	protected void populateMagazzinoFields(Magazzino magazzino) {
+		populateMagazzinoFields(magazzino.getRagSoc1(), magazzino.getRagSoc2());
+		selenium.type(DETAILS_CODE, magazzino.getCode());
+		selenium.type(DETAILS_COMPENSATION, magazzino.getCompensation());
 	}
 }
