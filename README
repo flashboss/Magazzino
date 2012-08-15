@@ -15,10 +15,15 @@ to install it in jboss 6.x:
 export JBOSS_HOME=.....
 mvn install jboss:hard-deploy
 
-to test it in jboss:
+to test all it in jboss:
 
 export JBOSS_HOME=.....
 mvn -Pjbossas-remote-6 test
+
+to test with a single test it in jboss:
+
+export JBOSS_HOME=.....
+mvn -Pjbossas-remote-6 test -Dtest=AddressAgentTest
 
 to test it with selenium:
 
