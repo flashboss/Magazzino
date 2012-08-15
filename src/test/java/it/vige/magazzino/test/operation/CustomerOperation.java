@@ -21,11 +21,14 @@ import it.vige.magazzino.model.Customer;
 import it.vige.magazzino.model.Data;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author <a href="http://www.vige.it">Luca Stancapiano</a>
  */
 public class CustomerOperation {
+
+	private List<Customer> customers = new ArrayList<Customer>();
 
 	public Customer create(String code, String name, String ragSocial,
 			String iva, Address address, ArrayList<Data> listData) {
@@ -37,6 +40,11 @@ public class CustomerOperation {
 		customer.setAddress(address);
 		customer.setFiles(listData);
 
+		customers.add(customer);
 		return customer;
+	}
+
+	public Customer[] getAllCustomers() {
+		return customers.toArray(new Customer[0]);
 	}
 }

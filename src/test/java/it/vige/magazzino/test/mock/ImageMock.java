@@ -26,4 +26,6 @@ public interface ImageMock {
 	ImageOperation imageOperation = new ImageOperation();
 	
 	byte[] image0 = imageOperation.create();
+
+	byte[][] images = imageOperation.getAllImages();
 }

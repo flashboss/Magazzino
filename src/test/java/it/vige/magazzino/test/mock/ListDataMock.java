@@ -87,4 +87,7 @@ public interface ListDataMock extends ImageMock {
 
 	ArrayList<Data> listData19 = listDataOperation.create("132561", image0,
 			"Logo per customer", 31334, "logo11.gif", true, "256612");
+
+	ArrayList<Data>[] listDatas = listDataOperation.getAllListDatas();
+
 }

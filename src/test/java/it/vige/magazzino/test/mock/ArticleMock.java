@@ -113,4 +113,6 @@ public interface ArticleMock {
 			"4224", "provider 16", "234234", "675765", "322", "5454", "3232",
 			"545", "656", "44416", "232", "5454", "making 16", "notes 16");
 
+	Article[] articles = articleOperation.getAllArticles();
+
 }

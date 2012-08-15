@@ -80,4 +80,6 @@ public interface MagazzinoMock extends AddressMock, ListDataMock {
 			"645645", "cause 13", "compensation 13", "5454", "rag soc 25",
 			"rag soc 26", "111", "04/04/1995", "212121212", "33.000,00 Û",
 			"86433", address19, null);
+
+	Magazzino[] jars = magazzinoOperation.getAllJars();
 }

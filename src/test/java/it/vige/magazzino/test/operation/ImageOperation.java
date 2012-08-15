@@ -18,11 +18,15 @@ package it.vige.magazzino.test.operation;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author <a href="http://www.vige.it">Luca Stancapiano</a>
  */
 public class ImageOperation {
+
+	private List<byte[]> images = new ArrayList<byte[]>();
 
 	public byte[] create() {
 		byte[] bytes = new byte[10310];
@@ -35,6 +39,12 @@ public class ImageOperation {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
+		images.add(bytes);
 		return bytes;
+	}
+
+	public byte[][] getAllImages() {
+		return images.toArray(new byte[0][0]);
 	}
 }

@@ -105,4 +105,6 @@ public interface AddressMock {
 	Address address19 = addressOperation.create("23453", "via Serafina",
 			"00666", "63564832764", "3467468733", "ngnghghg@vige.it",
 			"llklk.it", "33", "TK", "Palinuro", "Tokyo");
+
+	Address[] addresses = addressOperation.getAllAddresses();
 }

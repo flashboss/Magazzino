@@ -18,10 +18,15 @@ package it.vige.magazzino.test.operation;
 
 import it.vige.magazzino.model.Address;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author <a href="http://www.vige.it">Luca Stancapiano</a>
  */
 public class AddressOperation {
+
+	private List<Address> addresses = new ArrayList<Address>();
 
 	public Address create(String code, String homeAddress, String cap,
 			String phone, String fax, String email, String site,
@@ -39,6 +44,11 @@ public class AddressOperation {
 		address.setTown(town);
 		address.setProvince(province);
 
+		addresses.add(address);
 		return address;
+	}
+
+	public Address[] getAllAddresses() {
+		return addresses.toArray(new Address[0]);
 	}
 }

@@ -52,4 +52,6 @@ public interface CustomerMock extends AddressMock, ListDataMock {
 
 	Customer customer8 = customerOperation.create("6433", "cliente 10",
 			"rag soc 10", "324464646", address8, null);
+
+	Customer[] customers = customerOperation.getAllCustomers();
 }

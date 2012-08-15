@@ -21,11 +21,14 @@ import it.vige.magazzino.model.Data;
 import it.vige.magazzino.model.Magazzino;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author <a href="http://www.vige.it">Luca Stancapiano</a>
  */
 public class MagazzinoOperation {
+
+	private List<Magazzino> jars = new ArrayList<Magazzino>();
 
 	public Magazzino create(String number, String date, String code,
 			String cause, String compensation, String codCustomer,
@@ -49,6 +52,11 @@ public class MagazzinoOperation {
 		magazzino.setAddress(address);
 		magazzino.setFiles(listData);
 
+		jars.add(magazzino);
 		return magazzino;
+	}
+
+	public Magazzino[] getAllJars() {
+		return jars.toArray(new Magazzino[0]);
 	}
 }

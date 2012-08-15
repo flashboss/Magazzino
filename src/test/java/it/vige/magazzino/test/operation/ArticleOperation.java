@@ -18,11 +18,16 @@ package it.vige.magazzino.test.operation;
 
 import it.vige.magazzino.model.Article;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author <a href="http://www.vige.it">Luca Stancapiano</a>
  */
 public class ArticleOperation {
 
+	private List<Article> articles = new ArrayList<Article>();
+	
 	public Article create(String code, String barCode, String description,
 			String um, String mis, String catMerc, String imponible,
 			String prize, String cost, String provider, String rate, String ca,
@@ -52,7 +57,12 @@ public class ArticleOperation {
 		article.setSc3(sc3);
 		article.setUm(um);
 		article.setVolume(volume);
-
+		
+		articles.add(article);
 		return article;
+	}
+
+	public Article[] getAllArticles() {
+		return articles.toArray(new Article[0]);
 	}
 }

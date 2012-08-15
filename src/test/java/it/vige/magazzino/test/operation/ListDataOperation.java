@@ -19,11 +19,14 @@ package it.vige.magazzino.test.operation;
 import it.vige.magazzino.model.Data;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author <a href="http://www.vige.it">Luca Stancapiano</a>
  */
 public class ListDataOperation {
+
+	private List<ArrayList<Data>> listDatas = new ArrayList<ArrayList<Data>>();
 
 	public ArrayList<Data> create(String code, byte[] image,
 			String description, int length, String name, boolean isMulti,
@@ -48,7 +51,14 @@ public class ListDataOperation {
 				data2.setName(secondName);
 				listData.add(data2);
 			}
+
+			listDatas.add(listData);
 		}
 		return listData;
+	}
+
+	@SuppressWarnings("unchecked")
+	public ArrayList<Data>[] getAllListDatas() {
+		return listDatas.toArray(new ArrayList[0]);
 	}
 }

@@ -58,4 +58,6 @@ public interface ReceiptMock extends MagazzinoMock, CustomerMock {
 
 	Receipt receipt10 = receiptOperation.create("33333", "12/05/2001",
 			"causale 11", "description 11", magazzino10, customer3);
+
+	Receipt[] receipts = receiptOperation.getAllReceipts();
 }

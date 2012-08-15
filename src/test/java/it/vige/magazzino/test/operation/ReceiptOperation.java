@@ -20,10 +20,15 @@ import it.vige.magazzino.model.Customer;
 import it.vige.magazzino.model.Magazzino;
 import it.vige.magazzino.model.Receipt;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author <a href="http://www.vige.it">Luca Stancapiano</a>
  */
 public class ReceiptOperation {
+
+	private List<Receipt> receipts = new ArrayList<Receipt>();
 
 	public Receipt create(String number, String date, String cause,
 			String description, Magazzino magazzino, Customer customer) {
@@ -35,6 +40,11 @@ public class ReceiptOperation {
 		receipt.setJar(magazzino);
 		receipt.setCustomer(customer);
 
+		receipts.add(receipt);
 		return receipt;
+	}
+
+	public Receipt[] getAllReceipts() {
+		return receipts.toArray(new Receipt[0]);
 	}
 }
