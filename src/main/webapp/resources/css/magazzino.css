@@ -47,7 +47,7 @@ select {
     padding: 8px;
 }
 
-input[type=submit], input[type=button] {
+input[type=submit], input[type=button], input[type=reset] {
     font-weight: bold;
     border: 1px solid #5D1414;
     height: 26px;
