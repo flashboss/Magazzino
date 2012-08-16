@@ -16,47 +16,48 @@
  */
 package it.vige.magazzino.ftest;
 
+import static org.jboss.test.selenium.guard.request.RequestTypeGuardFactory.waitXhr;
+import static org.jboss.test.selenium.locator.LocatorFactory.jq;
+import static org.testng.AssertJUnit.assertEquals;
+import static org.testng.AssertJUnit.assertFalse;
+import static org.testng.AssertJUnit.assertTrue;
+import it.vige.magazzino.model.Receipt;
+import it.vige.magazzino.test.mock.ReceiptMock;
+import it.vige.magazzino.test.operation.ReceiptOperation;
+
 import org.jboss.test.selenium.locator.JQueryLocator;
 import org.jboss.test.selenium.locator.option.OptionLocator;
 import org.jboss.test.selenium.locator.option.OptionValueLocator;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import static org.jboss.test.selenium.guard.request.RequestTypeGuardFactory.waitXhr;
-import static org.jboss.test.selenium.locator.LocatorFactory.jq;
-import static org.testng.AssertJUnit.*;
-
 /**
  * This class tests receipts functionality of the example.
  * 
  * @author <a href="http://www.vige.it">Luca Stancapiano</a>
  */
-public class ReceiptTest extends AbstractTest {
+public class ReceiptTest extends AbstractTest implements ReceiptMock {
 
-	public static final JQueryLocator MENU_FIND = jq("[href^='//magazzino/search/search_receipt']");
-	public static final JQueryLocator SEARCH_NO_RESULTS = jq("#noReceiptsMsg");
+	public static final JQueryLocator MENU_FIND = jq("[href^='/magazzino/search/search_receipt']");
+	public static final JQueryLocator MENU_INSERT = jq("[href^='/magazzino/receipt']");
+	public static final JQueryLocator SEARCH_NO_RESULTS = jq("[id='receiptSelectionForm:noReceiptMsg']");
 	public static final JQueryLocator SEARCH_RESULT_TABLE_FIRST_ROW_LINK = jq("[id='receiptSelectionForm:receipts:0:view']");
-	public static final JQueryLocator BUTTON_PROCEED = jq("[id='receiptForm:proceed']");
-	public static final JQueryLocator BUTTON_CONFIRM = jq("[id='confirmForm:confirm']");
-	public static final JQueryLocator BUTTON_CANCEL = jq("[id='confirmForm:cancel']");
-	public static final JQueryLocator BUTTON_REVISE = jq("[id='confirmForm:revise']");
-	public static final String RECEIPT_MESSAGE = "The receipt is";
-	public static final String CANCEL_MESSAGE = "has been canceled.";
+	public static final JQueryLocator BUTTON_UPDATE_PROCEED = jq("[id='receiptUpdater']");
+	public static final JQueryLocator BUTTON_INSERT_PROCEED = jq("[id='receiptRegister']");
+	public static final JQueryLocator BUTTON_CANCEL = jq("[id='cancel']");
 
-	public static final JQueryLocator COUNT_RECEIPT = jq("[id='receiptSelectionForm:receipts'] tbody tr");
-	public static final JQueryLocator COUNT_RECEIPTS = jq("[id='receipts:receipts'] tbody tr");
+	public static final JQueryLocator COUNT_RECEIPTS = jq("[id='receiptSelectionForm:receipts'] tbody tr");
 
-	public static final JQueryLocator RECEIPTS_TABLE_FIRST_ROW_NAME = jq("table[id='receipts:receipts'] tbody tr:first td:first");
-	public static final JQueryLocator RECEIPTS_TABLE_FIRST_ROW_LINK = jq("[id='receipts:receipts:0:cancel']");
-	public static final JQueryLocator RECEIPTS_CANCEL_MESSAGE = jq("[id='messages'] li");
-	public static final String RECEIPTS_CANCEL_MESSAGE_TEXT = "Your receipt at the .+? on .+? has been canceled\\.";
+	public static final JQueryLocator RECEIPTS_TABLE_FIRST_ROW_NAME = jq("table[id='receiptSelectionForm:receipts'] tbody tr:first td:first");
+	public static final JQueryLocator RECEIPTS_TABLE_FIRST_ROW_DELETE = jq("[id='receiptSelectionForm:receipts:0:delete']");
+	public static final JQueryLocator RECEIPTS_MESSAGE = jq("[id='messages'] li");
 
-	public static final JQueryLocator DETAILS_CARD_TYPE = jq("[id='receiptForm:creditCardType:type']");
-	public static final JQueryLocator DETAILS_CARD_NUMBER = jq("[id='receiptForm:creditCardNumber:input']");
-	public static final JQueryLocator DETAILS_SMOKING = jq("[id='receiptForm:smokingPreference:input:0']");
-	public static final JQueryLocator DETAILS_NONSMOKING = jq("[id='receiptForm:smokingPreference:input:1']");
-
-	public static final JQueryLocator CONFIRM_TEXT = jq("[id='content']");
+	public static final JQueryLocator DETAILS_NUMBER = jq("[id='number:input']");
+	public static final JQueryLocator DETAILS_DATE = jq("[id='date:input']");
+	public static final JQueryLocator DETAILS_CAUSE = jq("[id='cause:input']");
+	public static final JQueryLocator DETAILS_DESCRIPTION = jq("[id='description:input']");
+	public static final JQueryLocator DETAILS_JAR = jq("[id='jar:select:1']");
+	public static final JQueryLocator DETAILS_CUSTOMER = jq("[id='customer:select:2']");
 
 	public static final JQueryLocator SEARCH_PAGE_SIZE = jq("[id='pageSize']");
 
@@ -68,32 +69,36 @@ public class ReceiptTest extends AbstractTest {
 		selenium.waitForPageToLoad();
 
 	}
-	
+
 	/**
 	 * Tests the receipts search - with both existing and non-existing queries.
 	 */
 	@Test
 	public void testSearch() {
-		enterSearchQuery("Marriott");
+		enterSearchQuery("cliente");
 		assertFalse(selenium.isElementPresent(SEARCH_NO_RESULTS));
-		assertEquals(2, selenium.getCount(COUNT_RECEIPT));
+		assertEquals(5, selenium.getCount(COUNT_RECEIPTS));
 
 		enterSearchQuery("nonExistingReceipt");
 		assertTrue(selenium.isElementPresent(SEARCH_NO_RESULTS));
-		assertEquals(0, selenium.getCount(COUNT_RECEIPT));
+		assertEquals(0, selenium.getCount(COUNT_RECEIPTS));
 	}
 
 	@Test
 	public void testSearchPageSize() {
 		int[] values = { 5, 10, 20 };
 
-		selenium.type(SEARCH_QUERY, "a");
+		selenium.type(SEARCH_QUERY, "rag soc");
 
 		for (int pageSize : values) {
 			selenium.select(SEARCH_PAGE_SIZE,
 					new OptionValueLocator(String.valueOf(pageSize)));
 			waitXhr(selenium).keyUp(SEARCH_QUERY, " ");
-			assertEquals(selenium.getCount(COUNT_RECEIPT), pageSize);
+			if (receipts.length > pageSize)
+				assertEquals(selenium.getCount(COUNT_RECEIPTS), pageSize);
+			else
+				assertEquals(selenium.getCount(COUNT_RECEIPTS), receipts.length);
+
 		}
 	}
 
@@ -102,126 +107,130 @@ public class ReceiptTest extends AbstractTest {
 	 */
 	@Test
 	public void testSimpleReceipt() {
-		String receiptName = "Grand Hyatt";
+		Receipt receipt = new Receipt();
+		receipt.setCause("causale");
+		receipt.setNumber("11213");
 		int receiptsCount = selenium.getCount(COUNT_RECEIPTS);
-		searchReceipt(receiptName, CreditCardType.VISA);
+		searchUpdateReceipt(receipt, "rag soc");
 		assertEquals(++receiptsCount, selenium.getCount(COUNT_RECEIPTS));
 	}
 
-	/**
-	 * Tests "revise" and "cancel" buttons as well as that changed credit card
-	 * details are propagated across the receipts wizard.
-	 */
 	@Test
-	public void testMoreSophisticatedReceipt() {
-		String receiptName = "Conrad Miami";
-		String creditCardNumber1 = "0123456789012347";
-		CreditCardType creditCardType1 = CreditCardType.DISCOVER;
-		String creditCardNumber2 = "6432109876543210";
-		CreditCardType creditCardType2 = CreditCardType.AMEX;
-		int receiptsCount = selenium.getCount(COUNT_RECEIPTS);
-
-		enterSearchQuery(receiptName);
-		selenium.click(SEARCH_RESULT_TABLE_FIRST_ROW_LINK);
+	public void testInsertDeleteNewReceipt() {
+		ReceiptOperation receiptOperation = new ReceiptOperation();
+		selenium.click(MENU_INSERT);
 		selenium.waitForPageToLoad();
-		// receipts detail page
-		populateReceiptFields(creditCardNumber1, creditCardType1);
-		selenium.click(BUTTON_PROCEED);
+		String receiptName = "newName";
+		String pIva1 = "0123456789012347";
+		String ragSoc1 = "new rag soc for receipt test";
+		Receipt receipt = receiptOperation.create("99999999", receiptName,
+				ragSoc1, pIva1, null, null);
+		populateReceiptFields(receipt);
+		selenium.click(BUTTON_INSERT_PROCEED);
 		selenium.waitForPageToLoad();
-		// confirmation page
-		assertTrue(selenium.getText(CONFIRM_TEXT).contains(creditCardNumber1));
-		assertTrue(selenium.getText(CONFIRM_TEXT).contains(
-				creditCardType1.getName()));
-		selenium.click(BUTTON_REVISE);
-		selenium.waitForPageToLoad();
-		// back to receipt page
-		populateReceiptFields(creditCardNumber2, creditCardType2);
-		selenium.click(BUTTON_PROCEED);
-		selenium.waitForPageToLoad();
-		// confirmation page
-		assertTrue(selenium.getText(CONFIRM_TEXT).contains(creditCardNumber2));
-		assertTrue(selenium.getText(CONFIRM_TEXT).contains(
-				creditCardType2.getName()));
+		String message = selenium.getText(RECEIPTS_MESSAGE);
+		assertTrue(message, message.contains(receipt.getNumber()));
 		// cancel receipt
 		selenium.click(BUTTON_CANCEL);
 		selenium.waitForPageToLoad();
-		// check that the receipt count remains unchanged
-		assertEquals(receiptsCount, selenium.getCount(COUNT_RECEIPTS));
+		selenium.click(BUTTON_INSERT_PROCEED);
+		selenium.waitForPageToLoad();
+		assertFalse(message, message.contains(receipt.getNumber()));
+		receipt.setDate(null);
+		populateReceiptFields(receipt);
+		selenium.click(BUTTON_INSERT_PROCEED);
+		selenium.waitForPageToLoad();
+		assertFalse(message, message.contains(receipt.getNumber()));
+		selenium.click(MENU_FIND);
+		enterSearchQuery(receiptName);
+		selenium.waitForPageToLoad();
+		selenium.click(RECEIPTS_TABLE_FIRST_ROW_DELETE);
+		selenium.waitForPageToLoad();
+		assertTrue(message, message.contains(receipt.getNumber()));
 	}
 
 	@Test
-	public void testReceiptCanceling() {
-		String[] receiptNames = new String[] { "Hilton Diagonal Mar",
-				"Parc 55", "Ritz-Carlton Montreal", "Parc 55" };
+	public void testMultiSearchingUpdate() {
+		Receipt[] receipts = new Receipt[] { receipt0, receipt1, receipt2,
+				receipt4 };
 		int receiptsCount = selenium.getCount(COUNT_RECEIPTS);
 
-		// make 3 receipts
-		for (String receiptName : receiptNames) {
-			searchReceipt(receiptName, CreditCardType.VISA);
+		// make 4 receipts
+		for (Receipt receipt : receipts) {
+			searchUpdateReceipt(receipt, "test-selenium-for-ragsoc");
 		}
 
-		receiptsCount += receiptNames.length;
+		selenium.click(MENU_FIND);
+		selenium.waitForPageToLoad();
+		enterSearchQuery("test-selenium-for-ragsoc");
 		assertEquals(receiptsCount, selenium.getCount(COUNT_RECEIPTS));
-
-		for (int i = 0; i < receiptNames.length; i++) {
-			String receiptName = selenium
-					.getText(RECEIPTS_TABLE_FIRST_ROW_NAME).trim();
-			selenium.click(RECEIPTS_TABLE_FIRST_ROW_LINK);
-			selenium.waitForPageToLoad();
-			String message = selenium.getText(RECEIPTS_CANCEL_MESSAGE);
-			assertTrue("Unexpected canceling message: " + message,
-					message.matches(RECEIPTS_CANCEL_MESSAGE_TEXT));
-			assertTrue("Unexpected receipt name.",
-					message.contains(receiptName));
-			assertEquals("Unexpected number of receipts", --receiptsCount,
-					selenium.getCount(COUNT_RECEIPTS));
-		}
 	}
 
-	protected void searchReceipt(String receiptName,
-			CreditCardType creditCardType) {
+	protected void searchUpdateReceipt(Receipt receipt, String newCause) {
 		if (!selenium.isElementPresent(SEARCH_QUERY)) {
 			selenium.open(contextPath);
 			selenium.waitForPageToLoad();
 			selenium.click(MENU_FIND);
 			selenium.waitForPageToLoad();
 		}
-		enterSearchQuery(receiptName);
+		enterSearchQuery(receipt.getDescription());
 		selenium.click(SEARCH_RESULT_TABLE_FIRST_ROW_LINK);
 		selenium.waitForPageToLoad();
 		// receipt page
-		populateReceiptFields(creditCardType);
-		selenium.click(BUTTON_PROCEED);
-		selenium.waitForPageToLoad();
-		// confirm page
-		selenium.click(BUTTON_CONFIRM);
+		populateReceiptFields(newCause);
+		selenium.click(BUTTON_UPDATE_PROCEED);
 		selenium.waitForPageToLoad();
 		// main page
-		assertTrue("Receipts failed.", selenium.isTextPresent(RECEIPT_MESSAGE));
+		assertTrue("Update success.",
+				selenium.isTextPresent(receipt.getNumber()));
+		// receipt page
+		populateReceiptFields(receipt.getCause());
+		selenium.click(BUTTON_UPDATE_PROCEED);
+		selenium.waitForPageToLoad();
+		// main page
+		assertTrue("Update success.",
+				selenium.isTextPresent(receipt.getNumber()));
 	}
 
-	protected void populateReceiptFields(CreditCardType creditCardType) {
-		selenium.select(DETAILS_CARD_TYPE, creditCardType.getLocator());
+	protected void populateReceiptFields(String cause) {
+		selenium.type(DETAILS_CAUSE, cause);
 	}
 
-	protected void populateReceiptFields(String creditCardNumber,
-			CreditCardType creditCardType) {
-		selenium.type(DETAILS_CARD_NUMBER, creditCardNumber);
-		populateReceiptFields(creditCardType);
+	protected void populateReceiptFields(String cause, String description) {
+		populateReceiptFields(cause);
+		selenium.type(DETAILS_DESCRIPTION, description);
 	}
 
-	private enum CreditCardType {
-		VISA("VISA"), MASTERCARD("MasterCard"), AMEX("AMEX"), DISCOVER(
-				"Discover");
+	protected void populateReceiptFields(Receipt receipt) {
+		populateReceiptFields(receipt.getCause(), receipt.getDescription());
+		selenium.type(DETAILS_NUMBER, receipt.getNumber());
+		selenium.type(DETAILS_DATE, receipt.getDate());
+		selenium.select(DETAILS_JAR, Jar.JAR3.getLocator());
+		selenium.select(DETAILS_CUSTOMER, Customer.CLIENTE4.getLocator());
+	}
+
+	private enum Jar {
+		JAR1("Jar1"), JAR2("Jar2"), JAR3("Jar3"), JAR4("Jar4");
 
 		private String name;
 
-		private CreditCardType(String name) {
+		private Jar(String name) {
 			this.name = name;
 		}
 
-		public String getName() {
-			return name;
+		public OptionLocator<?> getLocator() {
+			return new OptionValueLocator(name);
+		}
+	}
+
+	private enum Customer {
+		CLIENTE1("Cliente1"), CLIENTE2("Cliente2"), CLIENTE3("Cliente3"), CLIENTE4(
+				"Cliente4");
+
+		private String name;
+
+		private Customer(String name) {
+			this.name = name;
 		}
 
 		public OptionLocator<?> getLocator() {
