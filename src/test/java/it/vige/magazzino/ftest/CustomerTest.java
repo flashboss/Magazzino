@@ -21,6 +21,7 @@ import static org.jboss.test.selenium.locator.LocatorFactory.jq;
 import static org.testng.AssertJUnit.assertEquals;
 import static org.testng.AssertJUnit.assertFalse;
 import static org.testng.AssertJUnit.assertTrue;
+import it.vige.magazzino.model.Address;
 import it.vige.magazzino.model.Customer;
 import it.vige.magazzino.test.mock.CustomerMock;
 import it.vige.magazzino.test.operation.CustomerOperation;
@@ -55,6 +56,7 @@ public class CustomerTest extends AbstractTest implements CustomerMock {
 	public static final JQueryLocator DETAILS_CODE = jq("[id='code:input']");
 	public static final JQueryLocator DETAILS_P_IVA = jq("[id='iva:input']");
 	public static final JQueryLocator DETAILS_NAME = jq("[id='name:input']");
+	public static final JQueryLocator DETAILS_STREET = jq("[id='street:input']");
 
 	public static final JQueryLocator SEARCH_PAGE_SIZE = jq("[id='pageSize']");
 
@@ -121,8 +123,10 @@ public class CustomerTest extends AbstractTest implements CustomerMock {
 		String customerName = "newName";
 		String pIva1 = "0123456789012347";
 		String ragSoc1 = "new rag soc for customer test";
+		Address address = new Address();
+		address.setAddress("Vige street");
 		Customer customer = customerOperation.create("99999999", customerName,
-				ragSoc1, pIva1, null, null);
+				ragSoc1, pIva1, address, null);
 		populateCustomerFields(customer);
 		selenium.click(BUTTON_INSERT_PROCEED);
 		selenium.waitForPageToLoad();
@@ -203,5 +207,6 @@ public class CustomerTest extends AbstractTest implements CustomerMock {
 		populateCustomerFields(customer.getRagSocial(), customer.getIva());
 		selenium.type(DETAILS_CODE, customer.getCode());
 		selenium.type(DETAILS_NAME, customer.getName());
+		selenium.type(DETAILS_STREET, customer.getAddress().getAddress());
 	}
 }

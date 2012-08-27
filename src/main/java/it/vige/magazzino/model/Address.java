@@ -19,6 +19,7 @@ package it.vige.magazzino.model;
 import java.io.Serializable;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -52,6 +53,7 @@ public class Address implements Serializable {
 
 	@Id
 	@NotNull
+	@GeneratedValue
 	public String getCode() {
 		return code;
 	}
