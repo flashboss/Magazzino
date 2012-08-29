@@ -50,6 +50,8 @@ public class ArticleTest extends AbstractTest implements ArticleMock {
 	public static final JQueryLocator ARTICLES_TABLE_FIRST_ROW_NAME = jq("table[id='articleSelectionForm:articles'] tbody tr:first td:first");
 	public static final JQueryLocator ARTICLES_TABLE_FIRST_ROW_DELETE = jq("[id='articleSelectionForm:articles:0:delete']");
 	public static final JQueryLocator ARTICLES_MESSAGE = jq("[id='messages'] li");
+	public static final JQueryLocator ARTICLES_MESSAGE1 = jq("[id='code:message1']");
+	public static final JQueryLocator ARTICLES_MESSAGE2 = jq("[id='rate:message1']");
 
 	public static final JQueryLocator DETAILS_BAR_CODE = jq("[id='barCode:input']");
 	public static final JQueryLocator DETAILS_CODE = jq("[id='code:input']");
@@ -80,8 +82,6 @@ public class ArticleTest extends AbstractTest implements ArticleMock {
 	public void setUp() {
 		selenium.open(contextPath);
 		selenium.waitForPageToLoad();
-		selenium.click(MENU_FIND);
-		selenium.waitForPageToLoad();
 
 	}
 
@@ -90,6 +90,8 @@ public class ArticleTest extends AbstractTest implements ArticleMock {
 	 */
 	@Test
 	public void testSearch() {
+		selenium.click(MENU_FIND);
+		selenium.waitForPageToLoad();
 		enterSearchQuery("cliente");
 		assertFalse(selenium.isElementPresent(SEARCH_NO_RESULTS));
 		assertEquals(5, selenium.getCount(COUNT_ARTICLES));
@@ -103,6 +105,8 @@ public class ArticleTest extends AbstractTest implements ArticleMock {
 	public void testSearchPageSize() {
 		int[] values = { 5, 10, 20 };
 
+		selenium.click(MENU_FIND);
+		selenium.waitForPageToLoad();
 		selenium.type(SEARCH_QUERY, "rag soc");
 
 		for (int pageSize : values) {
@@ -125,6 +129,8 @@ public class ArticleTest extends AbstractTest implements ArticleMock {
 		Article article = new Article();
 		article.setCatMerc("5675");
 		article.setCode("2121");
+		selenium.click(MENU_FIND);
+		selenium.waitForPageToLoad();
 		int articlesCount = selenium.getCount(COUNT_ARTICLES);
 		searchUpdateArticle(article, "6667654");
 		assertEquals(++articlesCount, selenium.getCount(COUNT_ARTICLES));
@@ -148,21 +154,24 @@ public class ArticleTest extends AbstractTest implements ArticleMock {
 		assertTrue(message, message.contains(article.getCode()));
 		// cancel article
 		selenium.click(BUTTON_CANCEL);
-		selenium.waitForPageToLoad();
 		selenium.click(BUTTON_INSERT_PROCEED);
 		selenium.waitForPageToLoad();
-		assertFalse(message, message.contains(article.getCode()));
-		article.setRate(null);
+		String message1 = selenium.getText(ARTICLES_MESSAGE1);
+		assertTrue(message1, message1.contains(article.getCode()));
+		article.setRate("");
+		article.setCode("99999991");
 		populateArticleFields(article);
 		selenium.click(BUTTON_INSERT_PROCEED);
 		selenium.waitForPageToLoad();
-		assertFalse(message, message.contains(article.getCode()));
+		String message2 = selenium.getText(ARTICLES_MESSAGE2);
+		assertFalse(message2, message2.contains(article.getCode()));
 		selenium.click(MENU_FIND);
-		enterSearchQuery(catMerc);
 		selenium.waitForPageToLoad();
+		enterSearchQuery(catMerc);
 		selenium.click(ARTICLES_TABLE_FIRST_ROW_DELETE);
 		selenium.waitForPageToLoad();
-		assertTrue(message, message.contains(article.getCode()));
+		message = selenium.getText(ARTICLES_MESSAGE);
+		assertTrue(message, message.contains("99999999"));
 	}
 
 	@Test
@@ -197,13 +206,15 @@ public class ArticleTest extends AbstractTest implements ArticleMock {
 		selenium.click(BUTTON_UPDATE_PROCEED);
 		selenium.waitForPageToLoad();
 		// main page
-		assertTrue("Update success.", selenium.isTextPresent(article.getCode()));
+		assertTrue("Update success.",
+				selenium.isTextPresent("You have been successfully updated"));
 		// article page
 		populateArticleFields(article.getPack());
 		selenium.click(BUTTON_UPDATE_PROCEED);
 		selenium.waitForPageToLoad();
 		// main page
-		assertTrue("Update success.", selenium.isTextPresent(article.getCode()));
+		assertTrue("Update success.",
+				selenium.isTextPresent("You have been successfully updated"));
 	}
 
 	protected void populateArticleFields(String pack) {

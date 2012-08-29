@@ -145,6 +145,9 @@ public class Receipt implements Serializable {
 		// TODO Auto-generated method stub
 		if (!(arg0 instanceof Receipt))
 			return super.equals(arg0);
+		else if (this.getNumber() == null
+				&& ((Receipt) arg0).getNumber() == null)
+			return true;
 		else
 			return this.getNumber().equals(((Receipt) arg0).getNumber());
 	}

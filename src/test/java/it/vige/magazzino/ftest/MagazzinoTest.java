@@ -50,6 +50,8 @@ public class MagazzinoTest extends AbstractTest implements MagazzinoMock {
 	public static final JQueryLocator JARS_TABLE_FIRST_ROW_NAME = jq("table[id='magazzinoSelectionForm:jars'] tbody tr:first td:first");
 	public static final JQueryLocator JARS_TABLE_FIRST_ROW_DELETE = jq("[id='magazzinoSelectionForm:jars:0:delete']");
 	public static final JQueryLocator JARS_MESSAGE = jq("[id='messages'] li");
+	public static final JQueryLocator JARS_MESSAGE1 = jq("[id='number:message1']");
+	public static final JQueryLocator JARS_MESSAGE2 = jq("[id='iva:message2']");
 
 	public static final JQueryLocator DETAILS_RAG_SOC1 = jq("[id='ragSoc1:input']");
 	public static final JQueryLocator DETAILS_RAG_SOC2 = jq("[id='ragSoc2:input']");
@@ -71,8 +73,6 @@ public class MagazzinoTest extends AbstractTest implements MagazzinoMock {
 	public void setUp() {
 		selenium.open(contextPath);
 		selenium.waitForPageToLoad();
-		selenium.click(MENU_FIND);
-		selenium.waitForPageToLoad();
 
 	}
 
@@ -81,6 +81,8 @@ public class MagazzinoTest extends AbstractTest implements MagazzinoMock {
 	 */
 	@Test
 	public void testSearch() {
+		selenium.click(MENU_FIND);
+		selenium.waitForPageToLoad();
 		enterSearchQuery("cliente");
 		assertFalse(selenium.isElementPresent(SEARCH_NO_RESULTS));
 		assertEquals(5, selenium.getCount(COUNT_JARS));
@@ -94,6 +96,8 @@ public class MagazzinoTest extends AbstractTest implements MagazzinoMock {
 	public void testSearchPageSize() {
 		int[] values = { 5, 10, 20 };
 
+		selenium.click(MENU_FIND);
+		selenium.waitForPageToLoad();
 		selenium.type(SEARCH_QUERY, "rag soc");
 
 		for (int pageSize : values) {
@@ -116,6 +120,8 @@ public class MagazzinoTest extends AbstractTest implements MagazzinoMock {
 		Magazzino magazzino = new Magazzino();
 		magazzino.setCompensation("compensation");
 		magazzino.setCode("21234");
+		selenium.click(MENU_FIND);
+		selenium.waitForPageToLoad();
 		int jarsCount = selenium.getCount(COUNT_JARS);
 		searchUpdateMagazzino(magazzino, "new cause");
 		assertEquals(++jarsCount, selenium.getCount(COUNT_JARS));
@@ -136,24 +142,27 @@ public class MagazzinoTest extends AbstractTest implements MagazzinoMock {
 		selenium.click(BUTTON_INSERT_PROCEED);
 		selenium.waitForPageToLoad();
 		String message = selenium.getText(JARS_MESSAGE);
-		assertTrue(message, message.contains(magazzino.getCode()));
+		assertTrue(message, message.contains(magazzino.getNumber()));
 		// cancel magazzino
 		selenium.click(BUTTON_CANCEL);
-		selenium.waitForPageToLoad();
 		selenium.click(BUTTON_INSERT_PROCEED);
 		selenium.waitForPageToLoad();
-		assertFalse(message, message.contains(magazzino.getCode()));
-		magazzino.setIva(null);
+		String message1 = selenium.getText(JARS_MESSAGE1);
+		assertTrue(message1, message1.contains(magazzino.getNumber()));
+		magazzino.setIva("");
+		magazzino.setNumber("99999991");
 		populateMagazzinoFields(magazzino);
 		selenium.click(BUTTON_INSERT_PROCEED);
 		selenium.waitForPageToLoad();
-		assertFalse(message, message.contains(magazzino.getCode()));
+		String message2 = selenium.getText(JARS_MESSAGE2);
+		assertFalse(message2, message2.contains(magazzino.getNumber()));
 		selenium.click(MENU_FIND);
-		enterSearchQuery(magazzinoCompensation);
 		selenium.waitForPageToLoad();
+		enterSearchQuery(magazzinoCompensation);
 		selenium.click(JARS_TABLE_FIRST_ROW_DELETE);
 		selenium.waitForPageToLoad();
-		assertTrue(message, message.contains(magazzino.getCode()));
+		message = selenium.getText(JARS_MESSAGE);
+		assertTrue(message, message.contains("99999999"));
 	}
 
 	@Test
@@ -189,14 +198,14 @@ public class MagazzinoTest extends AbstractTest implements MagazzinoMock {
 		selenium.waitForPageToLoad();
 		// main page
 		assertTrue("Update success.",
-				selenium.isTextPresent(magazzino.getCode()));
+				selenium.isTextPresent("You have been successfully updated"));
 		// magazzino page
 		populateMagazzinoFields(magazzino.getCause());
 		selenium.click(BUTTON_UPDATE_PROCEED);
 		selenium.waitForPageToLoad();
 		// main page
 		assertTrue("Update success.",
-				selenium.isTextPresent(magazzino.getCode()));
+				selenium.isTextPresent("You have been successfully updated"));
 	}
 
 	protected void populateMagazzinoFields(String ragSoc1) {

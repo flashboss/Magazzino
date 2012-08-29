@@ -19,7 +19,6 @@ package it.vige.magazzino.model;
 import java.io.Serializable;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -39,6 +38,9 @@ import org.jboss.seam.solder.core.Veto;
 @Veto
 public class Address implements Serializable {
 	private static final long serialVersionUID = 5864740902799651849L;
+
+	@Id
+	@NotNull
 	private String code;
 	private String address;
 	private String civicNumber;
@@ -51,9 +53,6 @@ public class Address implements Serializable {
 	private String site;
 	private String email;
 
-	@Id
-	@NotNull
-	@GeneratedValue
 	public String getCode() {
 		return code;
 	}
@@ -152,6 +151,8 @@ public class Address implements Serializable {
 		// TODO Auto-generated method stub
 		if (!(arg0 instanceof Address))
 			return super.equals(arg0);
+		else if (this.getCode() == null && ((Address) arg0).getCode() == null)
+			return true;
 		else
 			return this.getCode().equals(((Address) arg0).getCode());
 	}

@@ -45,7 +45,7 @@ import org.jboss.seam.solder.core.Veto;
 public class Customer extends FileUpload {
 	private static final long serialVersionUID = -612733026033932730L;
 	@OneToOne
-	private Address address;
+	private Address address = new Address();
 	private String code;
 	private String name;
 	private String ragSocial;
@@ -131,6 +131,8 @@ public class Customer extends FileUpload {
 		// TODO Auto-generated method stub
 		if (!(arg0 instanceof Customer))
 			return super.equals(arg0);
+		else if (this.getCode() == null && ((Customer) arg0).getCode() == null)
+			return true;
 		else
 			return this.getCode().equals(((Customer) arg0).getCode());
 	}

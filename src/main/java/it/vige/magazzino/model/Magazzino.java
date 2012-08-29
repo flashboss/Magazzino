@@ -22,6 +22,7 @@ import java.util.ArrayList;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -44,7 +45,8 @@ import org.jboss.seam.solder.core.Veto;
 public class Magazzino extends FileUpload {
 	private static final long serialVersionUID = -602933026033932730L;
 	@OneToOne
-	private Address address;
+	@JoinColumn(name = "code_bbb", nullable = false)
+	private Address address = new Address();
 	private String number;
 	private String date;
 	private String code;
@@ -227,6 +229,9 @@ public class Magazzino extends FileUpload {
 		// TODO Auto-generated method stub
 		if (!(arg0 instanceof Magazzino))
 			return super.equals(arg0);
+		else if (this.getNumber() == null
+				&& ((Magazzino) arg0).getNumber() == null)
+			return true;
 		else
 			return this.getNumber().equals(((Magazzino) arg0).getNumber());
 	}

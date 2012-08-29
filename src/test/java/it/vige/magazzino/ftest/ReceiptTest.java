@@ -51,6 +51,8 @@ public class ReceiptTest extends AbstractTest implements ReceiptMock {
 	public static final JQueryLocator RECEIPTS_TABLE_FIRST_ROW_NAME = jq("table[id='receiptSelectionForm:receipts'] tbody tr:first td:first");
 	public static final JQueryLocator RECEIPTS_TABLE_FIRST_ROW_DELETE = jq("[id='receiptSelectionForm:receipts:0:delete']");
 	public static final JQueryLocator RECEIPTS_MESSAGE = jq("[id='messages'] li");
+	public static final JQueryLocator RECEIPTS_MESSAGE1 = jq("[id='number:message1']");
+	public static final JQueryLocator RECEIPTS_MESSAGE2 = jq("[id='date:message1']");
 
 	public static final JQueryLocator DETAILS_NUMBER = jq("[id='number:input']");
 	public static final JQueryLocator DETAILS_DATE = jq("[id='date:input']");
@@ -65,8 +67,6 @@ public class ReceiptTest extends AbstractTest implements ReceiptMock {
 	public void setUp() {
 		selenium.open(contextPath);
 		selenium.waitForPageToLoad();
-		selenium.click(MENU_FIND);
-		selenium.waitForPageToLoad();
 
 	}
 
@@ -75,6 +75,8 @@ public class ReceiptTest extends AbstractTest implements ReceiptMock {
 	 */
 	@Test
 	public void testSearch() {
+		selenium.click(MENU_FIND);
+		selenium.waitForPageToLoad();
 		enterSearchQuery("cliente");
 		assertFalse(selenium.isElementPresent(SEARCH_NO_RESULTS));
 		assertEquals(5, selenium.getCount(COUNT_RECEIPTS));
@@ -88,6 +90,8 @@ public class ReceiptTest extends AbstractTest implements ReceiptMock {
 	public void testSearchPageSize() {
 		int[] values = { 5, 10, 20 };
 
+		selenium.click(MENU_FIND);
+		selenium.waitForPageToLoad();
 		selenium.type(SEARCH_QUERY, "rag soc");
 
 		for (int pageSize : values) {
@@ -110,6 +114,8 @@ public class ReceiptTest extends AbstractTest implements ReceiptMock {
 		Receipt receipt = new Receipt();
 		receipt.setCause("causale");
 		receipt.setNumber("11213");
+		selenium.click(MENU_FIND);
+		selenium.waitForPageToLoad();
 		int receiptsCount = selenium.getCount(COUNT_RECEIPTS);
 		searchUpdateReceipt(receipt, "rag soc");
 		assertEquals(++receiptsCount, selenium.getCount(COUNT_RECEIPTS));
@@ -132,21 +138,24 @@ public class ReceiptTest extends AbstractTest implements ReceiptMock {
 		assertTrue(message, message.contains(receipt.getNumber()));
 		// cancel receipt
 		selenium.click(BUTTON_CANCEL);
-		selenium.waitForPageToLoad();
 		selenium.click(BUTTON_INSERT_PROCEED);
 		selenium.waitForPageToLoad();
-		assertFalse(message, message.contains(receipt.getNumber()));
-		receipt.setDate(null);
+		String message1 = selenium.getText(RECEIPTS_MESSAGE1);
+		assertTrue(message1, message1.contains(receipt.getNumber()));
+		receipt.setDate("");
+		receipt.setNumber("99999991");
 		populateReceiptFields(receipt);
 		selenium.click(BUTTON_INSERT_PROCEED);
 		selenium.waitForPageToLoad();
-		assertFalse(message, message.contains(receipt.getNumber()));
+		String message2 = selenium.getText(RECEIPTS_MESSAGE2);
+		assertFalse(message2, message2.contains(receipt.getNumber()));
 		selenium.click(MENU_FIND);
-		enterSearchQuery(receiptName);
 		selenium.waitForPageToLoad();
+		enterSearchQuery(receiptName);
 		selenium.click(RECEIPTS_TABLE_FIRST_ROW_DELETE);
 		selenium.waitForPageToLoad();
-		assertTrue(message, message.contains(receipt.getNumber()));
+		message = selenium.getText(RECEIPTS_MESSAGE);
+		assertTrue(message, message.contains("99999999"));
 	}
 
 	@Test
@@ -182,14 +191,14 @@ public class ReceiptTest extends AbstractTest implements ReceiptMock {
 		selenium.waitForPageToLoad();
 		// main page
 		assertTrue("Update success.",
-				selenium.isTextPresent(receipt.getNumber()));
+				selenium.isTextPresent("You have been successfully updated"));
 		// receipt page
 		populateReceiptFields(receipt.getCause());
 		selenium.click(BUTTON_UPDATE_PROCEED);
 		selenium.waitForPageToLoad();
 		// main page
 		assertTrue("Update success.",
-				selenium.isTextPresent(receipt.getNumber()));
+				selenium.isTextPresent("You have been successfully updated"));
 	}
 
 	protected void populateReceiptFields(String cause) {
