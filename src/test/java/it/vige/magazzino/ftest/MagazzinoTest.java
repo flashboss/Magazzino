@@ -39,19 +39,19 @@ public class MagazzinoTest extends AbstractTest implements MagazzinoMock {
 
 	public static final JQueryLocator MENU_FIND = jq("[href^='/magazzino/search/search_magazzino']");
 	public static final JQueryLocator MENU_INSERT = jq("[href^='/magazzino/magazzino']");
-	public static final JQueryLocator SEARCH_NO_RESULTS = jq("[id='magazzinoSelectionForm:noMagazzinoMsg']");
-	public static final JQueryLocator SEARCH_RESULT_TABLE_FIRST_ROW_LINK = jq("[id='magazzinoSelectionForm:jars:0:view']");
+	public static final JQueryLocator SEARCH_NO_RESULTS = jq("[id='jarSelectionForm:noJarMsg']");
+	public static final JQueryLocator SEARCH_RESULT_TABLE_FIRST_ROW_LINK = jq("[id='jarSelectionForm:jars:0:view']");
 	public static final JQueryLocator BUTTON_UPDATE_PROCEED = jq("[id='magazzinoUpdater']");
 	public static final JQueryLocator BUTTON_INSERT_PROCEED = jq("[id='magazzinoRegister']");
 	public static final JQueryLocator BUTTON_CANCEL = jq("[id='cancel']");
 
-	public static final JQueryLocator COUNT_JARS = jq("[id='magazzinoSelectionForm:jars'] tbody tr");
+	public static final JQueryLocator COUNT_JARS = jq("[id='jarSelectionForm:jars'] tbody tr");
 
-	public static final JQueryLocator JARS_TABLE_FIRST_ROW_NAME = jq("table[id='magazzinoSelectionForm:jars'] tbody tr:first td:first");
-	public static final JQueryLocator JARS_TABLE_FIRST_ROW_DELETE = jq("[id='magazzinoSelectionForm:jars:0:delete']");
+	public static final JQueryLocator JARS_TABLE_FIRST_ROW_NAME = jq("table[id='jarSelectionForm:jars'] tbody tr:first td:first");
+	public static final JQueryLocator JARS_TABLE_FIRST_ROW_DELETE = jq("[id='jarSelectionForm:jars:0:delete']");
 	public static final JQueryLocator JARS_MESSAGE = jq("[id='messages'] li");
 	public static final JQueryLocator JARS_MESSAGE1 = jq("[id='number:message1']");
-	public static final JQueryLocator JARS_MESSAGE2 = jq("[id='iva:message2']");
+	public static final JQueryLocator JARS_MESSAGE2 = jq("[id='ragSoc2:message1']");
 
 	public static final JQueryLocator DETAILS_RAG_SOC1 = jq("[id='ragSoc1:input']");
 	public static final JQueryLocator DETAILS_RAG_SOC2 = jq("[id='ragSoc2:input']");
@@ -83,7 +83,7 @@ public class MagazzinoTest extends AbstractTest implements MagazzinoMock {
 	public void testSearch() {
 		selenium.click(MENU_FIND);
 		selenium.waitForPageToLoad();
-		enterSearchQuery("cliente");
+		enterSearchQuery("rag soc");
 		assertFalse(selenium.isElementPresent(SEARCH_NO_RESULTS));
 		assertEquals(5, selenium.getCount(COUNT_JARS));
 
@@ -104,27 +104,17 @@ public class MagazzinoTest extends AbstractTest implements MagazzinoMock {
 			selenium.select(SEARCH_PAGE_SIZE,
 					new OptionValueLocator(String.valueOf(pageSize)));
 			waitXhr(selenium).keyUp(SEARCH_QUERY, " ");
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 			if (jars.length > pageSize)
 				assertEquals(selenium.getCount(COUNT_JARS), pageSize);
 			else
 				assertEquals(selenium.getCount(COUNT_JARS), jars.length);
 
 		}
-	}
-
-	/**
-	 * Simply follows the magazzino wizard without changing anything.
-	 */
-	@Test
-	public void testSimpleMagazzino() {
-		Magazzino magazzino = new Magazzino();
-		magazzino.setCompensation("compensation");
-		magazzino.setCode("21234");
-		selenium.click(MENU_FIND);
-		selenium.waitForPageToLoad();
-		int jarsCount = selenium.getCount(COUNT_JARS);
-		searchUpdateMagazzino(magazzino, "new cause");
-		assertEquals(++jarsCount, selenium.getCount(COUNT_JARS));
 	}
 
 	@Test
@@ -149,7 +139,7 @@ public class MagazzinoTest extends AbstractTest implements MagazzinoMock {
 		selenium.waitForPageToLoad();
 		String message1 = selenium.getText(JARS_MESSAGE1);
 		assertTrue(message1, message1.contains(magazzino.getNumber()));
-		magazzino.setIva("");
+		magazzino.setRagSoc2("");
 		magazzino.setNumber("99999991");
 		populateMagazzinoFields(magazzino);
 		selenium.click(BUTTON_INSERT_PROCEED);
@@ -219,6 +209,7 @@ public class MagazzinoTest extends AbstractTest implements MagazzinoMock {
 
 	protected void populateMagazzinoFields(Magazzino magazzino) {
 		populateMagazzinoFields(magazzino.getRagSoc1(), magazzino.getRagSoc2());
+		selenium.type(DETAILS_NUMBER, magazzino.getNumber());
 		selenium.type(DETAILS_CODE, magazzino.getCode());
 		selenium.type(DETAILS_COMPENSATION, magazzino.getCompensation());
 	}

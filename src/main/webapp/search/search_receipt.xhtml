@@ -82,8 +82,6 @@
 								value="#{bundles.messages.delete}"
 								action="#{receiptDeleter.delete(_receipt)}"
 								style="white-space: nowrap;">
-								<f:ajax render=":receiptSelectionForm:searchResults"
-									onevent="controlSpinner" />
 							</h:commandLink>
 							| <h:commandLink id="pdf"
 								value="#{bundles.messages.template_linkPDF}" action="#{format1DocumentReceipt.build(_receipt)}"

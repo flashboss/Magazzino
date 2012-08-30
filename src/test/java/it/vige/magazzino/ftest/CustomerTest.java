@@ -97,6 +97,11 @@ public class CustomerTest extends AbstractTest implements CustomerMock {
 			selenium.select(SEARCH_PAGE_SIZE,
 					new OptionValueLocator(String.valueOf(pageSize)));
 			waitXhr(selenium).keyUp(SEARCH_QUERY, " ");
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 			if (customers.length > pageSize)
 				assertEquals(selenium.getCount(COUNT_CUSTOMERS), pageSize);
 			else
@@ -104,21 +109,6 @@ public class CustomerTest extends AbstractTest implements CustomerMock {
 						customers.length);
 
 		}
-	}
-
-	/**
-	 * Simply follows the customer wizard without changing anything.
-	 */
-	@Test
-	public void testSimpleCustomer() {
-		Customer customer = new Customer();
-		customer.setName("cliente");
-		customer.setCode("19987");
-		selenium.click(MENU_FIND);
-		selenium.waitForPageToLoad();
-		int customersCount = selenium.getCount(COUNT_CUSTOMERS);
-		searchUpdateCustomer(customer, "rag soc");
-		assertEquals(++customersCount, selenium.getCount(COUNT_CUSTOMERS));
 	}
 
 	@Test

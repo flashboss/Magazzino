@@ -92,7 +92,7 @@ public class ArticleTest extends AbstractTest implements ArticleMock {
 	public void testSearch() {
 		selenium.click(MENU_FIND);
 		selenium.waitForPageToLoad();
-		enterSearchQuery("cliente");
+		enterSearchQuery("provider");
 		assertFalse(selenium.isElementPresent(SEARCH_NO_RESULTS));
 		assertEquals(5, selenium.getCount(COUNT_ARTICLES));
 
@@ -107,33 +107,23 @@ public class ArticleTest extends AbstractTest implements ArticleMock {
 
 		selenium.click(MENU_FIND);
 		selenium.waitForPageToLoad();
-		selenium.type(SEARCH_QUERY, "rag soc");
+		selenium.type(SEARCH_QUERY, "provider");
 
 		for (int pageSize : values) {
 			selenium.select(SEARCH_PAGE_SIZE,
 					new OptionValueLocator(String.valueOf(pageSize)));
 			waitXhr(selenium).keyUp(SEARCH_QUERY, " ");
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 			if (articles.length > pageSize)
 				assertEquals(selenium.getCount(COUNT_ARTICLES), pageSize);
 			else
 				assertEquals(selenium.getCount(COUNT_ARTICLES), articles.length);
 
 		}
-	}
-
-	/**
-	 * Simply follows the article wizard without changing anything.
-	 */
-	@Test
-	public void testSimpleArticle() {
-		Article article = new Article();
-		article.setCatMerc("5675");
-		article.setCode("2121");
-		selenium.click(MENU_FIND);
-		selenium.waitForPageToLoad();
-		int articlesCount = selenium.getCount(COUNT_ARTICLES);
-		searchUpdateArticle(article, "6667654");
-		assertEquals(++articlesCount, selenium.getCount(COUNT_ARTICLES));
 	}
 
 	@Test

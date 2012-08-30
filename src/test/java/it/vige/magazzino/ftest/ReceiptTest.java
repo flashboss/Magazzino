@@ -39,7 +39,6 @@ import org.testng.annotations.Test;
 public class ReceiptTest extends AbstractTest implements ReceiptMock {
 
 	public static final JQueryLocator MENU_FIND = jq("[href^='/magazzino/search/search_receipt']");
-	public static final JQueryLocator MENU_INSERT = jq("[href^='/magazzino/receipt']");
 	public static final JQueryLocator SEARCH_NO_RESULTS = jq("[id='receiptSelectionForm:noReceiptMsg']");
 	public static final JQueryLocator SEARCH_RESULT_TABLE_FIRST_ROW_LINK = jq("[id='receiptSelectionForm:receipts:0:view']");
 	public static final JQueryLocator BUTTON_UPDATE_PROCEED = jq("[id='receiptUpdater']");
@@ -52,14 +51,14 @@ public class ReceiptTest extends AbstractTest implements ReceiptMock {
 	public static final JQueryLocator RECEIPTS_TABLE_FIRST_ROW_DELETE = jq("[id='receiptSelectionForm:receipts:0:delete']");
 	public static final JQueryLocator RECEIPTS_MESSAGE = jq("[id='messages'] li");
 	public static final JQueryLocator RECEIPTS_MESSAGE1 = jq("[id='number:message1']");
-	public static final JQueryLocator RECEIPTS_MESSAGE2 = jq("[id='date:message1']");
+	public static final JQueryLocator RECEIPTS_MESSAGE2 = jq("[id='cause:message1']");
 
 	public static final JQueryLocator DETAILS_NUMBER = jq("[id='number:input']");
 	public static final JQueryLocator DETAILS_DATE = jq("[id='date:input']");
 	public static final JQueryLocator DETAILS_CAUSE = jq("[id='cause:input']");
 	public static final JQueryLocator DETAILS_DESCRIPTION = jq("[id='description:input']");
-	public static final JQueryLocator DETAILS_JAR = jq("[id='jar:select:1']");
-	public static final JQueryLocator DETAILS_CUSTOMER = jq("[id='customer:select:2']");
+	public static final JQueryLocator DETAILS_JAR = jq("[id='jar:select']");
+	public static final JQueryLocator DETAILS_CUSTOMER = jq("[id='customer:select']");
 
 	public static final JQueryLocator SEARCH_PAGE_SIZE = jq("[id='pageSize']");
 
@@ -77,7 +76,7 @@ public class ReceiptTest extends AbstractTest implements ReceiptMock {
 	public void testSearch() {
 		selenium.click(MENU_FIND);
 		selenium.waitForPageToLoad();
-		enterSearchQuery("cliente");
+		enterSearchQuery("causale");
 		assertFalse(selenium.isElementPresent(SEARCH_NO_RESULTS));
 		assertEquals(5, selenium.getCount(COUNT_RECEIPTS));
 
@@ -92,12 +91,17 @@ public class ReceiptTest extends AbstractTest implements ReceiptMock {
 
 		selenium.click(MENU_FIND);
 		selenium.waitForPageToLoad();
-		selenium.type(SEARCH_QUERY, "rag soc");
+		selenium.type(SEARCH_QUERY, "causale");
 
 		for (int pageSize : values) {
 			selenium.select(SEARCH_PAGE_SIZE,
 					new OptionValueLocator(String.valueOf(pageSize)));
 			waitXhr(selenium).keyUp(SEARCH_QUERY, " ");
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 			if (receipts.length > pageSize)
 				assertEquals(selenium.getCount(COUNT_RECEIPTS), pageSize);
 			else
@@ -106,31 +110,14 @@ public class ReceiptTest extends AbstractTest implements ReceiptMock {
 		}
 	}
 
-	/**
-	 * Simply follows the receipt wizard without changing anything.
-	 */
-	@Test
-	public void testSimpleReceipt() {
-		Receipt receipt = new Receipt();
-		receipt.setCause("causale");
-		receipt.setNumber("11213");
-		selenium.click(MENU_FIND);
-		selenium.waitForPageToLoad();
-		int receiptsCount = selenium.getCount(COUNT_RECEIPTS);
-		searchUpdateReceipt(receipt, "rag soc");
-		assertEquals(++receiptsCount, selenium.getCount(COUNT_RECEIPTS));
-	}
-
 	@Test
 	public void testInsertDeleteNewReceipt() {
 		ReceiptOperation receiptOperation = new ReceiptOperation();
-		selenium.click(MENU_INSERT);
-		selenium.waitForPageToLoad();
 		String receiptName = "newName";
-		String pIva1 = "0123456789012347";
+		String description = "new description";
 		String ragSoc1 = "new rag soc for receipt test";
 		Receipt receipt = receiptOperation.create("99999999", receiptName,
-				ragSoc1, pIva1, null, null);
+				ragSoc1, description, null, null);
 		populateReceiptFields(receipt);
 		selenium.click(BUTTON_INSERT_PROCEED);
 		selenium.waitForPageToLoad();
@@ -142,7 +129,7 @@ public class ReceiptTest extends AbstractTest implements ReceiptMock {
 		selenium.waitForPageToLoad();
 		String message1 = selenium.getText(RECEIPTS_MESSAGE1);
 		assertTrue(message1, message1.contains(receipt.getNumber()));
-		receipt.setDate("");
+		receipt.setCause("");
 		receipt.setNumber("99999991");
 		populateReceiptFields(receipt);
 		selenium.click(BUTTON_INSERT_PROCEED);
@@ -151,7 +138,7 @@ public class ReceiptTest extends AbstractTest implements ReceiptMock {
 		assertFalse(message2, message2.contains(receipt.getNumber()));
 		selenium.click(MENU_FIND);
 		selenium.waitForPageToLoad();
-		enterSearchQuery(receiptName);
+		enterSearchQuery(description);
 		selenium.click(RECEIPTS_TABLE_FIRST_ROW_DELETE);
 		selenium.waitForPageToLoad();
 		message = selenium.getText(RECEIPTS_MESSAGE);
@@ -213,13 +200,13 @@ public class ReceiptTest extends AbstractTest implements ReceiptMock {
 	protected void populateReceiptFields(Receipt receipt) {
 		populateReceiptFields(receipt.getCause(), receipt.getDescription());
 		selenium.type(DETAILS_NUMBER, receipt.getNumber());
-		selenium.type(DETAILS_DATE, receipt.getDate());
 		selenium.select(DETAILS_JAR, Jar.JAR3.getLocator());
 		selenium.select(DETAILS_CUSTOMER, Customer.CLIENTE4.getLocator());
 	}
 
 	private enum Jar {
-		JAR1("Jar1"), JAR2("Jar2"), JAR3("Jar3"), JAR4("Jar4");
+		JAR1(magazzino1.getNumber()), JAR2(magazzino2.getNumber()), JAR3(
+				magazzino3.getNumber()), JAR4(magazzino4.getNumber());
 
 		private String name;
 
@@ -233,8 +220,8 @@ public class ReceiptTest extends AbstractTest implements ReceiptMock {
 	}
 
 	private enum Customer {
-		CLIENTE1("Cliente1"), CLIENTE2("Cliente2"), CLIENTE3("Cliente3"), CLIENTE4(
-				"Cliente4");
+		CLIENTE1(customer1.getCode()), CLIENTE2(customer2.getCode()), CLIENTE3(
+				customer3.getCode()), CLIENTE4(customer4.getCode());
 
 		private String name;
 
