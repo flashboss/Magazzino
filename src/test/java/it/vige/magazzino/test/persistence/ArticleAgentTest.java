@@ -16,11 +16,23 @@
  */
 package it.vige.magazzino.test.persistence;
 
+import static it.vige.magazzino.test.Dependencies.FACES;
 import static it.vige.magazzino.test.Dependencies.SOLDER;
+import it.vige.magazzino.ArticleRegister;
+import it.vige.magazzino.i18n.DefaultBundleKey;
+import it.vige.magazzino.inventory.ArticleSearch;
+import it.vige.magazzino.inventory.SearchCriteria;
+import it.vige.magazzino.inventory.all.ArticleAllSearch;
+import it.vige.magazzino.log.ArticleLog;
 import it.vige.magazzino.model.Article;
+import it.vige.magazzino.model.Article_;
+import it.vige.magazzino.remove.ArticleDeleter;
+import it.vige.magazzino.selection.ArticleSelection;
 import it.vige.magazzino.test.mock.ArticleMock;
 import it.vige.magazzino.test.operation.ArticleOperation;
+import it.vige.magazzino.update.ArticleUpdater;
 
+import javax.ejb.EJB;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -47,7 +59,14 @@ public class ArticleAgentTest implements ArticleMock {
 				.addClass(ArticleAgentTest.class)
 				.addClasses(ArticleMock.class, ArticleOperation.class,
 						Article.class)
+				.addClasses(ArticleRegister.class, ArticleUpdater.class,
+						ArticleDeleter.class, ArticleSelection.class)
+				.addClasses(ArticleLog.class, Article_.class)
+				.addClasses(ArticleSearch.class, ArticleAllSearch.class,
+						SearchCriteria.class)
+				.addClasses(DefaultBundleKey.class)
 				.addAsLibraries(SOLDER)
+				.addAsLibraries(FACES)
 				.addAsWebInfResource("test-web.xml", "web.xml")
 				.addAsWebInfResource("test-persistence.xml",
 						"classes/META-INF/persistence.xml")
@@ -55,6 +74,18 @@ public class ArticleAgentTest implements ArticleMock {
 		System.out.println(war.toString(true));
 		return war;
 	}
+
+	@EJB
+	ArticleRegister articleRegister;
+
+	@EJB
+	ArticleUpdater articleUpdater;
+
+	@EJB
+	ArticleDeleter articleDeleter;
+
+	@EJB
+	ArticleSelection articleSelection;
 
 	@Inject
 	UserTransaction utx;
@@ -90,5 +121,25 @@ public class ArticleAgentTest implements ArticleMock {
 	public void searchArticle() throws Exception {
 		Assert.assertEquals(16, em.createQuery("select b from Article b")
 				.getResultList().size());
+	}
+
+	@Test
+	public void testSearch() {
+
+	}
+
+	@Test
+	public void testSearchPageSize() {
+
+	}
+
+	@Test
+	public void testInsertDeleteNewArticle() {
+
+	}
+
+	@Test
+	public void testMultiSearchingUpdate() {
+
 	}
 }

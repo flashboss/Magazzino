@@ -16,15 +16,26 @@
  */
 package it.vige.magazzino.test.persistence;
 
+import static it.vige.magazzino.test.Dependencies.FACES;
+import static it.vige.magazzino.test.Dependencies.INTERNATIONAL;
 import static it.vige.magazzino.test.Dependencies.RICHFACES;
 import static it.vige.magazzino.test.Dependencies.SOLDER;
 import it.vige.magazzino.DataContainer;
 import it.vige.magazzino.FileUpload;
+import it.vige.magazzino.ReceiptRegister;
+import it.vige.magazzino.i18n.DefaultBundleKey;
+import it.vige.magazzino.inventory.ReceiptSearch;
+import it.vige.magazzino.inventory.SearchCriteria;
+import it.vige.magazzino.inventory.all.ReceiptAllSearch;
+import it.vige.magazzino.log.ReceiptLog;
 import it.vige.magazzino.model.Address;
 import it.vige.magazzino.model.Customer;
 import it.vige.magazzino.model.Data;
 import it.vige.magazzino.model.Magazzino;
 import it.vige.magazzino.model.Receipt;
+import it.vige.magazzino.model.Receipt_;
+import it.vige.magazzino.remove.ReceiptDeleter;
+import it.vige.magazzino.selection.ReceiptSelection;
 import it.vige.magazzino.test.mock.AddressMock;
 import it.vige.magazzino.test.mock.CustomerMock;
 import it.vige.magazzino.test.mock.ImageMock;
@@ -37,7 +48,9 @@ import it.vige.magazzino.test.operation.ImageOperation;
 import it.vige.magazzino.test.operation.ListDataOperation;
 import it.vige.magazzino.test.operation.MagazzinoOperation;
 import it.vige.magazzino.test.operation.ReceiptOperation;
+import it.vige.magazzino.update.ReceiptUpdater;
 
+import javax.ejb.EJB;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -71,10 +84,19 @@ public class ReceiptAgentTest implements ReceiptMock {
 				.addClasses(Data.class, ListDataMock.class,
 						ListDataOperation.class)
 				.addClasses(ImageMock.class, ImageOperation.class)
+				.addClasses(ReceiptRegister.class, ReceiptUpdater.class,
+						ReceiptDeleter.class, ReceiptSelection.class)
+				.addClasses(ReceiptLog.class, Receipt_.class)
+				.addClasses(ReceiptSearch.class, ReceiptAllSearch.class,
+						SearchCriteria.class)
 				.addClasses(DataContainer.class, FileUpload.class)
+				.addClasses(DefaultBundleKey.class)
 				.addClasses(AddressMock.class, AddressOperation.class,
 						Address.class)
 				.addAsLibraries(SOLDER)
+				.addAsLibraries(INTERNATIONAL)
+				.addAsLibraries(FACES)
+				.addAsLibraries(RICHFACES)
 				.addAsLibraries(RICHFACES)
 				.addAsResource("logo.gif")
 				.addAsWebInfResource("test-web.xml", "web.xml")
@@ -84,6 +106,18 @@ public class ReceiptAgentTest implements ReceiptMock {
 		System.out.println(war.toString(true));
 		return war;
 	}
+
+	@EJB
+	ReceiptRegister receiptRegister;
+
+	@EJB
+	ReceiptUpdater receiptUpdater;
+
+	@EJB
+	ReceiptDeleter receiptDeleter;
+
+	@EJB
+	ReceiptSelection receiptSelection;
 
 	@Inject
 	UserTransaction utx;
@@ -114,5 +148,25 @@ public class ReceiptAgentTest implements ReceiptMock {
 	public void searchReceipt() throws Exception {
 		Assert.assertEquals(11, em.createQuery("select b from Receipt b")
 				.getResultList().size());
+	}
+
+	@Test
+	public void testSearch() {
+
+	}
+
+	@Test
+	public void testSearchPageSize() {
+
+	}
+
+	@Test
+	public void testInsertDeleteNewArticle() {
+
+	}
+
+	@Test
+	public void testMultiSearchingUpdate() {
+
 	}
 }

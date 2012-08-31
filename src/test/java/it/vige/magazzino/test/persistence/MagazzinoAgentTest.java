@@ -16,13 +16,24 @@
  */
 package it.vige.magazzino.test.persistence;
 
+import static it.vige.magazzino.test.Dependencies.FACES;
+import static it.vige.magazzino.test.Dependencies.INTERNATIONAL;
 import static it.vige.magazzino.test.Dependencies.RICHFACES;
 import static it.vige.magazzino.test.Dependencies.SOLDER;
 import it.vige.magazzino.DataContainer;
 import it.vige.magazzino.FileUpload;
+import it.vige.magazzino.MagazzinoRegister;
+import it.vige.magazzino.i18n.DefaultBundleKey;
+import it.vige.magazzino.inventory.MagazzinoSearch;
+import it.vige.magazzino.inventory.SearchCriteria;
+import it.vige.magazzino.inventory.all.MagazzinoAllSearch;
+import it.vige.magazzino.log.MagazzinoLog;
 import it.vige.magazzino.model.Address;
 import it.vige.magazzino.model.Data;
 import it.vige.magazzino.model.Magazzino;
+import it.vige.magazzino.model.Magazzino_;
+import it.vige.magazzino.remove.MagazzinoDeleter;
+import it.vige.magazzino.selection.MagazzinoSelection;
 import it.vige.magazzino.test.mock.AddressMock;
 import it.vige.magazzino.test.mock.ImageMock;
 import it.vige.magazzino.test.mock.ListDataMock;
@@ -31,7 +42,9 @@ import it.vige.magazzino.test.operation.AddressOperation;
 import it.vige.magazzino.test.operation.ImageOperation;
 import it.vige.magazzino.test.operation.ListDataOperation;
 import it.vige.magazzino.test.operation.MagazzinoOperation;
+import it.vige.magazzino.update.MagazzinoUpdater;
 
+import javax.ejb.EJB;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -64,8 +77,16 @@ public class MagazzinoAgentTest implements MagazzinoMock {
 						Address.class)
 				.addClasses(MagazzinoMock.class, MagazzinoOperation.class,
 						Magazzino.class)
+				.addClasses(MagazzinoRegister.class, MagazzinoUpdater.class,
+						MagazzinoDeleter.class, MagazzinoSelection.class)
+				.addClasses(MagazzinoLog.class, Magazzino_.class)
+				.addClasses(MagazzinoSearch.class, MagazzinoAllSearch.class,
+						SearchCriteria.class)
 				.addClasses(DataContainer.class, FileUpload.class)
+				.addClasses(DefaultBundleKey.class)
 				.addAsLibraries(SOLDER)
+				.addAsLibraries(INTERNATIONAL)
+				.addAsLibraries(FACES)
 				.addAsLibraries(RICHFACES)
 				.addAsResource("logo.gif")
 				.addAsWebInfResource("test-web.xml", "web.xml")
@@ -75,6 +96,18 @@ public class MagazzinoAgentTest implements MagazzinoMock {
 		System.out.println(war.toString(true));
 		return war;
 	}
+
+	@EJB
+	MagazzinoRegister magazzinoRegister;
+
+	@EJB
+	MagazzinoUpdater magazzinoUpdater;
+
+	@EJB
+	MagazzinoDeleter magazzinoDeleter;
+
+	@EJB
+	MagazzinoSelection magazzinoSelection;
 
 	@Inject
 	UserTransaction utx;
@@ -105,6 +138,26 @@ public class MagazzinoAgentTest implements MagazzinoMock {
 	public void searchMagazzino() throws Exception {
 		Assert.assertEquals(11, em.createQuery("select b from Magazzino b")
 				.getResultList().size());
+	}
+
+	@Test
+	public void testSearch() {
+
+	}
+
+	@Test
+	public void testSearchPageSize() {
+
+	}
+
+	@Test
+	public void testInsertDeleteNewArticle() {
+
+	}
+
+	@Test
+	public void testMultiSearchingUpdate() {
+
 	}
 
 }

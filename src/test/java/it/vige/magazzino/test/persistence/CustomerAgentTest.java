@@ -16,13 +16,24 @@
  */
 package it.vige.magazzino.test.persistence;
 
+import static it.vige.magazzino.test.Dependencies.INTERNATIONAL;
 import static it.vige.magazzino.test.Dependencies.RICHFACES;
 import static it.vige.magazzino.test.Dependencies.SOLDER;
+import static it.vige.magazzino.test.Dependencies.FACES;
+import it.vige.magazzino.CustomerRegister;
 import it.vige.magazzino.DataContainer;
 import it.vige.magazzino.FileUpload;
+import it.vige.magazzino.i18n.DefaultBundleKey;
+import it.vige.magazzino.inventory.CustomerSearch;
+import it.vige.magazzino.inventory.SearchCriteria;
+import it.vige.magazzino.inventory.all.CustomerAllSearch;
+import it.vige.magazzino.log.CustomerLog;
 import it.vige.magazzino.model.Address;
 import it.vige.magazzino.model.Customer;
+import it.vige.magazzino.model.Customer_;
 import it.vige.magazzino.model.Data;
+import it.vige.magazzino.remove.CustomerDeleter;
+import it.vige.magazzino.selection.CustomerSelection;
 import it.vige.magazzino.test.mock.AddressMock;
 import it.vige.magazzino.test.mock.CustomerMock;
 import it.vige.magazzino.test.mock.ImageMock;
@@ -31,7 +42,9 @@ import it.vige.magazzino.test.operation.AddressOperation;
 import it.vige.magazzino.test.operation.CustomerOperation;
 import it.vige.magazzino.test.operation.ImageOperation;
 import it.vige.magazzino.test.operation.ListDataOperation;
+import it.vige.magazzino.update.CustomerUpdater;
 
+import javax.ejb.EJB;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -64,8 +77,16 @@ public class CustomerAgentTest implements CustomerMock {
 						Address.class)
 				.addClasses(CustomerMock.class, CustomerOperation.class,
 						Customer.class)
+				.addClasses(CustomerRegister.class, CustomerUpdater.class,
+						CustomerDeleter.class, CustomerSelection.class)
+				.addClasses(CustomerLog.class, Customer_.class)
+				.addClasses(CustomerSearch.class, CustomerAllSearch.class,
+						SearchCriteria.class)
 				.addClasses(DataContainer.class, FileUpload.class)
+				.addClasses(DefaultBundleKey.class)
 				.addAsLibraries(SOLDER)
+				.addAsLibraries(INTERNATIONAL)
+				.addAsLibraries(FACES)
 				.addAsLibraries(RICHFACES)
 				.addAsResource("logo.gif")
 				.addAsWebInfResource("test-web.xml", "web.xml")
@@ -75,6 +96,18 @@ public class CustomerAgentTest implements CustomerMock {
 		System.out.println(war.toString(true));
 		return war;
 	}
+
+	@EJB
+	CustomerRegister customerRegister;
+
+	@EJB
+	CustomerUpdater customerUpdater;
+
+	@EJB
+	CustomerDeleter customerDeleter;
+
+	@EJB
+	CustomerSelection customerSelection;
 
 	@Inject
 	UserTransaction utx;
@@ -103,6 +136,26 @@ public class CustomerAgentTest implements CustomerMock {
 	public void searchCustomer() throws Exception {
 		Assert.assertEquals(9, em.createQuery("select b from Customer b")
 				.getResultList().size());
+	}
+
+	@Test
+	public void testSearch() {
+
+	}
+
+	@Test
+	public void testSearchPageSize() {
+
+	}
+
+	@Test
+	public void testInsertDeleteNewArticle() {
+
+	}
+
+	@Test
+	public void testMultiSearchingUpdate() {
+
 	}
 
 }
