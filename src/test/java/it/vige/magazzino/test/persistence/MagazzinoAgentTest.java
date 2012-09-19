@@ -52,6 +52,7 @@ import javax.transaction.UserTransaction;
 
 import org.jboss.arquillian.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.seam.international.status.Messages;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
@@ -106,11 +107,17 @@ public class MagazzinoAgentTest implements MagazzinoMock {
 	@EJB
 	MagazzinoDeleter magazzinoDeleter;
 
-	@EJB
+	@Inject
 	MagazzinoSelection magazzinoSelection;
 
 	@EJB
 	MagazzinoSearch magazzinoSearch;
+
+	@Inject
+	SearchCriteria criteria;
+
+	@Inject
+	Messages messages;
 
 	@Inject
 	UserTransaction utx;
@@ -154,7 +161,7 @@ public class MagazzinoAgentTest implements MagazzinoMock {
 	}
 
 	@Test
-	public void testInsertDeleteNewArticle() {
+	public void testInsertDeleteNewMagazzino() {
 
 	}
 

@@ -58,6 +58,7 @@ import javax.transaction.UserTransaction;
 
 import org.jboss.arquillian.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.seam.international.status.Messages;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
@@ -116,11 +117,17 @@ public class ReceiptAgentTest implements ReceiptMock {
 	@EJB
 	ReceiptDeleter receiptDeleter;
 
-	@EJB
+	@Inject
 	ReceiptSelection receiptSelection;
 
 	@EJB
 	ReceiptSearch receiptSearch;
+
+	@Inject
+	SearchCriteria criteria;
+
+	@Inject
+	Messages messages;
 
 	@Inject
 	UserTransaction utx;
@@ -164,7 +171,7 @@ public class ReceiptAgentTest implements ReceiptMock {
 	}
 
 	@Test
-	public void testInsertDeleteNewArticle() {
+	public void testInsertDeleteNewReceipt() {
 
 	}
 

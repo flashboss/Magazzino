@@ -20,6 +20,9 @@ import static it.vige.magazzino.test.Dependencies.FACES;
 import static it.vige.magazzino.test.Dependencies.INTERNATIONAL;
 import static it.vige.magazzino.test.Dependencies.RICHFACES;
 import static it.vige.magazzino.test.Dependencies.SOLDER;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import it.vige.magazzino.CustomerRegister;
 import it.vige.magazzino.DataContainer;
 import it.vige.magazzino.FileUpload;
@@ -45,6 +48,7 @@ import it.vige.magazzino.test.operation.ListDataOperation;
 import it.vige.magazzino.update.CustomerUpdater;
 
 import javax.ejb.EJB;
+import javax.ejb.EJBTransactionRolledbackException;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -52,9 +56,13 @@ import javax.transaction.UserTransaction;
 
 import org.jboss.arquillian.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.seam.international.status.Message;
+import org.jboss.seam.international.status.Messages;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.jboss.weld.Container;
+import org.jboss.weld.context.http.HttpConversationContext;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -106,11 +114,17 @@ public class CustomerAgentTest implements CustomerMock {
 	@EJB
 	CustomerDeleter customerDeleter;
 
-	@EJB
+	@Inject
 	CustomerSelection customerSelection;
 
 	@EJB
 	CustomerSearch customerSearch;
+
+	@Inject
+	SearchCriteria criteria;
+
+	@Inject
+	Messages messages;
 
 	@Inject
 	UserTransaction utx;
@@ -143,22 +157,113 @@ public class CustomerAgentTest implements CustomerMock {
 
 	@Test
 	public void testSearch() {
+		criteria.setQuery("cliente");
+		customerSearch.find();
+		assertFalse(customerSearch.getCustomers().size() == 0);
+		assertEquals(5, customerSearch.getCustomers().size());
 
+		criteria.setQuery("nonExistingCustomer");
+		customerSearch.find();
+		assertTrue(customerSearch.getCustomers().size() == 0);
+		assertEquals(0, customerSearch.getCustomers().size());
 	}
 
 	@Test
 	public void testSearchPageSize() {
+		int[] values = { 5, 10, 20 };
 
+		criteria.setQuery("rag soc");
+
+		for (int pageSize : values) {
+			criteria.setPageSize(pageSize);
+			customerSearch.find();
+			if (customers.length > pageSize)
+				assertEquals(customerSearch.getCustomers().size(), pageSize);
+			else
+				assertEquals(customerSearch.getCustomers().size(),
+						customers.length);
+
+		}
 	}
 
 	@Test
-	public void testInsertDeleteNewArticle() {
-
+	public void testInsertDeleteNewCustomer() {
+		String customerName = "newName";
+		String pIva1 = "0123456789012347";
+		String ragSoc1 = "new rag soc for customer test";
+		Address address = new Address();
+		address.setAddress("Vige street");
+		Customer customer = customerRegister.getNewCustomer();
+		customer.setCode("99999999");
+		customer.setName(customerName);
+		customer.setIva(pIva1);
+		customer.setRagSocial(ragSoc1);
+		customer.setAddress(address);
+		customerRegister.register();
+		String message = messages.getAll().iterator().next().getText();
+		assertTrue(message, message.contains(customer.getCode()));
+		// cancel customer
+		customer.setCode("");
+		try {
+			customerRegister.register();
+			assertTrue(false);
+		} catch (EJBTransactionRolledbackException ex) {
+			assertTrue(true);
+		}
+		customer.setName("");
+		customer.setCode("99999991");
+		try {
+			customerRegister.register();
+			assertTrue(false);
+		} catch (EJBTransactionRolledbackException ex) {
+			assertTrue(true);
+		}
+		criteria.setQuery(customerName);
+		customerSearch.find();
+		Container.instance().deploymentManager().instance()
+				.select(HttpConversationContext.class).get().activate();
+		customerSelection.selectCustomer(customerSearch.getCustomers().get(0));
+		Customer selectedCustomer = customerSelection.getSelectedCustomer();
+		customerDeleter.delete(selectedCustomer);
+		message = messages.getAll().toArray(new Message[0])[3].getText();
+		assertTrue(message, message.contains("99999999"));
 	}
 
 	@Test
 	public void testMultiSearchingUpdate() {
+		Customer[] customers = new Customer[] { customer0, customer1,
+				customer2, customer4 };
 
+		// make 4 customers
+		Container.instance().deploymentManager().instance()
+				.select(HttpConversationContext.class).get().activate();
+		for (Customer customer : customers) {
+			searchUpdateCustomer(customer, "test-injection-for-ragsoc");
+		}
+		criteria.setQuery("test-injection-for-ragsoc");
+		customerSearch.find();
+		assertEquals(customerSearch.getCustomers().size(), 0);
+	}
+
+	protected void searchUpdateCustomer(Customer customer, String newRagSoc) {
+		criteria.setQuery(customer.getName());
+		customerSearch.find();
+		customerSelection.selectCustomer(customerSearch.getCustomers().get(0));
+		Customer selectedCustomer = customerSelection.getSelectedCustomer();
+		// customer page
+		selectedCustomer.setRagSocial(newRagSoc);
+		customerUpdater.update();
+		// main page
+		String message = messages.getAll().iterator().next().getText();
+		assertTrue("Update success.",
+				message.startsWith("You have been successfully updated"));
+		// customer page
+		selectedCustomer.setRagSocial(customer.getRagSocial());
+		customerUpdater.update();
+		// main page
+		message = messages.getAll().iterator().next().getText();
+		assertTrue("Update success.",
+				message.startsWith("You have been successfully updated"));
 	}
 
 }

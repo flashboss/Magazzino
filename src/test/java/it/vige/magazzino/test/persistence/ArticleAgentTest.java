@@ -172,7 +172,6 @@ public class ArticleAgentTest implements ArticleMock {
 				assertEquals(articleSearch.getArticles().size(),
 						articles.length);
 		}
-
 	}
 
 	@Test
