@@ -119,6 +119,9 @@ public class ReceiptAgentTest implements ReceiptMock {
 	@EJB
 	ReceiptSelection receiptSelection;
 
+	@EJB
+	ReceiptSearch receiptSearch;
+
 	@Inject
 	UserTransaction utx;
 

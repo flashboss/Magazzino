@@ -18,6 +18,9 @@ package it.vige.magazzino.test.persistence;
 
 import static it.vige.magazzino.test.Dependencies.FACES;
 import static it.vige.magazzino.test.Dependencies.SOLDER;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import it.vige.magazzino.ArticleRegister;
 import it.vige.magazzino.i18n.DefaultBundleKey;
 import it.vige.magazzino.inventory.ArticleSearch;
@@ -33,6 +36,8 @@ import it.vige.magazzino.test.operation.ArticleOperation;
 import it.vige.magazzino.update.ArticleUpdater;
 
 import javax.ejb.EJB;
+import javax.ejb.EJBTransactionRolledbackException;
+import javax.enterprise.inject.spi.BeanManager;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -40,9 +45,13 @@ import javax.transaction.UserTransaction;
 
 import org.jboss.arquillian.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.seam.international.status.Message;
+import org.jboss.seam.international.status.Messages;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.jboss.weld.Container;
+import org.jboss.weld.context.http.HttpConversationContext;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -84,11 +93,23 @@ public class ArticleAgentTest implements ArticleMock {
 	@EJB
 	ArticleDeleter articleDeleter;
 
-	@EJB
+	@Inject
 	ArticleSelection articleSelection;
+
+	@EJB
+	ArticleSearch articleSearch;
+
+	@Inject
+	SearchCriteria criteria;
+
+	@Inject
+	Messages messages;
 
 	@Inject
 	UserTransaction utx;
+
+	@Inject
+	BeanManager beanManager;
 
 	@PersistenceContext
 	EntityManager em;
@@ -125,21 +146,110 @@ public class ArticleAgentTest implements ArticleMock {
 
 	@Test
 	public void testSearch() {
+		criteria.setQuery("provider");
+		articleSearch.find();
+		assertFalse(articleSearch.getArticles().size() == 0);
+		assertEquals(5, articleSearch.getArticles().size());
 
+		criteria.setQuery("nonExistingArticle");
+		articleSearch.find();
+		assertTrue(articleSearch.getArticles().size() == 0);
+		assertEquals(0, articleSearch.getArticles().size());
 	}
 
 	@Test
 	public void testSearchPageSize() {
+		int[] values = { 5, 10, 20 };
+
+		criteria.setQuery("provider");
+
+		for (int pageSize : values) {
+			criteria.setPageSize(pageSize);
+			articleSearch.find();
+			if (articles.length > pageSize)
+				assertEquals(articleSearch.getArticles().size(), pageSize);
+			else
+				assertEquals(articleSearch.getArticles().size(),
+						articles.length);
+		}
 
 	}
 
 	@Test
 	public void testInsertDeleteNewArticle() {
-
+		String catMerc = "newName";
+		String rate = "012345678";
+		String pack = "1111111111";
+		Article article = articleRegister.getNewArticle();
+		article.setCode("99999999");
+		article.setCatMerc(catMerc);
+		article.setRate(rate);
+		article.setPack(pack);
+		articleRegister.register();
+		String message = messages.getAll().iterator().next().getText();
+		assertTrue(message, message.contains(article.getCode()));
+		// cancel article
+		article.setCode("");
+		try {
+			articleRegister.register();
+			assertTrue(false);
+		} catch (EJBTransactionRolledbackException ex) {
+			assertTrue(true);
+		}
+		article.setRate("");
+		article.setCode("99999991");
+		try {
+			articleRegister.register();
+			assertTrue(false);
+		} catch (EJBTransactionRolledbackException ex) {
+			assertTrue(true);
+		}
+		criteria.setQuery(catMerc);
+		articleSearch.find();
+		Container.instance().deploymentManager().instance()
+				.select(HttpConversationContext.class).get().activate();
+		articleSelection.selectArticle(articleSearch.getArticles().get(0));
+		Article selectedArticle = articleSelection.getSelectedArticle();
+		articleDeleter.delete(selectedArticle);
+		message = messages.getAll().toArray(new Message[0])[3].getText();
+		assertTrue(message, message.contains("99999999"));
 	}
 
 	@Test
 	public void testMultiSearchingUpdate() {
+		Article[] articles = new Article[] { article0, article1, article2,
+				article4 };
 
+		// make 4 articles
+		Container.instance().deploymentManager().instance()
+				.select(HttpConversationContext.class).get().activate();
+		for (Article article : articles) {
+			searchUpdateArticle(article, "7777777");
+		}
+		criteria.setQuery("7777777");
+		articleSearch.find();
+		assertEquals(articleSearch.getArticles().size(), 0);
+	}
+
+	protected void searchUpdateArticle(Article article, String newPack) {
+
+		criteria.setQuery(article.getDescription());
+		articleSearch.find();
+		articleSelection.selectArticle(articleSearch.getArticles().get(0));
+		Article selectedArticle = articleSelection.getSelectedArticle();
+		// article page
+		selectedArticle.setPack(newPack);
+		articleUpdater.update();
+		// main page
+		String message = messages.getAll().iterator().next().getText();
+		assertTrue("Update success.",
+				message.startsWith("You have been successfully updated"));
+		// article page
+		selectedArticle.setPack(article.getPack());
+		articleUpdater.update();
+		// main page
+		message = messages.getAll().iterator().next().getText();
+		assertTrue("Update success.",
+				message.startsWith("You have been successfully updated"));
 	}
 }

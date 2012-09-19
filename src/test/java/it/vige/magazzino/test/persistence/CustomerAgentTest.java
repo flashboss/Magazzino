@@ -16,10 +16,10 @@
  */
 package it.vige.magazzino.test.persistence;
 
+import static it.vige.magazzino.test.Dependencies.FACES;
 import static it.vige.magazzino.test.Dependencies.INTERNATIONAL;
 import static it.vige.magazzino.test.Dependencies.RICHFACES;
 import static it.vige.magazzino.test.Dependencies.SOLDER;
-import static it.vige.magazzino.test.Dependencies.FACES;
 import it.vige.magazzino.CustomerRegister;
 import it.vige.magazzino.DataContainer;
 import it.vige.magazzino.FileUpload;
@@ -108,6 +108,9 @@ public class CustomerAgentTest implements CustomerMock {
 
 	@EJB
 	CustomerSelection customerSelection;
+
+	@EJB
+	CustomerSearch customerSearch;
 
 	@Inject
 	UserTransaction utx;

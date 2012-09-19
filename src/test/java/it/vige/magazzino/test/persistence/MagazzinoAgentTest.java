@@ -109,6 +109,9 @@ public class MagazzinoAgentTest implements MagazzinoMock {
 	@EJB
 	MagazzinoSelection magazzinoSelection;
 
+	@EJB
+	MagazzinoSearch magazzinoSearch;
+
 	@Inject
 	UserTransaction utx;
 
