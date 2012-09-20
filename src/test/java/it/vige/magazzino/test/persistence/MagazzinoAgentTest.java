@@ -20,6 +20,9 @@ import static it.vige.magazzino.test.Dependencies.FACES;
 import static it.vige.magazzino.test.Dependencies.INTERNATIONAL;
 import static it.vige.magazzino.test.Dependencies.RICHFACES;
 import static it.vige.magazzino.test.Dependencies.SOLDER;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import it.vige.magazzino.DataContainer;
 import it.vige.magazzino.FileUpload;
 import it.vige.magazzino.MagazzinoRegister;
@@ -45,6 +48,7 @@ import it.vige.magazzino.test.operation.MagazzinoOperation;
 import it.vige.magazzino.update.MagazzinoUpdater;
 
 import javax.ejb.EJB;
+import javax.ejb.EJBTransactionRolledbackException;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -52,10 +56,13 @@ import javax.transaction.UserTransaction;
 
 import org.jboss.arquillian.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.seam.international.status.Message;
 import org.jboss.seam.international.status.Messages;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.jboss.weld.Container;
+import org.jboss.weld.context.http.HttpConversationContext;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -152,22 +159,109 @@ public class MagazzinoAgentTest implements MagazzinoMock {
 
 	@Test
 	public void testSearch() {
+		criteria.setQuery("rag soc");
+		magazzinoSearch.find();
+		assertFalse(magazzinoSearch.getJars().size() == 0);
+		assertEquals(5, magazzinoSearch.getJars().size());
 
+		criteria.setQuery("nonExistingMagazzino");
+		magazzinoSearch.find();
+		assertTrue(magazzinoSearch.getJars().size() == 0);
+		assertEquals(0, magazzinoSearch.getJars().size());
 	}
 
 	@Test
 	public void testSearchPageSize() {
+		int[] values = { 5, 10, 20 };
 
+		criteria.setQuery("rag soc");
+
+		for (int pageSize : values) {
+			criteria.setPageSize(pageSize);
+			magazzinoSearch.find();
+			if (jars.length > pageSize)
+				assertEquals(magazzinoSearch.getJars().size(), pageSize);
+			else
+				assertEquals(magazzinoSearch.getJars().size(), jars.length);
+		}
 	}
 
 	@Test
 	public void testInsertDeleteNewMagazzino() {
+		String magazzinoCompensation = "newCompensation";
+		String ragSoc1 = "new rag soc for magazzino test";
+		String ragSoc2 = "0123456789012347";
+		Magazzino magazzino = magazzinoRegister.getNewJar();
+		magazzino.setNumber("99999999");
+		magazzino.setCompensation(magazzinoCompensation);
+		magazzino.setRagSoc1(ragSoc1);
+		magazzino.setRagSoc2(ragSoc2);
+		magazzinoRegister.register();
+		String message = messages.getAll().iterator().next().getText();
+		assertTrue(message, message.contains(magazzino.getNumber()));
+		// cancel magazzino
+		magazzino.setNumber("");
+		try {
+			magazzinoRegister.register();
+			assertTrue(false);
+		} catch (EJBTransactionRolledbackException ex) {
+			assertTrue(true);
+		}
+		magazzino.setRagSoc2("");
+		magazzino.setNumber("99999991");
+		try {
+			magazzinoRegister.register();
+			assertTrue(false);
+		} catch (EJBTransactionRolledbackException ex) {
+			assertTrue(true);
+		}
+		criteria.setQuery(magazzinoCompensation);
+		magazzinoSearch.find();
+		Container.instance().deploymentManager().instance()
+				.select(HttpConversationContext.class).get().activate();
+		magazzinoSelection.selectJar(magazzinoSearch.getJars().get(0));
+		Magazzino selectedJar = magazzinoSelection.getSelectedJar();
+		magazzinoDeleter.delete(selectedJar);
+		message = messages.getAll().toArray(new Message[0])[3].getText();
+		assertTrue(message, message.contains("99999999"));
 
 	}
 
 	@Test
 	public void testMultiSearchingUpdate() {
+		Magazzino[] jars = new Magazzino[] { magazzino0, magazzino1,
+				magazzino2, magazzino4 };
 
+		// make 4 jars
+		Container.instance().deploymentManager().instance()
+				.select(HttpConversationContext.class).get().activate();
+		for (Magazzino magazzino : jars) {
+			searchUpdateMagazzino(magazzino, "test-ejb-for-ragsoc");
+		}
+		criteria.setQuery("test-ejb-for-ragsoc");
+		magazzinoSearch.find();
+		assertEquals(magazzinoSearch.getJars().size(), 0);
+	}
+
+	protected void searchUpdateMagazzino(Magazzino magazzino, String newCause) {
+		criteria.setQuery(magazzino.getCompensation());
+		magazzinoSearch.find();
+		magazzinoSelection.selectJar(magazzinoSearch.getJars().get(0));
+		Magazzino selectedJar = magazzinoSelection.getSelectedJar();
+		// magazzino page
+		selectedJar.setCause(newCause);
+		magazzinoUpdater.update();
+		// main page
+		String message = messages.getAll().iterator().next().getText();
+		assertTrue("Update success.",
+				message.startsWith("You have been successfully updated"));
+		// magazzino page
+		selectedJar.setCause(magazzino.getCause());
+		magazzinoUpdater.update();
+		// main page
+		message = messages.getAll().iterator().next().getText();
+		assertTrue("Update success.",
+				message.startsWith("You have been successfully updated"));
 	}
 
 }

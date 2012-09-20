@@ -34,6 +34,7 @@
 		<junit.version>4.8</junit.version>
 		<jersey.version>1.5</jersey.version>
 		<richfaces.version>4.1.0.Final</richfaces.version>
+		<surefire.version>2.7.2</surefire.version>
 	</properties>
 
 	<repositories>
@@ -323,7 +324,7 @@
 
 					<plugin>
 						<artifactId>maven-surefire-plugin</artifactId>
-						<version>2.7.2</version>
+						<version>${surefire.version}</version>
 						<configuration>
 							<testNGArtifactName>none:none</testNGArtifactName>
 							<excludes>
@@ -365,6 +366,7 @@
 				<plugins>
 					<plugin>
 						<artifactId>maven-surefire-plugin</artifactId>
+						<version>${surefire.version}</version>
 						<configuration>
 							<skip>false</skip>
 							<testNGArtifactName>none:none</testNGArtifactName>
@@ -404,6 +406,7 @@
 				<plugins>
 					<plugin>
 						<artifactId>maven-surefire-plugin</artifactId>
+						<version>${surefire.version}</version>
 						<configuration>
 							<skip>false</skip>
 							<testNGArtifactName>none:none</testNGArtifactName>
@@ -446,7 +449,7 @@
 				<plugins>
 					<plugin>
 						<artifactId>maven-surefire-plugin</artifactId>
-						<version>2.7.2</version>
+						<version>${surefire.version}</version>
 						<configuration>
 							<systemProperties>
 								<property>
