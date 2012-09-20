@@ -64,6 +64,7 @@ import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.jboss.weld.Container;
 import org.jboss.weld.context.http.HttpConversationContext;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -132,23 +133,25 @@ public class MagazzinoAgentTest implements MagazzinoMock {
 	@PersistenceContext
 	EntityManager em;
 
-	@Test
+	@Before
 	public void createMagazzino() throws Exception {
-		utx.begin();
-		em.joinTransaction();
+		if (em.find(Magazzino.class, magazzino1.getNumber()) == null) {
+			utx.begin();
+			em.joinTransaction();
 
-		em.persist(magazzino0);
-		em.persist(magazzino1);
-		em.persist(magazzino2);
-		em.persist(magazzino3);
-		em.persist(magazzino4);
-		em.persist(magazzino5);
-		em.persist(magazzino6);
-		em.persist(magazzino7);
-		em.persist(magazzino8);
-		em.persist(magazzino9);
-		em.persist(magazzino10);
-		utx.commit();
+			em.persist(magazzino0);
+			em.persist(magazzino1);
+			em.persist(magazzino2);
+			em.persist(magazzino3);
+			em.persist(magazzino4);
+			em.persist(magazzino5);
+			em.persist(magazzino6);
+			em.persist(magazzino7);
+			em.persist(magazzino8);
+			em.persist(magazzino9);
+			em.persist(magazzino10);
+			utx.commit();
+		}
 	}
 
 	@Test
@@ -222,9 +225,14 @@ public class MagazzinoAgentTest implements MagazzinoMock {
 		magazzinoSelection.selectJar(magazzinoSearch.getJars().get(0));
 		Magazzino selectedJar = magazzinoSelection.getSelectedJar();
 		magazzinoDeleter.delete(selectedJar);
-		message = messages.getAll().toArray(new Message[0])[3].getText();
-		assertTrue(message, message.contains("99999999"));
+		boolean found = false;
+		for (Message messageFromList : messages.getAll()) {
+			if (messageFromList.getText().contains("99999999")
+					&& messageFromList.getText().contains("deleted"))
+				found = true;
+		}
 
+		assertTrue(message, found);
 	}
 
 	@Test

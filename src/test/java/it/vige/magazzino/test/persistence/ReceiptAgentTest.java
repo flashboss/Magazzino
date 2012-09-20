@@ -20,6 +20,9 @@ import static it.vige.magazzino.test.Dependencies.FACES;
 import static it.vige.magazzino.test.Dependencies.INTERNATIONAL;
 import static it.vige.magazzino.test.Dependencies.RICHFACES;
 import static it.vige.magazzino.test.Dependencies.SOLDER;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import it.vige.magazzino.DataContainer;
 import it.vige.magazzino.FileUpload;
 import it.vige.magazzino.ReceiptRegister;
@@ -51,6 +54,7 @@ import it.vige.magazzino.test.operation.ReceiptOperation;
 import it.vige.magazzino.update.ReceiptUpdater;
 
 import javax.ejb.EJB;
+import javax.ejb.EJBTransactionRolledbackException;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -58,11 +62,15 @@ import javax.transaction.UserTransaction;
 
 import org.jboss.arquillian.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.seam.international.status.Message;
 import org.jboss.seam.international.status.Messages;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.jboss.weld.Container;
+import org.jboss.weld.context.http.HttpConversationContext;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -70,7 +78,8 @@ import org.junit.runner.RunWith;
  * @author <a href="http://www.vige.it">Luca Stancapiano</a>
  */
 @RunWith(Arquillian.class)
-public class ReceiptAgentTest implements ReceiptMock {
+public class ReceiptAgentTest implements ReceiptMock, MagazzinoMock,
+		CustomerMock {
 	@Deployment
 	public static WebArchive createDeployment() {
 		WebArchive war = ShrinkWrap
@@ -135,23 +144,28 @@ public class ReceiptAgentTest implements ReceiptMock {
 	@PersistenceContext
 	EntityManager em;
 
-	@Test
+	@Before
 	public void createReceipt() throws Exception {
-		utx.begin();
-		em.joinTransaction();
+		if (em.find(Receipt.class, receipt0.getNumber()) == null) {
+			utx.begin();
+			em.joinTransaction();
 
-		em.persist(receipt0);
-		em.persist(receipt1);
-		em.persist(receipt2);
-		em.persist(receipt3);
-		em.persist(receipt4);
-		em.persist(receipt5);
-		em.persist(receipt6);
-		em.persist(receipt7);
-		em.persist(receipt8);
-		em.persist(receipt9);
-		em.persist(receipt10);
-		utx.commit();
+			em.persist(receipt0);
+			em.persist(receipt1);
+			em.persist(receipt2);
+			em.persist(receipt3);
+			em.persist(receipt4);
+			em.persist(receipt5);
+			em.persist(receipt6);
+			em.persist(receipt7);
+			em.persist(receipt8);
+			em.persist(receipt9);
+			em.persist(receipt10);
+
+			em.persist(customer0);
+			em.persist(magazzino0);
+			utx.commit();
+		}
 	}
 
 	@Test
@@ -162,21 +176,116 @@ public class ReceiptAgentTest implements ReceiptMock {
 
 	@Test
 	public void testSearch() {
+		criteria.setQuery("causale");
+		receiptSearch.find();
+		assertFalse(receiptSearch.getReceipts().size() == 0);
+		assertEquals(5, receiptSearch.getReceipts().size());
 
+		criteria.setQuery("nonExistingReceipt");
+		receiptSearch.find();
+		assertTrue(receiptSearch.getReceipts().size() == 0);
+		assertEquals(0, receiptSearch.getReceipts().size());
 	}
 
 	@Test
 	public void testSearchPageSize() {
+		int[] values = { 5, 10, 20 };
 
+		criteria.setQuery("causale");
+
+		for (int pageSize : values) {
+			criteria.setPageSize(pageSize);
+			receiptSearch.find();
+			if (receipts.length > pageSize)
+				assertEquals(receiptSearch.getReceipts().size(), pageSize);
+			else
+				assertEquals(receiptSearch.getReceipts().size(),
+						receipts.length);
+		}
 	}
 
 	@Test
 	public void testInsertDeleteNewReceipt() {
+		String date = "newName";
+		String description = "new description";
+		String cause = "new rag soc for receipt test";
+		Receipt receipt = receiptRegister.getNewReceipt();
+		receipt.setNumber("99999999");
+		receipt.setDate(date);
+		receipt.setCause(cause);
+		receipt.setDescription(description);
+		receipt.setCustomer(customer0);
+		receipt.setJar(magazzino0);
+		receiptRegister.register();
+		String message = messages.getAll().iterator().next().getText();
+		assertTrue(message, message.contains(receipt.getNumber()));
+		// cancel receipt
+		receipt.setNumber("");
+		try {
+			receiptRegister.register();
+			assertTrue(false);
+		} catch (EJBTransactionRolledbackException ex) {
+			assertTrue(true);
+		}
+		receipt.setCause("");
+		receipt.setNumber("99999991");
+		try {
+			receiptRegister.register();
+			assertTrue(false);
+		} catch (EJBTransactionRolledbackException ex) {
+			assertTrue(true);
+		}
+		criteria.setQuery(date);
+		receiptSearch.find();
+		Container.instance().deploymentManager().instance()
+				.select(HttpConversationContext.class).get().activate();
+		receiptSelection.selectReceipt(receiptSearch.getReceipts().get(0));
+		Receipt selectedReceipt = receiptSelection.getSelectedReceipt();
+		receiptDeleter.delete(selectedReceipt);
+		boolean found = false;
+		for (Message messageFromList : messages.getAll()) {
+			if (messageFromList.getText().contains("99999999")
+					&& messageFromList.getText().contains("deleted"))
+				found = true;
+		}
 
+		assertTrue(message, found);
 	}
 
 	@Test
 	public void testMultiSearchingUpdate() {
+		Receipt[] receipts = new Receipt[] { receipt0, receipt1, receipt2,
+				receipt4 };
 
+		// make 4 receipts
+		Container.instance().deploymentManager().instance()
+				.select(HttpConversationContext.class).get().activate();
+		for (Receipt receipt : receipts) {
+			searchUpdateReceipt(receipt, "test-ejb-for-cause");
+		}
+		criteria.setQuery("test-ejb-for-cause");
+		receiptSearch.find();
+		assertEquals(receiptSearch.getReceipts().size(), 0);
+	}
+
+	protected void searchUpdateReceipt(Receipt receipt, String newCause) {
+		criteria.setQuery(receipt.getDescription());
+		receiptSearch.find();
+		receiptSelection.selectReceipt(receiptSearch.getReceipts().get(0));
+		Receipt selectedReceipt = receiptSelection.getSelectedReceipt();
+		// receipt page
+		selectedReceipt.setCause(newCause);
+		receiptUpdater.update();
+		// main page
+		String message = messages.getAll().iterator().next().getText();
+		assertTrue("Update success.",
+				message.startsWith("You have been successfully updated"));
+		// receipt page
+		selectedReceipt.setCause(receipt.getCause());
+		receiptUpdater.update();
+		// main page
+		message = messages.getAll().iterator().next().getText();
+		assertTrue("Update success.",
+				message.startsWith("You have been successfully updated"));
 	}
 }

@@ -64,6 +64,7 @@ import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.jboss.weld.Container;
 import org.jboss.weld.context.http.HttpConversationContext;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -132,21 +133,23 @@ public class CustomerAgentTest implements CustomerMock {
 	@PersistenceContext
 	EntityManager em;
 
-	@Test
+	@Before
 	public void createCustomer() throws Exception {
-		utx.begin();
-		em.joinTransaction();
+		if (em.find(Customer.class, customer0.getCode()) == null) {
+			utx.begin();
+			em.joinTransaction();
 
-		em.persist(customer0);
-		em.persist(customer1);
-		em.persist(customer2);
-		em.persist(customer3);
-		em.persist(customer4);
-		em.persist(customer5);
-		em.persist(customer6);
-		em.persist(customer7);
-		em.persist(customer8);
-		utx.commit();
+			em.persist(customer0);
+			em.persist(customer1);
+			em.persist(customer2);
+			em.persist(customer3);
+			em.persist(customer4);
+			em.persist(customer5);
+			em.persist(customer6);
+			em.persist(customer7);
+			em.persist(customer8);
+			utx.commit();
+		}
 	}
 
 	@Test
@@ -225,8 +228,14 @@ public class CustomerAgentTest implements CustomerMock {
 		customerSelection.selectCustomer(customerSearch.getCustomers().get(0));
 		Customer selectedCustomer = customerSelection.getSelectedCustomer();
 		customerDeleter.delete(selectedCustomer);
-		message = messages.getAll().toArray(new Message[0])[3].getText();
-		assertTrue(message, message.contains("99999999"));
+		boolean found = false;
+		for (Message messageFromList : messages.getAll()) {
+			if (messageFromList.getText().contains("99999999")
+					&& messageFromList.getText().contains("deleted"))
+				found = true;
+		}
+
+		assertTrue(message, found);
 	}
 
 	@Test

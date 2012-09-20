@@ -32,6 +32,7 @@ import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -62,32 +63,34 @@ public class AddressAgentTest implements AddressMock {
 	@PersistenceContext
 	EntityManager em;
 
-	@Test
+	@Before
 	public void createAddress() throws Exception {
-		utx.begin();
-		em.joinTransaction();
+		if (em.find(Address.class, address0.getCode()) == null) {
+			utx.begin();
+			em.joinTransaction();
 
-		em.persist(address0);
-		em.persist(address1);
-		em.persist(address2);
-		em.persist(address3);
-		em.persist(address4);
-		em.persist(address5);
-		em.persist(address6);
-		em.persist(address7);
-		em.persist(address8);
-		em.persist(address9);
-		em.persist(address10);
-		em.persist(address11);
-		em.persist(address12);
-		em.persist(address13);
-		em.persist(address14);
-		em.persist(address15);
-		em.persist(address16);
-		em.persist(address17);
-		em.persist(address18);
-		em.persist(address19);
-		utx.commit();
+			em.persist(address0);
+			em.persist(address1);
+			em.persist(address2);
+			em.persist(address3);
+			em.persist(address4);
+			em.persist(address5);
+			em.persist(address6);
+			em.persist(address7);
+			em.persist(address8);
+			em.persist(address9);
+			em.persist(address10);
+			em.persist(address11);
+			em.persist(address12);
+			em.persist(address13);
+			em.persist(address14);
+			em.persist(address15);
+			em.persist(address16);
+			em.persist(address17);
+			em.persist(address18);
+			em.persist(address19);
+			utx.commit();
+		}
 	}
 
 	@Test

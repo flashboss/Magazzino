@@ -53,6 +53,7 @@ import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.jboss.weld.Container;
 import org.jboss.weld.context.http.HttpConversationContext;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -114,28 +115,30 @@ public class ArticleAgentTest implements ArticleMock {
 	@PersistenceContext
 	EntityManager em;
 
-	@Test
+	@Before
 	public void createArticle() throws Exception {
-		utx.begin();
-		em.joinTransaction();
+		if (em.find(Article.class, article0.getCode()) == null) {
+			utx.begin();
+			em.joinTransaction();
 
-		em.persist(article0);
-		em.persist(article1);
-		em.persist(article2);
-		em.persist(article3);
-		em.persist(article4);
-		em.persist(article5);
-		em.persist(article6);
-		em.persist(article7);
-		em.persist(article8);
-		em.persist(article9);
-		em.persist(article10);
-		em.persist(article11);
-		em.persist(article12);
-		em.persist(article13);
-		em.persist(article14);
-		em.persist(article15);
-		utx.commit();
+			em.persist(article0);
+			em.persist(article1);
+			em.persist(article2);
+			em.persist(article3);
+			em.persist(article4);
+			em.persist(article5);
+			em.persist(article6);
+			em.persist(article7);
+			em.persist(article8);
+			em.persist(article9);
+			em.persist(article10);
+			em.persist(article11);
+			em.persist(article12);
+			em.persist(article13);
+			em.persist(article14);
+			em.persist(article15);
+			utx.commit();
+		}
 	}
 
 	@Test
@@ -210,8 +213,14 @@ public class ArticleAgentTest implements ArticleMock {
 		articleSelection.selectArticle(articleSearch.getArticles().get(0));
 		Article selectedArticle = articleSelection.getSelectedArticle();
 		articleDeleter.delete(selectedArticle);
-		message = messages.getAll().toArray(new Message[0])[3].getText();
-		assertTrue(message, message.contains("99999999"));
+		boolean found = false;
+		for (Message messageFromList : messages.getAll()) {
+			if (messageFromList.getText().contains("99999999")
+					&& messageFromList.getText().contains("deleted"))
+				found = true;
+		}
+
+		assertTrue(message, found);
 	}
 
 	@Test

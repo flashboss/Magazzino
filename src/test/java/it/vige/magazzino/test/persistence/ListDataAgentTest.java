@@ -34,6 +34,7 @@ import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -66,52 +67,54 @@ public class ListDataAgentTest implements ListDataMock {
 	@PersistenceContext
 	EntityManager em;
 
-	@Test
+	@Before
 	public void createListData() throws Exception {
-		utx.begin();
-		em.joinTransaction();
+		if (em.find(Data.class, listData0.get(0).getCode()) == null) {
+			utx.begin();
+			em.joinTransaction();
 
-		for (Data data : listData0)
-			em.persist(data);
-		for (Data data : listData1)
-			em.persist(data);
-		for (Data data : listData2)
-			em.persist(data);
-		for (Data data : listData3)
-			em.persist(data);
-		for (Data data : listData4)
-			em.persist(data);
-		for (Data data : listData5)
-			em.persist(data);
-		for (Data data : listData6)
-			em.persist(data);
-		for (Data data : listData7)
-			em.persist(data);
-		for (Data data : listData8)
-			em.persist(data);
-		for (Data data : listData9)
-			em.persist(data);
-		for (Data data : listData10)
-			em.persist(data);
-		for (Data data : listData11)
-			em.persist(data);
-		for (Data data : listData12)
-			em.persist(data);
-		for (Data data : listData13)
-			em.persist(data);
-		for (Data data : listData14)
-			em.persist(data);
-		for (Data data : listData15)
-			em.persist(data);
-		for (Data data : listData16)
-			em.persist(data);
-		for (Data data : listData17)
-			em.persist(data);
-		for (Data data : listData18)
-			em.persist(data);
-		for (Data data : listData19)
-			em.persist(data);
-		utx.commit();
+			for (Data data : listData0)
+				em.persist(data);
+			for (Data data : listData1)
+				em.persist(data);
+			for (Data data : listData2)
+				em.persist(data);
+			for (Data data : listData3)
+				em.persist(data);
+			for (Data data : listData4)
+				em.persist(data);
+			for (Data data : listData5)
+				em.persist(data);
+			for (Data data : listData6)
+				em.persist(data);
+			for (Data data : listData7)
+				em.persist(data);
+			for (Data data : listData8)
+				em.persist(data);
+			for (Data data : listData9)
+				em.persist(data);
+			for (Data data : listData10)
+				em.persist(data);
+			for (Data data : listData11)
+				em.persist(data);
+			for (Data data : listData12)
+				em.persist(data);
+			for (Data data : listData13)
+				em.persist(data);
+			for (Data data : listData14)
+				em.persist(data);
+			for (Data data : listData15)
+				em.persist(data);
+			for (Data data : listData16)
+				em.persist(data);
+			for (Data data : listData17)
+				em.persist(data);
+			for (Data data : listData18)
+				em.persist(data);
+			for (Data data : listData19)
+				em.persist(data);
+			utx.commit();
+		}
 	}
 
 	@Test

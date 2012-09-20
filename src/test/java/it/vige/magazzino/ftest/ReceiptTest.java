@@ -113,11 +113,11 @@ public class ReceiptTest extends AbstractTest implements ReceiptMock {
 	@Test
 	public void testInsertDeleteNewReceipt() {
 		ReceiptOperation receiptOperation = new ReceiptOperation();
-		String receiptName = "newName";
+		String date = "newName";
 		String description = "new description";
-		String ragSoc1 = "new rag soc for receipt test";
-		Receipt receipt = receiptOperation.create("99999999", receiptName,
-				ragSoc1, description, null, null);
+		String cause = "new rag soc for receipt test";
+		Receipt receipt = receiptOperation.create("99999999", date,
+				cause, description, null, null);
 		populateReceiptFields(receipt);
 		selenium.click(BUTTON_INSERT_PROCEED);
 		selenium.waitForPageToLoad();
