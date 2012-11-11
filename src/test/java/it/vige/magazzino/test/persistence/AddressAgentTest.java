@@ -18,6 +18,7 @@ package it.vige.magazzino.test.persistence;
 
 import static it.vige.magazzino.test.Dependencies.SOLDER;
 import it.vige.magazzino.model.Address;
+import it.vige.magazzino.model.Address_;
 import it.vige.magazzino.test.mock.AddressMock;
 import it.vige.magazzino.test.operation.AddressOperation;
 
@@ -48,6 +49,7 @@ public class AddressAgentTest implements AddressMock {
 				.addClass(AddressAgentTest.class)
 				.addClasses(AddressMock.class, AddressOperation.class,
 						Address.class)
+						.addClasses(Address_.class)
 				.addAsLibraries(SOLDER)
 				.addAsWebInfResource("test-web.xml", "web.xml")
 				.addAsWebInfResource("test-persistence.xml",
