@@ -20,7 +20,7 @@ to test all it in jboss:
 export JBOSS_HOME=.....
 mvn -Pjbossas-remote-6 test
 
-to test with a single test it in jboss:
+to test it with a single test in jboss:
 
 export JBOSS_HOME=.....
 mvn -Pjbossas-remote-6 test -Dtest=AddressAgentTest
@@ -32,3 +32,6 @@ deploy the application in a server
 start the server with 8080 port
 java -jar selenium-server-standalone-2.25.0.jar
 mvn -Dftest test
+
+to test it with a single test in jboss:
+mvn -Pftest test -Dtest=MagazzinoTest
