@@ -49,7 +49,7 @@ public class AddressAgentTest implements AddressMock {
 				.addClass(AddressAgentTest.class)
 				.addClasses(AddressMock.class, AddressOperation.class,
 						Address.class)
-						.addClasses(Address_.class)
+				.addClasses(Address_.class)
 				.addAsLibraries(SOLDER)
 				.addAsWebInfResource("test-web.xml", "web.xml")
 				.addAsWebInfResource("test-persistence.xml",
