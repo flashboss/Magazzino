@@ -27,18 +27,18 @@ import java.util.List;
 public class ArticleOperation {
 
 	private List<Article> articles = new ArrayList<Article>();
-	
-	public Article create(String code, String barCode, String description,
-			String um, String mis, String catMerc, String imponible,
-			String prize, String cost, String provider, String rate, String ca,
-			String sc1, String sc2, String sc3, String qtmin, String qtmax,
-			String pack, String health, String volume, String making,
-			String notes) {
+
+	public Article create(String codeArticle, String barCode,
+			String description, String um, String mis, String catMerc,
+			String imponible, String prize, String cost, String provider,
+			String rate, String ca, String sc1, String sc2, String sc3,
+			String qtmin, String qtmax, String pack, String health,
+			String volume, String making, String notes) {
 		Article article = new Article();
 		article.setBarCode(barCode);
 		article.setCa(ca);
 		article.setCatMerc(catMerc);
-		article.setCode(code);
+		article.setCodeArticle(codeArticle);
 		article.setCost(cost);
 		article.setDescription(description);
 		article.setHealth(health);
@@ -57,7 +57,7 @@ public class ArticleOperation {
 		article.setSc3(sc3);
 		article.setUm(um);
 		article.setVolume(volume);
-		
+
 		articles.add(article);
 		return article;
 	}

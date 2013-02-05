@@ -16,13 +16,32 @@
  */
 package it.vige.magazzino.test.mock;
 
+import static it.vige.magazzino.test.mock.AddressMock.address10;
+import static it.vige.magazzino.test.mock.AddressMock.address11;
+import static it.vige.magazzino.test.mock.AddressMock.address12;
+import static it.vige.magazzino.test.mock.AddressMock.address13;
+import static it.vige.magazzino.test.mock.AddressMock.address14;
+import static it.vige.magazzino.test.mock.AddressMock.address15;
+import static it.vige.magazzino.test.mock.AddressMock.address16;
+import static it.vige.magazzino.test.mock.AddressMock.address17;
+import static it.vige.magazzino.test.mock.AddressMock.address18;
+import static it.vige.magazzino.test.mock.AddressMock.address19;
+import static it.vige.magazzino.test.mock.AddressMock.address9;
+import static it.vige.magazzino.test.mock.ListDataMock.listData10;
+import static it.vige.magazzino.test.mock.ListDataMock.listData11;
+import static it.vige.magazzino.test.mock.ListDataMock.listData12;
+import static it.vige.magazzino.test.mock.ListDataMock.listData13;
+import static it.vige.magazzino.test.mock.ListDataMock.listData14;
+import static it.vige.magazzino.test.mock.ListDataMock.listData15;
+import static it.vige.magazzino.test.mock.ListDataMock.listData16;
+import static it.vige.magazzino.test.mock.ListDataMock.listData9;
 import it.vige.magazzino.model.Magazzino;
 import it.vige.magazzino.test.operation.MagazzinoOperation;
 
 /**
  * @author <a href="http://www.vige.it">Luca Stancapiano</a>
  */
-public interface MagazzinoMock extends AddressMock, ListDataMock {
+public interface MagazzinoMock {
 
 	MagazzinoOperation magazzinoOperation = new MagazzinoOperation();
 

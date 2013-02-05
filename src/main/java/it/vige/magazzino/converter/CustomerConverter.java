@@ -19,7 +19,7 @@ public class CustomerConverter extends Converter<Customer> {
 	public Customer toObject(UIComponent arg0, String arg1) {
 		// TODO Auto-generated method stub
 		for (Customer jar : customerAllSearch.getAllCustomers())
-			if (jar.getCode().equals(arg1))
+			if (jar.getCodeCustomer().equals(arg1))
 				return jar;
 		return null;
 	}
@@ -27,7 +27,7 @@ public class CustomerConverter extends Converter<Customer> {
 	@Override
 	public String toString(UIComponent arg0, Customer arg1) {
 		// TODO Auto-generated method stub
-		return arg1.getCode();
+		return arg1.getCodeCustomer();
 	}
 
 }

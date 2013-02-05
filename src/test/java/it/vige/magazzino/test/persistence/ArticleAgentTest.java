@@ -18,6 +18,23 @@ package it.vige.magazzino.test.persistence;
 
 import static it.vige.magazzino.test.Dependencies.FACES;
 import static it.vige.magazzino.test.Dependencies.SOLDER;
+import static it.vige.magazzino.test.mock.ArticleMock.article0;
+import static it.vige.magazzino.test.mock.ArticleMock.article1;
+import static it.vige.magazzino.test.mock.ArticleMock.article10;
+import static it.vige.magazzino.test.mock.ArticleMock.article11;
+import static it.vige.magazzino.test.mock.ArticleMock.article12;
+import static it.vige.magazzino.test.mock.ArticleMock.article13;
+import static it.vige.magazzino.test.mock.ArticleMock.article14;
+import static it.vige.magazzino.test.mock.ArticleMock.article15;
+import static it.vige.magazzino.test.mock.ArticleMock.article2;
+import static it.vige.magazzino.test.mock.ArticleMock.article3;
+import static it.vige.magazzino.test.mock.ArticleMock.article4;
+import static it.vige.magazzino.test.mock.ArticleMock.article5;
+import static it.vige.magazzino.test.mock.ArticleMock.article6;
+import static it.vige.magazzino.test.mock.ArticleMock.article7;
+import static it.vige.magazzino.test.mock.ArticleMock.article8;
+import static it.vige.magazzino.test.mock.ArticleMock.article9;
+import static it.vige.magazzino.test.mock.ArticleMock.articles;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -61,7 +78,7 @@ import org.junit.runner.RunWith;
  * @author <a href="http://www.vige.it">Luca Stancapiano</a>
  */
 @RunWith(Arquillian.class)
-public class ArticleAgentTest implements ArticleMock {
+public class ArticleAgentTest {
 	@Deployment
 	public static WebArchive createDeployment() {
 		WebArchive war = ShrinkWrap
@@ -117,7 +134,7 @@ public class ArticleAgentTest implements ArticleMock {
 
 	@Before
 	public void createArticle() throws Exception {
-		if (em.find(Article.class, article0.getCode()) == null) {
+		if (em.find(Article.class, article0.getCodeArticle()) == null) {
 			utx.begin();
 			em.joinTransaction();
 
@@ -183,15 +200,15 @@ public class ArticleAgentTest implements ArticleMock {
 		String rate = "012345678";
 		String pack = "1111111111";
 		Article article = articleRegister.getNewArticle();
-		article.setCode("99999999");
+		article.setCodeArticle("99999999");
 		article.setCatMerc(catMerc);
 		article.setRate(rate);
 		article.setPack(pack);
 		articleRegister.register();
 		String message = messages.getAll().iterator().next().getText();
-		assertTrue(message, message.contains(article.getCode()));
+		assertTrue(message, message.contains(article.getCodeArticle()));
 		// cancel article
-		article.setCode("");
+		article.setCodeArticle("");
 		try {
 			articleRegister.register();
 			assertTrue(false);
@@ -199,7 +216,7 @@ public class ArticleAgentTest implements ArticleMock {
 			assertTrue(true);
 		}
 		article.setRate("");
-		article.setCode("99999991");
+		article.setCodeArticle("99999991");
 		try {
 			articleRegister.register();
 			assertTrue(false);

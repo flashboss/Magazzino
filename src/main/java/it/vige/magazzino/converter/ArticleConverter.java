@@ -19,7 +19,7 @@ public class ArticleConverter extends Converter<Article> {
 	public Article toObject(UIComponent arg0, String arg1) {
 		// TODO Auto-generated method stub
 		for (Article article : articleAllSearch.getAllArticles())
-			if (article.getCode().equals(arg1))
+			if (article.getCodeArticle().equals(arg1))
 				return article;
 		return null;
 	}
@@ -27,7 +27,7 @@ public class ArticleConverter extends Converter<Article> {
 	@Override
 	public String toString(UIComponent arg0, Article arg1) {
 		// TODO Auto-generated method stub
-		return arg1.getCode();
+		return arg1.getCodeArticle();
 	}
 
 }

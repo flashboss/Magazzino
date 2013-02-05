@@ -28,11 +28,10 @@ public class AddressOperation {
 
 	private List<Address> addresses = new ArrayList<Address>();
 
-	public Address create(String code, String homeAddress, String cap,
+	public Address create(String homeAddress, String cap,
 			String phone, String fax, String email, String site,
 			String civicNumber, String province, String town, String city) {
 		Address address = new Address();
-		address.setCode(code);
 		address.setAddress(homeAddress);
 		address.setCap(cap);
 		address.setCity(city);

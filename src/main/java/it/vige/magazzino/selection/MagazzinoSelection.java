@@ -35,27 +35,28 @@ import org.jboss.seam.solder.logging.TypedCategory;
 @SessionScoped
 public class MagazzinoSelection {
 
-    @Inject
-    @TypedCategory(MagazzinoSelection.class)
-    private MagazzinoLog log;
-    
-    @Inject
-    private Conversation conversation;
-	
+	@Inject
+	@TypedCategory(MagazzinoSelection.class)
+	private MagazzinoLog log;
+
+	@Inject
+	private Conversation conversation;
+
 	private Magazzino jarSelection;
 
 	@Begin
-    public void selectJar(final Magazzino jar) {
-        conversation.setTimeout(600000); //10 * 60 * 1000 (10 minutes)
-        jarSelection = jar;
-        log.jarSelected(jar.getNumber()+"", jar.getCodCustomer(), jar.getCause());
-    }
+	public void selectJar(final Magazzino jar) {
+		conversation.setTimeout(600000); // 10 * 60 * 1000 (10 minutes)
+		jarSelection = jar;
+		log.jarSelected(jar.getCodeJar() + "", jar.getCodCustomer(),
+				jar.getCause());
+	}
 
-    @Produces
-    @RequestScoped
-    @Named("jar")
-    public Magazzino getSelectedJar() {
-        return jarSelection;
-    }
+	@Produces
+	@RequestScoped
+	@Named("jar")
+	public Magazzino getSelectedJar() {
+		return jarSelection;
+	}
 
 }

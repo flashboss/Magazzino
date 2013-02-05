@@ -19,7 +19,7 @@ public class MagazzinoConverter extends Converter<Magazzino> {
 	public Magazzino toObject(UIComponent arg0, String arg1) {
 		// TODO Auto-generated method stub
 		for (Magazzino jar : magazzinoAllSearch.getAllJars())
-			if (jar.getNumber().equals(arg1))
+			if (jar.getCodeJar().equals(arg1))
 				return jar;
 		return null;
 	}
@@ -27,7 +27,7 @@ public class MagazzinoConverter extends Converter<Magazzino> {
 	@Override
 	public String toString(UIComponent arg0, Magazzino arg1) {
 		// TODO Auto-generated method stub
-		return arg1.getNumber();
+		return arg1.getCodeJar();
 	}
 
 }

@@ -48,9 +48,9 @@ public class CustomerDeleter {
 
 	@Inject
 	private FacesContext facesContext;
-    
-    @Inject
-    private CustomerSearch customerSearch;
+
+	@Inject
+	private CustomerSearch customerSearch;
 
 	public void delete(Customer customer) {
 		Customer oldCustomer;
@@ -58,11 +58,11 @@ public class CustomerDeleter {
 			em.remove(oldCustomer);
 			customerSearch.currentPage();
 		}
-		
+
 		messages.info(new DefaultBundleKey("customer_deleted"))
 				.defaults(
 						"You have been successfully deleted the customer {0}!")
-				.params(customer.getCode());
+				.params(customer.getCodeCustomer());
 	}
 
 	/**
@@ -85,7 +85,7 @@ public class CustomerDeleter {
 	}
 
 	private Customer verifyCodeIsAvailable(Customer customer) {
-		Customer existing = em.find(Customer.class, customer.getCode());
+		Customer existing = em.find(Customer.class, customer.getCodeCustomer());
 		return existing;
 	}
 

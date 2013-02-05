@@ -19,12 +19,14 @@ package it.vige.magazzino.model;
 import it.vige.magazzino.FileUpload;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -43,40 +45,49 @@ import org.jboss.seam.solder.core.Veto;
 @Table(name = "magazzino")
 @Veto
 public class Magazzino extends FileUpload {
-	private static final long serialVersionUID = -602933026033932730L;
-	@OneToOne
-	@JoinColumn(name = "code_bbb", nullable = false)
+	private static final long serialVersionUID = 7693948752468272876L;
 	private Address address = new Address();
-	private String number;
+	@Id
+	@Column(name = "codeJar")
+	@NotNull
+	@Size(min = 3, max = 15)
+	@Pattern(regexp = "^\\w*$", message = "not a valid number")
+	private String codeJar;
 	private String date;
 	private String code;
 	private String cause;
 	private String compensation;
 	private String codCustomer;
+	@NotNull
+	@Size(min = 1, max = 100)
 	private String ragSoc1;
+	@NotNull
+	@Size(min = 1, max = 100)
 	private String ragSoc2;
 	private String numberDoc;
 	private String dateDoc;
 	private String iva;
 	private String capSoc;
 	private String reaPI;
-	@OneToMany
-	private ArrayList<Data> files;
+	@OneToMany(mappedBy = "jar", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private List<Data> files = new ArrayList<Data>();
+	@OneToMany(mappedBy = "jar", cascade = CascadeType.ALL)
+	private List<Receipt> receipts = new ArrayList<Receipt>();
 
 	public Magazzino() {
 	}
 
-	public Magazzino(final String number, final String date) {
-		this.number = number;
+	public Magazzino(final String codeJar, final String date) {
+		this.codeJar = codeJar;
 		this.date = date;
 	}
 
-	public Magazzino(final String number, final String date, final String code,
-			final String cause, final String compensation,
+	public Magazzino(final String codeJar, final String date,
+			final String code, final String cause, final String compensation,
 			final String codCustomer, final String ragSoc1,
 			final String ragSoc2, final String numberDoc, final String dateDoc,
 			final String iva, final String capSoc, final String reaPI) {
-		this(number, date);
+		this(codeJar, date);
 		this.code = code;
 		this.cause = cause;
 		this.compensation = compensation;
@@ -90,16 +101,12 @@ public class Magazzino extends FileUpload {
 		this.reaPI = reaPI;
 	}
 
-	@Id
-	@NotNull
-	@Size(min = 3, max = 15)
-	@Pattern(regexp = "^\\w*$", message = "not a valid number")
-	public String getNumber() {
-		return number;
+	public String getCodeJar() {
+		return codeJar;
 	}
 
-	public void setNumber(final String number) {
-		this.number = number;
+	public void setCodeJar(final String codeJar) {
+		this.codeJar = codeJar;
 	}
 
 	public String getDate() {
@@ -142,8 +149,6 @@ public class Magazzino extends FileUpload {
 		this.codCustomer = codCustomer;
 	}
 
-	@NotNull
-	@Size(min = 1, max = 100)
 	public String getRagSoc1() {
 		return ragSoc1;
 	}
@@ -152,8 +157,6 @@ public class Magazzino extends FileUpload {
 		this.ragSoc1 = ragSoc1;
 	}
 
-	@NotNull
-	@Size(min = 1, max = 100)
 	public String getRagSoc2() {
 		return ragSoc2;
 	}
@@ -178,7 +181,6 @@ public class Magazzino extends FileUpload {
 		this.dateDoc = dateDoc;
 	}
 
-	@NotNull
 	public Address getAddress() {
 		return address;
 	}
@@ -211,12 +213,20 @@ public class Magazzino extends FileUpload {
 		this.reaPI = reaPI;
 	}
 
-	public ArrayList<Data> getFiles() {
+	public List<Data> getFiles() {
 		return files;
 	}
 
-	public void setFiles(ArrayList<Data> files) {
+	public void setFiles(List<Data> files) {
 		this.files = files;
+	}
+
+	public List<Receipt> getReceipts() {
+		return receipts;
+	}
+
+	public void setReceipts(List<Receipt> receipts) {
+		this.receipts = receipts;
 	}
 
 	@Override
@@ -229,16 +239,16 @@ public class Magazzino extends FileUpload {
 		// TODO Auto-generated method stub
 		if (!(arg0 instanceof Magazzino))
 			return super.equals(arg0);
-		else if (this.getNumber() == null
-				&& ((Magazzino) arg0).getNumber() == null)
+		else if (this.getCodeJar() == null
+				&& ((Magazzino) arg0).getCodeJar() == null)
 			return true;
 		else
-			return this.getNumber().equals(((Magazzino) arg0).getNumber());
+			return this.getCodeJar().equals(((Magazzino) arg0).getCodeJar());
 	}
 
 	@Override
 	public int hashCode() {
 		// TODO Auto-generated method stub
-		return Integer.parseInt(number);
+		return codeJar.hashCode();
 	}
 }

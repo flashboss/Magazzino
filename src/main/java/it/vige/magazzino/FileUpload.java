@@ -4,8 +4,8 @@ import it.vige.magazzino.model.Data;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -80,9 +80,9 @@ public abstract class FileUpload implements DataContainer {
 		return System.currentTimeMillis();
 	}
 
-	public abstract ArrayList<Data> getFiles();
+	public abstract List<Data> getFiles();
 
-	public abstract void setFiles(ArrayList<Data> files);
+	public abstract void setFiles(List<Data> files);
 
 	public int getUploadsAvailable() {
 		return MAX_FILES_AVAILABLE;

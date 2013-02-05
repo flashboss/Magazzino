@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -13,22 +15,28 @@ import org.jboss.seam.solder.core.Veto;
 @Table(name = "image")
 @Veto
 public class Data implements Serializable {
-	private static final long serialVersionUID = 1L;
-	private String code;
+	private static final long serialVersionUID = -3015533027717027819L;
+	@Id
+	@NotNull
+	private String codeData;
 	private String name;
 	private String mime;
 	private long length;
 	private byte[] data;
 	private String description;
+	@ManyToOne
+	@JoinColumn(name = "codeCustomer")
+	private Customer customer;
+	@ManyToOne
+	@JoinColumn(name = "codeJar")
+	private Magazzino jar;
 
-	@Id
-	@NotNull
-	public String getCode() {
-		return code;
+	public String getCodeData() {
+		return codeData;
 	}
 
-	public void setCode(String code) {
-		this.code = code;
+	public void setCodeData(String codeData) {
+		this.codeData = codeData;
 	}
 
 	public byte[] getData() {
@@ -91,5 +99,21 @@ public class Data implements Serializable {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
+
+	public Magazzino getJar() {
+		return jar;
+	}
+
+	public void setJar(Magazzino jar) {
+		this.jar = jar;
 	}
 }

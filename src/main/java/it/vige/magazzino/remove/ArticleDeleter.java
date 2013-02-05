@@ -48,9 +48,9 @@ public class ArticleDeleter {
 
 	@Inject
 	private FacesContext facesContext;
-    
-    @Inject
-    private ArticleSearch articleSearch;
+
+	@Inject
+	private ArticleSearch articleSearch;
 
 	public void delete(Article article) {
 		Article oldArticle;
@@ -58,11 +58,10 @@ public class ArticleDeleter {
 			em.remove(oldArticle);
 			articleSearch.currentPage();
 		}
-		
+
 		messages.info(new DefaultBundleKey("article_deleted"))
-				.defaults(
-						"You have been successfully deleted the article {0}!")
-				.params(article.getCode());
+				.defaults("You have been successfully deleted the article {0}!")
+				.params(article.getCodeArticle());
 	}
 
 	/**
@@ -85,7 +84,7 @@ public class ArticleDeleter {
 	}
 
 	private Article verifyCodeIsAvailable(Article article) {
-		Article existing = em.find(Article.class, article.getCode());
+		Article existing = em.find(Article.class, article.getCodeArticle());
 		return existing;
 	}
 

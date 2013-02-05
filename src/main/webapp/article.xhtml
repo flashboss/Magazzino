@@ -33,7 +33,7 @@
 
 				<fieldset>
 					<p:input id="code" label="#{bundles.messages.article_code}">
-						<h:inputText id="input" value="#{newArticle.code}"
+						<h:inputText id="input" value="#{newArticle.codeArticle}"
 							binding="#{articleRegister.codeInput}" />
 					</p:input>
 
@@ -129,8 +129,7 @@
 							action="#{articleRegister.register}" />
 						#{' '}
 						<h:commandButton id="cancel"
-							value="#{bundles.messages.template_linkReset}"
-							type="reset" />
+							value="#{bundles.messages.template_linkReset}" type="reset" />
 					</div>
 
 				</fieldset>

@@ -39,8 +39,8 @@ import org.jboss.seam.solder.core.Veto;
 @Table(name = "article")
 @Veto
 public class Article implements Serializable {
-	private static final long serialVersionUID = -602733026033911730L;
-	private String code;
+	private static final long serialVersionUID = 5030595742331298971L;
+	private String codeArticle;
 	private String barCode;
 	private String description;
 	private String um;
@@ -66,8 +66,8 @@ public class Article implements Serializable {
 	public Article() {
 	}
 
-	public Article(final String code, final String barCode) {
-		this.code = code;
+	public Article(final String codeArticle, final String barCode) {
+		this.codeArticle = codeArticle;
 		this.barCode = barCode;
 	}
 
@@ -105,12 +105,12 @@ public class Article implements Serializable {
 	@Id
 	@NotNull
 	@Size(min = 1, max = 100)
-	public String getCode() {
-		return code;
+	public String getCodeArticle() {
+		return codeArticle;
 	}
 
-	public void setCode(final String code) {
-		this.code = code;
+	public void setCodeArticle(final String codeArticle) {
+		this.codeArticle = codeArticle;
 	}
 
 	public String getBarCode() {
@@ -297,12 +297,13 @@ public class Article implements Serializable {
 		if (!(arg0 instanceof Article))
 			return super.equals(arg0);
 		else
-			return this.getCode().equals(((Article) arg0).getCode());
+			return this.getCodeArticle().equals(
+					((Article) arg0).getCodeArticle());
 	}
 
 	@Override
 	public int hashCode() {
 		// TODO Auto-generated method stub
-		return Integer.parseInt(code);
+		return codeArticle.hashCode();
 	}
 }

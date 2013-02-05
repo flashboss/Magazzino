@@ -34,28 +34,29 @@ import org.jboss.seam.solder.logging.TypedCategory;
 @Named
 @SessionScoped
 public class ArticleSelection {
-	
-    @Inject
-    @TypedCategory(ArticleSelection.class)
-    private ArticleLog log;
 
-    @Inject
-    private Conversation conversation;
-	
+	@Inject
+	@TypedCategory(ArticleSelection.class)
+	private ArticleLog log;
+
+	@Inject
+	private Conversation conversation;
+
 	private Article articleSelection;
 
 	@Begin
-    public void selectArticle(final Article article) {
-        conversation.setTimeout(600000); //10 * 60 * 1000 (10 minutes)
-        articleSelection = article;
-        log.articleSelected(article.getCode()+"", article.getBarCode(), article.getDescription());
-    }
+	public void selectArticle(final Article article) {
+		conversation.setTimeout(600000); // 10 * 60 * 1000 (10 minutes)
+		articleSelection = article;
+		log.articleSelected(article.getCodeArticle() + "",
+				article.getBarCode(), article.getDescription());
+	}
 
-    @Produces
-    @RequestScoped
-    @Named("article")
-    public Article getSelectedArticle() {
-        return articleSelection;
-    }
+	@Produces
+	@RequestScoped
+	@Named("article")
+	public Article getSelectedArticle() {
+		return articleSelection;
+	}
 
 }

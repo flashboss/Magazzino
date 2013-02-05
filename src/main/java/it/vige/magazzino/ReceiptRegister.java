@@ -37,7 +37,7 @@ import org.jboss.seam.solder.logging.TypedCategory;
 
 /**
  * The view controller for registering a new receipt
- *
+ * 
  * @author <a href="http://www.vige.it">Luca Stancapiano</a>
  */
 @Stateful
@@ -45,91 +45,98 @@ import org.jboss.seam.solder.logging.TypedCategory;
 @SessionScoped
 public class ReceiptRegister {
 
-    @Inject
-    @TypedCategory(ReceiptRegister.class)
-    private ReceiptLog log;
-	
-    @PersistenceContext
-    private EntityManager em;
+	@Inject
+	@TypedCategory(ReceiptRegister.class)
+	private ReceiptLog log;
 
-    @Inject
-    private Messages messages;
+	@PersistenceContext
+	private EntityManager em;
 
-    @Inject
-    private FacesContext facesContext;
+	@Inject
+	private Messages messages;
 
-    private UIInput numberInput;
+	@Inject
+	private FacesContext facesContext;
 
-    private final Receipt newReceipt = new Receipt();
+	private UIInput numberInput;
 
-    private boolean registered;
+	private final Receipt newReceipt = new Receipt();
 
-    private boolean registrationInvalid;
+	private boolean registered;
 
-    public void register() {
-        if (verifyNumberIsAvailable()) {
-            em.persist(newReceipt);
-            registered = true;
+	private boolean registrationInvalid;
 
-            messages.info(new DefaultBundleKey("receipt_registered"))
-                    .defaults("You have been successfully registered as the receipt {0}!")
-                    .params(newReceipt.getNumber());
-            log.receiptConfirmed(newReceipt.getNumber()+"", newReceipt.getCause());
-        } else {
-            registrationInvalid = true;
-        }
-    }
+	public void register() {
+		if (verifyNumberIsAvailable()) {
+			em.persist(newReceipt);
+			registered = true;
 
-    public boolean isRegistrationInvalid() {
-        return registrationInvalid;
-    }
+			messages.info(new DefaultBundleKey("receipt_registered"))
+					.defaults(
+							"You have been successfully registered as the receipt {0}!")
+					.params(newReceipt.getCodeReceipt());
+			log.receiptConfirmed(newReceipt.getCodeReceipt() + "",
+					newReceipt.getCause());
+		} else {
+			registrationInvalid = true;
+		}
+	}
 
-    /**
-     * This method just shows another approach to adding a status message.
-     * <p>
-     * Invoked by:
-     * </p>
-     * <p/>
-     * <pre>
-     * &lt;f:event type="preRenderView" listener="#{register.notifyIfRegistrationIsInvalid}"/>
-     * </pre>
-     */
-    public void notifyIfRegistrationIsInvalid() {
-        if (facesContext.isValidationFailed() || registrationInvalid) {
-            messages.warn(new DefaultBundleKey("receipt_invalid")).defaults(
-                    "Invalid receipt. Please correct the errors and try again.");
-        }
-    }
+	public boolean isRegistrationInvalid() {
+		return registrationInvalid;
+	}
 
-    @Produces
-    @Named
-    public Receipt getNewReceipt() {
-        return newReceipt;
-    }
+	/**
+	 * This method just shows another approach to adding a status message.
+	 * <p>
+	 * Invoked by:
+	 * </p>
+	 * <p/>
+	 * 
+	 * <pre>
+	 * &lt;f:event type="preRenderView" listener="#{register.notifyIfRegistrationIsInvalid}"/>
+	 * </pre>
+	 */
+	public void notifyIfRegistrationIsInvalid() {
+		if (facesContext.isValidationFailed() || registrationInvalid) {
+			messages.warn(new DefaultBundleKey("receipt_invalid"))
+					.defaults(
+							"Invalid receipt. Please correct the errors and try again.");
+		}
+	}
 
-    public boolean isRegistered() {
-        return registered;
-    }
+	@Produces
+	@Named
+	public Receipt getNewReceipt() {
+		return newReceipt;
+	}
 
-    public UIInput getNumberInput() {
-        return numberInput;
-    }
+	public boolean isRegistered() {
+		return registered;
+	}
 
-    public void setNumberInput(final UIInput numberInput) {
-        this.numberInput = numberInput;
-    }
+	public UIInput getNumberInput() {
+		return numberInput;
+	}
 
-    private boolean verifyNumberIsAvailable() {
-        Receipt existing = em.find(Receipt.class, newReceipt.getNumber());
-        if (existing != null) {
-            messages.warn(new BundleKey("messages", "account_numberTaken"))
-                    .defaults("The number '{0}' is already taken. Please choose another number.")
-                    .targets(numberInput.getClientId()).params(newReceipt.getNumber());
-            log.receiptAvailable(existing.getNumber()+"", existing != null);
-            return false;
-        }
+	public void setNumberInput(final UIInput numberInput) {
+		this.numberInput = numberInput;
+	}
 
-        return true;
-    }
+	private boolean verifyNumberIsAvailable() {
+		Receipt existing = em.find(Receipt.class, newReceipt.getCodeReceipt());
+		if (existing != null) {
+			messages.warn(new BundleKey("messages", "account_numberTaken"))
+					.defaults(
+							"The number '{0}' is already taken. Please choose another number.")
+					.targets(numberInput.getClientId())
+					.params(newReceipt.getCodeReceipt());
+			log.receiptAvailable(existing.getCodeReceipt() + "",
+					existing != null);
+			return false;
+		}
+
+		return true;
+	}
 
 }

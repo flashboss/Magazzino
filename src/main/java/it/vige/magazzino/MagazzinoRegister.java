@@ -37,7 +37,7 @@ import org.jboss.seam.solder.logging.TypedCategory;
 
 /**
  * The view controller for registering a new jar
- *
+ * 
  * @author <a href="http://www.vige.it">Luca Stancapiano</a>
  */
 @Stateful
@@ -45,91 +45,95 @@ import org.jboss.seam.solder.logging.TypedCategory;
 @SessionScoped
 public class MagazzinoRegister {
 
-    @Inject
-    @TypedCategory(MagazzinoRegister.class)
-    private MagazzinoLog log;
-	
-    @PersistenceContext
-    private EntityManager em;
+	@Inject
+	@TypedCategory(MagazzinoRegister.class)
+	private MagazzinoLog log;
 
-    @Inject
-    private Messages messages;
+	@PersistenceContext
+	private EntityManager em;
 
-    @Inject
-    private FacesContext facesContext;
+	@Inject
+	private Messages messages;
 
-    private UIInput numberInput;
+	@Inject
+	private FacesContext facesContext;
 
-    private final Magazzino newJar = new Magazzino();
+	private UIInput numberInput;
 
-    private boolean registered;
+	private final Magazzino newJar = new Magazzino();
 
-    private boolean registrationInvalid;
+	private boolean registered;
 
-    public void register() {
-        if (verifyNumberIsAvailable()) {
-            registered = true;
-            em.persist(newJar);
+	private boolean registrationInvalid;
 
-            messages.info(new DefaultBundleKey("magazzino_registered"))
-                    .defaults("You have been successfully registered as the jar {0}!")
-                    .params(newJar.getNumber());
-            log.jarConfirmed(newJar.getNumber()+"", newJar.getCodCustomer());
-        } else {
-            registrationInvalid = true;
-        }
-    }
+	public void register() {
+		if (verifyNumberIsAvailable()) {
+			registered = true;
+			em.persist(newJar);
 
-    public boolean isRegistrationInvalid() {
-        return registrationInvalid;
-    }
+			messages.info(new DefaultBundleKey("magazzino_registered"))
+					.defaults(
+							"You have been successfully registered as the jar {0}!")
+					.params(newJar.getCodeJar());
+			log.jarConfirmed(newJar.getCodeJar() + "", newJar.getCodCustomer());
+		} else {
+			registrationInvalid = true;
+		}
+	}
 
-    /**
-     * This method just shows another approach to adding a status message.
-     * <p>
-     * Invoked by:
-     * </p>
-     * <p/>
-     * <pre>
-     * &lt;f:event type="preRenderView" listener="#{register.notifyIfRegistrationIsInvalid}"/>
-     * </pre>
-     */
-    public void notifyIfRegistrationIsInvalid() {
-        if (facesContext.isValidationFailed() || registrationInvalid) {
-            messages.warn(new DefaultBundleKey("magazzino_invalid")).defaults(
-                    "Invalid jar. Please correct the errors and try again.");
-        }
-    }
+	public boolean isRegistrationInvalid() {
+		return registrationInvalid;
+	}
 
-    @Produces
-    @Named
-    public Magazzino getNewJar() {
-        return newJar;
-    }
+	/**
+	 * This method just shows another approach to adding a status message.
+	 * <p>
+	 * Invoked by:
+	 * </p>
+	 * <p/>
+	 * 
+	 * <pre>
+	 * &lt;f:event type="preRenderView" listener="#{register.notifyIfRegistrationIsInvalid}"/>
+	 * </pre>
+	 */
+	public void notifyIfRegistrationIsInvalid() {
+		if (facesContext.isValidationFailed() || registrationInvalid) {
+			messages.warn(new DefaultBundleKey("magazzino_invalid")).defaults(
+					"Invalid jar. Please correct the errors and try again.");
+		}
+	}
 
-    public boolean isRegistered() {
-        return registered;
-    }
+	@Produces
+	@Named
+	public Magazzino getNewJar() {
+		return newJar;
+	}
 
-    public UIInput getNumberInput() {
-        return numberInput;
-    }
+	public boolean isRegistered() {
+		return registered;
+	}
 
-    public void setNumberInput(final UIInput numberInput) {
-        this.numberInput = numberInput;
-    }
+	public UIInput getNumberInput() {
+		return numberInput;
+	}
 
-    private boolean verifyNumberIsAvailable() {
-        Magazzino existing = em.find(Magazzino.class, newJar.getNumber());
-        if (existing != null) {
-            messages.warn(new BundleKey("messages", "account_numberTaken"))
-                    .defaults("The number '{0}' is already taken. Please choose another number.")
-                    .targets(numberInput.getClientId()).params(newJar.getNumber());
-            log.jarAvailable(existing.getNumber()+"", existing != null);
-            return false;
-        }
+	public void setNumberInput(final UIInput numberInput) {
+		this.numberInput = numberInput;
+	}
 
-        return true;
-    }
+	private boolean verifyNumberIsAvailable() {
+		Magazzino existing = em.find(Magazzino.class, newJar.getCodeJar());
+		if (existing != null) {
+			messages.warn(new BundleKey("messages", "account_numberTaken"))
+					.defaults(
+							"The number '{0}' is already taken. Please choose another number.")
+					.targets(numberInput.getClientId())
+					.params(newJar.getCodeJar());
+			log.jarAvailable(existing.getCodeJar() + "", existing != null);
+			return false;
+		}
+
+		return true;
+	}
 
 }

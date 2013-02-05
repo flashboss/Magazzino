@@ -48,9 +48,9 @@ public class MagazzinoDeleter {
 
 	@Inject
 	private FacesContext facesContext;
-    
-    @Inject
-    private MagazzinoSearch magazzinoSearch;
+
+	@Inject
+	private MagazzinoSearch magazzinoSearch;
 
 	public void delete(Magazzino magazzino) {
 		Magazzino oldMagazzino;
@@ -59,9 +59,8 @@ public class MagazzinoDeleter {
 			magazzinoSearch.currentPage();
 		}
 		messages.info(new DefaultBundleKey("magazzino_deleted"))
-				.defaults(
-						"You have been successfully deleted the jar {0}!")
-				.params(magazzino.getNumber());
+				.defaults("You have been successfully deleted the jar {0}!")
+				.params(magazzino.getCodeJar());
 	}
 
 	/**
@@ -83,7 +82,7 @@ public class MagazzinoDeleter {
 	}
 
 	private Magazzino verifyNumberIsAvailable(Magazzino magazzino) {
-		Magazzino existing = em.find(Magazzino.class, magazzino.getNumber());
+		Magazzino existing = em.find(Magazzino.class, magazzino.getCodeJar());
 		return existing;
 	}
 

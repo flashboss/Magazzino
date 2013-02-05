@@ -16,13 +16,17 @@
  */
 package it.vige.magazzino.ftest;
 
+import static it.vige.magazzino.test.mock.ArticleMock.article0;
+import static it.vige.magazzino.test.mock.ArticleMock.article1;
+import static it.vige.magazzino.test.mock.ArticleMock.article2;
+import static it.vige.magazzino.test.mock.ArticleMock.article4;
+import static it.vige.magazzino.test.mock.ArticleMock.articles;
 import static org.jboss.test.selenium.guard.request.RequestTypeGuardFactory.waitXhr;
 import static org.jboss.test.selenium.locator.LocatorFactory.jq;
 import static org.testng.AssertJUnit.assertEquals;
 import static org.testng.AssertJUnit.assertFalse;
 import static org.testng.AssertJUnit.assertTrue;
 import it.vige.magazzino.model.Article;
-import it.vige.magazzino.test.mock.ArticleMock;
 import it.vige.magazzino.test.operation.ArticleOperation;
 
 import org.jboss.test.selenium.locator.JQueryLocator;
@@ -35,7 +39,7 @@ import org.testng.annotations.Test;
  * 
  * @author <a href="http://www.vige.it">Luca Stancapiano</a>
  */
-public class ArticleTest extends AbstractTest implements ArticleMock {
+public class ArticleTest extends AbstractTest {
 
 	public static final JQueryLocator MENU_FIND = jq("[href^='/magazzino/search/search_article']");
 	public static final JQueryLocator MENU_INSERT = jq("[href^='/magazzino/article']");
@@ -141,20 +145,20 @@ public class ArticleTest extends AbstractTest implements ArticleMock {
 		selenium.click(BUTTON_INSERT_PROCEED);
 		selenium.waitForPageToLoad();
 		String message = selenium.getText(ARTICLES_MESSAGE);
-		assertTrue(message, message.contains(article.getCode()));
+		assertTrue(message, message.contains(article.getCodeArticle()));
 		// cancel article
 		selenium.click(BUTTON_CANCEL);
 		selenium.click(BUTTON_INSERT_PROCEED);
 		selenium.waitForPageToLoad();
 		String message1 = selenium.getText(ARTICLES_MESSAGE1);
-		assertTrue(message1, message1.contains(article.getCode()));
+		assertTrue(message1, message1.contains(article.getCodeArticle()));
 		article.setRate("");
-		article.setCode("99999991");
+		article.setCodeArticle("99999991");
 		populateArticleFields(article);
 		selenium.click(BUTTON_INSERT_PROCEED);
 		selenium.waitForPageToLoad();
 		String message2 = selenium.getText(ARTICLES_MESSAGE2);
-		assertFalse(message2, message2.contains(article.getCode()));
+		assertFalse(message2, message2.contains(article.getCodeArticle()));
 		selenium.click(MENU_FIND);
 		selenium.waitForPageToLoad();
 		enterSearchQuery(catMerc);
@@ -218,7 +222,7 @@ public class ArticleTest extends AbstractTest implements ArticleMock {
 
 	protected void populateArticleFields(Article article) {
 		populateArticleFields(article.getPack(), article.getRate());
-		selenium.type(DETAILS_CODE, article.getCode());
+		selenium.type(DETAILS_CODE, article.getCodeArticle());
 		selenium.type(DETAILS_BAR_CODE, article.getBarCode());
 		selenium.type(DETAILS_DESCRIPTION, article.getDescription());
 		selenium.type(DETAILS_UM, article.getUm());

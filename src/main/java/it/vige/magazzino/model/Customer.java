@@ -19,11 +19,14 @@ package it.vige.magazzino.model;
 import it.vige.magazzino.FileUpload;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -44,28 +47,36 @@ import org.jboss.seam.solder.core.Veto;
 @Veto
 public class Customer extends FileUpload {
 	private static final long serialVersionUID = -612733026033932730L;
-	@OneToOne
 	private Address address = new Address();
-	private String code;
+	@Id
+	@Column(name = "codeCustomer")
+	@NotNull
+	@Size(min = 3, max = 15)
+	@Pattern(regexp = "^\\w*$", message = "not a valid customer")
+	private String codeCustomer;
+	@NotNull
+	@Size(min = 1, max = 100)
 	private String name;
+	@NotNull
 	private String ragSocial;
+	@NotNull
 	private String iva;
-	@OneToMany
-	private ArrayList<Data> files;
+	@OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private List<Data> files = new ArrayList<Data>();;
+	@OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+	private List<Receipt> receipts = new ArrayList<Receipt>();
 
 	public Customer() {
 	}
 
-	public Customer(final String code, final String name,
+	public Customer(final String codeCustomer, final String name,
 			final String ragSocial, final String iva) {
-		this.code = code;
+		this.codeCustomer = codeCustomer;
 		this.name = name;
 		this.ragSocial = ragSocial;
 		this.iva = iva;
 	}
 
-	@NotNull
-	@Size(min = 1, max = 100)
 	public String getName() {
 		return name;
 	}
@@ -74,19 +85,14 @@ public class Customer extends FileUpload {
 		this.name = name;
 	}
 
-	@Id
-	@NotNull
-	@Size(min = 3, max = 15)
-	@Pattern(regexp = "^\\w*$", message = "not a valid customer")
-	public String getCode() {
-		return code;
+	public String getCodeCustomer() {
+		return codeCustomer;
 	}
 
-	public void setCode(final String code) {
-		this.code = code;
+	public void setCodeCustomer(final String codeCustomer) {
+		this.codeCustomer = codeCustomer;
 	}
 
-	@NotNull
 	public String getRagSocial() {
 		return ragSocial;
 	}
@@ -95,7 +101,6 @@ public class Customer extends FileUpload {
 		this.ragSocial = ragSocial;
 	}
 
-	@NotNull
 	public String getIva() {
 		return iva;
 	}
@@ -104,7 +109,6 @@ public class Customer extends FileUpload {
 		this.iva = iva;
 	}
 
-	@NotNull
 	public Address getAddress() {
 		return address;
 	}
@@ -113,12 +117,20 @@ public class Customer extends FileUpload {
 		this.address = address;
 	}
 
-	public ArrayList<Data> getFiles() {
+	public List<Data> getFiles() {
 		return files;
 	}
 
-	public void setFiles(ArrayList<Data> files) {
+	public void setFiles(List<Data> files) {
 		this.files = files;
+	}
+
+	public List<Receipt> getReceipts() {
+		return receipts;
+	}
+
+	public void setReceipts(List<Receipt> receipts) {
+		this.receipts = receipts;
 	}
 
 	@Override
@@ -131,15 +143,17 @@ public class Customer extends FileUpload {
 		// TODO Auto-generated method stub
 		if (!(arg0 instanceof Customer))
 			return super.equals(arg0);
-		else if (this.getCode() == null && ((Customer) arg0).getCode() == null)
+		else if (this.getCodeCustomer() == null
+				&& ((Customer) arg0).getCodeCustomer() == null)
 			return true;
 		else
-			return this.getCode().equals(((Customer) arg0).getCode());
+			return this.getCodeCustomer().equals(
+					((Customer) arg0).getCodeCustomer());
 	}
 
 	@Override
 	public int hashCode() {
 		// TODO Auto-generated method stub
-		return Integer.parseInt(code);
+		return codeCustomer.hashCode();
 	}
 }

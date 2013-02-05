@@ -70,7 +70,7 @@ public class CustomerUpdater {
 		messages.info(new DefaultBundleKey("customer_updated"))
 				.defaults(
 						"You have been successfully updated as the customer {0}!")
-				.params(customer.getCode());
+				.params(customer.getCodeCustomer());
 	}
 
 	public boolean isRegistrationInvalid() {
@@ -109,7 +109,7 @@ public class CustomerUpdater {
 	}
 
 	private Customer verifyCodeIsAvailable(Customer customer) {
-		Customer existing = em.find(Customer.class, customer.getCode());
+		Customer existing = em.find(Customer.class, customer.getCodeCustomer());
 		return existing;
 	}
 

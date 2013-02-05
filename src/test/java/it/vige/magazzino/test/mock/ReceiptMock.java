@@ -16,13 +16,33 @@
  */
 package it.vige.magazzino.test.mock;
 
+import static it.vige.magazzino.test.mock.CustomerMock.customer0;
+import static it.vige.magazzino.test.mock.CustomerMock.customer1;
+import static it.vige.magazzino.test.mock.CustomerMock.customer2;
+import static it.vige.magazzino.test.mock.CustomerMock.customer3;
+import static it.vige.magazzino.test.mock.CustomerMock.customer4;
+import static it.vige.magazzino.test.mock.CustomerMock.customer5;
+import static it.vige.magazzino.test.mock.CustomerMock.customer6;
+import static it.vige.magazzino.test.mock.CustomerMock.customer7;
+import static it.vige.magazzino.test.mock.CustomerMock.customer8;
+import static it.vige.magazzino.test.mock.MagazzinoMock.magazzino0;
+import static it.vige.magazzino.test.mock.MagazzinoMock.magazzino1;
+import static it.vige.magazzino.test.mock.MagazzinoMock.magazzino10;
+import static it.vige.magazzino.test.mock.MagazzinoMock.magazzino2;
+import static it.vige.magazzino.test.mock.MagazzinoMock.magazzino3;
+import static it.vige.magazzino.test.mock.MagazzinoMock.magazzino4;
+import static it.vige.magazzino.test.mock.MagazzinoMock.magazzino5;
+import static it.vige.magazzino.test.mock.MagazzinoMock.magazzino6;
+import static it.vige.magazzino.test.mock.MagazzinoMock.magazzino7;
+import static it.vige.magazzino.test.mock.MagazzinoMock.magazzino8;
+import static it.vige.magazzino.test.mock.MagazzinoMock.magazzino9;
 import it.vige.magazzino.model.Receipt;
 import it.vige.magazzino.test.operation.ReceiptOperation;
 
 /**
  * @author <a href="http://www.vige.it">Luca Stancapiano</a>
  */
-public interface ReceiptMock extends MagazzinoMock, CustomerMock {
+public interface ReceiptMock {
 
 	ReceiptOperation receiptOperation = new ReceiptOperation();
 

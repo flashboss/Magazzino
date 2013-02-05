@@ -20,6 +20,18 @@ import static it.vige.magazzino.test.Dependencies.FACES;
 import static it.vige.magazzino.test.Dependencies.INTERNATIONAL;
 import static it.vige.magazzino.test.Dependencies.RICHFACES;
 import static it.vige.magazzino.test.Dependencies.SOLDER;
+import static it.vige.magazzino.test.mock.MagazzinoMock.jars;
+import static it.vige.magazzino.test.mock.MagazzinoMock.magazzino0;
+import static it.vige.magazzino.test.mock.MagazzinoMock.magazzino1;
+import static it.vige.magazzino.test.mock.MagazzinoMock.magazzino10;
+import static it.vige.magazzino.test.mock.MagazzinoMock.magazzino2;
+import static it.vige.magazzino.test.mock.MagazzinoMock.magazzino3;
+import static it.vige.magazzino.test.mock.MagazzinoMock.magazzino4;
+import static it.vige.magazzino.test.mock.MagazzinoMock.magazzino5;
+import static it.vige.magazzino.test.mock.MagazzinoMock.magazzino6;
+import static it.vige.magazzino.test.mock.MagazzinoMock.magazzino7;
+import static it.vige.magazzino.test.mock.MagazzinoMock.magazzino8;
+import static it.vige.magazzino.test.mock.MagazzinoMock.magazzino9;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -32,9 +44,11 @@ import it.vige.magazzino.inventory.SearchCriteria;
 import it.vige.magazzino.inventory.all.MagazzinoAllSearch;
 import it.vige.magazzino.log.MagazzinoLog;
 import it.vige.magazzino.model.Address;
+import it.vige.magazzino.model.Customer;
 import it.vige.magazzino.model.Data;
 import it.vige.magazzino.model.Magazzino;
 import it.vige.magazzino.model.Magazzino_;
+import it.vige.magazzino.model.Receipt;
 import it.vige.magazzino.remove.MagazzinoDeleter;
 import it.vige.magazzino.selection.MagazzinoSelection;
 import it.vige.magazzino.test.mock.AddressMock;
@@ -46,6 +60,8 @@ import it.vige.magazzino.test.operation.ImageOperation;
 import it.vige.magazzino.test.operation.ListDataOperation;
 import it.vige.magazzino.test.operation.MagazzinoOperation;
 import it.vige.magazzino.update.MagazzinoUpdater;
+
+import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ejb.EJBTransactionRolledbackException;
@@ -72,7 +88,7 @@ import org.junit.runner.RunWith;
  * @author <a href="http://www.vige.it">Luca Stancapiano</a>
  */
 @RunWith(Arquillian.class)
-public class MagazzinoAgentTest implements MagazzinoMock {
+public class MagazzinoAgentTest {
 	@Deployment
 	public static WebArchive createDeployment() {
 		WebArchive war = ShrinkWrap
@@ -93,6 +109,8 @@ public class MagazzinoAgentTest implements MagazzinoMock {
 						SearchCriteria.class)
 				.addClasses(DataContainer.class, FileUpload.class)
 				.addClasses(DefaultBundleKey.class)
+				.addClasses(Customer.class)
+				.addClasses(Receipt.class)
 				.addAsLibraries(SOLDER)
 				.addAsLibraries(INTERNATIONAL)
 				.addAsLibraries(FACES)
@@ -108,7 +126,7 @@ public class MagazzinoAgentTest implements MagazzinoMock {
 
 	@EJB
 	MagazzinoRegister magazzinoRegister;
-
+	
 	@EJB
 	MagazzinoUpdater magazzinoUpdater;
 
@@ -135,20 +153,41 @@ public class MagazzinoAgentTest implements MagazzinoMock {
 
 	@Before
 	public void createMagazzino() throws Exception {
-		if (em.find(Magazzino.class, magazzino1.getNumber()) == null) {
+		if (em.find(Magazzino.class, magazzino1.getCodeJar()) == null) {
 			utx.begin();
 			em.joinTransaction();
-
+			persistList(magazzino0.getFiles());
+			persistList(magazzino0.getReceipts());
 			em.persist(magazzino0);
+			persistList(magazzino1.getFiles());
+			persistList(magazzino1.getReceipts());
 			em.persist(magazzino1);
+			persistList(magazzino2.getFiles());
+			persistList(magazzino2.getReceipts());
 			em.persist(magazzino2);
+			persistList(magazzino3.getFiles());
+			persistList(magazzino3.getReceipts());
 			em.persist(magazzino3);
+			persistList(magazzino4.getFiles());
+			persistList(magazzino4.getReceipts());
 			em.persist(magazzino4);
+			persistList(magazzino5.getFiles());
+			persistList(magazzino5.getReceipts());
 			em.persist(magazzino5);
+			persistList(magazzino6.getFiles());
+			persistList(magazzino6.getReceipts());
 			em.persist(magazzino6);
+			persistList(magazzino7.getFiles());
+			persistList(magazzino7.getReceipts());
 			em.persist(magazzino7);
+			persistList(magazzino8.getFiles());
+			persistList(magazzino8.getReceipts());
 			em.persist(magazzino8);
+			persistList(magazzino9.getFiles());
+			persistList(magazzino9.getReceipts());
 			em.persist(magazzino9);
+			persistList(magazzino10.getFiles());
+			persistList(magazzino10.getReceipts());
 			em.persist(magazzino10);
 			utx.commit();
 		}
@@ -194,16 +233,19 @@ public class MagazzinoAgentTest implements MagazzinoMock {
 		String magazzinoCompensation = "newCompensation";
 		String ragSoc1 = "new rag soc for magazzino test";
 		String ragSoc2 = "0123456789012347";
+		Address address = new Address();
+		address.setAddress("Vige street");
 		Magazzino magazzino = magazzinoRegister.getNewJar();
-		magazzino.setNumber("99999999");
+		magazzino.setCodeJar("99999999");
 		magazzino.setCompensation(magazzinoCompensation);
 		magazzino.setRagSoc1(ragSoc1);
 		magazzino.setRagSoc2(ragSoc2);
+		magazzino.setAddress(address);
 		magazzinoRegister.register();
 		String message = messages.getAll().iterator().next().getText();
-		assertTrue(message, message.contains(magazzino.getNumber()));
+		assertTrue(message, message.contains(magazzino.getCodeJar()));
 		// cancel magazzino
-		magazzino.setNumber("");
+		magazzino.setCodeJar("");
 		try {
 			magazzinoRegister.register();
 			assertTrue(false);
@@ -211,7 +253,7 @@ public class MagazzinoAgentTest implements MagazzinoMock {
 			assertTrue(true);
 		}
 		magazzino.setRagSoc2("");
-		magazzino.setNumber("99999991");
+		magazzino.setCodeJar("99999991");
 		try {
 			magazzinoRegister.register();
 			assertTrue(false);
@@ -270,6 +312,12 @@ public class MagazzinoAgentTest implements MagazzinoMock {
 		message = messages.getAll().iterator().next().getText();
 		assertTrue("Update success.",
 				message.startsWith("You have been successfully updated"));
+	}
+
+	private <T> void persistList(List<T> elements) {
+		if (elements != null)
+			for (T element : elements)
+				em.persist(element);
 	}
 
 }

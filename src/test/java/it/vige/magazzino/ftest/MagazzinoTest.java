@@ -16,13 +16,17 @@
  */
 package it.vige.magazzino.ftest;
 
+import static it.vige.magazzino.test.mock.MagazzinoMock.jars;
+import static it.vige.magazzino.test.mock.MagazzinoMock.magazzino0;
+import static it.vige.magazzino.test.mock.MagazzinoMock.magazzino1;
+import static it.vige.magazzino.test.mock.MagazzinoMock.magazzino2;
+import static it.vige.magazzino.test.mock.MagazzinoMock.magazzino4;
 import static org.jboss.test.selenium.guard.request.RequestTypeGuardFactory.waitXhr;
 import static org.jboss.test.selenium.locator.LocatorFactory.jq;
 import static org.testng.AssertJUnit.assertEquals;
 import static org.testng.AssertJUnit.assertFalse;
 import static org.testng.AssertJUnit.assertTrue;
 import it.vige.magazzino.model.Magazzino;
-import it.vige.magazzino.test.mock.MagazzinoMock;
 import it.vige.magazzino.test.operation.MagazzinoOperation;
 
 import org.jboss.test.selenium.locator.JQueryLocator;
@@ -35,7 +39,7 @@ import org.testng.annotations.Test;
  * 
  * @author <a href="http://www.vige.it">Luca Stancapiano</a>
  */
-public class MagazzinoTest extends AbstractTest implements MagazzinoMock {
+public class MagazzinoTest extends AbstractTest {
 
 	public static final JQueryLocator MENU_FIND = jq("[href^='/magazzino/search/search_magazzino']");
 	public static final JQueryLocator MENU_INSERT = jq("[href^='/magazzino/magazzino']");
@@ -132,20 +136,20 @@ public class MagazzinoTest extends AbstractTest implements MagazzinoMock {
 		selenium.click(BUTTON_INSERT_PROCEED);
 		selenium.waitForPageToLoad();
 		String message = selenium.getText(JARS_MESSAGE);
-		assertTrue(message, message.contains(magazzino.getNumber()));
+		assertTrue(message, message.contains(magazzino.getCodeJar()));
 		// cancel magazzino
 		selenium.click(BUTTON_CANCEL);
 		selenium.click(BUTTON_INSERT_PROCEED);
 		selenium.waitForPageToLoad();
 		String message1 = selenium.getText(JARS_MESSAGE1);
-		assertTrue(message1, message1.contains(magazzino.getNumber()));
+		assertTrue(message1, message1.contains(magazzino.getCodeJar()));
 		magazzino.setRagSoc2("");
-		magazzino.setNumber("99999991");
+		magazzino.setCodeJar("99999991");
 		populateMagazzinoFields(magazzino);
 		selenium.click(BUTTON_INSERT_PROCEED);
 		selenium.waitForPageToLoad();
 		String message2 = selenium.getText(JARS_MESSAGE2);
-		assertFalse(message2, message2.contains(magazzino.getNumber()));
+		assertFalse(message2, message2.contains(magazzino.getCodeJar()));
 		selenium.click(MENU_FIND);
 		selenium.waitForPageToLoad();
 		enterSearchQuery(magazzinoCompensation);
@@ -209,8 +213,8 @@ public class MagazzinoTest extends AbstractTest implements MagazzinoMock {
 
 	protected void populateMagazzinoFields(Magazzino magazzino) {
 		populateMagazzinoFields(magazzino.getRagSoc1(), magazzino.getRagSoc2());
-		selenium.type(DETAILS_NUMBER, magazzino.getNumber());
-		selenium.type(DETAILS_CODE, magazzino.getCode());
+		selenium.type(DETAILS_NUMBER, magazzino.getCodeJar());
+		selenium.type(DETAILS_CODE, magazzino.getCodeJar());
 		selenium.type(DETAILS_COMPENSATION, magazzino.getCompensation());
 	}
 }

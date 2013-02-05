@@ -35,7 +35,7 @@
 
 				<fieldset>
 					<p:input id="number" label="#{bundles.messages.receipt_number}">
-						<h:inputText id="input" value="#{newReceipt.number}"
+						<h:inputText id="input" value="#{newReceipt.codeReceipt}"
 							binding="#{receiptRegister.numberInput}" />
 					</p:input>
 
@@ -72,8 +72,7 @@
 							action="#{receiptRegister.register}" />
 						#{' '}
 						<h:commandButton id="cancel"
-							value="#{bundles.messages.template_linkReset}"
-							type="reset" />
+							value="#{bundles.messages.template_linkReset}" type="reset" />
 					</div>
 
 				</fieldset>

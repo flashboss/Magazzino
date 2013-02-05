@@ -48,7 +48,7 @@ public class CustomerSelection {
     public void selectCustomer(final Customer customer) {
         conversation.setTimeout(600000); //10 * 60 * 1000 (10 minutes)
         customerSelection = customer;
-        log.customerSelected(customer.getCode()+"", customer.getName());
+		log.customerSelected(customer.getCodeCustomer()+"", customer.getName());
     }
 
     @Produces

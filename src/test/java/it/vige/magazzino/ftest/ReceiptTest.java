@@ -16,13 +16,25 @@
  */
 package it.vige.magazzino.ftest;
 
+import static it.vige.magazzino.test.mock.CustomerMock.customer1;
+import static it.vige.magazzino.test.mock.CustomerMock.customer2;
+import static it.vige.magazzino.test.mock.CustomerMock.customer3;
+import static it.vige.magazzino.test.mock.CustomerMock.customer4;
+import static it.vige.magazzino.test.mock.MagazzinoMock.magazzino1;
+import static it.vige.magazzino.test.mock.MagazzinoMock.magazzino2;
+import static it.vige.magazzino.test.mock.MagazzinoMock.magazzino3;
+import static it.vige.magazzino.test.mock.MagazzinoMock.magazzino4;
+import static it.vige.magazzino.test.mock.ReceiptMock.receipt0;
+import static it.vige.magazzino.test.mock.ReceiptMock.receipt1;
+import static it.vige.magazzino.test.mock.ReceiptMock.receipt2;
+import static it.vige.magazzino.test.mock.ReceiptMock.receipt4;
+import static it.vige.magazzino.test.mock.ReceiptMock.receipts;
 import static org.jboss.test.selenium.guard.request.RequestTypeGuardFactory.waitXhr;
 import static org.jboss.test.selenium.locator.LocatorFactory.jq;
 import static org.testng.AssertJUnit.assertEquals;
 import static org.testng.AssertJUnit.assertFalse;
 import static org.testng.AssertJUnit.assertTrue;
 import it.vige.magazzino.model.Receipt;
-import it.vige.magazzino.test.mock.ReceiptMock;
 import it.vige.magazzino.test.operation.ReceiptOperation;
 
 import org.jboss.test.selenium.locator.JQueryLocator;
@@ -36,7 +48,7 @@ import org.testng.annotations.Test;
  * 
  * @author <a href="http://www.vige.it">Luca Stancapiano</a>
  */
-public class ReceiptTest extends AbstractTest implements ReceiptMock {
+public class ReceiptTest extends AbstractTest {
 
 	public static final JQueryLocator MENU_FIND = jq("[href^='/magazzino/search/search_receipt']");
 	public static final JQueryLocator SEARCH_NO_RESULTS = jq("[id='receiptSelectionForm:noReceiptMsg']");
@@ -116,26 +128,26 @@ public class ReceiptTest extends AbstractTest implements ReceiptMock {
 		String date = "newName";
 		String description = "new description";
 		String cause = "new rag soc for receipt test";
-		Receipt receipt = receiptOperation.create("99999999", date,
-				cause, description, null, null);
+		Receipt receipt = receiptOperation.create("99999999", date, cause,
+				description, null, null);
 		populateReceiptFields(receipt);
 		selenium.click(BUTTON_INSERT_PROCEED);
 		selenium.waitForPageToLoad();
 		String message = selenium.getText(RECEIPTS_MESSAGE);
-		assertTrue(message, message.contains(receipt.getNumber()));
+		assertTrue(message, message.contains(receipt.getCodeReceipt()));
 		// cancel receipt
 		selenium.click(BUTTON_CANCEL);
 		selenium.click(BUTTON_INSERT_PROCEED);
 		selenium.waitForPageToLoad();
 		String message1 = selenium.getText(RECEIPTS_MESSAGE1);
-		assertTrue(message1, message1.contains(receipt.getNumber()));
+		assertTrue(message1, message1.contains(receipt.getCodeReceipt()));
 		receipt.setCause("");
-		receipt.setNumber("99999991");
+		receipt.setCodeReceipt("99999991");
 		populateReceiptFields(receipt);
 		selenium.click(BUTTON_INSERT_PROCEED);
 		selenium.waitForPageToLoad();
 		String message2 = selenium.getText(RECEIPTS_MESSAGE2);
-		assertFalse(message2, message2.contains(receipt.getNumber()));
+		assertFalse(message2, message2.contains(receipt.getCodeReceipt()));
 		selenium.click(MENU_FIND);
 		selenium.waitForPageToLoad();
 		enterSearchQuery(description);
@@ -199,14 +211,14 @@ public class ReceiptTest extends AbstractTest implements ReceiptMock {
 
 	protected void populateReceiptFields(Receipt receipt) {
 		populateReceiptFields(receipt.getCause(), receipt.getDescription());
-		selenium.type(DETAILS_NUMBER, receipt.getNumber());
+		selenium.type(DETAILS_NUMBER, receipt.getCodeReceipt());
 		selenium.select(DETAILS_JAR, Jar.JAR3.getLocator());
 		selenium.select(DETAILS_CUSTOMER, Customer.CLIENTE4.getLocator());
 	}
 
 	private enum Jar {
-		JAR1(magazzino1.getNumber()), JAR2(magazzino2.getNumber()), JAR3(
-				magazzino3.getNumber()), JAR4(magazzino4.getNumber());
+		JAR1(magazzino1.getCodeJar()), JAR2(magazzino2.getCodeJar()), JAR3(
+				magazzino3.getCodeJar()), JAR4(magazzino4.getCodeJar());
 
 		private String name;
 
@@ -220,8 +232,9 @@ public class ReceiptTest extends AbstractTest implements ReceiptMock {
 	}
 
 	private enum Customer {
-		CLIENTE1(customer1.getCode()), CLIENTE2(customer2.getCode()), CLIENTE3(
-				customer3.getCode()), CLIENTE4(customer4.getCode());
+		CLIENTE1(customer1.getCodeCustomer()), CLIENTE2(customer2
+				.getCodeCustomer()), CLIENTE3(customer3.getCodeCustomer()), CLIENTE4(
+				customer4.getCodeCustomer());
 
 		private String name;
 

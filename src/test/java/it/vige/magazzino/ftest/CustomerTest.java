@@ -16,6 +16,11 @@
  */
 package it.vige.magazzino.ftest;
 
+import static it.vige.magazzino.test.mock.CustomerMock.customer0;
+import static it.vige.magazzino.test.mock.CustomerMock.customer1;
+import static it.vige.magazzino.test.mock.CustomerMock.customer2;
+import static it.vige.magazzino.test.mock.CustomerMock.customer4;
+import static it.vige.magazzino.test.mock.CustomerMock.customers;
 import static org.jboss.test.selenium.guard.request.RequestTypeGuardFactory.waitXhr;
 import static org.jboss.test.selenium.locator.LocatorFactory.jq;
 import static org.testng.AssertJUnit.assertEquals;
@@ -23,7 +28,6 @@ import static org.testng.AssertJUnit.assertFalse;
 import static org.testng.AssertJUnit.assertTrue;
 import it.vige.magazzino.model.Address;
 import it.vige.magazzino.model.Customer;
-import it.vige.magazzino.test.mock.CustomerMock;
 import it.vige.magazzino.test.operation.CustomerOperation;
 
 import org.jboss.test.selenium.locator.JQueryLocator;
@@ -36,7 +40,7 @@ import org.testng.annotations.Test;
  * 
  * @author <a href="http://www.vige.it">Luca Stancapiano</a>
  */
-public class CustomerTest extends AbstractTest implements CustomerMock {
+public class CustomerTest extends AbstractTest {
 
 	public static final JQueryLocator MENU_FIND = jq("[href^='/magazzino/search/search_customer']");
 	public static final JQueryLocator MENU_INSERT = jq("[href^='/magazzino/customer']");
@@ -127,20 +131,20 @@ public class CustomerTest extends AbstractTest implements CustomerMock {
 		selenium.click(BUTTON_INSERT_PROCEED);
 		selenium.waitForPageToLoad();
 		String message = selenium.getText(CUSTOMERS_MESSAGE);
-		assertTrue(message, message.contains(customer.getCode()));
+		assertTrue(message, message.contains(customer.getCodeCustomer()));
 		// cancel customer
 		selenium.click(BUTTON_CANCEL);
 		selenium.click(BUTTON_INSERT_PROCEED);
 		selenium.waitForPageToLoad();
 		String message1 = selenium.getText(CUSTOMERS_MESSAGE1);
-		assertTrue(message1, message1.contains(customer.getCode()));
+		assertTrue(message1, message1.contains(customer.getCodeCustomer()));
 		customer.setName("");
-		customer.setCode("99999991");
+		customer.setCodeCustomer("99999991");
 		populateCustomerFields(customer);
 		selenium.click(BUTTON_INSERT_PROCEED);
 		selenium.waitForPageToLoad();
 		String message2 = selenium.getText(CUSTOMERS_MESSAGE2);
-		assertFalse(message2, message2.contains(customer.getCode()));
+		assertFalse(message2, message2.contains(customer.getCodeCustomer()));
 		selenium.click(MENU_FIND);
 		selenium.waitForPageToLoad();
 		enterSearchQuery(customerName);
@@ -204,7 +208,7 @@ public class CustomerTest extends AbstractTest implements CustomerMock {
 
 	protected void populateCustomerFields(Customer customer) {
 		populateCustomerFields(customer.getRagSocial(), customer.getIva());
-		selenium.type(DETAILS_CODE, customer.getCode());
+		selenium.type(DETAILS_CODE, customer.getCodeCustomer());
 		selenium.type(DETAILS_NAME, customer.getName());
 		selenium.type(DETAILS_STREET, customer.getAddress().getAddress());
 	}

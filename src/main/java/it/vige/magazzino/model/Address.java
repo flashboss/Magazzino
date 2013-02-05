@@ -18,13 +18,6 @@ package it.vige.magazzino.model;
 
 import java.io.Serializable;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-
-import org.jboss.seam.solder.core.Veto;
-
 /**
  * <p>
  * <strong>Address</strong> is the model/entity class that represents an address
@@ -33,15 +26,9 @@ import org.jboss.seam.solder.core.Veto;
  * 
  * @author <a href="http://www.vige.it">Luca Stancapiano</a>
  */
-@Entity
-@Table(name = "address")
-@Veto
 public class Address implements Serializable {
 	private static final long serialVersionUID = 5864740902799651849L;
 
-	@Id
-	@NotNull
-	private String code;
 	private String address;
 	private String civicNumber;
 	private String cap;
@@ -52,14 +39,6 @@ public class Address implements Serializable {
 	private String fax;
 	private String site;
 	private String email;
-
-	public String getCode() {
-		return code;
-	}
-
-	public void setCode(String code) {
-		this.code = code;
-	}
 
 	public String getAddress() {
 		return address;
@@ -144,23 +123,6 @@ public class Address implements Serializable {
 	@Override
 	public String toString() {
 		return address + " " + civicNumber + " " + cap + " " + city;
-	}
-
-	@Override
-	public boolean equals(Object arg0) {
-		// TODO Auto-generated method stub
-		if (!(arg0 instanceof Address))
-			return super.equals(arg0);
-		else if (this.getCode() == null && ((Address) arg0).getCode() == null)
-			return true;
-		else
-			return this.getCode().equals(((Address) arg0).getCode());
-	}
-
-	@Override
-	public int hashCode() {
-		// TODO Auto-generated method stub
-		return Integer.parseInt(code);
 	}
 
 }

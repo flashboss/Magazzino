@@ -16,13 +16,29 @@
  */
 package it.vige.magazzino.test.mock;
 
+import static it.vige.magazzino.test.mock.AddressMock.address0;
+import static it.vige.magazzino.test.mock.AddressMock.address1;
+import static it.vige.magazzino.test.mock.AddressMock.address2;
+import static it.vige.magazzino.test.mock.AddressMock.address3;
+import static it.vige.magazzino.test.mock.AddressMock.address4;
+import static it.vige.magazzino.test.mock.AddressMock.address5;
+import static it.vige.magazzino.test.mock.AddressMock.address6;
+import static it.vige.magazzino.test.mock.AddressMock.address7;
+import static it.vige.magazzino.test.mock.AddressMock.address8;
+import static it.vige.magazzino.test.mock.ListDataMock.listData0;
+import static it.vige.magazzino.test.mock.ListDataMock.listData1;
+import static it.vige.magazzino.test.mock.ListDataMock.listData2;
+import static it.vige.magazzino.test.mock.ListDataMock.listData3;
+import static it.vige.magazzino.test.mock.ListDataMock.listData4;
+import static it.vige.magazzino.test.mock.ListDataMock.listData5;
+import static it.vige.magazzino.test.mock.ListDataMock.listData6;
 import it.vige.magazzino.model.Customer;
 import it.vige.magazzino.test.operation.CustomerOperation;
 
 /**
  * @author <a href="http://www.vige.it">Luca Stancapiano</a>
  */
-public interface CustomerMock extends AddressMock, ListDataMock {
+public interface CustomerMock {
 
 	CustomerOperation customerOperation = new CustomerOperation();
 

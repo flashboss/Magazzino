@@ -34,7 +34,7 @@
 				<fieldset>
 					<p:input id="number" label="#{bundles.messages.magazzino_number}">
 						<h:inputText id="input"
-							value="#{magazzinoSelection.selectedJar.number}"
+							value="#{magazzinoSelection.selectedJar.codeJar}"
 							binding="#{magazzinoUpdater.numberInput}" />
 					</p:input>
 
@@ -45,7 +45,7 @@
 
 					<p:input id="code" label="#{bundles.messages.magazzino_code}">
 						<h:inputText id="input"
-							value="#{magazzinoSelection.selectedJar.code}" />
+							value="#{magazzinoSelection.selectedJar.codeJar}" />
 					</p:input>
 
 					<p:input id="cause" label="#{bundles.messages.magazzino_cause}">

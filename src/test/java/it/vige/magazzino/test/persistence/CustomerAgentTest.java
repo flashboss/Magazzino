@@ -20,6 +20,16 @@ import static it.vige.magazzino.test.Dependencies.FACES;
 import static it.vige.magazzino.test.Dependencies.INTERNATIONAL;
 import static it.vige.magazzino.test.Dependencies.RICHFACES;
 import static it.vige.magazzino.test.Dependencies.SOLDER;
+import static it.vige.magazzino.test.mock.CustomerMock.customer0;
+import static it.vige.magazzino.test.mock.CustomerMock.customer1;
+import static it.vige.magazzino.test.mock.CustomerMock.customer2;
+import static it.vige.magazzino.test.mock.CustomerMock.customer3;
+import static it.vige.magazzino.test.mock.CustomerMock.customer4;
+import static it.vige.magazzino.test.mock.CustomerMock.customer5;
+import static it.vige.magazzino.test.mock.CustomerMock.customer6;
+import static it.vige.magazzino.test.mock.CustomerMock.customer7;
+import static it.vige.magazzino.test.mock.CustomerMock.customer8;
+import static it.vige.magazzino.test.mock.CustomerMock.customers;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -35,6 +45,8 @@ import it.vige.magazzino.model.Address;
 import it.vige.magazzino.model.Customer;
 import it.vige.magazzino.model.Customer_;
 import it.vige.magazzino.model.Data;
+import it.vige.magazzino.model.Magazzino;
+import it.vige.magazzino.model.Receipt;
 import it.vige.magazzino.remove.CustomerDeleter;
 import it.vige.magazzino.selection.CustomerSelection;
 import it.vige.magazzino.test.mock.AddressMock;
@@ -46,6 +58,8 @@ import it.vige.magazzino.test.operation.CustomerOperation;
 import it.vige.magazzino.test.operation.ImageOperation;
 import it.vige.magazzino.test.operation.ListDataOperation;
 import it.vige.magazzino.update.CustomerUpdater;
+
+import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ejb.EJBTransactionRolledbackException;
@@ -72,7 +86,7 @@ import org.junit.runner.RunWith;
  * @author <a href="http://www.vige.it">Luca Stancapiano</a>
  */
 @RunWith(Arquillian.class)
-public class CustomerAgentTest implements CustomerMock {
+public class CustomerAgentTest {
 	@Deployment
 	public static WebArchive createDeployment() {
 		WebArchive war = ShrinkWrap
@@ -93,6 +107,8 @@ public class CustomerAgentTest implements CustomerMock {
 						SearchCriteria.class)
 				.addClasses(DataContainer.class, FileUpload.class)
 				.addClasses(DefaultBundleKey.class)
+				.addClasses(Magazzino.class)
+				.addClasses(Receipt.class)
 				.addAsLibraries(SOLDER)
 				.addAsLibraries(INTERNATIONAL)
 				.addAsLibraries(FACES)
@@ -135,18 +151,35 @@ public class CustomerAgentTest implements CustomerMock {
 
 	@Before
 	public void createCustomer() throws Exception {
-		if (em.find(Customer.class, customer0.getCode()) == null) {
+		if (em.find(Customer.class, customer0.getCodeCustomer()) == null) {
 			utx.begin();
 			em.joinTransaction();
-
+			persistList(customer0.getFiles());
+			persistList(customer0.getReceipts());
 			em.persist(customer0);
+			persistList(customer1.getFiles());
+			persistList(customer1.getReceipts());
 			em.persist(customer1);
+			persistList(customer2.getFiles());
+			persistList(customer2.getReceipts());
 			em.persist(customer2);
+			persistList(customer3.getFiles());
+			persistList(customer3.getReceipts());
 			em.persist(customer3);
+			persistList(customer4.getFiles());
+			persistList(customer4.getReceipts());
 			em.persist(customer4);
+			persistList(customer5.getFiles());
+			persistList(customer5.getReceipts());
 			em.persist(customer5);
+			persistList(customer6.getFiles());
+			persistList(customer6.getReceipts());
 			em.persist(customer6);
+			persistList(customer7.getFiles());
+			persistList(customer7.getReceipts());
 			em.persist(customer7);
+			persistList(customer8.getFiles());
+			persistList(customer8.getReceipts());
 			em.persist(customer8);
 			utx.commit();
 		}
@@ -197,16 +230,16 @@ public class CustomerAgentTest implements CustomerMock {
 		Address address = new Address();
 		address.setAddress("Vige street");
 		Customer customer = customerRegister.getNewCustomer();
-		customer.setCode("99999999");
+		customer.setCodeCustomer("99999999");
 		customer.setName(customerName);
 		customer.setIva(pIva1);
 		customer.setRagSocial(ragSoc1);
 		customer.setAddress(address);
 		customerRegister.register();
 		String message = messages.getAll().iterator().next().getText();
-		assertTrue(message, message.contains(customer.getCode()));
+		assertTrue(message, message.contains(customer.getCodeCustomer()));
 		// cancel customer
-		customer.setCode("");
+		customer.setCodeCustomer("");
 		try {
 			customerRegister.register();
 			assertTrue(false);
@@ -214,7 +247,7 @@ public class CustomerAgentTest implements CustomerMock {
 			assertTrue(true);
 		}
 		customer.setName("");
-		customer.setCode("99999991");
+		customer.setCodeCustomer("99999991");
 		try {
 			customerRegister.register();
 			assertTrue(false);
@@ -273,6 +306,12 @@ public class CustomerAgentTest implements CustomerMock {
 		message = messages.getAll().iterator().next().getText();
 		assertTrue("Update success.",
 				message.startsWith("You have been successfully updated"));
+	}
+
+	private <T> void persistList(List<T> elements) {
+		if (elements != null)
+			for (T element : elements)
+				em.persist(element);
 	}
 
 }

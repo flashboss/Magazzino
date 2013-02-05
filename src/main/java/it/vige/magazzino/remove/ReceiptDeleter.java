@@ -48,9 +48,9 @@ public class ReceiptDeleter {
 
 	@Inject
 	private FacesContext facesContext;
-    
-    @Inject
-    private ReceiptSearch receiptSearch;
+
+	@Inject
+	private ReceiptSearch receiptSearch;
 
 	public void delete(Receipt receipt) {
 		Receipt oldReceipt;
@@ -58,11 +58,10 @@ public class ReceiptDeleter {
 			em.remove(oldReceipt);
 			receiptSearch.currentPage();
 		}
-		
+
 		messages.info(new DefaultBundleKey("receipt_deleted"))
-				.defaults(
-						"You have been successfully deleted the receipt {0}!")
-				.params(receipt.getNumber());
+				.defaults("You have been successfully deleted the receipt {0}!")
+				.params(receipt.getCodeReceipt());
 	}
 
 	/**
@@ -85,7 +84,7 @@ public class ReceiptDeleter {
 	}
 
 	private Receipt verifyNumberIsAvailable(Receipt receipt) {
-		Receipt existing = em.find(Receipt.class, receipt.getNumber());
+		Receipt existing = em.find(Receipt.class, receipt.getCodeReceipt());
 		return existing;
 	}
 

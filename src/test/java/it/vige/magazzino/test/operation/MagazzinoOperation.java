@@ -30,13 +30,13 @@ public class MagazzinoOperation {
 
 	private List<Magazzino> jars = new ArrayList<Magazzino>();
 
-	public Magazzino create(String number, String date, String code,
+	public Magazzino create(String codeJar, String date, String code,
 			String cause, String compensation, String codCustomer,
 			String ragSoc1, String ragSoc2, String numberDoc, String dateDoc,
 			String iva, String capSoc, String reaPI, Address address,
-			ArrayList<Data> listData) {
+			List<Data> listData) {
 		Magazzino magazzino = new Magazzino();
-		magazzino.setNumber(number);
+		magazzino.setCodeJar(codeJar);
 		magazzino.setDate(date);
 		magazzino.setCode(code);
 		magazzino.setCause(cause);

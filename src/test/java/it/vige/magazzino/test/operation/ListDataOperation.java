@@ -26,17 +26,16 @@ import java.util.List;
  */
 public class ListDataOperation {
 
-	private List<ArrayList<Data>> listDatas = new ArrayList<ArrayList<Data>>();
+	private List<List<Data>> listDatas = new ArrayList<List<Data>>();
 
-	public ArrayList<Data> create(String code, byte[] image,
-			String description, int length, String name, boolean isMulti,
-			String code2) {
-		ArrayList<Data> listData = null;
+	public List<Data> create(String codeData, byte[] image, String description,
+			int length, String name, boolean isMulti, String codeData2) {
+		List<Data> listData = null;
 		if (image != null) {
 			listData = new ArrayList<Data>();
 			String secondName = "nuovo nome";
 			Data data = new Data();
-			data.setCode(code);
+			data.setCodeData(codeData);
 			data.setData(image);
 			data.setDescription(description);
 			data.setLength(length);
@@ -44,7 +43,7 @@ public class ListDataOperation {
 			listData.add(data);
 			if (isMulti) {
 				Data data2 = new Data();
-				data2.setCode(code2);
+				data2.setCodeData(codeData2);
 				data2.setData(image);
 				data2.setDescription("nuova descrizione");
 				data2.setLength(98);
@@ -58,7 +57,7 @@ public class ListDataOperation {
 	}
 
 	@SuppressWarnings("unchecked")
-	public ArrayList<Data>[] getAllListDatas() {
-		return listDatas.toArray(new ArrayList[0]);
+	public List<Data>[] getAllListDatas() {
+		return listDatas.toArray(new List[0]);
 	}
 }

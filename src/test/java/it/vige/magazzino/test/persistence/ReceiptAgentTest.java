@@ -20,9 +20,44 @@ import static it.vige.magazzino.test.Dependencies.FACES;
 import static it.vige.magazzino.test.Dependencies.INTERNATIONAL;
 import static it.vige.magazzino.test.Dependencies.RICHFACES;
 import static it.vige.magazzino.test.Dependencies.SOLDER;
+import static it.vige.magazzino.test.mock.CustomerMock.customer0;
+import static it.vige.magazzino.test.mock.CustomerMock.customer1;
+import static it.vige.magazzino.test.mock.CustomerMock.customer2;
+import static it.vige.magazzino.test.mock.CustomerMock.customer3;
+import static it.vige.magazzino.test.mock.CustomerMock.customer4;
+import static it.vige.magazzino.test.mock.CustomerMock.customer5;
+import static it.vige.magazzino.test.mock.CustomerMock.customer6;
+import static it.vige.magazzino.test.mock.CustomerMock.customer7;
+import static it.vige.magazzino.test.mock.CustomerMock.customer8;
+import static it.vige.magazzino.test.mock.MagazzinoMock.magazzino0;
+import static it.vige.magazzino.test.mock.MagazzinoMock.magazzino1;
+import static it.vige.magazzino.test.mock.MagazzinoMock.magazzino10;
+import static it.vige.magazzino.test.mock.MagazzinoMock.magazzino2;
+import static it.vige.magazzino.test.mock.MagazzinoMock.magazzino3;
+import static it.vige.magazzino.test.mock.MagazzinoMock.magazzino4;
+import static it.vige.magazzino.test.mock.MagazzinoMock.magazzino5;
+import static it.vige.magazzino.test.mock.MagazzinoMock.magazzino6;
+import static it.vige.magazzino.test.mock.MagazzinoMock.magazzino7;
+import static it.vige.magazzino.test.mock.MagazzinoMock.magazzino8;
+import static it.vige.magazzino.test.mock.MagazzinoMock.magazzino9;
+import static it.vige.magazzino.test.mock.ReceiptMock.receipt0;
+import static it.vige.magazzino.test.mock.ReceiptMock.receipt1;
+import static it.vige.magazzino.test.mock.ReceiptMock.receipt10;
+import static it.vige.magazzino.test.mock.ReceiptMock.receipt2;
+import static it.vige.magazzino.test.mock.ReceiptMock.receipt3;
+import static it.vige.magazzino.test.mock.ReceiptMock.receipt4;
+import static it.vige.magazzino.test.mock.ReceiptMock.receipt5;
+import static it.vige.magazzino.test.mock.ReceiptMock.receipt6;
+import static it.vige.magazzino.test.mock.ReceiptMock.receipt7;
+import static it.vige.magazzino.test.mock.ReceiptMock.receipt8;
+import static it.vige.magazzino.test.mock.ReceiptMock.receipt9;
+import static it.vige.magazzino.test.mock.ReceiptMock.receipts;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+
+import java.util.List;
+
 import it.vige.magazzino.DataContainer;
 import it.vige.magazzino.FileUpload;
 import it.vige.magazzino.ReceiptRegister;
@@ -78,8 +113,7 @@ import org.junit.runner.RunWith;
  * @author <a href="http://www.vige.it">Luca Stancapiano</a>
  */
 @RunWith(Arquillian.class)
-public class ReceiptAgentTest implements ReceiptMock, MagazzinoMock,
-		CustomerMock {
+public class ReceiptAgentTest {
 	@Deployment
 	public static WebArchive createDeployment() {
 		WebArchive war = ShrinkWrap
@@ -146,9 +180,70 @@ public class ReceiptAgentTest implements ReceiptMock, MagazzinoMock,
 
 	@Before
 	public void createReceipt() throws Exception {
-		if (em.find(Receipt.class, receipt0.getNumber()) == null) {
+		if (em.find(Receipt.class, receipt0.getCodeReceipt()) == null) {
 			utx.begin();
 			em.joinTransaction();
+			persistList(customer0.getFiles());
+			persistList(customer0.getReceipts());
+			em.persist(customer0);
+			persistList(customer1.getFiles());
+			persistList(customer1.getReceipts());
+			em.persist(customer1);
+			persistList(customer2.getFiles());
+			persistList(customer2.getReceipts());
+			em.persist(customer2);
+			persistList(customer3.getFiles());
+			persistList(customer3.getReceipts());
+			em.persist(customer3);
+			persistList(customer4.getFiles());
+			persistList(customer4.getReceipts());
+			em.persist(customer4);
+			persistList(customer5.getFiles());
+			persistList(customer5.getReceipts());
+			em.persist(customer5);
+			persistList(customer6.getFiles());
+			persistList(customer6.getReceipts());
+			em.persist(customer6);
+			persistList(customer7.getFiles());
+			persistList(customer7.getReceipts());
+			em.persist(customer7);
+			persistList(customer8.getFiles());
+			persistList(customer8.getReceipts());
+			em.persist(customer8);
+
+			persistList(magazzino0.getFiles());
+			persistList(magazzino0.getReceipts());
+			em.persist(magazzino0);
+			persistList(magazzino1.getFiles());
+			persistList(magazzino1.getReceipts());
+			em.persist(magazzino1);
+			persistList(magazzino2.getFiles());
+			persistList(magazzino2.getReceipts());
+			em.persist(magazzino2);
+			persistList(magazzino3.getFiles());
+			persistList(magazzino3.getReceipts());
+			em.persist(magazzino3);
+			persistList(magazzino4.getFiles());
+			persistList(magazzino4.getReceipts());
+			em.persist(magazzino4);
+			persistList(magazzino5.getFiles());
+			persistList(magazzino5.getReceipts());
+			em.persist(magazzino5);
+			persistList(magazzino6.getFiles());
+			persistList(magazzino6.getReceipts());
+			em.persist(magazzino6);
+			persistList(magazzino7.getFiles());
+			persistList(magazzino7.getReceipts());
+			em.persist(magazzino7);
+			persistList(magazzino8.getFiles());
+			persistList(magazzino8.getReceipts());
+			em.persist(magazzino8);
+			persistList(magazzino9.getFiles());
+			persistList(magazzino9.getReceipts());
+			em.persist(magazzino9);
+			persistList(magazzino10.getFiles());
+			persistList(magazzino10.getReceipts());
+			em.persist(magazzino10);
 
 			em.persist(receipt0);
 			em.persist(receipt1);
@@ -161,9 +256,6 @@ public class ReceiptAgentTest implements ReceiptMock, MagazzinoMock,
 			em.persist(receipt8);
 			em.persist(receipt9);
 			em.persist(receipt10);
-
-			em.persist(customer0);
-			em.persist(magazzino0);
 			utx.commit();
 		}
 	}
@@ -210,7 +302,7 @@ public class ReceiptAgentTest implements ReceiptMock, MagazzinoMock,
 		String description = "new description";
 		String cause = "new rag soc for receipt test";
 		Receipt receipt = receiptRegister.getNewReceipt();
-		receipt.setNumber("99999999");
+		receipt.setCodeReceipt("99999999");
 		receipt.setDate(date);
 		receipt.setCause(cause);
 		receipt.setDescription(description);
@@ -218,9 +310,9 @@ public class ReceiptAgentTest implements ReceiptMock, MagazzinoMock,
 		receipt.setJar(magazzino0);
 		receiptRegister.register();
 		String message = messages.getAll().iterator().next().getText();
-		assertTrue(message, message.contains(receipt.getNumber()));
+		assertTrue(message, message.contains(receipt.getCodeReceipt()));
 		// cancel receipt
-		receipt.setNumber("");
+		receipt.setCodeReceipt("");
 		try {
 			receiptRegister.register();
 			assertTrue(false);
@@ -228,7 +320,7 @@ public class ReceiptAgentTest implements ReceiptMock, MagazzinoMock,
 			assertTrue(true);
 		}
 		receipt.setCause("");
-		receipt.setNumber("99999991");
+		receipt.setCodeReceipt("99999991");
 		try {
 			receiptRegister.register();
 			assertTrue(false);
@@ -287,5 +379,11 @@ public class ReceiptAgentTest implements ReceiptMock, MagazzinoMock,
 		message = messages.getAll().iterator().next().getText();
 		assertTrue("Update success.",
 				message.startsWith("You have been successfully updated"));
+	}
+
+	private <T> void persistList(List<T> elements) {
+		if (elements != null)
+			for (T element : elements)
+				em.persist(element);
 	}
 }

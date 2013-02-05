@@ -60,15 +60,15 @@ public class ReceiptUpdater {
 	public void update() {
 		Receipt oldReceipt;
 		Receipt receipt = receiptSelection.getSelectedReceipt();
-		if ((oldReceipt = verifyNumberIsAvailable(receipt)) != null) 
+		if ((oldReceipt = verifyNumberIsAvailable(receipt)) != null)
 			em.remove(oldReceipt);
-		
+
 		em.persist(receipt);
 		updated = true;
 		messages.info(new DefaultBundleKey("receipt_updated"))
 				.defaults(
 						"You have been successfully updated as the receipt {0}!")
-				.params(receipt.getNumber());
+				.params(receipt.getCodeReceipt());
 	}
 
 	/**
@@ -103,7 +103,7 @@ public class ReceiptUpdater {
 	}
 
 	private Receipt verifyNumberIsAvailable(Receipt receipt) {
-		Receipt existing = em.find(Receipt.class, receipt.getNumber());
+		Receipt existing = em.find(Receipt.class, receipt.getCodeReceipt());
 		return existing;
 	}
 

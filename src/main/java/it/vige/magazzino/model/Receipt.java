@@ -42,24 +42,34 @@ import org.jboss.seam.solder.core.Veto;
 @Table(name = "receipt")
 @Veto
 public class Receipt implements Serializable {
-	private static final long serialVersionUID = -602763026033932730L;
+	private static final long serialVersionUID = -6293695153492023096L;
 	@ManyToOne
-	@JoinColumn(name = "number_bbb", nullable = false)
+	@NotNull
+	@JoinColumn(name = "codeJar")
 	private Magazzino jar;
 	@ManyToOne
-	@JoinColumn(name = "code_bbb", nullable = false)
+	@NotNull
+	@JoinColumn(name = "codeCustomer")
 	private Customer customer;
-	private String number;
+	@Id
+	@NotNull
+	@Size(min = 3, max = 15)
+	@Pattern(regexp = "^\\w*$", message = "not a valid number")
+	private String codeReceipt;
+	@NotNull
 	private String date;
+	@NotNull
+	@Size(min = 1, max = 100)
 	private String cause;
+	@Size(min = 5, max = 15)
 	private String description;
 
 	public Receipt() {
 	}
 
-	public Receipt(final String number, final String date, final String cause,
-			Magazzino jar, Customer customer) {
-		this.number = number;
+	public Receipt(final String codeReceipt, final String date,
+			final String cause, Magazzino jar, Customer customer) {
+		this.codeReceipt = codeReceipt;
 		this.date = date;
 		this.cause = cause;
 		this.jar = jar;
@@ -72,8 +82,6 @@ public class Receipt implements Serializable {
 		this.description = description;
 	}
 
-	@NotNull
-	@Size(min = 1, max = 100)
 	public String getCause() {
 		return cause;
 	}
@@ -82,7 +90,6 @@ public class Receipt implements Serializable {
 		this.cause = cause;
 	}
 
-	@Size(min = 5, max = 15)
 	public String getDescription() {
 		return description;
 	}
@@ -91,19 +98,14 @@ public class Receipt implements Serializable {
 		this.description = description;
 	}
 
-	@Id
-	@NotNull
-	@Size(min = 3, max = 15)
-	@Pattern(regexp = "^\\w*$", message = "not a valid number")
-	public String getNumber() {
-		return number;
+	public String getCodeReceipt() {
+		return codeReceipt;
 	}
 
-	public void setNumber(final String number) {
-		this.number = number;
+	public void setCodeReceipt(final String codeReceipt) {
+		this.codeReceipt = codeReceipt;
 	}
 
-	@NotNull
 	public String getDate() {
 		return date;
 	}
@@ -114,7 +116,7 @@ public class Receipt implements Serializable {
 
 	@Transient
 	public String getNumberWithCause() {
-		return number + " <" + cause + ">";
+		return codeReceipt + " <" + cause + ">";
 	}
 
 	@Override
@@ -122,7 +124,6 @@ public class Receipt implements Serializable {
 		return cause;
 	}
 
-	@NotNull
 	public Magazzino getJar() {
 		return jar;
 	}
@@ -131,7 +132,6 @@ public class Receipt implements Serializable {
 		this.jar = jar;
 	}
 
-	@NotNull
 	public Customer getCustomer() {
 		return customer;
 	}
@@ -145,16 +145,17 @@ public class Receipt implements Serializable {
 		// TODO Auto-generated method stub
 		if (!(arg0 instanceof Receipt))
 			return super.equals(arg0);
-		else if (this.getNumber() == null
-				&& ((Receipt) arg0).getNumber() == null)
+		else if (this.getCodeReceipt() == null
+				&& ((Receipt) arg0).getCodeReceipt() == null)
 			return true;
 		else
-			return this.getNumber().equals(((Receipt) arg0).getNumber());
+			return this.getCodeReceipt().equals(
+					((Receipt) arg0).getCodeReceipt());
 	}
 
 	@Override
 	public int hashCode() {
 		// TODO Auto-generated method stub
-		return Integer.parseInt(number);
+		return codeReceipt.hashCode();
 	}
 }

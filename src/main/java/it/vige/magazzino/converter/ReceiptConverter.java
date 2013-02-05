@@ -19,7 +19,7 @@ public class ReceiptConverter extends Converter<Receipt> {
 	public Receipt toObject(UIComponent arg0, String arg1) {
 		// TODO Auto-generated method stub
 		for (Receipt receipt : receiptAllSearch.getAllReceipts())
-			if (receipt.getNumber().equals(arg1))
+			if (receipt.getCodeReceipt().equals(arg1))
 				return receipt;
 		return null;
 	}
@@ -27,7 +27,7 @@ public class ReceiptConverter extends Converter<Receipt> {
 	@Override
 	public String toString(UIComponent arg0, Receipt arg1) {
 		// TODO Auto-generated method stub
-		return arg1.getNumber();
+		return arg1.getCodeReceipt();
 	}
 
 }

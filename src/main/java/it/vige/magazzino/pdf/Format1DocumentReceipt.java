@@ -214,7 +214,7 @@ public class Format1DocumentReceipt implements DocumentReceipt {
 		Phrase phrase27 = new Phrase("aaqaqaq", normalFont);
 		Phrase phrase28 = new Phrase("cddcddcd", normalFont);
 		Phrase phrase29 = new Phrase("cnjcndkd", normalFont);
-		Phrase phrase30 = new Phrase(receipt.getNumber() + "", normalFont);
+		Phrase phrase30 = new Phrase(receipt.getCodeReceipt() + "", normalFont);
 		Phrase phrase31 = new Phrase(receipt.getDate(), normalFont);
 		Phrase phrase32 = new Phrase("tgsb", normalFont);
 		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase27, 36,

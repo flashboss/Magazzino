@@ -37,7 +37,7 @@ import org.jboss.seam.solder.logging.TypedCategory;
 
 /**
  * The view controller for registering a new article
- *
+ * 
  * @author <a href="http://www.vige.it">Luca Stancapiano</a>
  */
 @Stateful
@@ -45,91 +45,98 @@ import org.jboss.seam.solder.logging.TypedCategory;
 @SessionScoped
 public class ArticleRegister {
 
-    @Inject
-    @TypedCategory(ArticleRegister.class)
-    private ArticleLog log;
-    
-    @PersistenceContext
-    private EntityManager em;
+	@Inject
+	@TypedCategory(ArticleRegister.class)
+	private ArticleLog log;
 
-    @Inject
-    private Messages messages;
+	@PersistenceContext
+	private EntityManager em;
 
-    @Inject
-    private FacesContext facesContext;
+	@Inject
+	private Messages messages;
 
-    private UIInput codeInput;
+	@Inject
+	private FacesContext facesContext;
 
-    private final Article newArticle = new Article();
+	private UIInput codeInput;
 
-    private boolean registered;
+	private final Article newArticle = new Article();
 
-    private boolean registrationInvalid;
+	private boolean registered;
 
-    public void register() {
-        if (verifyCodeIsAvailable()) {
-            registered = true;
-            em.persist(newArticle);
+	private boolean registrationInvalid;
 
-            messages.info(new DefaultBundleKey("article_registered"))
-                    .defaults("You have been successfully registered as the article {0}!")
-                    .params(newArticle.getCode());
-            log.articleConfirmed(newArticle.getCode()+"", newArticle.getBarCode());
-        } else {
-            registrationInvalid = true;
-        }
-    }
+	public void register() {
+		if (verifyCodeIsAvailable()) {
+			registered = true;
+			em.persist(newArticle);
 
-    public boolean isRegistrationInvalid() {
-        return registrationInvalid;
-    }
+			messages.info(new DefaultBundleKey("article_registered"))
+					.defaults(
+							"You have been successfully registered as the article {0}!")
+					.params(newArticle.getCodeArticle());
+			log.articleConfirmed(newArticle.getCodeArticle() + "",
+					newArticle.getBarCode());
+		} else {
+			registrationInvalid = true;
+		}
+	}
 
-    /**
-     * This method just shows another approach to adding a status message.
-     * <p>
-     * Invoked by:
-     * </p>
-     * <p/>
-     * <pre>
-     * &lt;f:event type="preRenderView" listener="#{register.notifyIfRegistrationIsInvalid}"/>
-     * </pre>
-     */
-    public void notifyIfRegistrationIsInvalid() {
-        if (facesContext.isValidationFailed() || registrationInvalid) {
-            messages.warn(new DefaultBundleKey("article_invalid")).defaults(
-                    "Invalid article. Please correct the errors and try again.");
-        }
-    }
+	public boolean isRegistrationInvalid() {
+		return registrationInvalid;
+	}
 
-    @Produces
-    @Named
-    public Article getNewArticle() {
-        return newArticle;
-    }
+	/**
+	 * This method just shows another approach to adding a status message.
+	 * <p>
+	 * Invoked by:
+	 * </p>
+	 * <p/>
+	 * 
+	 * <pre>
+	 * &lt;f:event type="preRenderView" listener="#{register.notifyIfRegistrationIsInvalid}"/>
+	 * </pre>
+	 */
+	public void notifyIfRegistrationIsInvalid() {
+		if (facesContext.isValidationFailed() || registrationInvalid) {
+			messages.warn(new DefaultBundleKey("article_invalid"))
+					.defaults(
+							"Invalid article. Please correct the errors and try again.");
+		}
+	}
 
-    public boolean isRegistered() {
-        return registered;
-    }
+	@Produces
+	@Named
+	public Article getNewArticle() {
+		return newArticle;
+	}
 
-    public UIInput getCodeInput() {
-        return codeInput;
-    }
+	public boolean isRegistered() {
+		return registered;
+	}
 
-    public void setCodeInput(final UIInput codeInput) {
-        this.codeInput = codeInput;
-    }
+	public UIInput getCodeInput() {
+		return codeInput;
+	}
 
-    private boolean verifyCodeIsAvailable() {
-        Article existing = em.find(Article.class, newArticle.getCode());
-        if (existing != null) {
-            messages.warn(new BundleKey("messages", "account_codeTaken"))
-                    .defaults("The username '{0}' is already taken. Please choose another code.")
-                    .targets(codeInput.getClientId()).params(newArticle.getCode());
-            log.articleAvailable(existing.getCode()+"", existing != null);
-            return false;
-        }
+	public void setCodeInput(final UIInput codeInput) {
+		this.codeInput = codeInput;
+	}
 
-        return true;
-    }
+	private boolean verifyCodeIsAvailable() {
+		Article existing = em.find(Article.class, newArticle.getCodeArticle());
+		if (existing != null) {
+			messages.warn(new BundleKey("messages", "account_codeTaken"))
+					.defaults(
+							"The username '{0}' is already taken. Please choose another code.")
+					.targets(codeInput.getClientId())
+					.params(newArticle.getCodeArticle());
+			log.articleAvailable(existing.getCodeArticle() + "",
+					existing != null);
+			return false;
+		}
+
+		return true;
+	}
 
 }

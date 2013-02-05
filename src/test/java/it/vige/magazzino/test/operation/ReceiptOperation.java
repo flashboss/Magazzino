@@ -30,13 +30,13 @@ public class ReceiptOperation {
 
 	private List<Receipt> receipts = new ArrayList<Receipt>();
 
-	public Receipt create(String number, String date, String cause,
+	public Receipt create(String codeReceipt, String date, String cause,
 			String description, Magazzino magazzino, Customer customer) {
 		Receipt receipt = new Receipt();
 		receipt.setCause(cause);
 		receipt.setDate(date);
 		receipt.setDescription(description);
-		receipt.setNumber(number);
+		receipt.setCodeReceipt(codeReceipt);
 		receipt.setJar(magazzino);
 		receipt.setCustomer(customer);
 

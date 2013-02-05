@@ -62,7 +62,7 @@ public class ArticleUpdater {
 	public void update() {
 		Article oldArticle;
 		Article article = articleSelection.getSelectedArticle();
-		if ((oldArticle = verifyCodeIsAvailable(article)) != null) 
+		if ((oldArticle = verifyCodeIsAvailable(article)) != null)
 			em.remove(oldArticle);
 
 		em.persist(article);
@@ -70,7 +70,7 @@ public class ArticleUpdater {
 		messages.info(new DefaultBundleKey("article_updated"))
 				.defaults(
 						"You have been successfully updated as the article {0}!")
-				.params(article.getCode());
+				.params(article.getCodeArticle());
 	}
 
 	public boolean isRegistrationInvalid() {
@@ -109,7 +109,7 @@ public class ArticleUpdater {
 	}
 
 	private Article verifyCodeIsAvailable(Article article) {
-		Article existing = em.find(Article.class, article.getCode());
+		Article existing = em.find(Article.class, article.getCodeArticle());
 		return existing;
 	}
 

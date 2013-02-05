@@ -30,10 +30,10 @@ public class CustomerOperation {
 
 	private List<Customer> customers = new ArrayList<Customer>();
 
-	public Customer create(String code, String name, String ragSocial,
-			String iva, Address address, ArrayList<Data> listData) {
+	public Customer create(String codeCustomer, String name, String ragSocial,
+			String iva, Address address, List<Data> listData) {
 		Customer customer = new Customer();
-		customer.setCode(code);
+		customer.setCodeCustomer(codeCustomer);
 		customer.setName(name);
 		customer.setRagSocial(ragSocial);
 		customer.setIva(iva);
