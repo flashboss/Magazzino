@@ -16,9 +16,12 @@
  */
 package it.vige.magazzino;
 
+import java.util.List;
+
 import it.vige.magazzino.i18n.DefaultBundleKey;
 import it.vige.magazzino.log.CustomerLog;
 import it.vige.magazzino.model.Customer;
+import it.vige.magazzino.model.Data;
 
 import javax.ejb.Stateful;
 import javax.enterprise.context.SessionScoped;
@@ -69,6 +72,11 @@ public class CustomerRegister {
 	public void register() {
 		if (verifyCodeIsAvailable()) {
 			registered = true;
+			List<Data> files = newCustomer.getFiles();
+			for (Data file : files) {
+				file.setCustomer(newCustomer);
+				em.persist(file);
+			}
 			em.persist(newCustomer);
 
 			messages.info(new DefaultBundleKey("customer_registered"))

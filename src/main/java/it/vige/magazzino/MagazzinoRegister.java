@@ -18,7 +18,10 @@ package it.vige.magazzino;
 
 import it.vige.magazzino.i18n.DefaultBundleKey;
 import it.vige.magazzino.log.MagazzinoLog;
+import it.vige.magazzino.model.Data;
 import it.vige.magazzino.model.Magazzino;
+
+import java.util.List;
 
 import javax.ejb.Stateful;
 import javax.enterprise.context.SessionScoped;
@@ -69,6 +72,11 @@ public class MagazzinoRegister {
 	public void register() {
 		if (verifyNumberIsAvailable()) {
 			registered = true;
+			List<Data> files = newJar.getFiles();
+			for (Data file : files) {
+				file.setJar(newJar);
+				em.persist(file);
+			}
 			em.persist(newJar);
 
 			messages.info(new DefaultBundleKey("magazzino_registered"))

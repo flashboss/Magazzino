@@ -4,6 +4,7 @@ import it.vige.magazzino.model.Data;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -45,6 +46,7 @@ public abstract class FileUpload implements DataContainer {
 		log.debug("File info: " + item.getName() + ","
 				+ item.getParameterName());
 		Data file = new Data();
+		file.setCodeData(new Date().toString());
 		file.setLength(item.getData().length);
 		file.setName(item.getName());
 		file.setData(item.getData());
