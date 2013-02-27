@@ -31,7 +31,8 @@ download selenium-server from http://selenium.googlecode.com/files/selenium-serv
 deploy the application in a server
 start the server with 8080 port
 java -jar selenium-server-standalone-2.25.0.jar
-mvn -Dftest test
+deploy the application with the command: mvn jboss:hard-deploy assuming the JBOSS_HOME system variable is correct
+mvn -Pftest test
 
 to test it with a single test in jboss:
 mvn -Pftest test -Dtest=MagazzinoTest
