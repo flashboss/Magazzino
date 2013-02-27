@@ -60,12 +60,8 @@ public class ArticleUpdater {
 	private boolean registrationInvalid;
 
 	public void update() {
-		Article oldArticle;
 		Article article = articleSelection.getSelectedArticle();
-		if ((oldArticle = verifyCodeIsAvailable(article)) != null)
-			em.remove(oldArticle);
-
-		em.persist(article);
+		em.merge(article);
 		updated = true;
 		messages.info(new DefaultBundleKey("article_updated"))
 				.defaults(
@@ -106,11 +102,6 @@ public class ArticleUpdater {
 
 	public void setCodeInput(final UIInput codeInput) {
 		this.codeInput = codeInput;
-	}
-
-	private Article verifyCodeIsAvailable(Article article) {
-		Article existing = em.find(Article.class, article.getCodeArticle());
-		return existing;
 	}
 
 }

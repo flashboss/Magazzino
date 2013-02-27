@@ -58,12 +58,8 @@ public class ReceiptUpdater {
 	private boolean updated;
 
 	public void update() {
-		Receipt oldReceipt;
 		Receipt receipt = receiptSelection.getSelectedReceipt();
-		if ((oldReceipt = verifyNumberIsAvailable(receipt)) != null)
-			em.remove(oldReceipt);
-
-		em.persist(receipt);
+		em.merge(receipt);
 		updated = true;
 		messages.info(new DefaultBundleKey("receipt_updated"))
 				.defaults(
@@ -100,11 +96,6 @@ public class ReceiptUpdater {
 
 	public void setNumberInput(final UIInput numberInput) {
 		this.numberInput = numberInput;
-	}
-
-	private Receipt verifyNumberIsAvailable(Receipt receipt) {
-		Receipt existing = em.find(Receipt.class, receipt.getCodeReceipt());
-		return existing;
 	}
 
 }

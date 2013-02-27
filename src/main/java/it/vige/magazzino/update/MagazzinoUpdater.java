@@ -60,12 +60,8 @@ public class MagazzinoUpdater {
 	private boolean registrationInvalid;
 
 	public void update() {
-		Magazzino oldMagazzino;
 		Magazzino magazzino = magazzinoSelection.getSelectedJar();
-		if ((oldMagazzino = verifyNumberIsAvailable(magazzino)) != null)
-			em.remove(oldMagazzino);
-
-		em.persist(magazzino);
+		em.merge(magazzino);
 		updated = true;
 		messages.info(new DefaultBundleKey("magazzino_updated"))
 				.defaults("You have been successfully updated as the jar {0}!")
@@ -104,11 +100,6 @@ public class MagazzinoUpdater {
 
 	public void setNumberInput(final UIInput numberInput) {
 		this.numberInput = numberInput;
-	}
-
-	private Magazzino verifyNumberIsAvailable(Magazzino magazzino) {
-		Magazzino existing = em.find(Magazzino.class, magazzino.getCodeJar());
-		return existing;
 	}
 
 }

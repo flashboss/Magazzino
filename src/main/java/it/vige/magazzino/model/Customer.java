@@ -62,7 +62,7 @@ public class Customer extends FileUpload {
 	@NotNull
 	private String iva;
 	@OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	private List<Data> files = new ArrayList<Data>();;
+	private List<Data> files = new ArrayList<Data>();
 	@OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
 	private List<Receipt> receipts = new ArrayList<Receipt>();
 

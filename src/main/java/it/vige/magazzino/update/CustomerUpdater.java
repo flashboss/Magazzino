@@ -60,12 +60,8 @@ public class CustomerUpdater {
 	private boolean registrationInvalid;
 
 	public void update() {
-		Customer oldCustomer;
 		Customer customer = customerSelection.getSelectedCustomer();
-		if ((oldCustomer = verifyCodeIsAvailable(customer)) != null)
-			em.remove(oldCustomer);
-
-		em.persist(customer);
+		em.merge(customer);
 		updated = true;
 		messages.info(new DefaultBundleKey("customer_updated"))
 				.defaults(
@@ -106,11 +102,6 @@ public class CustomerUpdater {
 
 	public void setCodeInput(final UIInput codeInput) {
 		this.codeInput = codeInput;
-	}
-
-	private Customer verifyCodeIsAvailable(Customer customer) {
-		Customer existing = em.find(Customer.class, customer.getCodeCustomer());
-		return existing;
 	}
 
 }
