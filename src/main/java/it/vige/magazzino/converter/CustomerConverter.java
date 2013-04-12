@@ -18,9 +18,9 @@ public class CustomerConverter extends Converter<Customer> {
 	@Override
 	public Customer toObject(UIComponent arg0, String arg1) {
 		// TODO Auto-generated method stub
-		for (Customer jar : customerAllSearch.getAllCustomers())
-			if (jar.getCodeCustomer().equals(arg1))
-				return jar;
+		for (Customer customer : customerAllSearch.getAllCustomers())
+			if (customer.getCodeCustomer().equals(arg1))
+				return customer;
 		return null;
 	}
 
