@@ -2,6 +2,7 @@ package it.vige.magazzino.model;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -22,6 +23,7 @@ public class Data implements Serializable {
 	private String name;
 	private String mime;
 	private long length;
+	@Column(length = 100000)
 	private byte[] data;
 	private String description;
 	@ManyToOne

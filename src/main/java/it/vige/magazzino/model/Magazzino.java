@@ -46,6 +46,7 @@ import org.jboss.seam.solder.core.Veto;
 @Veto
 public class Magazzino extends FileUpload {
 	private static final long serialVersionUID = 7693948752468272876L;
+	@Column(length = 1000)
 	private Address address = new Address();
 	@Id
 	@Column(name = "codeJar")
