@@ -141,7 +141,6 @@ public class ReceiptAgentTest {
 				.addAsLibraries(INTERNATIONAL)
 				.addAsLibraries(FACES)
 				.addAsLibraries(RICHFACES)
-				.addAsLibraries(RICHFACES)
 				.addAsResource("logo.gif")
 				.addAsWebInfResource("test-web.xml", "web.xml")
 				.addAsWebInfResource("test-persistence.xml",
