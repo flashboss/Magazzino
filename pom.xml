@@ -360,7 +360,7 @@
 						<directory>src/test/resources</directory>
 					</testResource>
 					<testResource>
-						<directory>src/test/resources-jbossas</directory>
+						<directory>src/test/resources-jbossas-6</directory>
 					</testResource>
 				</testResources>
 				<plugins>
@@ -440,7 +440,7 @@
 						<directory>src/test/resources</directory>
 					</testResource>
 					<testResource>
-						<directory>src/test/resources-jbossas</directory>
+						<directory>src/test/resources-jbossas-6</directory>
 					</testResource>
 				</testResources>
 				<plugins>
@@ -453,6 +453,8 @@
 							<excludes>
 								<exclude>**/ftest/**</exclude>
 								<exclude>**/hexcodes/**</exclude>
+								<exclude>**/vige/**</exclude>
+								<exclude>**/*.sql</exclude>
 							</excludes>
 							<additionalClasspathElements>
 								<additionalClasspathElement>${env.JBOSS_HOME}/client/jbossws-native-client.jar</additionalClasspathElement>
@@ -482,7 +484,7 @@
 								-Djboss.home=${env.JBOSS_HOME}
 								-Djboss.boot.server.log.dir=${env.JBOSS_HOME}
 								<!-- -->
-								-Xrunjdwp:transport=dt_socket,address=8787,server=y,suspend=n
+								-Xrunjdwp:transport=dt_socket,address=8787,server=y,suspend=y
 							</argLine>
 						</configuration>
 					</plugin>
