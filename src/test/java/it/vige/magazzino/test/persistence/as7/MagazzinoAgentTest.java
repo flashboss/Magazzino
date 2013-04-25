@@ -16,10 +16,10 @@
  */
 package it.vige.magazzino.test.persistence.as7;
 
-import static it.vige.magazzino.test.Dependencies.FACES;
-import static it.vige.magazzino.test.Dependencies.INTERNATIONAL;
-import static it.vige.magazzino.test.Dependencies.RICHFACES;
-import static it.vige.magazzino.test.Dependencies.SOLDER;
+import static it.vige.magazzino.test.persistence.Dependencies.FACES;
+import static it.vige.magazzino.test.persistence.Dependencies.INTERNATIONAL;
+import static it.vige.magazzino.test.persistence.Dependencies.RICHFACES;
+import static it.vige.magazzino.test.persistence.Dependencies.SOLDER;
 import static it.vige.magazzino.test.mock.MagazzinoMock.jars;
 import static it.vige.magazzino.test.mock.MagazzinoMock.magazzino0;
 import static it.vige.magazzino.test.mock.MagazzinoMock.magazzino1;

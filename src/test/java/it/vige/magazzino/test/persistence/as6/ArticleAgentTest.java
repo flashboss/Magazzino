@@ -16,8 +16,8 @@
  */
 package it.vige.magazzino.test.persistence.as6;
 
-import static it.vige.magazzino.test.Dependencies.FACES;
-import static it.vige.magazzino.test.Dependencies.SOLDER;
+import static it.vige.magazzino.test.persistence.Dependencies.FACES;
+import static it.vige.magazzino.test.persistence.Dependencies.SOLDER;
 import static it.vige.magazzino.test.mock.ArticleMock.article0;
 import static it.vige.magazzino.test.mock.ArticleMock.article1;
 import static it.vige.magazzino.test.mock.ArticleMock.article10;

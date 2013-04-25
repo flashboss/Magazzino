@@ -16,8 +16,8 @@
  */
 package it.vige.magazzino.test.persistence.as6;
 
-import static it.vige.magazzino.test.Dependencies.RICHFACES;
-import static it.vige.magazzino.test.Dependencies.SOLDER;
+import static it.vige.magazzino.test.persistence.Dependencies.RICHFACES;
+import static it.vige.magazzino.test.persistence.Dependencies.SOLDER;
 import static it.vige.magazzino.test.mock.ListDataMock.listData0;
 import static it.vige.magazzino.test.mock.ListDataMock.listData1;
 import static it.vige.magazzino.test.mock.ListDataMock.listData10;
