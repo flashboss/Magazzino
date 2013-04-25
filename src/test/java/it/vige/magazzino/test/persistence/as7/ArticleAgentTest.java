@@ -45,7 +45,6 @@ import it.vige.magazzino.inventory.SearchCriteria;
 import it.vige.magazzino.inventory.all.ArticleAllSearch;
 import it.vige.magazzino.log.ArticleLog;
 import it.vige.magazzino.model.Article;
-import it.vige.magazzino.model.Article_;
 import it.vige.magazzino.remove.ArticleDeleter;
 import it.vige.magazzino.selection.ArticleSelection;
 import it.vige.magazzino.test.mock.ArticleMock;
@@ -60,7 +59,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.UserTransaction;
 
-import org.jboss.arquillian.api.Deployment;
+import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.seam.international.status.Message;
 import org.jboss.seam.international.status.Messages;

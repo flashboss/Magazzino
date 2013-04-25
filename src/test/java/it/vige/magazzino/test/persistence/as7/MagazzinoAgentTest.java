@@ -47,7 +47,6 @@ import it.vige.magazzino.model.Address;
 import it.vige.magazzino.model.Customer;
 import it.vige.magazzino.model.Data;
 import it.vige.magazzino.model.Magazzino;
-import it.vige.magazzino.model.Magazzino_;
 import it.vige.magazzino.model.Receipt;
 import it.vige.magazzino.remove.MagazzinoDeleter;
 import it.vige.magazzino.selection.MagazzinoSelection;
@@ -70,7 +69,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.UserTransaction;
 
-import org.jboss.arquillian.api.Deployment;
+import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.seam.international.status.Message;
 import org.jboss.seam.international.status.Messages;

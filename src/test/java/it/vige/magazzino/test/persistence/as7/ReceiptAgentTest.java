@@ -55,9 +55,6 @@ import static it.vige.magazzino.test.mock.ReceiptMock.receipts;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-
-import java.util.List;
-
 import it.vige.magazzino.DataContainer;
 import it.vige.magazzino.FileUpload;
 import it.vige.magazzino.ReceiptRegister;
@@ -71,7 +68,6 @@ import it.vige.magazzino.model.Customer;
 import it.vige.magazzino.model.Data;
 import it.vige.magazzino.model.Magazzino;
 import it.vige.magazzino.model.Receipt;
-import it.vige.magazzino.model.Receipt_;
 import it.vige.magazzino.remove.ReceiptDeleter;
 import it.vige.magazzino.selection.ReceiptSelection;
 import it.vige.magazzino.test.mock.AddressMock;
@@ -88,6 +84,8 @@ import it.vige.magazzino.test.operation.MagazzinoOperation;
 import it.vige.magazzino.test.operation.ReceiptOperation;
 import it.vige.magazzino.update.ReceiptUpdater;
 
+import java.util.List;
+
 import javax.ejb.EJB;
 import javax.ejb.EJBTransactionRolledbackException;
 import javax.inject.Inject;
@@ -95,7 +93,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.UserTransaction;
 
-import org.jboss.arquillian.api.Deployment;
+import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.seam.international.status.Message;
 import org.jboss.seam.international.status.Messages;
