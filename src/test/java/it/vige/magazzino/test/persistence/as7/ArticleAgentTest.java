@@ -16,8 +16,6 @@
  */
 package it.vige.magazzino.test.persistence.as7;
 
-import static it.vige.magazzino.test.persistence.Dependencies.FACES;
-import static it.vige.magazzino.test.persistence.Dependencies.SOLDER;
 import static it.vige.magazzino.test.mock.ArticleMock.article0;
 import static it.vige.magazzino.test.mock.ArticleMock.article1;
 import static it.vige.magazzino.test.mock.ArticleMock.article10;
@@ -35,6 +33,8 @@ import static it.vige.magazzino.test.mock.ArticleMock.article7;
 import static it.vige.magazzino.test.mock.ArticleMock.article8;
 import static it.vige.magazzino.test.mock.ArticleMock.article9;
 import static it.vige.magazzino.test.mock.ArticleMock.articles;
+import static it.vige.magazzino.test.persistence.Dependencies.FACES;
+import static it.vige.magazzino.test.persistence.Dependencies.SOLDER;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -45,6 +45,7 @@ import it.vige.magazzino.inventory.SearchCriteria;
 import it.vige.magazzino.inventory.all.ArticleAllSearch;
 import it.vige.magazzino.log.ArticleLog;
 import it.vige.magazzino.model.Article;
+import it.vige.magazzino.model.Article_;
 import it.vige.magazzino.remove.ArticleDeleter;
 import it.vige.magazzino.selection.ArticleSelection;
 import it.vige.magazzino.test.mock.ArticleMock;
@@ -66,8 +67,6 @@ import org.jboss.seam.international.status.Messages;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.jboss.weld.Container;
-import org.jboss.weld.context.http.HttpConversationContext;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -224,8 +223,6 @@ public class ArticleAgentTest {
 		}
 		criteria.setQuery(catMerc);
 		articleSearch.find();
-		Container.instance().deploymentManager().instance()
-				.select(HttpConversationContext.class).get().activate();
 		articleSelection.selectArticle(articleSearch.getArticles().get(0));
 		Article selectedArticle = articleSelection.getSelectedArticle();
 		articleDeleter.delete(selectedArticle);
@@ -245,8 +242,6 @@ public class ArticleAgentTest {
 				article4 };
 
 		// make 4 articles
-		Container.instance().deploymentManager().instance()
-				.select(HttpConversationContext.class).get().activate();
 		for (Article article : articles) {
 			searchUpdateArticle(article, "7777777");
 		}

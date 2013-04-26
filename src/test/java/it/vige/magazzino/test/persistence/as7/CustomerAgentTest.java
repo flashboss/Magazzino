@@ -16,10 +16,6 @@
  */
 package it.vige.magazzino.test.persistence.as7;
 
-import static it.vige.magazzino.test.persistence.Dependencies.FACES;
-import static it.vige.magazzino.test.persistence.Dependencies.INTERNATIONAL;
-import static it.vige.magazzino.test.persistence.Dependencies.RICHFACES;
-import static it.vige.magazzino.test.persistence.Dependencies.SOLDER;
 import static it.vige.magazzino.test.mock.CustomerMock.customer0;
 import static it.vige.magazzino.test.mock.CustomerMock.customer1;
 import static it.vige.magazzino.test.mock.CustomerMock.customer2;
@@ -30,6 +26,10 @@ import static it.vige.magazzino.test.mock.CustomerMock.customer6;
 import static it.vige.magazzino.test.mock.CustomerMock.customer7;
 import static it.vige.magazzino.test.mock.CustomerMock.customer8;
 import static it.vige.magazzino.test.mock.CustomerMock.customers;
+import static it.vige.magazzino.test.persistence.Dependencies.FACES;
+import static it.vige.magazzino.test.persistence.Dependencies.INTERNATIONAL;
+import static it.vige.magazzino.test.persistence.Dependencies.RICHFACES;
+import static it.vige.magazzino.test.persistence.Dependencies.SOLDER;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -43,6 +43,7 @@ import it.vige.magazzino.inventory.all.CustomerAllSearch;
 import it.vige.magazzino.log.CustomerLog;
 import it.vige.magazzino.model.Address;
 import it.vige.magazzino.model.Customer;
+import it.vige.magazzino.model.Customer_;
 import it.vige.magazzino.model.Data;
 import it.vige.magazzino.model.Magazzino;
 import it.vige.magazzino.model.Receipt;
@@ -74,8 +75,6 @@ import org.jboss.seam.international.status.Messages;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.jboss.weld.Container;
-import org.jboss.weld.context.http.HttpConversationContext;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -255,8 +254,6 @@ public class CustomerAgentTest {
 		}
 		criteria.setQuery(customerName);
 		customerSearch.find();
-		Container.instance().deploymentManager().instance()
-				.select(HttpConversationContext.class).get().activate();
 		customerSelection.selectCustomer(customerSearch.getCustomers().get(0));
 		Customer selectedCustomer = customerSelection.getSelectedCustomer();
 		customerDeleter.delete(selectedCustomer);
@@ -276,8 +273,6 @@ public class CustomerAgentTest {
 				customer2, customer4 };
 
 		// make 4 customers
-		Container.instance().deploymentManager().instance()
-				.select(HttpConversationContext.class).get().activate();
 		for (Customer customer : customers) {
 			searchUpdateCustomer(customer, "test-injection-for-ragsoc");
 		}

@@ -16,10 +16,6 @@
  */
 package it.vige.magazzino.test.persistence.as7;
 
-import static it.vige.magazzino.test.persistence.Dependencies.FACES;
-import static it.vige.magazzino.test.persistence.Dependencies.INTERNATIONAL;
-import static it.vige.magazzino.test.persistence.Dependencies.RICHFACES;
-import static it.vige.magazzino.test.persistence.Dependencies.SOLDER;
 import static it.vige.magazzino.test.mock.MagazzinoMock.jars;
 import static it.vige.magazzino.test.mock.MagazzinoMock.magazzino0;
 import static it.vige.magazzino.test.mock.MagazzinoMock.magazzino1;
@@ -32,6 +28,10 @@ import static it.vige.magazzino.test.mock.MagazzinoMock.magazzino6;
 import static it.vige.magazzino.test.mock.MagazzinoMock.magazzino7;
 import static it.vige.magazzino.test.mock.MagazzinoMock.magazzino8;
 import static it.vige.magazzino.test.mock.MagazzinoMock.magazzino9;
+import static it.vige.magazzino.test.persistence.Dependencies.FACES;
+import static it.vige.magazzino.test.persistence.Dependencies.INTERNATIONAL;
+import static it.vige.magazzino.test.persistence.Dependencies.RICHFACES;
+import static it.vige.magazzino.test.persistence.Dependencies.SOLDER;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -47,6 +47,7 @@ import it.vige.magazzino.model.Address;
 import it.vige.magazzino.model.Customer;
 import it.vige.magazzino.model.Data;
 import it.vige.magazzino.model.Magazzino;
+import it.vige.magazzino.model.Magazzino_;
 import it.vige.magazzino.model.Receipt;
 import it.vige.magazzino.remove.MagazzinoDeleter;
 import it.vige.magazzino.selection.MagazzinoSelection;
@@ -76,8 +77,6 @@ import org.jboss.seam.international.status.Messages;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.jboss.weld.Container;
-import org.jboss.weld.context.http.HttpConversationContext;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -261,8 +260,6 @@ public class MagazzinoAgentTest {
 		}
 		criteria.setQuery(magazzinoCompensation);
 		magazzinoSearch.find();
-		Container.instance().deploymentManager().instance()
-				.select(HttpConversationContext.class).get().activate();
 		magazzinoSelection.selectJar(magazzinoSearch.getJars().get(0));
 		Magazzino selectedJar = magazzinoSelection.getSelectedJar();
 		magazzinoDeleter.delete(selectedJar);
@@ -282,8 +279,6 @@ public class MagazzinoAgentTest {
 				magazzino2, magazzino4 };
 
 		// make 4 jars
-		Container.instance().deploymentManager().instance()
-				.select(HttpConversationContext.class).get().activate();
 		for (Magazzino magazzino : jars) {
 			searchUpdateMagazzino(magazzino, "test-ejb-for-ragsoc");
 		}

@@ -16,10 +16,6 @@
  */
 package it.vige.magazzino.test.persistence.as7;
 
-import static it.vige.magazzino.test.persistence.Dependencies.FACES;
-import static it.vige.magazzino.test.persistence.Dependencies.INTERNATIONAL;
-import static it.vige.magazzino.test.persistence.Dependencies.RICHFACES;
-import static it.vige.magazzino.test.persistence.Dependencies.SOLDER;
 import static it.vige.magazzino.test.mock.CustomerMock.customer0;
 import static it.vige.magazzino.test.mock.CustomerMock.customer1;
 import static it.vige.magazzino.test.mock.CustomerMock.customer2;
@@ -52,6 +48,10 @@ import static it.vige.magazzino.test.mock.ReceiptMock.receipt7;
 import static it.vige.magazzino.test.mock.ReceiptMock.receipt8;
 import static it.vige.magazzino.test.mock.ReceiptMock.receipt9;
 import static it.vige.magazzino.test.mock.ReceiptMock.receipts;
+import static it.vige.magazzino.test.persistence.Dependencies.FACES;
+import static it.vige.magazzino.test.persistence.Dependencies.INTERNATIONAL;
+import static it.vige.magazzino.test.persistence.Dependencies.RICHFACES;
+import static it.vige.magazzino.test.persistence.Dependencies.SOLDER;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -68,6 +68,7 @@ import it.vige.magazzino.model.Customer;
 import it.vige.magazzino.model.Data;
 import it.vige.magazzino.model.Magazzino;
 import it.vige.magazzino.model.Receipt;
+import it.vige.magazzino.model.Receipt_;
 import it.vige.magazzino.remove.ReceiptDeleter;
 import it.vige.magazzino.selection.ReceiptSelection;
 import it.vige.magazzino.test.mock.AddressMock;
@@ -100,8 +101,6 @@ import org.jboss.seam.international.status.Messages;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.jboss.weld.Container;
-import org.jboss.weld.context.http.HttpConversationContext;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -326,8 +325,6 @@ public class ReceiptAgentTest {
 		}
 		criteria.setQuery(date);
 		receiptSearch.find();
-		Container.instance().deploymentManager().instance()
-				.select(HttpConversationContext.class).get().activate();
 		receiptSelection.selectReceipt(receiptSearch.getReceipts().get(0));
 		Receipt selectedReceipt = receiptSelection.getSelectedReceipt();
 		receiptDeleter.delete(selectedReceipt);
@@ -347,8 +344,6 @@ public class ReceiptAgentTest {
 				receipt4 };
 
 		// make 4 receipts
-		Container.instance().deploymentManager().instance()
-				.select(HttpConversationContext.class).get().activate();
 		for (Receipt receipt : receipts) {
 			searchUpdateReceipt(receipt, "test-ejb-for-cause");
 		}
