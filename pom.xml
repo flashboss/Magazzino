@@ -311,7 +311,7 @@
 							<jbossHome>${jboss.home}</jbossHome>
 							<serverName>${jboss.domain}</serverName>
 							<fileNames>
-								<param>src/main/resources-jbossas/magazzino-ds.xml</param>
+								<param>src/main/resources-jbossas-6/magazzino-ds.xml</param>
 								<param>${project.build.directory}/${project.build.finalName}.war</param>
 							</fileNames>
 						</configuration>
@@ -320,6 +320,19 @@
 						<groupId>org.jboss.as.plugins</groupId>
 						<artifactId>jboss-as-maven-plugin</artifactId>
 						<version>7.4.Final</version>
+						<executions>
+							<execution>
+								<id>add-datasource</id>
+								<phase>package</phase>
+								<goals>
+									<goal>add-resource</goal>
+								</goals>
+								<configuration>
+									<address>subsystem=datasources,data-source=java:jdbc/__mdefault</address>
+									<filename>src/main/resources-jbossas-7/magazzino-ds.xml</filename>
+								</configuration>
+							</execution>
+						</executions>
 					</plugin>
 
 					<plugin>
