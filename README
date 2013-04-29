@@ -15,15 +15,28 @@ to install it in jboss 6.x:
 export JBOSS_HOME=.....
 mvn install jboss:hard-deploy
 
-to test all it in jboss:
+to test all it in jboss 6.x:
 
 export JBOSS_HOME=.....
-mvn -Pjbossas-remote-6 test
+mvn clean
+rm src/main/java/it/vige/magazzino/log/*_*.java src/main/java/it/vige/magazzino/model/*_.java
+mvn -Pjbossas-remote-6 install
+
+to test all it in jboss 7.x:
+
+export JBOSS_HOME=.....
+mvn clean
+rm src/main/java/it/vige/magazzino/log/*_*.java src/main/java/it/vige/magazzino/model/*_.java
+mvn -Pjbossas-embedded-7 install
 
 to test it with a single test in jboss:
 
 export JBOSS_HOME=.....
 mvn -Pjbossas-remote-6 test -Dtest=AddressAgentTest
+or 
+mvn -Pjbossas-embedded-7 test -Dtest=AddressAgentTest
+
+
 
 to test it with selenium:
 
