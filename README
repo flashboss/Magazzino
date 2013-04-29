@@ -15,6 +15,11 @@ to install it in jboss 6.x:
 export JBOSS_HOME=.....
 mvn install jboss:hard-deploy
 
+to install it in jboss 7.x:
+
+export JBOSS_HOME=.....
+mvn install jboss-as:deploy
+
 to test all it in jboss 6.x:
 
 export JBOSS_HOME=.....
@@ -44,7 +49,10 @@ download selenium-server from http://selenium.googlecode.com/files/selenium-serv
 deploy the application in a server
 start the server with 8080 port
 java -jar selenium-server-standalone-2.25.0.jar
+on jboss 6.x:
 deploy the application with the command: mvn jboss:hard-deploy assuming the JBOSS_HOME system variable is correct
+on jboss 7.x:
+deploy the application with the command: mvn jboss-as:deploy assuming the JBOSS_HOME system variable is correct
 mvn -Pftest test
 
 to test it with a single test in jboss:
