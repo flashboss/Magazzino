@@ -63,6 +63,7 @@ import it.vige.magazzino.inventory.ReceiptSearch;
 import it.vige.magazzino.inventory.SearchCriteria;
 import it.vige.magazzino.inventory.all.ReceiptAllSearch;
 import it.vige.magazzino.log.ReceiptLog;
+import it.vige.magazzino.log.ReceiptLog_$logger;
 import it.vige.magazzino.model.Address;
 import it.vige.magazzino.model.Customer;
 import it.vige.magazzino.model.Data;
@@ -127,7 +128,7 @@ public class ReceiptAgentTest {
 				.addClasses(ImageMock.class, ImageOperation.class)
 				.addClasses(ReceiptRegister.class, ReceiptUpdater.class,
 						ReceiptDeleter.class, ReceiptSelection.class)
-				.addClasses(ReceiptLog.class, Receipt_.class)
+				.addClasses(ReceiptLog.class, ReceiptLog_$logger.class, Receipt_.class)
 				.addClasses(ReceiptSearch.class, ReceiptAllSearch.class,
 						SearchCriteria.class)
 				.addClasses(DataContainer.class, FileUpload.class)

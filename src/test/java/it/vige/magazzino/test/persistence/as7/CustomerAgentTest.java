@@ -41,6 +41,7 @@ import it.vige.magazzino.inventory.CustomerSearch;
 import it.vige.magazzino.inventory.SearchCriteria;
 import it.vige.magazzino.inventory.all.CustomerAllSearch;
 import it.vige.magazzino.log.CustomerLog;
+import it.vige.magazzino.log.CustomerLog_$logger;
 import it.vige.magazzino.model.Address;
 import it.vige.magazzino.model.Customer;
 import it.vige.magazzino.model.Customer_;
@@ -100,7 +101,7 @@ public class CustomerAgentTest {
 						Customer.class)
 				.addClasses(CustomerRegister.class, CustomerUpdater.class,
 						CustomerDeleter.class, CustomerSelection.class)
-				.addClasses(CustomerLog.class, Customer_.class)
+				.addClasses(CustomerLog.class, CustomerLog_$logger.class, Customer_.class)
 				.addClasses(CustomerSearch.class, CustomerAllSearch.class,
 						SearchCriteria.class)
 				.addClasses(DataContainer.class, FileUpload.class)

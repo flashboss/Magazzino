@@ -43,6 +43,7 @@ import it.vige.magazzino.inventory.MagazzinoSearch;
 import it.vige.magazzino.inventory.SearchCriteria;
 import it.vige.magazzino.inventory.all.MagazzinoAllSearch;
 import it.vige.magazzino.log.MagazzinoLog;
+import it.vige.magazzino.log.MagazzinoLog_$logger;
 import it.vige.magazzino.model.Address;
 import it.vige.magazzino.model.Customer;
 import it.vige.magazzino.model.Data;
@@ -102,7 +103,7 @@ public class MagazzinoAgentTest {
 						Magazzino.class)
 				.addClasses(MagazzinoRegister.class, MagazzinoUpdater.class,
 						MagazzinoDeleter.class, MagazzinoSelection.class)
-				.addClasses(MagazzinoLog.class, Magazzino_.class)
+				.addClasses(MagazzinoLog.class, MagazzinoLog_$logger.class, Magazzino_.class)
 				.addClasses(MagazzinoSearch.class, MagazzinoAllSearch.class,
 						SearchCriteria.class)
 				.addClasses(DataContainer.class, FileUpload.class)
