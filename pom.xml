@@ -36,7 +36,8 @@
 		<jboss-server-manager.version>1.0.3.GA</jboss-server-manager.version>
 		<junit.version>4.8</junit.version>
 		<jersey.version>1.5</jersey.version>
-		<richfaces.version>4.1.0.Final</richfaces.version>
+		<seam.version>3.0.0.Final</seam.version>
+		<richfaces.version>4.3.1.Final</richfaces.version>
 		<surefire.version>2.7.2</surefire.version>
 		<weld-as6.version>1.1.1.Final</weld-as6.version>
 		<weld-as7.version>1.1.5.AS71.Final</weld-as7.version>
@@ -128,7 +129,7 @@
 		<dependency>
 			<groupId>org.jboss.seam.international</groupId>
 			<artifactId>seam-international</artifactId>
-			<version>3.0.0.Final</version>
+			<version>${seam.version}</version>
 		</dependency>
 
 		<dependency>
@@ -251,6 +252,22 @@
 				</configuration>
 			</plugin>
 			<plugin>
+				<artifactId>maven-clean-plugin</artifactId>
+				<version>2.5</version>
+				<configuration>
+					<filesets>
+						<fileset>
+							<directory>src/main/java</directory>
+							<includes>
+								<include>**/*_.java</include>
+								<include>**/*_$logger.java</include>
+							</includes>
+							<followSymlinks>false</followSymlinks>
+						</fileset>
+					</filesets>
+				</configuration>
+			</plugin>
+			<plugin>
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>${surefire.version}</version>
 			</plugin>
@@ -302,49 +319,6 @@
 			</activation>
 			<build>
 				<plugins>
-					<plugin>
-						<groupId>org.codehaus.mojo</groupId>
-						<artifactId>jboss-maven-plugin</artifactId>
-						<!-- only version 1.4.1 supports hard deploying multiple files -->
-						<version>1.4.1</version>
-						<configuration>
-							<jbossHome>${jboss.home}</jbossHome>
-							<serverName>${jboss.domain}</serverName>
-							<fileNames>
-								<param>src/main/resources-jbossas-6/magazzino-ds.xml</param>
-								<param>${project.build.directory}/${project.build.finalName}.war</param>
-							</fileNames>
-						</configuration>
-					</plugin>
-					<plugin>
-						<groupId>org.jboss.as.plugins</groupId>
-						<artifactId>jboss-as-maven-plugin</artifactId>
-						<version>7.4.Final</version>
-						<executions>
-							<execution>
-								<id>add-datasource</id>
-								<phase>package</phase>
-								<goals>
-									<goal>add-resource</goal>
-								</goals>
-								<configuration>
-									<address>subsystem=datasources,data-source=java:jdbc/__mdefault</address>
-									<resource>
-										<enable-resource>true</enable-resource>
-										<properties>
-											<jndi-name>java:/jdbc/__mdefault</jndi-name>
-											<enabled>true</enabled>
-											<connection-url>jdbc:h2:mem:test;DB_CLOSE_DELAY=-1</connection-url>
-											<driver-name>h2</driver-name>
-											<user-name>sa</user-name>
-											<min-pool-size>5</min-pool-size>
-											<max-pool-size>20</max-pool-size>
-										</properties>
-									</resource>
-								</configuration>
-							</execution>
-						</executions>
-					</plugin>
 
 					<plugin>
 						<artifactId>maven-surefire-plugin</artifactId>
@@ -514,6 +488,102 @@
 		</profile>
 
 		<profile>
+			<id>jbossas-remote-7</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.jboss.as.plugins</groupId>
+						<artifactId>jboss-as-maven-plugin</artifactId>
+						<version>7.4.Final</version>
+						<executions>
+							<execution>
+								<id>add-datasource</id>
+								<phase>install</phase>
+								<goals>
+									<goal>add-resource</goal>
+									<goal>deploy</goal>
+								</goals>
+								<configuration>
+									<address>subsystem=datasources,data-source=java:jdbc/__mdefault</address>
+									<resource>
+										<enable-resource>true</enable-resource>
+										<properties>
+											<jndi-name>java:/jdbc/__mdefault</jndi-name>
+											<enabled>true</enabled>
+											<connection-url>jdbc:h2:mem:test;DB_CLOSE_DELAY=-1</connection-url>
+											<driver-name>h2</driver-name>
+											<user-name>sa</user-name>
+											<min-pool-size>5</min-pool-size>
+											<max-pool-size>20</max-pool-size>
+										</properties>
+									</resource>
+								</configuration>
+							</execution>
+							<execution>
+								<id>del-datasource</id>
+								<phase>clean</phase>
+								<goals>
+									<goal>undeploy</goal>
+									<goal>execute-commands</goal>
+								</goals>
+								<configuration>
+									<execute-commands>
+										<commands>
+											<command>/subsystem=datasources/data-source="java:jdbc/__mdefault":remove
+												{
+												"outcome" => "failed",
+												"failure-description" => "JBAS014749:
+												Operation handler failed: null",
+												"rolled-back" => true
+												}
+											</command>
+										</commands>
+									</execute-commands>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<artifactId>maven-surefire-plugin</artifactId>
+						<version>${surefire.version}</version>
+						<configuration>
+							<testNGArtifactName>none:none</testNGArtifactName>
+							<excludes>
+								<exclude>**/ftest/**</exclude>
+								<exclude>**/persistence/**</exclude>
+							</excludes>
+						</configuration>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-compiler-plugin</artifactId>
+						<version>2.3.2</version>
+						<configuration>
+							<!-- activate only when you need to generate the metamodel -->
+							<!-- compilerArgument>-proc:none</compilerArgument -->
+							<source>1.6</source>
+							<target>1.6</target>
+						</configuration>
+						<executions>
+							<execution>
+								<id>default-testCompile</id>
+								<phase>test-compile</phase>
+								<configuration>
+									<testExcludes>
+										<exclude>**/persistence/**</exclude>
+									</testExcludes>
+								</configuration>
+								<goals>
+									<goal>testCompile</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+
+		<profile>
 			<id>jbossas-remote-6</id>
 			<dependencies>
 				<dependency>
@@ -552,6 +622,36 @@
 					</testResource>
 				</testResources>
 				<plugins>
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>jboss-maven-plugin</artifactId>
+						<!-- only version 1.4.1 supports hard deploying multiple files -->
+						<version>1.4.1</version>
+						<configuration>
+							<jbossHome>${jboss.home}</jbossHome>
+							<serverName>${jboss.domain}</serverName>
+							<fileNames>
+								<param>src/main/resources-jbossas-6/magazzino-ds.xml</param>
+								<param>${project.build.directory}/${project.build.finalName}.war</param>
+							</fileNames>
+						</configuration>
+						<executions>
+							<execution>
+								<id>add-datasource</id>
+								<phase>install</phase>
+								<goals>
+									<goal>deploy</goal>
+								</goals>
+							</execution>
+							<execution>
+								<id>del-datasource</id>
+								<phase>clean</phase>
+								<goals>
+									<goal>undeploy</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
 					<plugin>
 						<artifactId>maven-surefire-plugin</artifactId>
 						<version>${surefire.version}</version>
