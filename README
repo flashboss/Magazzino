@@ -13,12 +13,22 @@ git push
 to install it in jboss 6.x:
 
 export JBOSS_HOME=.....
-mvn install jboss:hard-deploy
+mvn install -Pjbossas-remote-6
 
 to install it in jboss 7.x:
 
 export JBOSS_HOME=.....
-mvn install jboss-as:deploy
+mvn install -Pjbossas-remote-7
+
+to undeploy it in jboss 6.x:
+
+export JBOSS_HOME=.....
+mvn clean -Pjbossas-remote-6
+
+to undeploy it in jboss 7.x:
+
+export JBOSS_HOME=.....
+mvn clean -Pjbossas-remote-7
 
 to test all it in jboss 6.x:
 
@@ -32,6 +42,8 @@ to test all it in jboss 7.x:
 export JBOSS_HOME=.....
 mvn clean
 rm src/main/java/it/vige/magazzino/log/*_*.java src/main/java/it/vige/magazzino/model/*_.java
+mvn -Pjbossas-remote-7 install 
+or
 mvn -Pjbossas-embedded-7 install
 
 to test it with a single test in jboss:
