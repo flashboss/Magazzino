@@ -16,10 +16,6 @@
  */
 package it.vige.magazzino.test.persistence.as6;
 
-import static it.vige.magazzino.test.persistence.Dependencies.FACES;
-import static it.vige.magazzino.test.persistence.Dependencies.INTERNATIONAL;
-import static it.vige.magazzino.test.persistence.Dependencies.RICHFACES;
-import static it.vige.magazzino.test.persistence.Dependencies.SOLDER;
 import static it.vige.magazzino.test.mock.MagazzinoMock.jars;
 import static it.vige.magazzino.test.mock.MagazzinoMock.magazzino0;
 import static it.vige.magazzino.test.mock.MagazzinoMock.magazzino1;
@@ -32,6 +28,10 @@ import static it.vige.magazzino.test.mock.MagazzinoMock.magazzino6;
 import static it.vige.magazzino.test.mock.MagazzinoMock.magazzino7;
 import static it.vige.magazzino.test.mock.MagazzinoMock.magazzino8;
 import static it.vige.magazzino.test.mock.MagazzinoMock.magazzino9;
+import static it.vige.magazzino.test.persistence.Dependencies.FACES;
+import static it.vige.magazzino.test.persistence.Dependencies.INTERNATIONAL;
+import static it.vige.magazzino.test.persistence.Dependencies.RICHFACES;
+import static it.vige.magazzino.test.persistence.Dependencies.SOLDER;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -43,6 +43,7 @@ import it.vige.magazzino.inventory.MagazzinoSearch;
 import it.vige.magazzino.inventory.SearchCriteria;
 import it.vige.magazzino.inventory.all.MagazzinoAllSearch;
 import it.vige.magazzino.log.MagazzinoLog;
+import it.vige.magazzino.log.MagazzinoLog_$logger;
 import it.vige.magazzino.model.Address;
 import it.vige.magazzino.model.Customer;
 import it.vige.magazzino.model.Data;
@@ -104,7 +105,7 @@ public class MagazzinoAgentTest {
 						Magazzino.class)
 				.addClasses(MagazzinoRegister.class, MagazzinoUpdater.class,
 						MagazzinoDeleter.class, MagazzinoSelection.class)
-				.addClasses(MagazzinoLog.class, Magazzino_.class)
+				.addClasses(MagazzinoLog.class, MagazzinoLog_$logger.class, Magazzino_.class)
 				.addClasses(MagazzinoSearch.class, MagazzinoAllSearch.class,
 						SearchCriteria.class)
 				.addClasses(DataContainer.class, FileUpload.class)

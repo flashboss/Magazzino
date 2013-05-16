@@ -36,7 +36,7 @@ import javax.persistence.PersistenceContext;
 
 import org.jboss.seam.international.status.Messages;
 import org.jboss.seam.international.status.builder.BundleKey;
-import org.jboss.seam.solder.logging.TypedCategory;
+import org.jboss.solder.logging.TypedCategory;
 
 /**
  * The view controller for registering a new customer

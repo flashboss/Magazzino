@@ -34,6 +34,7 @@ import static it.vige.magazzino.test.mock.ArticleMock.article8;
 import static it.vige.magazzino.test.mock.ArticleMock.article9;
 import static it.vige.magazzino.test.mock.ArticleMock.articles;
 import static it.vige.magazzino.test.persistence.Dependencies.FACES;
+import static it.vige.magazzino.test.persistence.Dependencies.INTERNATIONAL;
 import static it.vige.magazzino.test.persistence.Dependencies.SOLDER;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -92,6 +93,7 @@ public class ArticleAgentTest {
 						SearchCriteria.class)
 				.addClasses(DefaultBundleKey.class)
 				.addAsLibraries(SOLDER)
+				.addAsLibraries(INTERNATIONAL)
 				.addAsLibraries(FACES)
 				.addAsWebInfResource("test-web.xml", "web.xml")
 				.addAsWebInfResource("test-persistence.xml",

@@ -16,10 +16,6 @@
  */
 package it.vige.magazzino.test.persistence.as6;
 
-import static it.vige.magazzino.test.persistence.Dependencies.FACES;
-import static it.vige.magazzino.test.persistence.Dependencies.INTERNATIONAL;
-import static it.vige.magazzino.test.persistence.Dependencies.RICHFACES;
-import static it.vige.magazzino.test.persistence.Dependencies.SOLDER;
 import static it.vige.magazzino.test.mock.CustomerMock.customer0;
 import static it.vige.magazzino.test.mock.CustomerMock.customer1;
 import static it.vige.magazzino.test.mock.CustomerMock.customer2;
@@ -52,12 +48,13 @@ import static it.vige.magazzino.test.mock.ReceiptMock.receipt7;
 import static it.vige.magazzino.test.mock.ReceiptMock.receipt8;
 import static it.vige.magazzino.test.mock.ReceiptMock.receipt9;
 import static it.vige.magazzino.test.mock.ReceiptMock.receipts;
+import static it.vige.magazzino.test.persistence.Dependencies.FACES;
+import static it.vige.magazzino.test.persistence.Dependencies.INTERNATIONAL;
+import static it.vige.magazzino.test.persistence.Dependencies.RICHFACES;
+import static it.vige.magazzino.test.persistence.Dependencies.SOLDER;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-
-import java.util.List;
-
 import it.vige.magazzino.DataContainer;
 import it.vige.magazzino.FileUpload;
 import it.vige.magazzino.ReceiptRegister;
@@ -66,6 +63,7 @@ import it.vige.magazzino.inventory.ReceiptSearch;
 import it.vige.magazzino.inventory.SearchCriteria;
 import it.vige.magazzino.inventory.all.ReceiptAllSearch;
 import it.vige.magazzino.log.ReceiptLog;
+import it.vige.magazzino.log.ReceiptLog_$logger;
 import it.vige.magazzino.model.Address;
 import it.vige.magazzino.model.Customer;
 import it.vige.magazzino.model.Data;
@@ -87,6 +85,8 @@ import it.vige.magazzino.test.operation.ListDataOperation;
 import it.vige.magazzino.test.operation.MagazzinoOperation;
 import it.vige.magazzino.test.operation.ReceiptOperation;
 import it.vige.magazzino.update.ReceiptUpdater;
+
+import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ejb.EJBTransactionRolledbackException;
@@ -130,7 +130,7 @@ public class ReceiptAgentTest {
 				.addClasses(ImageMock.class, ImageOperation.class)
 				.addClasses(ReceiptRegister.class, ReceiptUpdater.class,
 						ReceiptDeleter.class, ReceiptSelection.class)
-				.addClasses(ReceiptLog.class, Receipt_.class)
+				.addClasses(ReceiptLog.class, ReceiptLog_$logger.class, Receipt_.class)
 				.addClasses(ReceiptSearch.class, ReceiptAllSearch.class,
 						SearchCriteria.class)
 				.addClasses(DataContainer.class, FileUpload.class)

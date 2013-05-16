@@ -34,7 +34,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
-import org.jboss.seam.solder.logging.TypedCategory;
+import org.jboss.solder.logging.TypedCategory;
 
 /**
  * @author <a href="http://www.vige.it">Luca Stancapiano</a>

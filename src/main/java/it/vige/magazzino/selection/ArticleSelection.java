@@ -28,7 +28,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.jboss.seam.faces.context.conversation.Begin;
-import org.jboss.seam.solder.logging.TypedCategory;
+import org.jboss.solder.logging.TypedCategory;
 
 @Stateful
 @Named

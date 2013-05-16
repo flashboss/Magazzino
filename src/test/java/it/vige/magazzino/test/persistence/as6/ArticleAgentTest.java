@@ -17,6 +17,7 @@
 package it.vige.magazzino.test.persistence.as6;
 
 import static it.vige.magazzino.test.persistence.Dependencies.FACES;
+import static it.vige.magazzino.test.persistence.Dependencies.INTERNATIONAL;
 import static it.vige.magazzino.test.persistence.Dependencies.SOLDER;
 import static it.vige.magazzino.test.mock.ArticleMock.article0;
 import static it.vige.magazzino.test.mock.ArticleMock.article1;
@@ -44,6 +45,7 @@ import it.vige.magazzino.inventory.ArticleSearch;
 import it.vige.magazzino.inventory.SearchCriteria;
 import it.vige.magazzino.inventory.all.ArticleAllSearch;
 import it.vige.magazzino.log.ArticleLog;
+import it.vige.magazzino.log.ArticleLog_$logger;
 import it.vige.magazzino.model.Article;
 import it.vige.magazzino.model.Article_;
 import it.vige.magazzino.remove.ArticleDeleter;
@@ -88,11 +90,12 @@ public class ArticleAgentTest {
 						Article.class)
 				.addClasses(ArticleRegister.class, ArticleUpdater.class,
 						ArticleDeleter.class, ArticleSelection.class)
-				.addClasses(ArticleLog.class, Article_.class)
+				.addClasses(ArticleLog.class, ArticleLog_$logger.class, Article_.class)
 				.addClasses(ArticleSearch.class, ArticleAllSearch.class,
 						SearchCriteria.class)
 				.addClasses(DefaultBundleKey.class)
 				.addAsLibraries(SOLDER)
+				.addAsLibraries(INTERNATIONAL)
 				.addAsLibraries(FACES)
 				.addAsWebInfResource("test-web.xml", "web.xml")
 				.addAsWebInfResource("test-persistence.xml",

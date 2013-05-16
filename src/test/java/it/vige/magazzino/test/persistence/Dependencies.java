@@ -27,7 +27,7 @@ import org.jboss.shrinkwrap.resolver.api.maven.MavenDependencyResolver;
 public interface Dependencies {
 	static final Archive<?>[] SOLDER = DependencyResolvers
 			.use(MavenDependencyResolver.class).loadReposFromPom("pom.xml")
-			.artifact("org.jboss.seam.solder:seam-solder:3.0.0.Final")
+			.artifact("org.jboss.solder:solder-tooling:3.2.0.Final")
 			.resolveAs(GenericArchive.class).toArray(new Archive<?>[0]);
 	static final Archive<?>[] INTERNATIONAL = DependencyResolvers
 			.use(MavenDependencyResolver.class).loadReposFromPom("pom.xml")
@@ -40,6 +40,6 @@ public interface Dependencies {
 			.resolveAs(GenericArchive.class).toArray(new Archive<?>[0]);
 	static final Archive<?>[] RICHFACES = DependencyResolvers
 			.use(MavenDependencyResolver.class).loadReposFromPom("pom.xml")
-			.artifact("org.richfaces.ui:richfaces-components-api:4.1.0.Final")
+			.artifact("org.richfaces.ui:richfaces-components-api:4.3.1.Final")
 			.resolveAs(GenericArchive.class).toArray(new Archive<?>[0]);
 }
