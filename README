@@ -60,8 +60,6 @@ mvn -Pjbossas-remote-6 test -Dtest=AddressAgentTest
 or 
 mvn -Pjbossas-embedded-7 test -Dtest=AddressAgentTest
 
-
-
 to test it with selenium:
 
 download selenium-server from http://selenium.googlecode.com/files/selenium-server-standalone-2.25.0.jar
@@ -76,3 +74,9 @@ mvn -Pftest test
 
 to test it with a single test in jboss:
 mvn -Pftest test -Dtest=MagazzinoTest
+
+to deploy it with the shell command in jboss 7.x:
+
+$JBOSS_HOME/bin/jboss-cli.sh
+connect localhost
+deploy /xxxx/magazzino.war
