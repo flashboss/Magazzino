@@ -12,6 +12,15 @@ git commit README -m "comment!"
 
 git push
 
+to create a tag:
+
+git tag -a vx.x.x -m "version x.x.x"
+git push origin vx.x.x
+
+to delete a tag:
+
+git tag -d vx.x.x
+
 to install it in jboss 6.x:
 
 export JBOSS_HOME=.....
