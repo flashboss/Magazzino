@@ -36,7 +36,7 @@
 		<jboss-server-manager.version>1.0.3.GA</jboss-server-manager.version>
 		<junit.version>4.8</junit.version>
 		<jersey.version>1.5</jersey.version>
-		<seam.version>3.0.0.Final</seam.version>
+		<seam.version>3.1.0.Final</seam.version>
 		<richfaces.version>4.3.1.Final</richfaces.version>
 		<surefire.version>2.7.2</surefire.version>
 		<weld-as6.version>1.1.1.Final</weld-as6.version>
@@ -123,7 +123,7 @@
 		<dependency>
 			<groupId>org.jboss.seam.faces</groupId>
 			<artifactId>seam-faces</artifactId>
-			<version>3.0.2.Final</version>
+			<version>${seam.version}</version>
 		</dependency>
 
 		<dependency>
@@ -176,9 +176,9 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.jboss.seam.solder</groupId>
-			<artifactId>seam-solder-tooling</artifactId>
-			<version>3.0.0.Final</version>
+			<groupId>org.jboss.solder</groupId>
+			<artifactId>solder-tooling</artifactId>
+			<version>3.2.0.Final</version>
 			<scope>provided</scope>
 			<optional>true</optional>
 		</dependency>
@@ -631,7 +631,7 @@
 							<jbossHome>${jboss.home}</jbossHome>
 							<serverName>${jboss.domain}</serverName>
 							<fileNames>
-								<param>src/main/resources-jbossas-6/magazzino-ds.xml</param>
+								<param>${basedir}/src/main/resources-jbossas-6/magazzino-ds.xml</param>
 								<param>${project.build.directory}/${project.build.finalName}.war</param>
 							</fileNames>
 						</configuration>
@@ -640,14 +640,14 @@
 								<id>add-datasource</id>
 								<phase>install</phase>
 								<goals>
-									<goal>deploy</goal>
+									<goal>hard-deploy</goal>
 								</goals>
 							</execution>
 							<execution>
 								<id>del-datasource</id>
 								<phase>clean</phase>
 								<goals>
-									<goal>undeploy</goal>
+									<goal>hard-undeploy</goal>
 								</goals>
 							</execution>
 						</executions>
