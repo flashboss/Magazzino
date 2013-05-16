@@ -4,9 +4,11 @@ mvn clean
 
 git add src
 git add pom.xml
+git add README
 
 git commit src -m "comment!"
 git commit pom.xml -m "comment!"
+git commit README -m "comment!"
 
 git push
 
@@ -34,16 +36,12 @@ to test all it in jboss 6.x:
 
 export JBOSS_HOME=.....
 mvn clean
-rm src/main/java/it/vige/magazzino/log/*_*.java src/main/java/it/vige/magazzino/model/*_.java
 mvn -Pjbossas-remote-6 install
 
 to test all it in jboss 7.x:
 
 export JBOSS_HOME=.....
 mvn clean
-rm src/main/java/it/vige/magazzino/log/*_*.java src/main/java/it/vige/magazzino/model/*_.java
-mvn -Pjbossas-remote-7 install 
-or
 mvn -Pjbossas-embedded-7 install
 
 to test it with a single test in jboss:
