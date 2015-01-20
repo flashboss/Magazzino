@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<portlet-app xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
+	version="2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd">
+	<portlet>
+		<description xml:lang="IT">Magazzino</description>
+		<portlet-name>MagazzinoPortlet</portlet-name>
+		<display-name>Magazzino</display-name>
+		<portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
+		<init-param>
+			<name>javax.portlet.faces.defaultViewId.view</name>
+			<value>/customer.xhtml</value>
+		</init-param>
+		<init-param>
+			<name>javax.portlet.faces.defaultViewId.edit</name>
+			<value>/portlet/edit.xhtml</value>
+		</init-param>
+		<init-param>
+			<name>javax.portlet.faces.defaultViewId.help</name>
+			<value>/portlet/help.xhtml</value>
+		</init-param>
+		<init-param>
+			<name>javax.portlet.faces.preserveActionParams</name>
+			<value>true</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>edit</portlet-mode>
+		</supports>
+		<supported-locale>it</supported-locale>
+		<supported-locale>de</supported-locale>
+		<resource-bundle>messages</resource-bundle>
+		<portlet-info>
+			<title>Magazzino</title>
+			<short-title>Magazzino</short-title>
+			<keywords>Vige</keywords>
+		</portlet-info>
+	</portlet>
+</portlet-app>
